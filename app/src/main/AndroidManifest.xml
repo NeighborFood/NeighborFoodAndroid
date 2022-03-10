@@ -16,6 +16,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.ProfileEditingActivity"
+            android:label="Edit Profile"
             android:exported="false" />
         <activity
             android:name=".ui.activities.MainActivity"
@@ -26,8 +27,7 @@
         <activity android:name=".ui.activities.DisplayMessageActivity" />
         <activity
             android:name=".ui.activities.MealActivity"
-            android:exported="true"
-            android:label="Edit Profile">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
