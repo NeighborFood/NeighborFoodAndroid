@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProfileEditing">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/profileEditToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:navigationIcon="?attr/homeAsUpIndicator"/>
+
+    <ScrollView
+        android:id="@+id/profileEditScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/profilePictureImageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="50dp"
+                android:clickable="true"
+                android:contentDescription="@string/user_profile_picture"
+                tools:srcCompat="@tools:sample/avatars"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/nameLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/profilePictureImageView"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:text="@string/name" />
+
+            <TextView
+                android:id="@+id/nameValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nameLabel"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/profilePictureImageView"
+                android:text="@string/foulen"
+                />
+
+            <TextView
+                android:id="@+id/surnameLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nameValue"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/profilePictureImageView"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:text="@string/surname" />
+            <TextView
+                android:id="@+id/surnameValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/surnameLabel"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/profilePictureImageView"
+                android:text="Fouleni" />
+            <TextView
+                android:id="@+id/usernameLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/surnameValue"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/profilePictureImageView"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:text="@string/username" />
+
+            <TextView
+                android:id="@+id/usernameValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/usernameLabel"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/profilePictureImageView"
+                android:text="foulen99"
+                android:textColor="#757575" />
+
+            <TextView
+                android:id="@+id/bioLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/usernameValue"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:text="@string/bio" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/bioValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bioLabel"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp"
+                android:hint="@string/bio"
+                android:minHeight="150dp"
+                tools:ignore="DuplicateSpeakableTextCheck" />
+        </RelativeLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+
+        />
+
+
+</LinearLayout>
