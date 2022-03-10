@@ -16,7 +16,9 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static com.epfl.neighborfood.neighborfoodandroid.MainActivity.EXTRA_MESSAGE;
+import static com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity.EXTRA_MESSAGE;
+
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {

@@ -27,4 +27,5 @@
     <string name="bio">Bio</string>
     <string name="save">Save</string>
     <string name="user_profile_picture">User Profile Picture</string>
+    <string name="sign_in_with_google">Sign In with Google</string>
 </resources>

@@ -6,13 +6,15 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import static com.epfl.neighborfood.neighborfoodandroid.MainActivity.EXTRA_MESSAGE;
+import static com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity.EXTRA_MESSAGE;
 
 import android.content.Intent;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.DisplayMessageActivity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
