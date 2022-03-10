@@ -3,6 +3,10 @@
 *.aar
 *.ap_
 *.aab
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
 
 # Files for the ART/Dalvik VM
 *.dex
