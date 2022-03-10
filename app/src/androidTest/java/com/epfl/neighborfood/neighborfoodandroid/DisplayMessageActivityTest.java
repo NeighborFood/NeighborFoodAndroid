@@ -22,11 +22,11 @@ public class DisplayMessageActivityTest {
     @Test
     public void greetingMessageTest(){
         String intentString = "NeighborFoodTeam";
-        Intent intent = new Intent(ApplicationProvider.getApplicationContext(), GreetingActivity.class);
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(), DisplayMessageActivity.class);
         intent.putExtra(EXTRA_MESSAGE, intentString);
 
-        ActivityScenario<GreetingActivity> scenario = ActivityScenario.launch(intent);
-        onView(withId(R.id.textView2)).check(matches(withText(intentString)));
+        ActivityScenario<DisplayMessageActivity> scenario = ActivityScenario.launch(intent);
+        onView(withId(R.id.textView)).check(matches(withText(intentString)));
         scenario.close();
 
     }

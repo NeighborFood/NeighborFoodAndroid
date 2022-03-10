@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GreetingActivity">
+    tools:context=".DisplayMessageActivity">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="193dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="151dp"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="355dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
