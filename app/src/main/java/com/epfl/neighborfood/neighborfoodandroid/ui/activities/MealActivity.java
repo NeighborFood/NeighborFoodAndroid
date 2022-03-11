@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
@@ -28,8 +29,18 @@ public class MealActivity extends AppCompatActivity {
             String longDes = intent.getStringExtra("longDes");
             int imageId = intent.getIntExtra("imageid", R.drawable.paella);
 
-            binding.mealPicBig.setImageResource(imageId);
+            binding.mealImage.setImageResource(imageId);
+            binding.mealName.setText(name);
+            binding.mealDesc.setText(longDes);
 
         }
+
     }
+    /* TODO
+    public void goToOrderMealActivity(View view){
+        Intent intent = new Intent(this, OrderMealActivity.class);
+        startActivity(intent);
+    }
+
+    */
 }

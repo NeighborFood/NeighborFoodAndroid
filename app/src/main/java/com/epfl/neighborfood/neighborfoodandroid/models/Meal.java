@@ -2,7 +2,8 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 
 
 public class Meal {
-    private String name, shortDescription, longDescription;
+    private String name, shortDescription, longDescription, allergens;
+    private double price;
     private int imageId;
     // TODO add other attributes
 
@@ -25,6 +26,10 @@ public class Meal {
     public String getLongDescription() {
         return longDescription;
     }
+
+    public String getAllergens() { return allergens; }
+
+    public double getPrice() {  return price; }
 
     public int getImageId() {
         return imageId;
