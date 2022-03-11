@@ -1,4 +1,4 @@
-package com.epfl.neighborfood.neighborfoodandroid;
+package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.DisplayMessageActivity;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.epfl.neighborfood.MESSAGE";

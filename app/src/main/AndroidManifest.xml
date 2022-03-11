@@ -10,13 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NeighborFood.NoActionBar">
         <activity
-            android:name=".MainActivity"
-            android:exported="true" />
-        <activity android:name=".DisplayMessageActivity" />
-        <activity
-            android:name=".PlaceMealMenu"
+            android:name=".ui.activities.PlaceMealActivity"
             android:exported="true"
-            android:label="Add a meal">
+            android:label="Add a meal"/>
+
+        <activity android:name=".ui.activities.DisplayMessageActivity" />
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,11 +1,9 @@
-package com.epfl.neighborfood.neighborfoodandroid;
+package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
-public class PlaceMealMenu extends AppCompatActivity implements View.OnClickListener {
+import com.epfl.neighborfood.neighborfoodandroid.R;
+
+public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int RESULT_LOAD_IMAGE = 1;
     ImageView imageToUpload;
     Button confirmationButton;
@@ -30,15 +30,15 @@ public class PlaceMealMenu extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_meal_menu);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        imageToUpload = (ImageView) findViewById(R.id.imageToUpload) ;
-        confirmationButton = (Button) findViewById(R.id.ConfirmationButton);
-        addImageButton = (ImageButton) findViewById(R.id.addPictureButton);
-        allergensText = (EditText) findViewById(R.id.textAllergens);
-        descriptionText = (EditText) findViewById(R.id.textDesciption);
-        priceText = (EditText) findViewById(R.id.textPrice);
-        mealNameText = (EditText) findViewById(R.id.textMealName);
+        imageToUpload = findViewById(R.id.imageToUpload);
+        confirmationButton = findViewById(R.id.ConfirmationButton);
+        addImageButton = findViewById(R.id.addPictureButton);
+        allergensText = findViewById(R.id.textAllergens);
+        descriptionText = findViewById(R.id.textDesciption);
+        priceText = findViewById(R.id.textPrice);
+        mealNameText = findViewById(R.id.textMealName);
 
        addImageButton.setOnClickListener(this);
        confirmationButton.setOnClickListener(this);
