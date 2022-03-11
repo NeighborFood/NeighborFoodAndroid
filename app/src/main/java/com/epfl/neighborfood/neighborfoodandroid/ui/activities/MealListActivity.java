@@ -32,7 +32,7 @@ public class MealListActivity extends AppCompatActivity{
         findViewById(R.id.signButton).setOnClickListener(this::onClick);
 
         int[] imageId = {R.drawable.poulet, R.drawable.couscous, R.drawable.paella,
-                R.drawable.poulet, R.drawable.salade, R.drawable.soupe, R.drawable.tarte};
+                R.drawable.fondue, R.drawable.salade, R.drawable.soupe, R.drawable.tarte};
 
         String[] mealsName = {"Poulet au miel",
                 "Couscous aux légumes",
