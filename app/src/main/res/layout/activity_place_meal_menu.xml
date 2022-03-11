@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activities.PlaceMealActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="?attr/homeAsUpIndicator" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="0,00 chf"
+            android:includeFontPadding="false"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.054"
+            app:layout_constraintStart_toEndOf="@+id/PriceTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textAllergens" />
+
+        <TextView
+            android:id="@+id/PriceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Price:"
+            android:textColor="#9C27B0"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.044"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textAllergens" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textAllergens"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="write the allergens here .."
+            android:inputType="textMultiLine"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/AllergensTitle" />
+
+        <ImageView
+            android:id="@+id/imageToUpload"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/meal_picture"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintVertical_bias="0.055"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+        <ImageButton
+            android:id="@+id/addPictureButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/add_picture_button"
+            app:layout_constraintBottom_toBottomOf="@+id/imageToUpload"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageToUpload"
+            app:layout_constraintTop_toTopOf="@+id/imageToUpload"
+            app:layout_constraintVertical_bias="0.54"
+            app:srcCompat="@android:drawable/ic_input_add"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/MealNameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Meal Name:"
+            android:textColor="#9C27B0"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.052"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageToUpload" />
+
+        <TextView
+            android:id="@+id/MealDescriptionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Meal Description:"
+            android:textColor="#9C27B0"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.062"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textMealName" />
+
+        <TextView
+            android:id="@+id/AllergensTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Allergens:"
+            android:textColor="#9C27B0"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.049"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textDesciption" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textMealName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="write your meal name here .."
+            android:minHeight="48dp"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.042"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/MealNameTitle" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textDesciption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="write your description here .."
+            android:inputType="textMultiLine"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/MealDescriptionTitle" />
+
+        <Button
+            android:id="@+id/ConfirmationButton"
+            android:layout_width="209dp"
+            android:layout_height="49dp"
+            android:text="Propose meal"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.486"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textPrice"
+            app:layout_constraintVertical_bias="0.641" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

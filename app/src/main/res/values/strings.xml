@@ -28,4 +28,8 @@
     <string name="save">Save</string>
     <string name="user_profile_picture">User Profile Picture</string>
     <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="addpicturebutton">addPictureButton</string>
+    <string name="meal_picture" />
+    <string name="add_picture_button" />
+    <string name="propose_meal">Propose meal</string>
 </resources>

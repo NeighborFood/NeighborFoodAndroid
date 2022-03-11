@@ -22,10 +22,14 @@
             android:exported="false" />
         <activity android:name=".ui.activities.DisplayMessageActivity" />
         <activity
+            android:name=".ui.activities.PlaceMealActivity"
+            android:exported="true"
+            android:label="Add a meal"/>
+        <activity
             android:name=".ui.activities.MealActivity"
             android:exported="false" />
 
-            <activity
+        <activity
             android:name=".ui.activities.ChatRoomActivity"
             android:exported="false" />
         <activity
