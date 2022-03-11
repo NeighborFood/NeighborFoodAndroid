@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">NeighborFood</string>
+    <string name="title_activity_display_message">DisplayMessageActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="profile_page">Profile</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+    <string name="notifications">Notifications</string>
+    <string name="food_preferences">Food Preferences</string>
+    <string name="past_orders">Past Orders</string>
+    <string name="account">Account</string>
+    <string name="favorites">Favorites</string>
+    <string name="privacy">Privacy</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="name">Name</string>
+    <string name="foulen">Foulen</string>
+    <string name="surname">Surname</string>
+    <string name="username">Username</string>
+    <string name="bio">Bio</string>
+    <string name="save">Save</string>
+    <string name="user_profile_picture">User Profile Picture</string>
+    <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="addpicturebutton">addPictureButton</string>
+    <string name="meal_picture" />
+    <string name="add_picture_button" />
+    <string name="propose_meal">Propose meal</string>
 </resources>

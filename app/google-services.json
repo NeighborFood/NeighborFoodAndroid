@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "743325402792",
+    "project_id": "neighborfoodsdp",
+    "storage_bucket": "neighborfoodsdp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743325402792:android:cdbecfa6ae56a792d0249d",
+        "android_client_info": {
+          "package_name": "com.epfl.neighborfood.neighborfoodandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743325402792-vp4vpjfldpip4kqcssg6748sgcsdfv9a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.epfl.neighborfood.neighborfoodandroid",
+            "certificate_hash": "5157a39b055137863e35f68b7e78cdaec6640b7d"
+          }
+        },
+        {
+          "client_id": "743325402792-a1337fr4929vml06r8pkrtaasubvpusp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjrzQ2l2Jq-plklX9FuUSt790hZE7_JTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743325402792-a1337fr4929vml06r8pkrtaasubvpusp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

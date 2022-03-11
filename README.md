@@ -1,2 +1,2 @@
 # NeighborFoodAndroid
-Coming Soon...
+Coming Soon
