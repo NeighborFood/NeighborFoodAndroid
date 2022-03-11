@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
@@ -16,7 +17,7 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import java.util.ArrayList;
 
 
-public class MealListActivity extends AppCompatActivity {
+public class MealListActivity extends AppCompatActivity{
 
     ActivityMealListBinding binding;
 
@@ -25,6 +26,9 @@ public class MealListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMealListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        findViewById(R.id.accountButton).setOnClickListener(this::onClick);
+        findViewById(R.id.postButton).setOnClickListener(this::onClick);
+        findViewById(R.id.messageButton).setOnClickListener(this::onClick);
 
         int[] imageId = {R.drawable.poulet, R.drawable.couscous, R.drawable.paella,
                 R.drawable.poulet, R.drawable.salade, R.drawable.soupe, R.drawable.tarte};
@@ -75,5 +79,22 @@ public class MealListActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+    public void onClick(View v){
+        Intent intent = null;
+        switch (v.getId()){
+            case R.id.accountButton:
+                 intent = new Intent(this, PersonalProfileActivity.class);
+                break;
+            case R.id.messageButton:
+                intent = new Intent(this, ChatRoomActivity.class);
+                break;
+            case R.id.postButton:
+                intent = new Intent(this, PlaceMealActivity.class);
+                break;
+            default:
+                break;
+        }
+        startActivity(intent);
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
@@ -31,6 +32,10 @@ public class ProfileEditingActivity extends AppCompatActivity implements View.On
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent,1);
                 break;
+            case R.id.saveButton:
+                Toast.makeText(this, "Successfully Saved!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, PersonalProfileActivity.class);
+                startActivity(intent);
             default:
                 break;
         }

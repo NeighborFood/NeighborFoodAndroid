@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/account_small"
                 android:drawableRight="@android:drawable/ic_media_play"
+                android:onClick="goToEditProfile"
                 android:text="@string/profile_page" />
 
             <Button

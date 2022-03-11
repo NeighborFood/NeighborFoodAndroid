@@ -126,13 +126,14 @@
                 tools:ignore="DuplicateSpeakableTextCheck" />
         </RelativeLayout>
     </ScrollView>
+
     <Button
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/save"
+        android:onClick="onClick"
 
-        />
+        android:text="@string/save" />
 
 
 </LinearLayout>
