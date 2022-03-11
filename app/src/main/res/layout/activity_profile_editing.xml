@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".ui.activities.ProfileEditingActivity">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/profileEditToolbar"
         android:layout_width="match_parent"
