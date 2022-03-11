@@ -5,20 +5,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".SignUpActivity">
 
-  <Button
-      android:id="@+id/sign_in_button"
-      android:layout_width="239dp"
-      android:layout_height="82dp"
-      android:layout_marginStart="105dp"
-      android:layout_marginTop="592dp"
-      android:layout_marginEnd="106dp"
-      android:text="@string/sign_in_with_google"
+  <TextView
+      android:id="@+id/signin"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="50dp"
+      android:layout_marginStart="48dp"
+      android:layout_marginTop="72dp"
+      android:layout_marginEnd="50dp"
+      android:gravity="center"
+      android:text="Sign in"
+      android:textColor="@color/black"
+      android:textSize="35sp"
+      android:textStyle="bold"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.487"
+      app:layout_constraintHorizontal_bias="1.0"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
+  <com.google.android.gms.common.SignInButton
+      android:id="@+id/sign_in_button"
+      android:layout_width="358dp"
+      android:layout_height="60dp"
+      android:layout_marginStart="32dp"
+      android:layout_marginTop="204dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/signin" />
+
+  <Button
+      android:id="@+id/sign_out_button"
+      android:layout_width="184dp"
+      android:layout_height="40dp"
+      android:layout_marginStart="112dp"
+      android:layout_marginTop="24dp"
+      android:text="Log Out"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
