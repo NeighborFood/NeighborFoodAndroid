@@ -29,6 +29,7 @@ public class MealListActivity extends AppCompatActivity{
         findViewById(R.id.accountButton).setOnClickListener(this::onClick);
         findViewById(R.id.postButton).setOnClickListener(this::onClick);
         findViewById(R.id.messageButton).setOnClickListener(this::onClick);
+        findViewById(R.id.signButton).setOnClickListener(this::onClick);
 
         int[] imageId = {R.drawable.poulet, R.drawable.couscous, R.drawable.paella,
                 R.drawable.poulet, R.drawable.salade, R.drawable.soupe, R.drawable.tarte};
@@ -91,6 +92,9 @@ public class MealListActivity extends AppCompatActivity{
                 break;
             case R.id.postButton:
                 intent = new Intent(this, PlaceMealActivity.class);
+                break;
+            case R.id.signButton:
+                intent = new Intent(this, SignUpActivity.class);
                 break;
             default:
                 break;

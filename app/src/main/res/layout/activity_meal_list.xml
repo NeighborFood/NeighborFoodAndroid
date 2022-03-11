@@ -31,13 +31,13 @@
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginStart="88dp"
+            android:layout_marginStart="96dp"
             android:backgroundTint="#673AB7"
             android:foreground="@android:drawable/ic_menu_add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
@@ -54,6 +54,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="SpeakableTextPresentCheck" />
+
+        <Button
+            android:id="@+id/signButton"
+            android:layout_width="91dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="sign"
+            app:layout_constraintEnd_toStartOf="@+id/postButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

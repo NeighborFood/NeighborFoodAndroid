@@ -1,6 +1,6 @@
-package com.epfl.neighborfood.neighborfoodandroid;
+package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,11 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.epfl.neighborfood.neighborfoodandroid.models.GoogleLogin;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseUser;
+import com.epfl.neighborfood.neighborfoodandroid.R;
 
 public class SignUpActivity extends AppCompatActivity {
 

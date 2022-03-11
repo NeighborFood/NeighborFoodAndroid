@@ -1,4 +1,4 @@
-package com.epfl.neighborfood.neighborfoodandroid;
+package com.epfl.neighborfood.neighborfoodandroid.models;
 
 import android.content.Intent;
 

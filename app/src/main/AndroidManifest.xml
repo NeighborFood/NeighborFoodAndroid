@@ -33,6 +33,9 @@
             android:name=".ui.activities.ChatRoomActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.activities.SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.MealListActivity"
             android:exported="true">
             <intent-filter>
