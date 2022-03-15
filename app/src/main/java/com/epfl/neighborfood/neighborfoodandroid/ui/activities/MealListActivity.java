@@ -6,11 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.adapters.ListAdapter;
+import com.epfl.neighborfood.neighborfoodandroid.adapters.MealListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityMealListBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 
@@ -65,9 +64,9 @@ public class MealListActivity extends AppCompatActivity{
             mealArrayList.add(meal);
         }
 
-        ListAdapter listAdapter = new ListAdapter(MealListActivity.this, mealArrayList);
+        MealListAdapter mealListAdapter = new MealListAdapter(MealListActivity.this, mealArrayList);
 
-        binding.mealListView.setAdapter(listAdapter);
+        binding.mealListView.setAdapter(mealListAdapter);
         binding.mealListView.setClickable(true);
         binding.mealListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.models.ChatMessageModel;
-import com.google.firebase.auth.FirebaseAuth;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -21,11 +21,18 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
     private Context mContext;
-    private List<ChatMessageModel> mMessageList;
+    private List<Message> mMessageList;
 
-    public MessageListAdapter(Context context, List<ChatMessageModel> messageList) {
+    public MessageListAdapter(Context context, List<Message> messageList) {
         mContext = context;
         mMessageList = messageList;
+
+    }
+
+
+    public void addMessage(Message message){
+        mMessageList.add(message);
+        this.notifyDataSetChanged();
     }
 
     @Override
@@ -33,15 +40,14 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         return mMessageList.size();
     }
 
+
     // Determines the appropriate ViewType according to the sender of the message.
     @Override
     public int getItemViewType(int position) {
-        ChatMessageModel message = (ChatMessageModel) mMessageList.get(position);
+        Message message = (Message) mMessageList.get(position);
 
-        //if (message.getSender().getUserId().equals(SendBird.getCurrentUser().getUserId())) {
-        //this needs to be revised and corrected to adhere to the userProfileModel and message model
-        //this code is here for demo purposes
-        if (message.getMessageUser().equals("Elliot")){
+        if (message.getSender().getId() == AuthenticatorFactory.getDependency()
+                .getCurrentUser().getId()){
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
         } else {
@@ -71,7 +77,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     // Passes the message object to a ViewHolder so that the contents can be bound to UI.
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ChatMessageModel message = (ChatMessageModel) mMessageList.get(position);
+        Message message = (Message) mMessageList.get(position);
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
@@ -94,12 +100,12 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_gchat_timestamp_me);
         }
 
-        void bind(ChatMessageModel message) {
-            messageText.setText(message.getMessageText());
+        void bind(Message message) {
+            messageText.setText(message.getContent());
 
             // Format the stored timestamp into a readable String using method.
             SimpleDateFormat dateFormatter = new SimpleDateFormat("d MMM yyyy, HH:mm");
-            timeText.setText(dateFormatter.format(message.getMessageTime()));
+            timeText.setText(dateFormatter.format(message.getDate()));
         }
     }
 
@@ -115,13 +121,12 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             profileImage = (ImageView) itemView.findViewById(R.id.image_gchat_profile_other);
         }
 
-        void bind( ChatMessageModel message) {
-            messageText.setText(message.getMessageText());
-
+        void bind( Message message) {
+            messageText.setText(message.getContent());
             // Format the stored timestamp into a readable String
             SimpleDateFormat dateFormatter = new SimpleDateFormat("d MMM yyyy, HH:mm");
-            timeText.setText(dateFormatter.format(message.getMessageTime()));
-            nameText.setText(message.getMessageUser());
+            timeText.setText(dateFormatter.format(message.getDate()));
+            nameText.setText(message.getSender().getFullName());
         }
     }
 
