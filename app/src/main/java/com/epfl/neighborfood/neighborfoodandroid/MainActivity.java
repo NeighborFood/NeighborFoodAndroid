@@ -1,6 +1,8 @@
 package com.epfl.neighborfood.neighborfoodandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +16,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.fragmentContainerView, MealListFragment.class,null);
+        transaction.commit();
+        findViewById(R.id.HomeNavbarButton).setOnClickListener((View v)->{
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView,MealListFragment.class,null).addToBackStack(null).commit();
+        });
+        findViewById(R.id.AccountNavbarButton).setOnClickListener((View v)->{
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView,AccountFragment.class,null).addToBackStack(null).commit();
+        });
     }
-    public void goToNameActivity(View view){
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.mainName);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-    }
+
 }

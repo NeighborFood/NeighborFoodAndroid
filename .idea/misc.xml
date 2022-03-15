@@ -4,6 +4,21 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_display_message.xml" value="0.1" />
+<<<<<<< Updated upstream
+=======
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_main.xml" value="0.36141304347826086" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_meal.xml" value="0.16032608695652173" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_meal_list.xml" value="0.16032608695652173" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_personal_profile.xml" value="0.3736979166666667" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_profile_editing.xml" value="0.18287037037037038" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_sign_up.xml" value="0.264" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/content_personal_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/fragment_account.xml" value="0.1276595744680851" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/fragment_meal_list.xml" value="0.2" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/list_item_meal.xml" value="0.16032608695652173" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/menu/profile_name_menu.xml" value="0.2625" />
+        <entry key="..\:/Users/Salim/NeighborFoodAndroid/app/src/main/res/layout/activity_chat_room.xml" value="0.22530996152201796" />
+>>>>>>> Stashed changes
         <entry key="..\:/Users/Salim/NeighborFoodAndroid/app/src/main/res/layout/activity_display_message.xml" value="0.2695035460992908" />
         <entry key="..\:/Users/Salim/NeighborFoodAndroid/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/Salim/NeighborFoodAndroid/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
