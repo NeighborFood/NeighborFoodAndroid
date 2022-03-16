@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.AccountFragment;
+import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.epfl.neighborfood.MESSAGE";
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView,MealListFragment.class,null).addToBackStack(null).commit();
         });
         findViewById(R.id.AccountNavbarButton).setOnClickListener((View v)->{
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView,AccountFragment.class,null).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, AccountFragment.class,null).addToBackStack(null).commit();
         });
     }
 

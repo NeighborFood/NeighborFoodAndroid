@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.adapters.ListAdapter;
+import com.epfl.neighborfood.neighborfoodandroid.adapters.MealListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.FragmentMealListBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
@@ -68,7 +68,7 @@ public class MealListFragment extends Fragment {
             mealArrayList.add(meal);
         }
 
-        ListAdapter listAdapter = new ListAdapter(getActivity(), mealArrayList);
+        MealListAdapter listAdapter = new MealListAdapter(getActivity(), mealArrayList);
 
         binding.mealListView.setAdapter(listAdapter);
         binding.mealListView.setClickable(true);
