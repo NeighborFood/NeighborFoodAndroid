@@ -28,6 +28,7 @@ public class MainActivityTest {
 
     @Test
     public void intentOnButtonClickTest() {
+
         Intents.init();
         String inputString = "NeighborFoodTeam";
         String packageName = "com.epfl.neighborfood.neighborfoodandroid";

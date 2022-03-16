@@ -16,9 +16,9 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends ArrayAdapter {
+public class MealListAdapter extends ArrayAdapter {
 
-    public ListAdapter(Context context, ArrayList<Meal> mealArrayList) {
+    public MealListAdapter(Context context, ArrayList<Meal> mealArrayList) {
         super(context, R.layout.list_item_meal, mealArrayList);
     }
 
