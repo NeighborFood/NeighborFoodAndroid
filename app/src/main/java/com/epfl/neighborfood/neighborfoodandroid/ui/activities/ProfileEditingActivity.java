@@ -18,9 +18,9 @@ public class ProfileEditingActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_editing);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.profileEditToolbar);
+        Toolbar toolbar = findViewById(R.id.profileEditToolbar);
         setSupportActionBar(toolbar);
-        ppView = (ImageView) findViewById(R.id.profilePictureImageView);
+        ppView = findViewById(R.id.profilePictureImageView);
         ppView.setOnClickListener(this);
     }
 
@@ -34,8 +34,7 @@ public class ProfileEditingActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.saveButton:
                 Toast.makeText(this, "Successfully Saved!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, PersonalProfileActivity.class);
-                startActivity(intent);
+                finish();
             default:
                 break;
         }

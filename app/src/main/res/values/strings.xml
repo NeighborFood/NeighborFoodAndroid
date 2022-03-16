@@ -32,4 +32,6 @@
     <string name="meal_picture" />
     <string name="add_picture_button" />
     <string name="propose_meal">Propose meal</string>
+    <string name="home">Home</string>
+    <string name="messages">Messages</string>
 </resources>

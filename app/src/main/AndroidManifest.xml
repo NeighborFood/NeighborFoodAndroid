@@ -11,14 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NeighborFood.NoActionBar">
         <activity
-            android:name=".ui.activities.PersonalProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.activities.ProfileEditingActivity"
             android:label="Edit Profile"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.MainActivity"
             android:exported="false" />
         <activity android:name=".ui.activities.DisplayMessageActivity" />
         <activity
@@ -36,7 +30,7 @@
             android:name=".ui.activities.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.MealListActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
