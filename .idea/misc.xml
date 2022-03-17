@@ -30,11 +30,21 @@
         <entry key="..\:/Users/badis/Desktop/sweng/mock/NeighborFoodAndroid/app/src/main/res/layout/activity_profile_editing.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/benmu/OneDrive/Documents/GitHub/NeighborFoodAndroid/app/src/main/res/layout/activity_display_message.xml" value="0.11730072463768115" />
         <entry key="..\:/Users/benmu/OneDrive/Documents/GitHub/NeighborFoodAndroid/app/src/main/res/layout/activity_place_meal_menu.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/layout/activity_chat_history.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/activity_conversations.xml" value="0.21422101449275363" />
+        <entry key="app/src/main/res/layout/activity_meal_list.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/activity_personal_profile.xml" value="0.21422101449275363" />
+        <entry key="app/src/main/res/layout/activity_place_meal_menu.xml" value="0.21422101449275363" />
+        <entry key="app/src/main/res/layout/activity_profile_editing.xml" value="0.21422101449275363" />
+        <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/fragment_conversations.xml" value="0.21422101449275363" />
+        <entry key="app/src/main/res/layout/list_item_conversation.xml" value="0.21422101449275363" />
+        <entry key="app/src/main/res/layout/list_item_meal.xml" value="0.21422101449275363" />
       </map>
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

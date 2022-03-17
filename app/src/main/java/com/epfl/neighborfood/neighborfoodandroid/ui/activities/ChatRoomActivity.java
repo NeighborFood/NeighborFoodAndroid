@@ -5,10 +5,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.MessageListAdapter;
@@ -22,25 +25,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ChatRoomActivity extends AppCompatActivity {
+public class ChatRoomActivity extends AppCompatActivity{
 
 
     private RecyclerView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
     private List<Message> messageList = new ArrayList<>();
-    private User chatter = new User(1,"ww@epfl.ch","Walter", "White");
+    private User chatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //how are we gonna edit this
         DummyDatabase dep = DummyDatabase.getInstance();
         messageList = new ArrayList<>(dep.fetchMessages());
 
+
+        Intent i = getIntent();
+        chatter = (User)i.getSerializableExtra("Chatter");
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
-
-        //chatter = (User) getIntent().getSerializableExtra("MyClass");
 
         //back arrow
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_gchannel);
@@ -49,9 +54,11 @@ public class ChatRoomActivity extends AppCompatActivity {
         // add back arrow to toolbar and remove title
         if (getSupportActionBar() != null){
             getSupportActionBar().setTitle(chatter.getFullName());
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(toolbar.getTitle());
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
         mMessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
@@ -75,5 +82,14 @@ public class ChatRoomActivity extends AppCompatActivity {
                 message.setText("");
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) // Press Back Icon
+        {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

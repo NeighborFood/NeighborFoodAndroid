@@ -87,7 +87,7 @@ public class MealListActivity extends AppCompatActivity{
                  intent = new Intent(this, PersonalProfileActivity.class);
                 break;
             case R.id.messageButton:
-                intent = new Intent(this, ChatRoomActivity.class);
+                intent = new Intent(this, ConversationsActivity.class);
                 break;
             case R.id.postButton:
                 intent = new Intent(this, PlaceMealActivity.class);
