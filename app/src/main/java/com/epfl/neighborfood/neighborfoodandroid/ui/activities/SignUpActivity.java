@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.login.Account;
@@ -21,6 +22,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     private SignInButton signInButton;
     private Button signOutButton;
+    private Button startButton;
+    private TextView guideTextView;
     private LoginModel loginModel;
     int RC_SIGN_IN = 1;
 
@@ -32,6 +35,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         signInButton = findViewById(R.id.sign_in_button);
         signOutButton = findViewById(R.id.sign_out_button);
+        startButton = findViewById(R.id.start_button);
+        guideTextView = findViewById(R.id.guide_textView);
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,11 +80,15 @@ public class SignUpActivity extends AppCompatActivity {
         if(firebaseUser != null) {
             signOutButton.setVisibility(View.VISIBLE);
             signInButton.setVisibility(View.INVISIBLE);
-            Toast.makeText(SignUpActivity.this, "Welcome: "+ firebaseUser.getDisplayName(), Toast.LENGTH_SHORT).show();
+            startButton.setVisibility(View.VISIBLE);
+            guideTextView.setText("Welcome: "+ firebaseUser.getDisplayName()+". Click start to discover the daily meals");
+
+
         } else {
             signOutButton.setVisibility(View.INVISIBLE);
             signInButton.setVisibility(View.VISIBLE);
-            Toast.makeText(SignUpActivity.this, "Please press on the google sign button", Toast.LENGTH_SHORT).show();
+            startButton.setVisibility(View.INVISIBLE);
+            guideTextView.setText("Please connect via your google account!");
         }
     }
 
