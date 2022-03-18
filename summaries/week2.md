@@ -20,7 +20,7 @@ the meal in EditTexts, and click on the confirmation buttom to save the meal).
 buttons.
 
 ## Slim
-
+I had set up firebase configuration for authentication. I created a login ui, and implemented a working version of google sign up. I underestimated the time it would take me to implement it in a clean manner.
 
 ## Yassine
 
