@@ -23,7 +23,7 @@ buttons.
 I had set up firebase configuration for authentication. I created a login ui, and implemented a working version of google sign up. I underestimated the time it would take me to implement it in a clean manner.
 
 ## Yassine
-
+I implemented the UI for the chatrooms and started working on the abstractions and structure of the authentication and the database.
 
 
 
