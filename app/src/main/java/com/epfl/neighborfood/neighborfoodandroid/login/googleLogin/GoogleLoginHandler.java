@@ -10,13 +10,13 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
 public class GoogleLoginHandler implements LoginHandler {
+    GoogleSignInAccount account = null;
 
     @Override
     public Account handleOnLoginIntentResult(int requestCode, Intent intent) {
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
-        GoogleSignInAccount account = null;
         try{
-            task.getResult(ApiException.class);
+            account = task.getResult(ApiException.class);
         } catch (ApiException e) {
             e.printStackTrace();
         }
