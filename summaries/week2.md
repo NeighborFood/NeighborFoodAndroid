@@ -23,7 +23,7 @@ buttons.
 
 
 ## Yassine
-
+I implemented the UI for the chatrooms and started working on the abstractions and structure of the authentication and the database.
 
 
 
