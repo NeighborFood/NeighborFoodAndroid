@@ -19,8 +19,7 @@ I have had trouble dedicating the time to the project early in the week but this
 
 
 ## Yassine
-
-
+I implemented the UI for the chatrooms and started working on the abstractions and structure of the authentication and the database. The dask took much more time than expected So I wasn't able to write the tests
 
 
 ## Overall team
