@@ -10,7 +10,7 @@ I have had trouble dedicating the time to the project early in the week but this
 
 
 ## Khalil
-
+I refactored two actgivities into fragments and added a bottom navigation bar. I have not been able to finish all the tests as I had some trouble strating to test the fragments.
 
 ## Raed
 
