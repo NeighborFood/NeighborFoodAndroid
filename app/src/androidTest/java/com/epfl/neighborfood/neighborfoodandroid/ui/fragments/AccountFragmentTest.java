@@ -47,11 +47,6 @@ public class AccountFragmentTest {
     public void onCreate() {
         controller.onFragment(fragment -> fragment.onCreate(Bundle.EMPTY));
     }
-    @Test
-    public void onViewCreated() {
-        controller.onFragment();
-    }
-
     @After
     public void tearDown() throws Exception {
         Intents.release();
