@@ -1,35 +1,53 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.AccountFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.epfl.neighborfood.MESSAGE";
-
+    private NavigationBarView navbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setReorderingAllowed(true);
-        transaction.replace(R.id.fragmentContainerView, MealListFragment.class,null);
-        transaction.commit();
-        findViewById(R.id.HomeNavbarButton).setOnClickListener((View v)->{
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView,MealListFragment.class,null).addToBackStack(null).commit();
-        });
-        findViewById(R.id.AccountNavbarButton).setOnClickListener((View v)->{
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, AccountFragment.class,null).addToBackStack(null).commit();
-        });
+        setCurrentFragment(MealListFragment.class);
+        navbar =findViewById(R.id.bottomNavigationView);
+        navbar.setOnItemSelectedListener(this::switchFragment);
+    }
+    private boolean switchFragment(MenuItem it){
+
+        switch (it.getItemId()) {
+            case R.id.navBarHome:
+                setCurrentFragment(MealListFragment.class);
+                return true;
+            case R.id.navBarMessages:
+                Toast.makeText(this, "Not yet Implemented!", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.navBarAccount:
+                setCurrentFragment(AccountFragment.class);
+                return true;
+        }
+        return false;
+    }
+    private void setCurrentFragment(Class fragment){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment,null).addToBackStack(null).commit();
+
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //navbar.setSelectedItemId(navbar.getSelectedItemId());
+
+    }
 }

@@ -1,4 +1,4 @@
-package com.epfl.neighborfood.neighborfoodandroid;
+package com.epfl.neighborfood.neighborfoodandroid.ui.layouts;
 
 import android.content.Intent;
 
@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.DummyAuthenticator;
 import com.epfl.neighborfood.neighborfoodandroid.database.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
@@ -71,7 +73,7 @@ public class ChatRoomActivityTest {
 
 
         String message = "Thank You";
-        onView(withId(R.id.edit_gchat_message)).perform(typeText(message));
+        onView(ViewMatchers.withId(R.id.edit_gchat_message)).perform(typeText(message));
         onView(withId(R.id.button_gchat_send)).perform(click());
         onView(withText(message)).check(matches(isDisplayed()));
     }

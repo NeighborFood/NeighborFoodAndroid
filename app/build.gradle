@@ -67,7 +67,6 @@ dependencies {
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 
 
-
 }
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
