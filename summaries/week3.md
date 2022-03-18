@@ -22,7 +22,7 @@ his meal have(select and deselect).
 
 
 ## Yassine
-I implemented the UI for the chatrooms and started working on the abstractions and structure of the authentication and the database. The dask took much more time than expected So I wasn't able to write the tests
+I implemented the UI for the chat history and did some refractoring on the database abstractions and the ChatRoom class. I finished last week's tests and wrote tests for this week's code. 
 
 
 ## Overall team
