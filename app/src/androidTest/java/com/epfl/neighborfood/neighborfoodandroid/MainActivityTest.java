@@ -33,8 +33,8 @@ public class MainActivityTest {
         String inputString = "NeighborFoodTeam";
         String packageName = "com.epfl.neighborfood.neighborfoodandroid";
 
-        onView(withId(R.id.mainName)).perform(replaceText(inputString));
-        onView(withId(R.id.mainGo)).perform(click());
+        //onView(withId(R.id.mainName)).perform(replaceText(inputString));
+        //onView(withId(R.id.mainGo)).perform(click());
 
 
         intended(toPackage(packageName));
