@@ -56,8 +56,8 @@ public class ChatRoomActivityTest {
         DummyDatabase.getInstance().pushMessage(m1);
         DummyDatabase.getInstance().pushMessage(m2);
         Intent intent = new Intent(ApplicationProvider.getApplicationContext(), ChatRoomActivity.class);
+        intent.putExtra("Chatter",other);
         ActivityScenario<ChatRoomActivity> scenario = ActivityScenario.launch(intent);
-
         onView(withText("Hello, it's me !")).check(matches(isDisplayed()));
         onView(withText("Happy Meal !")).check(matches(isDisplayed()));
 
