@@ -2,6 +2,7 @@ package com.epfl.neighborfood.neighborfoodandroid.login.firebase;
 
 import androidx.annotation.NonNull;
 
+import com.epfl.neighborfood.neighborfoodandroid.login.LoggedInUser;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.SignUpActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,7 +24,7 @@ public class FirebaseLogin {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     FirebaseUser user = mAuth.getCurrentUser();
-                    signUpActivity.updateUI(user);
+                    signUpActivity.updateUI(new LoggedInUser((user)));
                 }
             }
         });

@@ -11,9 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.login.Account;
+import com.epfl.neighborfood.neighborfoodandroid.login.LoggedInUser;
 import com.epfl.neighborfood.neighborfoodandroid.login.LoginModel;
 import com.epfl.neighborfood.neighborfoodandroid.login.googleLogin.GoogleAccount;
 import com.epfl.neighborfood.neighborfoodandroid.login.googleLogin.GoogleLoginModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
 import com.google.android.gms.common.SignInButton;
 import com.google.firebase.auth.FirebaseUser;
 import com.epfl.neighborfood.neighborfoodandroid.R;
@@ -57,8 +59,10 @@ public class SignUpActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = loginModel.getFirebaseLogin().getCurrentUser();
-        updateUI(currentUser);
+        LoggedInUser loggedInUser = currentUser != null ? new LoggedInUser(currentUser) : null;
+        updateUI(loggedInUser);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -71,17 +75,17 @@ public class SignUpActivity extends AppCompatActivity {
         startActivityForResult(loginModel.signIn(), RC_SIGN_IN);
     }
 
-    private void signOut(){
+    public void signOut(){
         loginModel.signOut();
         updateUI(null);
     }
 
-    public void updateUI(FirebaseUser firebaseUser){
-        if(firebaseUser != null) {
+    public void updateUI(LoggedInUser loggedInUser){
+        if(loggedInUser != null) {
             signOutButton.setVisibility(View.VISIBLE);
             signInButton.setVisibility(View.INVISIBLE);
             startButton.setVisibility(View.VISIBLE);
-            guideTextView.setText("Welcome: "+ firebaseUser.getDisplayName()+". Click start to discover the daily meals");
+            guideTextView.setText("Welcome: "+ loggedInUser.toString()+". Click start to discover the daily meals");
 
 
         } else {
@@ -90,6 +94,11 @@ public class SignUpActivity extends AppCompatActivity {
             startButton.setVisibility(View.INVISIBLE);
             guideTextView.setText("Please connect via your google account!");
         }
+    }
+
+    public void startScrolling(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 }
