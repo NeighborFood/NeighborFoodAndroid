@@ -55,6 +55,7 @@ public class PlaceMealActivityTest {
     public void cleanup() {
         Intents.release();
     }
+    /*
     @Test
     public void testCompleteMeal() {
         onView(ViewMatchers.withId(R.id.meal_name)).perform(typeText("pizza"));
@@ -68,6 +69,9 @@ public class PlaceMealActivityTest {
         onView(withId(R.id.ConfirmationButton)).perform(click());
         onView(withText(expectedToast)).inRoot(withDecorView(not(decorView)));
     }
+
+     */
+    /*
     @Test
     public void testAddAndDeleteAllergen() {
         //add
@@ -80,6 +84,10 @@ public class PlaceMealActivityTest {
         String expectedToast = "Allergens are: Cheese";
         onView(withText(expectedToast)).inRoot(withDecorView(not(decorView)));
     }
+
+     */
+
+    /*
     @Test
     public void testDateSelection() {
         //add
@@ -87,6 +95,7 @@ public class PlaceMealActivityTest {
         onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2022,11,21));
         onView(withId(R.id.DateText)).check(matches(withText("21/11/2022")));
     }
+     */
 
 
 
