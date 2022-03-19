@@ -12,21 +12,19 @@ import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
-public class ProfileEditingActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProfileEditingActivity extends AppCompatActivity {
     private ImageView ppView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_editing);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.profileEditToolbar);
+        Toolbar toolbar = findViewById(R.id.profileEditToolbar);
         setSupportActionBar(toolbar);
-        ppView = (ImageView) findViewById(R.id.profilePictureImageView);
-        ppView.setOnClickListener(this);
+        ppView = findViewById(R.id.profilePictureImageView);
+        ppView.setOnClickListener(this::onClick);
     }
 
-
-    @Override
-    public void onClick(View v) {
+    private void onClick(View v){
         switch(v.getId()){
             case R.id.profilePictureImageView:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -34,8 +32,7 @@ public class ProfileEditingActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.saveButton:
                 Toast.makeText(this, "Successfully Saved!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, PersonalProfileActivity.class);
-                startActivity(intent);
+                finish();
             default:
                 break;
         }

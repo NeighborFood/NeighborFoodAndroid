@@ -1,11 +1,13 @@
-package com.epfl.neighborfood.neighborfoodandroid;
+package com.epfl.neighborfood.neighborfoodandroid.ui.layouts;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 
 import com.epfl.neighborfood.neighborfoodandroid.database.DummyDatabase;
@@ -92,7 +94,7 @@ public class ConversationsActivityTest {
         }
 
 
-        onView(withId(R.id.conversationsListView)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.conversationsListView)).check(matches(isDisplayed()));
 
         onData(instanceOf(Conversation.class))
                 .inAdapterView(allOf(withId(R.id.conversationsListView), isDisplayed()))

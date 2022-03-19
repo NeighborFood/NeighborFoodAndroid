@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.PersonalProfileActivity"
+    tools:context=".ui.fragments.AccountFragment"
     >
 
     <ScrollView
@@ -33,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/account_small"
                 android:drawableRight="@android:drawable/ic_media_play"
-                android:onClick="goToEditProfile"
                 android:text="@string/profile_page" />
 
             <Button

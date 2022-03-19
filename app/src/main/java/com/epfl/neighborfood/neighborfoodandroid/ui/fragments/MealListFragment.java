@@ -1,34 +1,38 @@
-package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
+package com.epfl.neighborfood.neighborfoodandroid.ui.fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.MealListAdapter;
-import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityMealListBinding;
+import com.epfl.neighborfood.neighborfoodandroid.databinding.FragmentMealListBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MealActivity;
 
 import java.util.ArrayList;
 
 
-public class MealListActivity extends AppCompatActivity{
+public class MealListFragment extends Fragment {
 
-    ActivityMealListBinding binding;
+    private FragmentMealListBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView (LayoutInflater inflater,
+                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMealListBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        findViewById(R.id.accountButton).setOnClickListener(this::onClick);
-        findViewById(R.id.postButton).setOnClickListener(this::onClick);
-        findViewById(R.id.messageButton).setOnClickListener(this::onClick);
-        findViewById(R.id.signButton).setOnClickListener(this::onClick);
+        binding = FragmentMealListBinding.inflate(getLayoutInflater());
+        return binding.getRoot();}
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        getView().findViewById(R.id.messagesButton).setOnClickListener(this::onClick);
 
         int[] imageId = {R.drawable.poulet, R.drawable.couscous, R.drawable.paella,
                 R.drawable.fondue, R.drawable.salade, R.drawable.soupe, R.drawable.tarte};
@@ -64,14 +68,14 @@ public class MealListActivity extends AppCompatActivity{
             mealArrayList.add(meal);
         }
 
-        MealListAdapter mealListAdapter = new MealListAdapter(MealListActivity.this, mealArrayList);
+        MealListAdapter listAdapter = new MealListAdapter(getActivity(), mealArrayList);
 
-        binding.mealListView.setAdapter(mealListAdapter);
+        binding.mealListView.setAdapter(listAdapter);
         binding.mealListView.setClickable(true);
         binding.mealListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(MealListActivity.this, MealActivity.class);
+                Intent i = new Intent(getActivity(), MealActivity.class);
                 i.putExtra("name", mealsName[position]);
                 i.putExtra("shortDes", mealsShortDes[position]);
                 i.putExtra("longDes", mealsLongDes[position]);
@@ -82,22 +86,11 @@ public class MealListActivity extends AppCompatActivity{
     }
     public void onClick(View v){
         Intent intent = null;
-        switch (v.getId()){
-            case R.id.accountButton:
-                 intent = new Intent(this, PersonalProfileActivity.class);
-                break;
-            case R.id.messageButton:
-                intent = new Intent(this, ConversationsActivity.class);
-                break;
-            case R.id.postButton:
-                intent = new Intent(this, PlaceMealActivity.class);
-                break;
-            case R.id.signButton:
-                intent = new Intent(this, SignUpActivity.class);
-                break;
-            default:
-                break;
+        switch(v.getId()){
+            case R.id.messagesButton:
+                intent = new Intent(getActivity(), ChatRoomActivity.class);
         }
         startActivity(intent);
     }
+
 }
