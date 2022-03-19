@@ -15,7 +15,6 @@ import com.epfl.neighborfood.neighborfoodandroid.database.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.DisplayMessageActivity;
 
 import org.junit.After;
 import org.junit.Before;
@@ -33,6 +32,7 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 @RunWith(AndroidJUnit4.class)
 public class ChatRoomActivityTest {
 
+    private User other = new User(1,"other@epfl.ch","George", "Other");
 
     @Before
     public void setUp() throws Exception {
@@ -48,7 +48,7 @@ public class ChatRoomActivityTest {
 
     @Test
     public void chatMessagesAppearTest() {
-        User other = new User(1,"other@epfl.ch","George", "Other");
+
         User me = DummyAuthenticator.getInstance().getCurrentUser();
         Message m1 = new Message("Hello, it's me !",me,other);
         Message m2 = new Message("Happy Meal !",other,me);
@@ -67,11 +67,13 @@ public class ChatRoomActivityTest {
     @Test
     public void sendNewMessageTest() {
         Intent intent = new Intent(ApplicationProvider.getApplicationContext(), ChatRoomActivity.class);
-        ActivityScenario<DisplayMessageActivity> scenario = ActivityScenario.launch(intent);
+        intent.putExtra("Chatter",other);
+        ActivityScenario<ChatRoomActivity> scenario = ActivityScenario.launch(intent);
         String message = "Thank You";
         onView(ViewMatchers.withId(R.id.edit_gchat_message)).perform(typeText(message));
         onView(withId(R.id.button_gchat_send)).perform(click());
         onView(withText(message)).check(matches(isDisplayed()));
+        scenario.close();
     }
 
 

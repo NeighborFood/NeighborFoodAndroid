@@ -12,14 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.ConversationListAdapter;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
-import com.epfl.neighborfood.neighborfoodandroid.models.Message;
-import com.epfl.neighborfood.neighborfoodandroid.models.User;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class ConversationsActivity extends AppCompatActivity {
@@ -35,16 +30,7 @@ public class ConversationsActivity extends AppCompatActivity {
 
 
         DummyDatabase dep = DummyDatabase.getInstance();
-        dep.pushConversation(
-                new Conversation( new User(1,"test1@machin.com","Test","One"),
-                        Arrays.asList(new Message("Hello",new User(1,"test1@machin.com","Test","One"),
-                                AuthenticatorFactory.getDependency().getCurrentUser())))
-        );
-        dep.pushConversation(
-                new Conversation( new User(2,"test2@machin.com","Test","Two"),
-                        Arrays.asList(new Message("Hello",AuthenticatorFactory.getDependency().getCurrentUser(),new User(2,"test2@machin.com","Test","Two")
-                                )))
-        );
+
         conversations = dep.fetchConversations();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversations);
