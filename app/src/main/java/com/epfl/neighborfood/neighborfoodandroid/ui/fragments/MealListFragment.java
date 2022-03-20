@@ -25,13 +25,15 @@ public class MealListFragment extends Fragment {
     private FragmentMealListBinding binding;
 
     @Override
-    public View onCreateView (LayoutInflater inflater,
-                              ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentMealListBinding.inflate(getLayoutInflater());
-        return binding.getRoot();}
+        return binding.getRoot();
+    }
+
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         getView().findViewById(R.id.messagesButton).setOnClickListener(this::onClick);
 
         int[] imageId = {R.drawable.poulet, R.drawable.couscous, R.drawable.paella,
@@ -84,9 +86,10 @@ public class MealListFragment extends Fragment {
             }
         });
     }
-    public void onClick(View v){
+
+    public void onClick(View v) {
         Intent intent = null;
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.messagesButton:
                 intent = new Intent(getActivity(), ChatRoomActivity.class);
         }
