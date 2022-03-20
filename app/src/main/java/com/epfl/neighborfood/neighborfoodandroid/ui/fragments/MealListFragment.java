@@ -26,7 +26,7 @@ public class MealListFragment extends Fragment {
 
     @Override
     public View onCreateView (LayoutInflater inflater,
-                                 ViewGroup container, Bundle savedInstanceState) {
+                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentMealListBinding.inflate(getLayoutInflater());
         return binding.getRoot();}

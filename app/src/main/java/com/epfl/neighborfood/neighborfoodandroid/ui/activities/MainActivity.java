@@ -1,8 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentTransaction;
+
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -47,7 +46,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        //navbar.setSelectedItemId(navbar.getSelectedItemId());
-
     }
 }
