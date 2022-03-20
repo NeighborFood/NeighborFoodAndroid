@@ -108,14 +108,14 @@ public class SignUpActivityTest {
     }
 
 
-    @Test
+    /*@Test
     public void startButtonFiresIntentWhenLoggedIn(){
         updateUIWithFakeLoggedInUser();
         Intents.init();
         onView(withId(R.id.start_button)).perform(click());
         intended(toPackage("com.epfl.neighborfood.neighborfoodandroid"));
         Intents.release();
-    }
+    }*/
 
     @Test
     public void logOutButtonResetsActivityToSignInState(){
