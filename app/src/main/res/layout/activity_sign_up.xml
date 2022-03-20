@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background1"
-    tools:context=".SignUpActivity">
+    tools:context=".ui.activities.SignUpActivity">
 
   <ImageView
       android:id="@+id/imageView"
@@ -18,10 +18,10 @@
       android:src="@drawable/icon"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/signin" />
+      app:layout_constraintTop_toBottomOf="@+id/welcome_text" />
 
   <TextView
-      android:id="@+id/signin"
+      android:id="@+id/welcome_text"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_margin="50dp"
@@ -29,7 +29,7 @@
       android:layout_marginTop="76dp"
       android:layout_marginEnd="50dp"
       android:gravity="center"
-      android:text="Welcome to NeighborFood"
+      android:text="@string/welcome_to_neighborfood"
       android:textColor="@color/purple_200"
       android:textSize="35sp"
       android:textStyle="bold"
@@ -55,7 +55,7 @@
       android:layout_marginTop="12dp"
       android:layout_marginEnd="115dp"
       android:layout_marginBottom="164dp"
-      android:text="Log Out"
+      android:text="@string/log_out"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.44"
@@ -70,7 +70,8 @@
       android:layout_marginTop="23dp"
       android:layout_marginEnd="162dp"
       android:layout_marginBottom="12dp"
-      android:text="Start"
+      android:text="@string/start"
+      android:onClick="startScrolling"
       app:layout_constraintBottom_toTopOf="@+id/sign_out_button"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.0"
@@ -85,7 +86,7 @@
       android:layout_marginTop="37dp"
       android:layout_marginEnd="63dp"
       android:fontFamily="casual"
-      android:text="TextView"
+      android:text="@string/textview"
       android:textAppearance="@style/TextAppearance.AppCompat.Body1"
       android:textSize="16sp"
       android:textStyle="bold|italic"
