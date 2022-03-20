@@ -10,6 +10,100 @@
         android:layout_height="match_parent"
         tools:context=".ui.activities.PlaceMealActivity">
 
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/bio"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/AllergensTitle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/GlutenIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/gluten" />
+
+                <ImageView
+                    android:id="@+id/CeleryIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/celery" />
+
+                <ImageView
+                    android:id="@+id/CheeseIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/cheese" />
+
+                <ImageView
+                    android:id="@+id/FishIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/fish" />
+
+                <ImageView
+                    android:id="@+id/MilkIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/milk" />
+                <ImageView
+                    android:id="@+id/LobsterIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/lobster" />
+                <ImageView
+                    android:id="@+id/HoneyIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/honey" />
+                <ImageView
+                    android:id="@+id/SoyIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/soy" />
+                <ImageView
+                    android:id="@+id/EggsIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/eggs" />
+                <ImageView
+                    android:id="@+id/ChocolateIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/chocolate" />
+
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -20,48 +114,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="?attr/homeAsUpIndicator" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="0,00 chf"
-            android:includeFontPadding="false"
-            android:inputType="numberDecimal"
-            android:minHeight="48dp"
-            android:selectAllOnFocus="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.054"
-            app:layout_constraintStart_toEndOf="@+id/PriceTitle"
-            app:layout_constraintTop_toBottomOf="@+id/textAllergens" />
-
-        <TextView
-            android:id="@+id/PriceTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Price:"
-            android:textColor="#9C27B0"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.044"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textAllergens" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textAllergens"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="write the allergens here .."
-            android:inputType="textMultiLine"
-            android:minHeight="48dp"
-            android:selectAllOnFocus="false"
-            android:singleLine="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/AllergensTitle" />
 
         <ImageView
             android:id="@+id/imageToUpload"
@@ -142,6 +194,44 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/MealNameTitle" />
 
+        <TextView
+            android:id="@+id/PriceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Price:"
+            android:textColor="#9C27B0"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.083"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
+
+        <TextView
+            android:id="@+id/priceTitle3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Date:"
+            android:textColor="#9C27B0"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.082"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/PriceTitle" />
+
+        <TextView
+            android:id="@+id/TimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time:"
+            android:textColor="#9C27B0"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.144"
+            app:layout_constraintStart_toEndOf="@+id/CalendarButton"
+            app:layout_constraintTop_toTopOf="@+id/priceTitle3" />
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textDesciption"
             android:layout_width="match_parent"
@@ -156,6 +246,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/MealDescriptionTitle" />
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="0,00 chf"
+            android:includeFontPadding="false"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.06"
+            app:layout_constraintStart_toEndOf="@+id/PriceTitle"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
+
         <Button
             android:id="@+id/ConfirmationButton"
             android:layout_width="209dp"
@@ -164,10 +269,46 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.486"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textPrice"
-            app:layout_constraintVertical_bias="0.641" />
+            app:layout_constraintTop_toBottomOf="@+id/DateText"
+            app:layout_constraintVertical_bias="0.327" />
+
+        <EditText
+            android:id="@+id/DateText"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="12dp"
+            android:ems="10"
+            android:hint="dd/mm/yyyy"
+            android:inputType="date"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toEndOf="@+id/priceTitle3"
+            app:layout_constraintTop_toBottomOf="@+id/textPrice" />
+
+        <EditText
+            android:id="@+id/TimeText"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:hint="00:00"
+            android:inputType="time"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toEndOf="@+id/TimeTitle"
+            app:layout_constraintTop_toTopOf="@+id/DateText" />
+
+        <ImageButton
+            android:id="@+id/CalendarButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/bio"
+            android:onClick="onClick"
+            app:layout_constraintBottom_toBottomOf="@+id/DateText"
+            app:layout_constraintStart_toEndOf="@+id/DateText"
+            app:layout_constraintTop_toTopOf="@+id/DateText"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/calendar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -20,6 +20,9 @@
             android:exported="true"
             android:label="Add a meal"/>
         <activity
+            android:name=".ui.activities.ConversationsActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activities.MealActivity"
             android:exported="false" />
 
@@ -28,7 +31,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.SignUpActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">

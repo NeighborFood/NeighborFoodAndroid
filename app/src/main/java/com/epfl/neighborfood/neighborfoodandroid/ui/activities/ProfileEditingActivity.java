@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
-public class ProfileEditingActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProfileEditingActivity extends AppCompatActivity {
     private ImageView ppView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +21,10 @@ public class ProfileEditingActivity extends AppCompatActivity implements View.On
         Toolbar toolbar = findViewById(R.id.profileEditToolbar);
         setSupportActionBar(toolbar);
         ppView = findViewById(R.id.profilePictureImageView);
-        ppView.setOnClickListener(this);
+        ppView.setOnClickListener(this::onClick);
     }
 
-
-    @Override
-    public void onClick(View v) {
+    public void onClick(View v){
         switch(v.getId()){
             case R.id.profilePictureImageView:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
