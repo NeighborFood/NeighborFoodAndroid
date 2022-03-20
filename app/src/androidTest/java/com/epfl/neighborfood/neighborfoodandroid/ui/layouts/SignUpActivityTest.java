@@ -27,10 +27,15 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class SignUpActivityTest {
 
+    // a fake LoggedInUser that will be used to simulate the case where an actual account is logged in into the app
     private LoggedInUser fakeLoggedInUser = new LoggedInUser("FakeName","FakeEmail@gmail.com");
+
     @Rule
     public ActivityScenarioRule<SignUpActivity> testRule = new ActivityScenarioRule<>(SignUpActivity.class);
 
+    /**
+     * Makes sure that we are logged out before the start of every test
+     */
     @Before
     public void logOut(){
         testRule.getScenario().onActivity(activity -> {
@@ -39,26 +44,40 @@ public class SignUpActivityTest {
 
     }
 
+    /**
+     * Checks if the button responsible to log in is visible when no user is logged in
+     */
     @Test
     public void logInButtonIsVisibleWhenLoggedOut(){
         onView(withId(R.id.sign_in_button)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
+    /**
+     * Checks if the button responsible to log out is invisible when no user is logged in
+     */
     @Test
     public void logOutButtonIsInvisibleWhenLoggedOut(){
         onView(withId(R.id.sign_out_button)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
 
+    /**
+     * Checks if the button responsible to start seeing the meals is invisible when no user is logged in
+     */
     @Test
     public void startButtonIsInvisibleWhenLoggedOut(){
         onView(withId(R.id.start_button)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
-
+    /**
+     * Checks that the guiding message is showing the right indication when no user is logged in
+     */
     @Test
     public void guideTextWithRightStringWhenLoggedOut(){
         onView(withId(R.id.guide_textView)).check(matches(withText("Please connect via your google account!")));
     }
 
+    /**
+     * Checks if a sign in intent is fired when the sign in button is used
+     */
     @Test
     public void intentFiredWhenSignInButtonClicked(){
         Intents.init();
@@ -67,40 +86,61 @@ public class SignUpActivityTest {
         Intents.release();
     }
 
+    /**
+     * checks if the welcome message is always displayed
+     */
     @Test
     public void welcomeMessageIsDisplayed(){
         onView(withId(R.id.welcome_text)).check(matches(isDisplayed()));
     }
 
+    /**
+     * checks if the logo image is always displayed
+     */
     @Test
     public void logoImageIsDisplayed(){
         onView(withId(R.id.imageView)).check(matches(isDisplayed()));
     }
 
+    /**
+     * this function will be used to simulate that an actual user is logged in into the app
+     */
     public void updateUIWithFakeLoggedInUser(){
         testRule.getScenario().onActivity(activity -> {
             activity.updateUI(fakeLoggedInUser);
         });
     }
 
+    /**
+     * Checks if the button responsible to log in is invisible when a user is logged in
+     */
     @Test
     public void logInButtonIsInvisibleWhenLoggedIn(){
         updateUIWithFakeLoggedInUser();
         onView(withId(R.id.sign_in_button)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
 
+    /**
+     * Checks if the button responsible to log out is visible when a user is logged in
+     */
     @Test
     public void logOutButtonIsVisibleWhenLoggedIn(){
         updateUIWithFakeLoggedInUser();
         onView(withId(R.id.sign_out_button)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
+    /**
+     * Checks if the button responsible to start seeing the meals is visible when a user is logged in
+     */
     @Test
     public void startButtonIsVisibleWhenLoggedIn(){
         updateUIWithFakeLoggedInUser();
         onView(withId(R.id.start_button)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
+    /**
+     * Checks if the guiding message is showing the right indication when a user is logged in
+     */
     @Test
     public void guideTextContainGreetingMessageWhenLoggedIn(){
         updateUIWithFakeLoggedInUser();
@@ -108,15 +148,10 @@ public class SignUpActivityTest {
     }
 
 
-    /*@Test
-    public void startButtonFiresIntentWhenLoggedIn(){
-        updateUIWithFakeLoggedInUser();
-        Intents.init();
-        onView(withId(R.id.start_button)).perform(click());
-        intended(toPackage("com.epfl.neighborfood.neighborfoodandroid"));
-        Intents.release();
-    }*/
-
+    /**
+     * Checks that when the log out button is pressed (when a user is logged in) we go back to the state of no user is logged in
+     * It is done by rechecking the visibility of different component
+     */
     @Test
     public void logOutButtonResetsActivityToSignInState(){
         updateUIWithFakeLoggedInUser();

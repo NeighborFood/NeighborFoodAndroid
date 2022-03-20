@@ -16,14 +16,22 @@ public class LoginModel {
         this.firebaseLogin = firebaseLogin;
     }
 
+    /**
+     * Uses the Login object to sign in by generating an sign in intent
+     * @return a sign in intent (Intent)
+     */
     public Intent signIn(){
         return login.signIn();
     }
 
+    /**
+     * Log out all different parties contributing to the sign in action
+     */
     public void signOut(){
         login.signOut();
         firebaseLogin.signOut();
     }
+
 
     public void setAccount(Account account) {
         this.account = account;

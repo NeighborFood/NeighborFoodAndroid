@@ -8,25 +8,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.login.Account;
 import com.epfl.neighborfood.neighborfoodandroid.login.LoggedInUser;
 import com.epfl.neighborfood.neighborfoodandroid.login.LoginModel;
 import com.epfl.neighborfood.neighborfoodandroid.login.googleLogin.GoogleAccount;
 import com.epfl.neighborfood.neighborfoodandroid.login.googleLogin.GoogleLoginModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
 import com.google.android.gms.common.SignInButton;
 import com.google.firebase.auth.FirebaseUser;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    // the button used to log in
     private SignInButton signInButton;
+    // the button used to log out
     private Button signOutButton;
+    // the button used to start using the other features of the app
     private Button startButton;
+    // a guiding text view, telling the user what to do next
     private TextView guideTextView;
+    // a login model allowing signing up/signing out from the app
     private LoginModel loginModel;
+    // a request code for the sign in intent
     int RC_SIGN_IN = 1;
 
     @Override
@@ -71,15 +75,26 @@ public class SignUpActivity extends AppCompatActivity {
         loginModel.getFirebaseLogin().loginWithCredential(((GoogleAccount)account).getAccountCredential(),this);
 
     }
+
+    /**
+     * Log in into the app using the loginModel intent
+     */
     private void signIn(){
         startActivityForResult(loginModel.signIn(), RC_SIGN_IN);
     }
 
+    /**
+     * Log out from the app by shutting off(and signing out) the service responsible for the log in feature
+     */
     public void signOut(){
         loginModel.signOut();
         updateUI(null);
     }
 
+    /**
+     * Updates the UI according to whether there is a logged in user or not
+     * @param loggedInUser: the current logged in user
+     */
     public void updateUI(LoggedInUser loggedInUser){
         if(loggedInUser != null) {
             signOutButton.setVisibility(View.VISIBLE);
@@ -96,6 +111,10 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * the onClick handler of the start button which will allow the user to go the meal activity
+     * @param view(View)
+     */
     public void startScrolling(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

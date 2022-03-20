@@ -4,31 +4,33 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoggedInUser {
 
-    private String firstName;
+    // the logged in user full name
+    private String name;
+    // the logged in user email
     private String email;
 
     public LoggedInUser(String firstName, String email) {
-        this.firstName = firstName;
+        this.name = firstName;
         this.email = email;
     }
 
+    /**
+     * create a LoggedInUser instance from a FirebaseUser
+     * @param firebaseUser(FirebaseUser)
+     */
     public LoggedInUser(FirebaseUser firebaseUser) {
-       firstName = firebaseUser.getDisplayName();
+       name = firebaseUser.getDisplayName();
        email = firebaseUser.getEmail();
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     @Override
     public String toString() {
-        return firstName + " ";
+        return name + " ";
     }
 }
 
