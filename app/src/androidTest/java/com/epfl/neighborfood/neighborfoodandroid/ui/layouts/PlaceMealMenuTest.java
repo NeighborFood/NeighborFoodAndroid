@@ -127,7 +127,7 @@ public class PlaceMealMenuTest {
         onView((withId(R.id.DateText))).check(matches(withText("11/11/2022")));
 
     }
-    @Test
+    /*@Test
     public void testAddAndDeleteAllergen() {
         //add
         onView(withId(R.id.FishIcon)).perform(click());
@@ -137,5 +137,5 @@ public class PlaceMealMenuTest {
         onView(withId(R.id.CheeseIcon)).perform(click());
         onView(withId(R.id.ConfirmationButton)).perform(click());
         //missing check if FishIcon is disabled and CheeseIcon is enabled
-    }
+    }*/
 }
