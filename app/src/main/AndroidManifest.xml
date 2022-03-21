@@ -16,7 +16,7 @@
             android:exported="false" />
         <activity android:name=".ui.activities.DisplayMessageActivity" />
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.PlaceMealActivity"
             android:exported="true"
             android:label="Add a meal"/>
         <activity
@@ -33,7 +33,7 @@
             android:name=".ui.activities.SignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activities.PlaceMealActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
