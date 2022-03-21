@@ -40,14 +40,8 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
     private void setCurrentFragment(Class fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment,null).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment,null)/*.addToBackStack(null)*/.commit();
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        //navbar.setSelectedItemId(navbar.getSelectedItemId());
-
-    }
 }

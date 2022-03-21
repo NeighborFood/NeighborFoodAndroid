@@ -19,6 +19,7 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity.EXTRA_MESSAGE;
 
+import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
 
 @RunWith(AndroidJUnit4.class)
@@ -28,17 +29,26 @@ public class MainActivityTest {
     public ActivityScenarioRule<MainActivity> testRule = new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void intentOnButtonClickTest() {
-
-        Intents.init();
-        String packageName = "com.epfl.neighborfood.neighborfoodandroid";
-        //onView(withId(R.id.HomeNavbarButton)).perform(click());
-
-        //intended(toPackage(packageName));
-
-        Intents.release();
+    public void defaultFragmentIsMealList() {
+        //onView(withId(R.id.fragmentContainerView)).has
+    }
+    @Test
+    public void homeButtonLoadsMealList(){
+        onView(withId((R.id.navBarHome))).perform(click());
 
     }
+    @Test
+    public void accountButtonLoadsAccountPage(){
+        onView(withId((R.id.navBarAccount))).perform(click());
+
+    }
+
+    @Test
+    public void messagesButtonLoadsMessages(){
+        onView(withId((R.id.navBarMessages))).perform(click());
+
+    }
+
 
 
 

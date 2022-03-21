@@ -1,5 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.fragments;
 
+import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.*;
 
 import androidx.fragment.app.testing.FragmentScenario;
@@ -14,20 +15,22 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.*;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ProfileEditingActivity;
 
 import java.util.Arrays;
 
 @RunWith(AndroidJUnit4.class)
 public class AccountFragmentTest {
 
-    private final String PACKAGENAME = "com.epfl.neighborfood.neighborfoodandroid";
     private FragmentScenario controller;
     @Before
     public void setUp() throws Exception {
@@ -37,15 +40,12 @@ public class AccountFragmentTest {
     }
     @Test
     public void opensProfile(){
+        Intent intent ;
         controller.onFragment(fragment -> {
             fragment.getActivity().findViewById(R.id.profilePageButton).callOnClick();
         });
-        onView(withId(R.id.profilePageButton)).perform(click());
-        intended(toPackage(PACKAGENAME));
-    }
-    @Test
-    public void onCreate() {
-        controller.onFragment(fragment -> fragment.onCreate(Bundle.EMPTY));
+
+        intending(allOf(toPackage(ProfileEditingActivity.class.getName())));
     }
     @After
     public void tearDown() throws Exception {
