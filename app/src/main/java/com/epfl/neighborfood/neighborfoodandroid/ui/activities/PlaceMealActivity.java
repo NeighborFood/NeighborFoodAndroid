@@ -132,7 +132,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        dateText.setText( dayOfMonth +"/"+ month +"/"+ year, TextView.BufferType.EDITABLE) ;
+        dateText.setText( dayOfMonth +"/"+ (month+1) +"/"+ year, TextView.BufferType.EDITABLE) ;
     }
 
     //getters
