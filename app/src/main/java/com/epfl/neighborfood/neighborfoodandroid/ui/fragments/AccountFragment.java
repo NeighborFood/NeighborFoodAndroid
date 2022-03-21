@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ProfileEditingActivity;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.SignUpActivity;
 
 public class AccountFragment extends Fragment {
     public AccountFragment(){
@@ -22,6 +23,10 @@ public class AccountFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getView().findViewById(R.id.profilePageButton).setOnClickListener((View v)->{
             Intent intent = new Intent(getActivity(),ProfileEditingActivity.class);
+            startActivity(intent);        
+        });
+        getView().findViewById(R.id.logoutButton).setOnClickListener((View v) -> {
+            Intent intent = new Intent(getActivity(), SignUpActivity.class);
             startActivity(intent);
         });
     }

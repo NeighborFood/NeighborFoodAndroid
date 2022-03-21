@@ -32,6 +32,12 @@
     <string name="meal_picture" />
     <string name="add_picture_button" />
     <string name="propose_meal">Propose meal</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="messages">Messages</string>
+    <string name="welcome_to_neighborfood">Welcome to NeighborFood</string>
+    <string name="log_out">Log Out</string>
+    <string name="start">Start</string>
+    <string name="textview">TextView</string>
 </resources>

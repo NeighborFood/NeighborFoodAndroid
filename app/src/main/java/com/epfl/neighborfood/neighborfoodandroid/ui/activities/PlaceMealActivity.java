@@ -3,27 +3,42 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
-public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener {
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener,DatePickerDialog.OnDateSetListener {
     private static final int RESULT_LOAD_IMAGE = 1;
     ImageView imageToUpload;
+    Map<ImageView,String> allergensIcons;
     Button confirmationButton;
-    ImageButton addImageButton;
-    EditText allergensText, descriptionText, priceText,mealNameText;
-    String allergens,description, price, mealName;
+    ImageButton addImageButton,calendarButton;
+    List<String> allergensInMeal,allergens;
+    EditText descriptionText, priceText,mealNameText,dateText,timeText;
+    private String description, price, mealName, time, date;
     Toolbar toolbar;
     Uri mealImage,image;
     @Override
@@ -35,28 +50,72 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         imageToUpload = findViewById(R.id.imageToUpload);
         confirmationButton = findViewById(R.id.ConfirmationButton);
         addImageButton = findViewById(R.id.addPictureButton);
-        allergensText = findViewById(R.id.textAllergens);
+
+        allergensInMeal = new ArrayList<String>();
+        allergensIcons = new HashMap<ImageView,String>();
+        allergensIcons.put(findViewById(R.id.CeleryIcon),"celery");
+        allergensIcons.put(findViewById(R.id.MilkIcon),"milk");
+        allergensIcons.put(findViewById(R.id.FishIcon),"fish");
+        allergensIcons.put(findViewById(R.id.CheeseIcon),"cheese");
+        allergensIcons.put(findViewById(R.id.GlutenIcon),"gluten");
+        allergensIcons.put(findViewById(R.id.HoneyIcon),"honey");
+        allergensIcons.put(findViewById(R.id.LobsterIcon),"Lobster");
+        allergensIcons.put(findViewById(R.id.SoyIcon),"Soy");
+        allergensIcons.put(findViewById(R.id.EggsIcon),"Eggs");
+        allergensIcons.put(findViewById(R.id.ChocolateIcon),"Chocolate");
+
         descriptionText = findViewById(R.id.textDesciption);
         priceText = findViewById(R.id.textPrice);
         mealNameText = findViewById(R.id.textMealName);
+        calendarButton = findViewById(R.id.CalendarButton);
+        dateText = findViewById(R.id.DateText);
+        timeText = findViewById(R.id.TimeText);
+        //listeners
+        for(ImageView icon:allergensIcons.keySet()){
+           icon.setOnClickListener(this);
+        }
+        calendarButton.setOnClickListener(this);
+        addImageButton.setOnClickListener(this);
+        confirmationButton.setOnClickListener(this);
 
-       addImageButton.setOnClickListener(this);
-       confirmationButton.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
+         if (allergensIcons.keySet().contains(v)){
+            String allergenName = allergensIcons.get(v);
+            if (allergensInMeal.contains(allergensIcons.get(v))) {
+                allergensInMeal.remove(allergenName);
+                v.setBackgroundColor(0xFFFFFF);
+            }
+            else{
+                allergensInMeal.add(allergenName);
+                v.setBackgroundColor(0x666BEC70);
+            }
+        }
         switch(v.getId()){
             case R.id.addPictureButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent,RESULT_LOAD_IMAGE);
                 break;
             case R.id.ConfirmationButton:
-                Toast.makeText(this, "Congrats! Your meal has been uploaded", Toast.LENGTH_LONG).show();
-                allergens= String.valueOf(allergensText.getText());
+                allergens= new ArrayList<>(allergensInMeal);
                 description= String.valueOf(descriptionText.getText());
                 price= String.valueOf(priceText.getText());
                 mealName= String.valueOf(mealNameText.getText());
+                time = String.valueOf(timeText.getText());
+                date = String.valueOf(dateText.getText());
                 mealImage = image;
+                Toast.makeText(this, "allergens are: "+ Arrays.toString(allergens.toArray()), Toast.LENGTH_LONG).show();
+                break;
+            case R.id.CalendarButton:
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        this,
+                        this,
+                        Calendar.getInstance().get(Calendar.YEAR),
+                        Calendar.getInstance().get(Calendar.MONTH),
+                        Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+                );
+                datePickerDialog.show();
                 break;
         }
     }
@@ -69,5 +128,30 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
             imageToUpload.setImageURI(image);
         }
 
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        dateText.setText( dayOfMonth +"/"+ month +"/"+ year, TextView.BufferType.EDITABLE) ;
+    }
+
+    //getters
+    public String getMealName(){
+        return mealName;
+    }
+    public String getMealDescription(){
+        return description;
+    }
+    public String getPrice(){
+        return price;
+    }
+    public String getDate(){
+        return date;
+    }
+    public String getTime(){
+        return time;
+    }
+    public List<String>getAllergens(){
+        return new ArrayList<>(allergens);
     }
 }

@@ -24,7 +24,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
         ppView.setOnClickListener(this::onClick);
     }
 
-    private void onClick(View v){
+    public void onClick(View v){
         switch(v.getId()){
             case R.id.profilePictureImageView:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
