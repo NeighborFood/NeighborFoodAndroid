@@ -15,6 +15,13 @@ public class Message extends Model{
         date = new Date();
     }
 
+    public Message(String messageText, User sender, User receiver, Date date) {
+        this.content = messageText;
+        this.sender = sender;
+        this.receiver = receiver;
+        this.date = date;
+    }
+
     public Message(){
     }
 
