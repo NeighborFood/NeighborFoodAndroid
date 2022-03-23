@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -29,10 +30,6 @@ import androidx.test.rule.GrantPermissionRule;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PlaceMealActivity;
-
-import org.hamcrest.Matcher;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -43,42 +40,15 @@ public class PlaceMealMenuTest {
     @Rule
     public GrantPermissionRule permissionRule = GrantPermissionRule.grant(Manifest.permission.READ_EXTERNAL_STORAGE);
 
-    private View decorView;
-
-    @Before
-    public void setUp(){
-        Intents.init();
-        testRule.getScenario().onActivity(new ActivityScenario.ActivityAction<PlaceMealActivity>() {
-            @Override
-            public void perform(PlaceMealActivity activity) {
-                decorView = activity.getWindow().getDecorView();
-            }
-        });
-    }
-    @After
-    public void cleanup() {
-        Intents.release();
-    }
-    /*
-     * Check if titles are visible.
-     */
-    @Test
-    public void titlesAreVisibleTest(){
-        onView(withId(R.id.MealNameTitle)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.MealDescriptionTitle)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.AllergensTitle)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.DateTitle)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.TimeTitle)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.MealNameTitle)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.MealNameTitle)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-    }
 
     /*
      * Check meal Name changes correctly
      */
     @Test
     public void changeMealNameTest(){
-        onView(withId(R.id.textMealName)).perform(typeText("pizza"));
+        onView(withId(R.id.textMealName))
+                .perform(ViewActions.scrollTo())
+                .perform(typeText("pizza"));
         onView((withId(R.id.textMealName))).check(matches(withText("pizza")));
     }
 
@@ -87,7 +57,9 @@ public class PlaceMealMenuTest {
      */
     @Test
     public void changeMealDescriptionTest(){
-        onView(withId(R.id.textDesciption)).perform(typeText("vegan pizza"));
+        onView(withId(R.id.textDesciption))
+                .perform(ViewActions.scrollTo())
+                .perform(typeText("vegan pizza"));
         onView((withId(R.id.textDesciption))).check(matches(withText("vegan pizza")));
     }
 
@@ -96,7 +68,9 @@ public class PlaceMealMenuTest {
      */
     @Test
     public void changePriceTest(){
-        onView(withId(R.id.textPrice)).perform(typeText("5"));
+        onView(withId(R.id.textPrice))
+                .perform(ViewActions.scrollTo())
+                .perform(typeText("5"));
         onView((withId(R.id.textPrice))).check(matches(withText("5")));
     }
 
@@ -105,7 +79,9 @@ public class PlaceMealMenuTest {
      */
     @Test
     public void changeTimeTest(){
-        onView(withId(R.id.TimeText)).perform(typeText("15:00"));
+        onView(withId(R.id.TimeText))
+                .perform(ViewActions.scrollTo())
+                .perform(typeText("15:00"));
         onView((withId(R.id.TimeText))).check(matches(withText("15:00")));
     }
     /*
