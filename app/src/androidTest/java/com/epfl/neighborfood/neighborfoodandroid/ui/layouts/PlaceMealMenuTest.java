@@ -3,6 +3,7 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.layouts;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
@@ -48,7 +49,7 @@ public class PlaceMealMenuTest {
     public void changeMealNameTest(){
         onView(withId(R.id.textMealName))
                 .perform(ViewActions.scrollTo())
-                .perform(typeText("pizza"));
+                .perform(typeText("pizza"),closeSoftKeyboard());
         onView((withId(R.id.textMealName))).check(matches(withText("pizza")));
     }
 
@@ -59,7 +60,7 @@ public class PlaceMealMenuTest {
     public void changeMealDescriptionTest(){
         onView(withId(R.id.textDesciption))
                 .perform(ViewActions.scrollTo())
-                .perform(typeText("vegan pizza"));
+                .perform(typeText("vegan pizza"),closeSoftKeyboard());
         onView((withId(R.id.textDesciption))).check(matches(withText("vegan pizza")));
     }
 
@@ -70,7 +71,7 @@ public class PlaceMealMenuTest {
     public void changePriceTest(){
         onView(withId(R.id.textPrice))
                 .perform(ViewActions.scrollTo())
-                .perform(typeText("5"));
+                .perform(typeText("5"),closeSoftKeyboard());
         onView((withId(R.id.textPrice))).check(matches(withText("5")));
     }
 
@@ -81,7 +82,7 @@ public class PlaceMealMenuTest {
     public void changeTimeTest(){
         onView(withId(R.id.TimeText))
                 .perform(ViewActions.scrollTo())
-                .perform(typeText("15:00"));
+                .perform(typeText("15:00"),closeSoftKeyboard());
         onView((withId(R.id.TimeText))).check(matches(withText("15:00")));
     }
     /*
@@ -91,7 +92,7 @@ public class PlaceMealMenuTest {
     public void changeDateManuallyTest(){
         onView(withId(R.id.DateText))
                 .perform(ViewActions.scrollTo())
-                .perform(typeText("21/03/2022"));
+                .perform(typeText("21/03/2022"),closeSoftKeyboard());
         onView((withId(R.id.DateText))).check(matches(withText("21/03/2022")));
     }
     /*
