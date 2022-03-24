@@ -33,14 +33,14 @@ import java.util.Map;
 public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener,DatePickerDialog.OnDateSetListener {
     private static final int RESULT_LOAD_IMAGE = 1;
     ImageView imageToUpload;
-    Map<ImageView,String> allergensIcons;
+    Map<ImageView, String> allergensIcons;
     Button confirmationButton;
-    ImageButton addImageButton,calendarButton;
-    List<String> allergensInMeal,allergens;
-    EditText descriptionText, priceText,mealNameText,dateText,timeText;
-    private String description, price, mealName, time, date;
+    ImageButton addImageButton, calendarButton;
+    List<String> allergensInMeal, allergens;
+    EditText descriptionText, priceText, mealNameText, dateText, timeText;
     Toolbar toolbar;
-    Uri mealImage,image;
+    Uri image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,17 +52,17 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         addImageButton = findViewById(R.id.addPictureButton);
 
         allergensInMeal = new ArrayList<String>();
-        allergensIcons = new HashMap<ImageView,String>();
-        allergensIcons.put(findViewById(R.id.CeleryIcon),"celery");
-        allergensIcons.put(findViewById(R.id.MilkIcon),"milk");
-        allergensIcons.put(findViewById(R.id.FishIcon),"fish");
-        allergensIcons.put(findViewById(R.id.CheeseIcon),"cheese");
-        allergensIcons.put(findViewById(R.id.GlutenIcon),"gluten");
-        allergensIcons.put(findViewById(R.id.HoneyIcon),"honey");
-        allergensIcons.put(findViewById(R.id.LobsterIcon),"Lobster");
-        allergensIcons.put(findViewById(R.id.SoyIcon),"Soy");
-        allergensIcons.put(findViewById(R.id.EggsIcon),"Eggs");
-        allergensIcons.put(findViewById(R.id.ChocolateIcon),"Chocolate");
+        allergensIcons = new HashMap<ImageView, String>();
+        allergensIcons.put(findViewById(R.id.CeleryIcon), "celery");
+        allergensIcons.put(findViewById(R.id.MilkIcon), "milk");
+        allergensIcons.put(findViewById(R.id.FishIcon), "fish");
+        allergensIcons.put(findViewById(R.id.CheeseIcon), "cheese");
+        allergensIcons.put(findViewById(R.id.GlutenIcon), "gluten");
+        allergensIcons.put(findViewById(R.id.HoneyIcon), "honey");
+        allergensIcons.put(findViewById(R.id.LobsterIcon), "Lobster");
+        allergensIcons.put(findViewById(R.id.SoyIcon), "Soy");
+        allergensIcons.put(findViewById(R.id.EggsIcon), "Eggs");
+        allergensIcons.put(findViewById(R.id.ChocolateIcon), "Chocolate");
 
         descriptionText = findViewById(R.id.textDesciption);
         priceText = findViewById(R.id.textPrice);
@@ -71,41 +71,45 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         dateText = findViewById(R.id.DateText);
         timeText = findViewById(R.id.TimeText);
         //listeners
-        for(ImageView icon:allergensIcons.keySet()){
-           icon.setOnClickListener(this);
+        for (ImageView icon : allergensIcons.keySet()) {
+            icon.setOnClickListener(this);
         }
         calendarButton.setOnClickListener(this);
         addImageButton.setOnClickListener(this);
         confirmationButton.setOnClickListener(this);
 
     }
+
     @Override
     public void onClick(View v) {
-         if (allergensIcons.keySet().contains(v)){
+        if (allergensIcons.keySet().contains(v)) {
             String allergenName = allergensIcons.get(v);
             if (allergensInMeal.contains(allergensIcons.get(v))) {
                 allergensInMeal.remove(allergenName);
                 v.setBackgroundColor(0xFFFFFF);
-            }
-            else{
+            } else {
                 allergensInMeal.add(allergenName);
                 v.setBackgroundColor(0x666BEC70);
             }
         }
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.addPictureButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent,RESULT_LOAD_IMAGE);
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 break;
             case R.id.ConfirmationButton:
-                allergens= new ArrayList<>(allergensInMeal);
-                description= String.valueOf(descriptionText.getText());
-                price= String.valueOf(priceText.getText());
-                mealName= String.valueOf(mealNameText.getText());
-                time = String.valueOf(timeText.getText());
-                date = String.valueOf(dateText.getText());
-                mealImage = image;
-                Toast.makeText(this, "allergens are: "+ Arrays.toString(allergens.toArray()), Toast.LENGTH_LONG).show();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("meal_name", String.valueOf(mealNameText.getText()));
+                i.putExtra("description", String.valueOf(descriptionText.getText()));
+                i.putExtra("price", String.valueOf(priceText.getText()));
+                i.putExtra("time", String.valueOf(priceText.getText()));
+                i.putExtra("date", String.valueOf(dateText.getText()));
+                i.putExtra("allergens", new ArrayList<>(allergensInMeal));
+                //***********************
+                //HERE the image should be put in extra for intent too
+                //mealImage = image;
+                //***********************
+                startActivity(i);
                 break;
             case R.id.CalendarButton:
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -123,7 +127,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode== RESULT_LOAD_IMAGE && resultCode ==RESULT_OK && data!= null){
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             image = data.getData();
             imageToUpload.setImageURI(image);
         }
@@ -132,26 +136,6 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        dateText.setText( dayOfMonth +"/"+ (month + 1) +"/"+ year, TextView.BufferType.EDITABLE) ;
-    }
-
-    //getters
-    public String getMealName(){
-        return mealName;
-    }
-    public String getMealDescription(){
-        return description;
-    }
-    public String getPrice(){
-        return price;
-    }
-    public String getDate(){
-        return date;
-    }
-    public String getTime(){
-        return time;
-    }
-    public List<String>getAllergens(){
-        return new ArrayList<>(allergens);
+        dateText.setText(dayOfMonth + "/" + (month + 1) + "/" + year, TextView.BufferType.EDITABLE);
     }
 }

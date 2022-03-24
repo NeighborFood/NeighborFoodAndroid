@@ -78,13 +78,14 @@ public class PlaceMealMenuTest {
     /*
      * Check Time changes correctly
      */
+    /*
     @Test
     public void changeTimeTest(){
         onView(withId(R.id.TimeText))
                 .perform(ViewActions.scrollTo())
                 .perform(typeText("15:00"),closeSoftKeyboard());
         onView((withId(R.id.TimeText))).check(matches(withText("15:00")));
-    }
+    }*/
     /*
      * Check Date changes correctly when done manually.
      */
