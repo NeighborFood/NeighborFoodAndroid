@@ -89,7 +89,9 @@ public class PlaceMealMenuTest {
      */
     @Test
     public void changeDateManuallyTest(){
-        onView(withId(R.id.DateText)).perform(typeText("21/03/2022"));
+        onView(withId(R.id.DateText))
+                .perform(ViewActions.scrollTo())
+                .perform(typeText("21/03/2022"));
         onView((withId(R.id.DateText))).check(matches(withText("21/03/2022")));
     }
     /*
@@ -97,9 +99,13 @@ public class PlaceMealMenuTest {
      */
     @Test
     public void changeDateByCalendarTest(){
-        onView(withId(R.id.CalendarButton)).perform(click());
+        onView(withId(R.id.CalendarButton))
+                .perform(ViewActions.scrollTo())
+                .perform(click());
         onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2022,11,11));
-        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(android.R.id.button1))
+                .perform(ViewActions.scrollTo())
+                .perform(click());
         onView((withId(R.id.DateText))).check(matches(withText("11/11/2022")));
 
     }
