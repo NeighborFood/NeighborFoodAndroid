@@ -21,9 +21,9 @@ public class AccountFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getView().findViewById(R.id.profilePageButton).setOnClickListener((View v) -> {
-            //Intent intent = new Intent(getActivity(),ProfileEditingActivity.class);
-            //startActivity(intent);
+        getView().findViewById(R.id.profilePageButton).setOnClickListener((View v)->{
+            Intent intent = new Intent(getActivity(),ProfileEditingActivity.class);
+            startActivity(intent);
         });
         getView().findViewById(R.id.logoutButton).setOnClickListener((View v) -> {
             Intent intent = new Intent(getActivity(), SignUpActivity.class);
