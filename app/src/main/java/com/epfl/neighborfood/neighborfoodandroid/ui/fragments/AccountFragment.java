@@ -23,7 +23,7 @@ public class AccountFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getView().findViewById(R.id.profilePageButton).setOnClickListener((View v)->{
             Intent intent = new Intent(getActivity(),ProfileEditingActivity.class);
-            startActivity(intent);        
+            startActivity(intent);
         });
         getView().findViewById(R.id.logoutButton).setOnClickListener((View v) -> {
             Intent intent = new Intent(getActivity(), SignUpActivity.class);

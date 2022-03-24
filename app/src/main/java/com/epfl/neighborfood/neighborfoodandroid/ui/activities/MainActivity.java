@@ -3,6 +3,7 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -30,13 +31,16 @@ public class MainActivity extends AppCompatActivity {
                 setCurrentFragment(MealListFragment.class);
                 return true;
             case R.id.navBarMessages:
-                Toast.makeText(this, "Not yet Implemented!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this,ConversationsActivity.class);
+                startActivity(intent);
+                //Toast.makeText(this, "Not yet Implemented!", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.navBarAccount:
                 setCurrentFragment(AccountFragment.class);
                 return true;
+            default:
+                return false;
         }
-        return false;
     }
     private void setCurrentFragment(Class fragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment,null)/*.addToBackStack(null)*/.commit();

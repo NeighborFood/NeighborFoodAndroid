@@ -15,7 +15,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:navigationIcon="?attr/homeAsUpIndicator"/>
+        app:navigationIcon="?attr/homeAsUpIndicator" />
 
     <ScrollView
         android:id="@+id/profileEditScrollView"
@@ -34,8 +34,8 @@
                 android:layout_marginTop="50dp"
                 android:clickable="true"
                 android:contentDescription="@string/user_profile_picture"
-                tools:srcCompat="@tools:sample/avatars"
-                android:focusable="true" />
+                android:focusable="true"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/nameLabel"
@@ -45,9 +45,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_toEndOf="@id/profilePictureImageView"
-                android:textSize="20sp"
+                android:text="@string/name"
                 android:textColor="#000000"
-                android:text="@string/name" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/nameValue"
@@ -57,8 +57,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_toEndOf="@id/profilePictureImageView"
-                android:text="@string/foulen"
-                />
+                android:text="@string/foulen" />
 
             <TextView
                 android:id="@+id/surnameLabel"
@@ -68,9 +67,10 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_toEndOf="@id/profilePictureImageView"
-                android:textSize="20sp"
+                android:text="@string/surname"
                 android:textColor="#000000"
-                android:text="@string/surname" />
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/surnameValue"
                 android:layout_width="match_parent"
@@ -80,6 +80,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_toEndOf="@id/profilePictureImageView"
                 android:text="Fouleni" />
+
             <TextView
                 android:id="@+id/usernameLabel"
                 android:layout_width="match_parent"
@@ -88,9 +89,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_toEndOf="@id/profilePictureImageView"
-                android:textSize="20sp"
+                android:text="@string/username"
                 android:textColor="#000000"
-                android:text="@string/username" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/usernameValue"
@@ -110,9 +111,9 @@
                 android:layout_below="@id/usernameValue"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:textSize="20sp"
+                android:text="@string/bio"
                 android:textColor="#000000"
-                android:text="@string/bio" />
+                android:textSize="20sp" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/bioValue"
@@ -131,8 +132,8 @@
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
         android:onClick="onClick"
-
         android:text="@string/save" />
 
 
