@@ -4,7 +4,8 @@
 
 
 ## Elior
-
+I added tests for the Meal List implementation. I struggled with the configuration of Cirrus to take into account the unit tests.
+I dedicated more time than the previous weeks but I am still struggling with writting tests. 
 
 ## Khalil
 
