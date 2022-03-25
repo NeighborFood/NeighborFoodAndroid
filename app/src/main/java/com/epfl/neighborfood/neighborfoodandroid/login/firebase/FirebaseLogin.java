@@ -32,7 +32,7 @@ public class FirebaseLogin {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     FirebaseUser user = mAuth.getCurrentUser();
-                    signUpActivity.updateUI(new LoggedInUser((user)));
+                    signUpActivity.updateUI(LoggedInUser.createLoggedInInUserFromFirebaseUser((user)));
                 }
             }
         });

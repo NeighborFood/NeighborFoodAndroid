@@ -18,15 +18,13 @@ public class LoggedInUser {
      * create a LoggedInUser instance from a FirebaseUser
      * @param firebaseUser(FirebaseUser)
      */
-    public LoggedInUser(FirebaseUser firebaseUser) {
-       name = firebaseUser.getDisplayName();
-       email = firebaseUser.getEmail();
+    public static LoggedInUser createLoggedInInUserFromFirebaseUser(FirebaseUser firebaseUser) {
+        if(firebaseUser == null) {
+            return null;
+        }
+        return new LoggedInUser(firebaseUser.getDisplayName(), firebaseUser.getEmail());
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    
 
     @Override
     public String toString() {

@@ -17,7 +17,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.login.LoggedInUser;
+import com.epfl.neighborfood.neighborfoodandroid.login.googleLogin.GoogleAccount;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.SignUpActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -147,6 +151,30 @@ public class SignUpActivityTest {
         onView(withId(R.id.guide_textView)).check(matches(withText("Welcome: "+ fakeLoggedInUser.toString()+". Click start to discover the daily meals")));
     }
 
+    /**
+     * Checks if a sign in intent is fired when the sign in button is used
+     */
+    @Test
+    public void intentFiredWhenStartClicked(){
+        updateUIWithFakeLoggedInUser();
+        Intents.init();
+        onView(withId(R.id.start_button)).perform(click());
+        intended(toPackage("com.epfl.neighborfood.neighborfoodandroid"));
+        Intents.release();
+    }
+
+    /**
+     * Checks finalizeLogin WorksWithDefaultCred
+     */
+    @Test
+    public void finalizeLoginTest(){
+        testRule.getScenario().onActivity(activity -> {
+            AuthCredential authCredential = GoogleAuthProvider.getCredential("2022", null);
+            GoogleAccount googleAccount = new GoogleAccount(GoogleSignInAccount.createDefault());
+            activity.finalizeLoginWithFirebase(authCredential);
+        });
+    }
+
 
     /**
      * Checks that when the log out button is pressed (when a user is logged in) we go back to the state of no user is logged in
@@ -162,6 +190,8 @@ public class SignUpActivityTest {
         onView(withId(R.id.start_button)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
 
     }
+
+
 
 
 

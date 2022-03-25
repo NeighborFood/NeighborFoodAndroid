@@ -14,9 +14,12 @@ import com.epfl.neighborfood.neighborfoodandroid.login.LoggedInUser;
 import com.epfl.neighborfood.neighborfoodandroid.login.LoginModel;
 import com.epfl.neighborfood.neighborfoodandroid.login.googleLogin.GoogleAccount;
 import com.epfl.neighborfood.neighborfoodandroid.login.googleLogin.GoogleLoginModel;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.SignInButton;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseUser;
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -63,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = loginModel.getFirebaseLogin().getCurrentUser();
-        LoggedInUser loggedInUser = currentUser != null ? new LoggedInUser(currentUser) : null;
+        LoggedInUser loggedInUser =  LoggedInUser.createLoggedInInUserFromFirebaseUser(currentUser);
         updateUI(loggedInUser);
     }
 
@@ -72,8 +75,12 @@ public class SignUpActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Account account = loginModel.getLoginHandler().handleOnLoginIntentResult(requestCode, data);
-        loginModel.getFirebaseLogin().loginWithCredential(((GoogleAccount)account).getAccountCredential(),this);
+        finalizeLoginWithFirebase(((GoogleAccount)account).getAccountCredential());
 
+    }
+
+    public void finalizeLoginWithFirebase(AuthCredential authCredential){
+        loginModel.getFirebaseLogin().loginWithCredential(authCredential, this);
     }
 
     /**

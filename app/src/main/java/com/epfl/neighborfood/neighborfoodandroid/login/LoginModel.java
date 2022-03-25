@@ -32,36 +32,12 @@ public class LoginModel {
         firebaseLogin.signOut();
     }
 
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public Login getLogin() {
-        return login;
-    }
-
-    public void setLogin(Login login) {
-        this.login = login;
-    }
-
     public LoginHandler getLoginHandler() {
         return loginHandler;
-    }
-
-    public void setLoginHandler(LoginHandler loginHandler) {
-        this.loginHandler = loginHandler;
     }
 
     public FirebaseLogin getFirebaseLogin() {
         return firebaseLogin;
     }
 
-    public void setFirebaseLogin(FirebaseLogin firebaseLogin) {
-        this.firebaseLogin = firebaseLogin;
-    }
 }
