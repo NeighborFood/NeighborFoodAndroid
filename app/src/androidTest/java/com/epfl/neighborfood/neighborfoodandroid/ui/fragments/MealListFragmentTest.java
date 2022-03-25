@@ -40,12 +40,6 @@ public class MealListFragmentTest {
         onData(anything()).inAdapterView(withId(R.id.mealListView)).atPosition(0).perform(click());
     }
 
-    // Can remove when removing the corresponding button
-    @Test
-    public void testClickMessages() {
-        //onView(withId(R.id.messagesButton)).perform(click());
-    }
-
 
 
     @After
