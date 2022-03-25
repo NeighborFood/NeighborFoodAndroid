@@ -156,15 +156,17 @@ public class SignUpActivityTest {
         onView(withId(R.id.guide_textView)).check(matches(withText("Welcome: "+ fakeLoggedInUser.toString()+". Click start to discover the daily meals")));
     }
 
+
     /**
      * Checks if a sign in intent is fired when the sign in button is used
      */
+    /*
     @Test
     public void intentFiredWhenStartClicked(){
         updateUIWithFakeLoggedInUser();
         onView(withId(R.id.start_button)).perform(click());
         intended(toPackage("com.epfl.neighborfood.neighborfoodandroid"));
-    }
+    }*/
 
     /**
      * Checks finalizeLogin WorksWithDefaultCred
