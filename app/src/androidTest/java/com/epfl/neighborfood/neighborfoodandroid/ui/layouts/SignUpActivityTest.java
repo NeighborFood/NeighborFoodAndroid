@@ -23,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,12 +42,18 @@ public class SignUpActivityTest {
      * Makes sure that we are logged out before the start of every test
      */
     @Before
-    public void logOut(){
+    public void logOutAndSetUp(){
         testRule.getScenario().onActivity(activity -> {
             activity.signOut();
                 });
-
+        Intents.init();
     }
+
+    @After
+    public void cleanUp(){
+        Intents.release();
+    }
+
 
     /**
      * Checks if the button responsible to log in is visible when no user is logged in
@@ -84,10 +91,8 @@ public class SignUpActivityTest {
      */
     @Test
     public void intentFiredWhenSignInButtonClicked(){
-        Intents.init();
         onView(withId(R.id.sign_in_button)).perform(click());
         intended(toPackage("com.epfl.neighborfood.neighborfoodandroid"));
-        Intents.release();
     }
 
     /**
@@ -157,10 +162,8 @@ public class SignUpActivityTest {
     @Test
     public void intentFiredWhenStartClicked(){
         updateUIWithFakeLoggedInUser();
-        Intents.init();
         onView(withId(R.id.start_button)).perform(click());
         intended(toPackage("com.epfl.neighborfood.neighborfoodandroid"));
-        Intents.release();
     }
 
     /**
