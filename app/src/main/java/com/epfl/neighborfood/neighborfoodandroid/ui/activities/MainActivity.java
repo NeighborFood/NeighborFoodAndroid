@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.AccountFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
+import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.VendorDashboardFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (it.getItemId()) {
             case R.id.navBarHome:
-                setCurrentFragment(MealListFragment.class);
+                setCurrentFragment(VendorDashboardFragment.class);
                 return true;
             case R.id.navBarMessages:
                 Intent intent = new Intent(this,ConversationsActivity.class);
