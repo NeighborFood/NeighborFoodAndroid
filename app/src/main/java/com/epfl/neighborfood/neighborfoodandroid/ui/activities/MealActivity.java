@@ -25,13 +25,7 @@ public class MealActivity extends AppCompatActivity {
         binding = ActivityMealBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ArrayList<Allergen> allergens = new ArrayList<>();
-        allergens.add(Allergen.EGGS);
-        allergens.add(Allergen.HONEY);
-        allergens.add(Allergen.GLUTEN);
-        allergens.add(Allergen.LOBSTER);
-        AllergensAdapter allergensAdapter = new AllergensAdapter(this, allergens);
-        binding.allergensMeal.setAdapter(allergensAdapter);
+
 
 
         Intent intent = this.getIntent();
@@ -42,6 +36,14 @@ public class MealActivity extends AppCompatActivity {
             String shortDes = intent.getStringExtra("shortDes");
             String longDes = intent.getStringExtra("longDes");
             int imageId = intent.getIntExtra("imageid", R.drawable.paella);
+
+            // TODO adapt to get the correct allergens when the database will be setup
+            ArrayList<Allergen> allergens = new ArrayList<>();
+            allergens.add(Allergen.CELERY);
+            allergens.add(Allergen.CHEESE);
+            allergens.add(Allergen.GLUTEN);
+            AllergensAdapter allergensAdapter = new AllergensAdapter(this, allergens);
+            binding.allergensMeal.setAdapter(allergensAdapter);
 
             binding.mealImage.setImageResource(imageId);
             binding.mealName.setText(name);
