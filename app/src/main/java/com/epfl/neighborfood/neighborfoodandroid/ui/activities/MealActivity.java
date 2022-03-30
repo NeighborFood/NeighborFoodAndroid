@@ -36,11 +36,5 @@ public class MealActivity extends AppCompatActivity {
         }
 
     }
-    /* TODO
-    public void goToOrderMealActivity(View view){
-        Intent intent = new Intent(this, OrderMealActivity.class);
-        startActivity(intent);
-    }
 
-    */
 }
