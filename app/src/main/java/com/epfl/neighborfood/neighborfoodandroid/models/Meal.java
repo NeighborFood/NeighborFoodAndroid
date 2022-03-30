@@ -1,10 +1,14 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Meal {
-    private String name, shortDescription, longDescription, allergens;
+    private String name, shortDescription, longDescription;
     private double price;
     private int imageId;
+    private List<Allergen> allergens;
 
 
     public Meal(String name, String shortDescription, String longDescription, int imageId) {
@@ -14,12 +18,12 @@ public class Meal {
         this.imageId = imageId;
     }
 
-    public Meal(String name, String shortDescription, String longDescription, int imageId, String allergens, double price) {
+    public Meal(String name, String shortDescription, String longDescription, int imageId, List<Allergen> allergens, double price) {
         this.name = name;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
         this.imageId = imageId;
-        this.allergens = allergens;
+        this.allergens = new ArrayList<>(allergens);
         this.price = price;
     }
 
@@ -35,7 +39,7 @@ public class Meal {
         return longDescription;
     }
 
-    public String getAllergens() { return allergens; }
+    public List<Allergen> getAllergens() { return allergens; }
 
     public double getPrice() {  return price; }
 
