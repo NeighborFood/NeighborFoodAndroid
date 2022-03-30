@@ -6,9 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.adapters.AllergensAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityMealBinding;
+import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
+
+import java.util.ArrayList;
 
 public class MealActivity extends AppCompatActivity {
 
@@ -19,6 +24,15 @@ public class MealActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMealBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        ArrayList<Allergen> allergens = new ArrayList<>();
+        allergens.add(Allergen.EGGS);
+        allergens.add(Allergen.HONEY);
+        allergens.add(Allergen.GLUTEN);
+        allergens.add(Allergen.LOBSTER);
+        AllergensAdapter allergensAdapter = new AllergensAdapter(this, allergens);
+        binding.allergensMeal.setAdapter(allergensAdapter);
+
 
         Intent intent = this.getIntent();
 

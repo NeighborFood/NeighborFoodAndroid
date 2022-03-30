@@ -14,10 +14,10 @@ public enum Allergen {
     EGGS (R.drawable.eggs, "Eggs"),
     CHOCOLATE (R.drawable.chocolate, "Chocolate");
 
-    private final Object idIcon;   // in kilograms
+    private final int idIcon;   // in kilograms
     private final String label; // in meters
 
-    public Object getId() {
+    public int getId() {
         return idIcon;
     }
 
@@ -25,7 +25,7 @@ public enum Allergen {
         return label;
     }
 
-    Allergen(Object id, String label) {
+    Allergen(int id, String label) {
         this.idIcon = id;
         this.label = label;
     }
