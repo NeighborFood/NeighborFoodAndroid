@@ -3,22 +3,22 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
 public enum Allergen {
-    CELERY (R.id.CeleryIcon, "celery"),
-    MILK (R.id.MilkIcon, "milk"),
-    FISH (R.id.FishIcon, "fish"),
-    CHEESE (R.id.CheeseIcon, "cheese"),
-    GLUTEN (R.id.GlutenIcon, "gluten"),
-    HONEY (R.id.HoneyIcon, "honey"),
-    LOBSTER (R.id.LobsterIcon, "Lobster"),
-    SOY (R.id.SoyIcon, "Soy"),
-    EGGS (R.id.EggsIcon, "Eggs"),
-    CHOCOLATE (R.id.ChocolateIcon, "Chocolate");
+    CELERY (R.drawable.celery, "celery"),
+    MILK (R.drawable.milk, "milk"),
+    FISH (R.drawable.fish, "fish"),
+    CHEESE (R.drawable.cheese, "cheese"),
+    GLUTEN (R.drawable.gluten, "gluten"),
+    HONEY (R.drawable.honey, "honey"),
+    LOBSTER (R.drawable.lobster, "Lobster"),
+    SOY (R.drawable.soy, "Soy"),
+    EGGS (R.drawable.eggs, "Eggs"),
+    CHOCOLATE (R.drawable.chocolate, "Chocolate");
 
-    private final Object id;   // in kilograms
+    private final Object idIcon;   // in kilograms
     private final String label; // in meters
 
     public Object getId() {
-        return id;
+        return idIcon;
     }
 
     public String getLabel() {
@@ -26,7 +26,7 @@ public enum Allergen {
     }
 
     Allergen(Object id, String label) {
-        this.id = id;
+        this.idIcon = id;
         this.label = label;
     }
 
