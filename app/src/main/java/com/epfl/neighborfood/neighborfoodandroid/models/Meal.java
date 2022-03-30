@@ -23,7 +23,7 @@ public class Meal {
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
         this.imageId = imageId;
-        this.allergens = new ArrayList<>(allergens);
+        this.allergens = allergens;
         this.price = price;
     }
 
