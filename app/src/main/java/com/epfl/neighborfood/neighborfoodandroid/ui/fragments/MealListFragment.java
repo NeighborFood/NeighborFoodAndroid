@@ -34,8 +34,6 @@ public class MealListFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        getView().findViewById(R.id.messagesButton).setOnClickListener(this::onClick);
-
         int[] imageId = {R.drawable.poulet, R.drawable.couscous, R.drawable.paella,
                 R.drawable.fondue, R.drawable.salade, R.drawable.soupe, R.drawable.tarte};
 
@@ -87,13 +85,5 @@ public class MealListFragment extends Fragment {
         });
     }
 
-    public void onClick(View v) {
-        Intent intent = null;
-        switch (v.getId()) {
-            case R.id.messagesButton:
-                intent = new Intent(getActivity(), ChatRoomActivity.class);
-        }
-        startActivity(intent);
-    }
 
 }
