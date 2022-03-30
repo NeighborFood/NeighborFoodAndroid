@@ -41,7 +41,7 @@
                 android:layout_marginBottom="30dp"
                 android:text="TextView"/>
 
-            <GridView
+            <ListView
                 android:id="@+id/allergensMeal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
