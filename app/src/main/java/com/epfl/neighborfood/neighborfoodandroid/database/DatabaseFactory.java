@@ -1,24 +1,25 @@
 package com.epfl.neighborfood.neighborfoodandroid.database;
 
 
+import com.epfl.neighborfood.neighborfoodandroid.database.firebase.FirebaseDB;
+
 public class DatabaseFactory {
 
-    private static Database dependency = DummyDatabase.getInstance();
+    private static TentativeDB dependency;
 
 
     /**
      * Gets the authenticator instance currently used
      * @return authenticator
      */
-    public static Database getDependency() {
+    public static TentativeDB getDependency() {
         return dependency;
     }
 
     /**
      * Sets the authenticator instance to be used
-     * @param authenticator authenticator
      */
-    public static void setDependency(Database authenticator) {
-        dependency = authenticator;
+    public static void setDependency(TentativeDB dep) {
+        dependency = dep;
     }
 }
