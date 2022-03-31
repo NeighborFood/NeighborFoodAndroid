@@ -96,7 +96,7 @@
         app:layout_constraintVertical_bias="0.046" />
 
     <TextView
-        android:id="@+id/rateId"
+        android:id="@+id/rateID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/_4_7"
@@ -120,11 +120,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.246"
         app:layout_constraintStart_toEndOf="@+id/StarId"
-        app:layout_constraintTop_toTopOf="@+id/rateId"
+        app:layout_constraintTop_toTopOf="@+id/rateID"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/nbrMealsId"
+        android:id="@+id/likesId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/_61"
@@ -134,7 +134,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.394"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/rateId"
+        app:layout_constraintTop_toTopOf="@+id/rateID"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -146,8 +146,8 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/StarId"
-        app:layout_constraintStart_toStartOf="@+id/rateId"
-        app:layout_constraintTop_toBottomOf="@+id/rateId"
+        app:layout_constraintStart_toStartOf="@+id/rateID"
+        app:layout_constraintTop_toBottomOf="@+id/rateID"
         app:layout_constraintVertical_bias="0.002" />
 
     <TextView
@@ -194,8 +194,8 @@
         android:textColor="#535353"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView5"
-        app:layout_constraintStart_toStartOf="@+id/nbrMealsId"
-        app:layout_constraintTop_toBottomOf="@+id/nbrMealsId" />
+        app:layout_constraintStart_toStartOf="@+id/likesId"
+        app:layout_constraintTop_toBottomOf="@+id/likesId" />
 
     <ImageView
         android:id="@+id/StarId"
@@ -203,8 +203,8 @@
         android:layout_height="27dp"
         android:layout_marginStart="4dp"
         android:contentDescription="@string/star"
-        app:layout_constraintStart_toEndOf="@+id/rateId"
-        app:layout_constraintTop_toTopOf="@+id/rateId"
+        app:layout_constraintStart_toEndOf="@+id/rateID"
+        app:layout_constraintTop_toTopOf="@+id/rateID"
         app:srcCompat="@android:drawable/btn_star_big_on"
         tools:ignore="ImageContrastCheck" />
 
@@ -285,8 +285,8 @@
         android:layout_width="25dp"
         android:layout_height="27dp"
         android:contentDescription="@string/meals"
-        app:layout_constraintStart_toEndOf="@+id/nbrMealsId"
-        app:layout_constraintTop_toTopOf="@+id/nbrMealsId"
+        app:layout_constraintStart_toEndOf="@+id/likesId"
+        app:layout_constraintTop_toTopOf="@+id/likesId"
         app:srcCompat="@drawable/meal_icon"
         tools:ignore="ImageContrastCheck" />
 
@@ -319,7 +319,7 @@
         app:layout_constraintVertical_bias="0.462" />
 
     <TextView
-        android:id="@+id/bioId"
+        android:id="@+id/bioValue2"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
