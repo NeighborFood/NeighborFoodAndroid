@@ -30,20 +30,24 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
             case R.id.SubscribeId:
                 if(!subscribed){
                     subscribeButton.setImageResource(R.drawable.full_heart);
+                    subscribeButton.setTag(R.drawable.full_heart);
                     subscribed = true;
                 }
                 else{
                     subscribeButton.setImageResource(R.drawable.empty_heart);
+                    subscribeButton.setTag(R.drawable.empty_heart);
                     subscribed = false;
                 }
                 break;
             case R.id.notificationId:
                 if(!notifyOn){
                     notificationButton.setImageResource(R.drawable.full_notif);
+                    notificationButton.setTag(R.drawable.full_notif);
                     notifyOn = true;
                 }
                 else{
                     notificationButton.setImageResource(R.drawable.empty_notif);
+                    notificationButton.setTag(R.drawable.empty_notif);
                     notifyOn = false;
                 }
         }
