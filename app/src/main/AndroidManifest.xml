@@ -33,6 +33,9 @@
             android:name=".ui.activities.SignUpActivity"
             android:exported="true" />
         <activity
+            android:name=".ui.activities.VendorProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
