@@ -12,13 +12,20 @@ public class UserFirebaseImpl extends User {
      * @param firebaseUser(FirebaseUser)
      */
     public UserFirebaseImpl(com.google.firebase.auth.FirebaseUser firebaseUser) {
-        super(0,firebaseUser.getEmail(),firebaseUser.getDisplayName(),firebaseUser.getDisplayName());
+        super(firebaseUser.getUid(),firebaseUser.getEmail(),firebaseUser.getDisplayName(),firebaseUser.getDisplayName());
         this.firebaseUser = firebaseUser;
+        String[] nameLastName = getNameLastNameFromDisplayName(firebaseUser.getDisplayName());
+        setFirstName(nameLastName[0]);
+        setLastName(nameLastName[1]);
     }
 
-    public UserFirebaseImpl(String fakeName, String email) {
-        super(0,email,fakeName,fakeName);
+    private String[] getNameLastNameFromDisplayName(String str){
+        String[] res = new String[2];
+        String[] split = str.split(" ");
+        res[0] = split.length>0 ? split[0] : "";
+        res[1] = split.length>1 ? split[1] : "";
 
+        return res;
     }
 
     @Override

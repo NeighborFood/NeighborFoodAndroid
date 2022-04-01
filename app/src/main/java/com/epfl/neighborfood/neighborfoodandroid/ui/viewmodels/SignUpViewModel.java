@@ -1,13 +1,12 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels;
 
-import android.app.Activity;
 import android.content.Intent;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
-import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthAppRepository;
+import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
@@ -21,10 +20,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
 public class SignUpViewModel extends ViewModel {
-    private AuthAppRepository authRepo;
+    private AuthRepository authRepo;
     private LiveData<User> user;
     @Inject
-    SignUpViewModel(AuthAppRepository authRepo){
+    SignUpViewModel(AuthRepository authRepo){
         this.authRepo = authRepo;
     }
     public LiveData<User> getCurrentUser (){

@@ -48,7 +48,7 @@ public class ConversationListAdapter extends ArrayAdapter {
 
         if (last != null) {
             txt = last.getContent();
-            long currUserID = AuthenticatorFactory.getDependency().getCurrentUser().getId();
+            String currUserID = AuthenticatorFactory.getDependency().getCurrentUser().getId();
             if (last.getSender().getId() == currUserID) {
                 txt = "You : " + txt;
             }

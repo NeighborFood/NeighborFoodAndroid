@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
-import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthAppRepository;
+import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 import javax.inject.Inject;
@@ -13,10 +13,10 @@ import javax.inject.Inject;
 @HiltViewModel
 public class EditProfileViewModel extends ViewModel {
     MutableLiveData<User> currentUser ;
-    AuthAppRepository authRepo;
+    AuthRepository authRepo;
 
     @Inject
-    EditProfileViewModel (AuthAppRepository repository){
+    EditProfileViewModel (AuthRepository repository){
         authRepo = repository;
     }
     public LiveData<User> getCurrentUser(){

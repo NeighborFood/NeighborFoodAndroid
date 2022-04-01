@@ -11,10 +11,12 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static com.epfl.neighborfood.neighborfoodandroid.util.matchers.ImageHasDrawableMatcher.hasDrawable;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.AllOf.allOf;
+import static org.junit.Assert.assertTrue;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -32,6 +34,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.models.User;
+import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
+import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepositoryTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ProfileEditingActivity;
 
@@ -39,25 +44,37 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
+import javax.inject.Inject;
+
+import dagger.hilt.android.testing.HiltAndroidRule;
+import dagger.hilt.android.testing.HiltAndroidTest;
+
+//@RunWith(AndroidJUnit4.class)
+@HiltAndroidTest
 public class ProfileEditingActivityTest {
     public static final String KEY_IMAGE_DATA = "data";
 
-    @Rule
+
     public ActivityScenarioRule<ProfileEditingActivity> testRule = new ActivityScenarioRule<>(ProfileEditingActivity.class);
+    public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
+    @Rule public RuleChain rule = RuleChain.outerRule(hiltRule)
+            .around(testRule);
+    @Inject
+    AuthRepository authRepository;
 
     @Before
     public void setUp() throws Exception {
         Intents.init();
+        hiltRule.inject();
     }
     @Test
     public void buttonSaveTest(){
 
         onView(withId(R.id.saveButton)).perform(click());
-        assert testRule.getScenario().getState().equals(Lifecycle.State.DESTROYED);
-
+        assertTrue(testRule.getScenario().getState() == Lifecycle.State.DESTROYED);
 
     }
 
@@ -98,6 +115,13 @@ public class ProfileEditingActivityTest {
         Resources res = InstrumentationRegistry.getInstrumentation().getTargetContext().getResources();
         bundle.putParcelable(ProfileEditingActivity.KEY_IMAGE_DATA, BitmapFactory.decodeResource(res,R.drawable.ic_launcher_background));
         return new Instrumentation.ActivityResult(Activity.RESULT_OK,new Intent().putExtras(bundle));
+    }
+
+    @Test
+    public void uiReflectsUser(){
+        User c = new User("-1","zbiba@epfl.ch","Zbiba","Zabboub");
+        ((AuthRepositoryTestImplementation)authRepository).updateUser(c);
+        onView(withId(R.id.nameValue)).check(matches(withText(c.getFirstName())));
     }
     @After
     public void tearDown() throws Exception {

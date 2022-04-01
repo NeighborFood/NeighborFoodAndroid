@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
-import com.epfl.neighborfood.neighborfoodandroid.login.LoginModel;
-import com.epfl.neighborfood.neighborfoodandroid.login.googleLogin.GoogleLoginModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.SignUpViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -39,7 +37,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     // a request code for the sign in intent
     int RC_SIGN_IN = 1;
-    private LoginModel loginModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +47,6 @@ public class SignUpActivity extends AppCompatActivity {
         guideTextView = findViewById(R.id.guide_textView);
 
 
-        loginModel = new GoogleLoginModel(this);
 
         initSignInButton();
         initSignOutButton();

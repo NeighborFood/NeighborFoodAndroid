@@ -12,21 +12,21 @@ import com.epfl.neighborfood.neighborfoodandroid.models.UserFirebaseImpl;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseUser;
 
-public class AuthAppRepository {
+public abstract class AuthRepository {
 
-    private FirebaseAuthenticator authenticator;
-    private MutableLiveData<User> userLiveData;
-    private MutableLiveData<Boolean> loggedOutLiveData;
+    protected Authenticator authenticator;
+    protected MutableLiveData<User> userLiveData;
+    protected MutableLiveData<Boolean> loggedOutLiveData;
 
-    public AuthAppRepository() {
-        this.authenticator = new FirebaseAuthenticator();
+    public AuthRepository(Authenticator authenticator) {
         this.userLiveData = new MutableLiveData<>();
         this.loggedOutLiveData = new MutableLiveData<>();
-
+        this.authenticator = authenticator;
         if (authenticator.getCurrentUser() != null) {
             userLiveData.postValue(authenticator.getCurrentUser());
             loggedOutLiveData.postValue(false);
         }
+
     }
     public void logOut(){
         authenticator.logOut();
@@ -41,13 +41,6 @@ public class AuthAppRepository {
         return loggedOutLiveData;
     }
 
-    public void authenticateWithCredential(AuthCredential credential){
-        authenticator.autheticateWithCredential(credential).addOnCompleteListener(task->{
-            if(task.isSuccessful()){
-                userLiveData.postValue(authenticator.getCurrentUser());
-                loggedOutLiveData.postValue(false);
-            }
-        });
-    }
+    public abstract void authenticateWithCredential(AuthCredential credential);
 
 }

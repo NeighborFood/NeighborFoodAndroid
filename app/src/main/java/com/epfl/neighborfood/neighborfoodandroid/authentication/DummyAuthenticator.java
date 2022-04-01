@@ -10,7 +10,7 @@ public class DummyAuthenticator implements Authenticator{
     }
 
     public User getCurrentUser(){
-       return new User(-1,"me@epfl.ch","Me", "Notyou");
+       return new User("-1","me@epfl.ch","Me", "Notyou");
     }
 
     @Override
