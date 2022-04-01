@@ -24,7 +24,10 @@ public class MealActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMealBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        findViewById(R.id.button2).setOnClickListener((a)->{
+            Intent intent = new Intent(this,VendorProfileActivity.class);
+            startActivity(intent);
+        });
 
 
 
@@ -52,5 +55,6 @@ public class MealActivity extends AppCompatActivity {
         }
 
     }
+
 
 }

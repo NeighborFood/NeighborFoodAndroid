@@ -33,6 +33,12 @@
                 android:layout_marginBottom="12dp"
                 android:layout_marginTop="12dp"/>
 
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_picture" />
+
             <TextView
                 android:id="@+id/mealDesc"
                 android:layout_width="286dp"
@@ -52,6 +58,7 @@
                 android:layout_height="65dp"
                 android:layout_marginBottom="16dp"
                 android:text="Order Meal"/>
+
         </LinearLayout>
     </ScrollView>
 
