@@ -22,8 +22,9 @@ I will pay a particular attention to estimate in a more accurate maneer the time
 
 
 ## Raed
-
-
+I implemented the Vendor Profile Activity where you can see the meal's vendor profile with his picture/name/bio/past meals/links to social Media..
+I added a subscribe and notification buttons too in order to link them later to the database.And in this activity you can see details about vendor's rating and number of reviews and total meals posted.. that will be retrieved from the database later.
+I reviewed elior's work too.
 ## Slim (scrum master)
 
 
