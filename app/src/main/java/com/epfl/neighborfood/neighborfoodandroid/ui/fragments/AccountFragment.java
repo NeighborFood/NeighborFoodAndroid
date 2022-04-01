@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PlaceMealActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ProfileEditingActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.SignUpActivity;
 
@@ -27,6 +28,10 @@ public class AccountFragment extends Fragment {
         });
         getView().findViewById(R.id.logoutButton).setOnClickListener((View v) -> {
             Intent intent = new Intent(getActivity(), SignUpActivity.class);
+            startActivity(intent);
+        });
+        getView().findViewById(R.id.button7).setOnClickListener(a->{
+            Intent intent = new Intent(getActivity(), PlaceMealActivity.class);
             startActivity(intent);
         });
     }

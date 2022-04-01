@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.epfl.neighborfood.neighborfoodandroid">
-
+    package="com.epfl.neighborfood.neighborfoodandroid" >
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -10,19 +10,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NeighborFood.NoActionBar">
-        <activity
-            android:name=".ui.activities.OrderHistoryActivity"
-            android:exported="false" />
+        android:theme="@style/Theme.NeighborFood.NoActionBar"
+        android:name=".NeighborFoodApplication">
+
         <activity
             android:name=".ui.activities.ProfileEditingActivity"
-            android:exported="false"
-            android:label="Edit Profile" />
+            android:label="Edit Profile"
+            android:exported="false" />
         <activity android:name=".ui.activities.DisplayMessageActivity" />
         <activity
             android:name=".ui.activities.PlaceMealActivity"
             android:exported="true"
-            android:label="Add a meal" />
+            android:label="Add a meal"/>
         <activity
             android:name=".ui.activities.ConversationsActivity"
             android:exported="true" />
@@ -30,13 +29,20 @@
             android:name=".ui.activities.MealActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.activities.OrderHistoryActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.activities.ChatRoomActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.SignUpActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activities.MainActivity"
+          android:name=".ui.activities.VendorProfileActivity"
+          android:exported="true" />
+        <activity
+            android:name=".ui.activities.SignUpActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,5 +51,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

@@ -32,6 +32,7 @@
     <string name="meal_picture" />
     <string name="add_picture_button" />
     <string name="propose_meal">Propose meal</string>
+    <string name="server_client_id">743325402792-a1337fr4929vml06r8pkrtaasubvpusp.apps.googleusercontent.com</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
@@ -40,4 +41,19 @@
     <string name="log_out">Log Out</string>
     <string name="start">Start</string>
     <string name="textview">TextView</string>
+    <string name="likes">Likes</string>
+    <string name="meals">meals</string>
+    <string name="heart">heart</string>
+    <string name="_50_reviews">50 reviews</string>
+    <string name="_61">61</string>
+    <string name="_103">103</string>
+    <string name="mr_fish">Mr.Fish</string>
+    <string name="_4_7">4.7</string>
+    <string name="star">star</string>
+    <string name="facebookicon">facebookIcon</string>
+    <string name="subscribe">subscribe</string>
+    <string name="notify_me">notify me</string>
+    <string name="past_meals">Past_meals</string>
+    <string name="meal1">Meal1</string>
+    <string name="sdp_fan">SDP fan</string>
 </resources>

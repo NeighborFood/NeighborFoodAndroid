@@ -1,15 +1,16 @@
 package com.epfl.neighborfood.neighborfoodandroid.login.firebase;
 
+import android.app.Activity;
+
 import androidx.annotation.NonNull;
 
-import com.epfl.neighborfood.neighborfoodandroid.login.LoggedInUser;
+import com.epfl.neighborfood.neighborfoodandroid.models.UserFirebaseImpl;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.SignUpActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
 public class FirebaseLogin {
@@ -24,15 +25,14 @@ public class FirebaseLogin {
     /**
      * login into the firebase using the authenticator and the authentication credential
      * @param authCredential(AuthCredential): the authentication credential (in Google signIn case they can be extracted from the GoogleSignInAccount)
-     * @param signUpActivity(SignUpActivity): the login activity
      */
-    public void loginWithCredential(AuthCredential authCredential, SignUpActivity signUpActivity) {
-        mAuth.signInWithCredential(authCredential).addOnCompleteListener(signUpActivity, new OnCompleteListener<AuthResult>() {
+    public void loginWithCredential(AuthCredential authCredential) {
+        mAuth.signInWithCredential(authCredential).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    signUpActivity.updateUI(new LoggedInUser((user)));
+                    com.google.firebase.auth.FirebaseUser user = mAuth.getCurrentUser();
+
                 }
             }
         });
@@ -48,7 +48,7 @@ public class FirebaseLogin {
     /**
      * @return the current authenticated user into the firebase authenticator
      */
-    public FirebaseUser getCurrentUser(){
+    public com.google.firebase.auth.FirebaseUser getCurrentUser(){
         return mAuth.getCurrentUser();
     }
 
