@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MealActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
