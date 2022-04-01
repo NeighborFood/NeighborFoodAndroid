@@ -46,6 +46,7 @@
         <entry key="app/src/main/res/layout/activity_profile_editing.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_conversations.xml" value="0.21422101449275363" />
+        <entry key="app/src/main/res/layout/fragment_meal_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_item_conversation.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/layout/list_item_meal.xml" value="0.21422101449275363" />
       </map>

@@ -16,7 +16,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.login.LoggedInUser;
+import com.epfl.neighborfood.neighborfoodandroid.models.UserFirebaseImpl;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.SignUpActivity;
 
 import org.junit.Before;
@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 public class SignUpActivityTest {
 
     // a fake LoggedInUser that will be used to simulate the case where an actual account is logged in into the app
-    private LoggedInUser fakeLoggedInUser = new LoggedInUser("FakeName","FakeEmail@gmail.com");
+    private UserFirebaseImpl fakeUserFirebaseImpl = new UserFirebaseImpl("FakeName","FakeEmail@gmail.com");
 
     @Rule
     public ActivityScenarioRule<SignUpActivity> testRule = new ActivityScenarioRule<>(SignUpActivity.class);
@@ -107,7 +107,7 @@ public class SignUpActivityTest {
      */
     public void updateUIWithFakeLoggedInUser(){
         testRule.getScenario().onActivity(activity -> {
-            activity.updateUI(fakeLoggedInUser);
+            activity.updateUI(fakeUserFirebaseImpl);
         });
     }
 
@@ -144,7 +144,7 @@ public class SignUpActivityTest {
     @Test
     public void guideTextContainGreetingMessageWhenLoggedIn(){
         updateUIWithFakeLoggedInUser();
-        onView(withId(R.id.guide_textView)).check(matches(withText("Welcome: "+ fakeLoggedInUser.toString()+". Click start to discover the daily meals")));
+        onView(withId(R.id.guide_textView)).check(matches(withText("Welcome: "+ fakeUserFirebaseImpl.toString()+". Click start to discover the daily meals")));
     }
 
 
