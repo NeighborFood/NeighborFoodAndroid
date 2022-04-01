@@ -26,8 +26,10 @@ I finally worked on the demo
 I implemented the Vendor Profile Activity where you can see the meal's vendor profile with his picture/name/bio/past meals/links to social Media..
 I added a subscribe and notification buttons too in order to link them later to the database.And in this activity you can see details about vendor's rating and number of reviews and total meals posted.. that will be retrieved from the database later.
 I reviewed elior's work too and worked with khalil on creating the demo for this week.
-## Slim (scrum master)
 
+## Slim (scrum master)
+I implemented the order History Activity where you can see the past orders of the logged in user, with the time where the order was achieved and details about the meal/Vendor.
+I had too many bugs with android studio (with the emulator), I spent too much time debugging and waiting for the emulator to launch and I was not able to finish the testing part.
 
 ## Yassine
 
