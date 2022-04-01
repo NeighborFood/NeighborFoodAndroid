@@ -77,12 +77,4 @@ public class ConversationsFragment extends Fragment {
             }
         });
     }
-    public void onClick(View v){
-        Intent intent = null;
-        switch(v.getId()){
-            case R.id.messagesButton:
-                intent = new Intent(getActivity(), ChatRoomActivity.class);
-        }
-        startActivity(intent);
-    }
 }
