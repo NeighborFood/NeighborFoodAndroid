@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MealActivity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -36,6 +34,8 @@ public class MealListFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        getView().findViewById(R.id.messagesButton).setOnClickListener(this::onClick);
+
         int[] imageId = {R.drawable.poulet, R.drawable.couscous, R.drawable.paella,
                 R.drawable.fondue, R.drawable.salade, R.drawable.soupe, R.drawable.tarte};
 
@@ -87,5 +87,13 @@ public class MealListFragment extends Fragment {
         });
     }
 
+    public void onClick(View v) {
+        Intent intent = null;
+        switch (v.getId()) {
+            case R.id.messagesButton:
+                intent = new Intent(getActivity(), ChatRoomActivity.class);
+        }
+        startActivity(intent);
+    }
 
 }
