@@ -5,7 +5,6 @@ public class Meal {
     private String name, shortDescription, longDescription, allergens;
     private double price;
     private int imageId;
-    // TODO add other attributes
 
 
     public Meal(String name, String shortDescription, String longDescription, int imageId) {
@@ -13,6 +12,15 @@ public class Meal {
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
         this.imageId = imageId;
+    }
+
+    public Meal(String name, String shortDescription, String longDescription, int imageId, String allergens, double price) {
+        this.name = name;
+        this.shortDescription = shortDescription;
+        this.longDescription = longDescription;
+        this.imageId = imageId;
+        this.allergens = allergens;
+        this.price = price;
     }
 
     public String getName() {
