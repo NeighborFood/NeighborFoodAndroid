@@ -32,7 +32,9 @@ I implemented the order History Activity where you can see the past orders of th
 I had too many bugs with android studio (with the emulator), I spent too much time debugging and waiting for the emulator to launch and I was not able to finish the testing part.
 
 ## Yassine
-
-
+This week I worked on designing the DB.
+Time estimates were OK.
+I spent most of the time deciding the architecture and choosing the most suitable design patters for our case. I produced code and some tests ( the high level abstractions and the firestore implementation) but for some reason my build fails due to duplicate classes error. I spent a lot of time trying to fix it or go around it but I couldn’t so I wasn’t able to merge my work into main.
+I reviewed the PR of Ellior, but I wasn't able to review the PR of Raed due to some weird behavior from github.
 
 ## Overall team
