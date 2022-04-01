@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:contentDescription="@string/_61"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bioLabel3">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:baselineAligned="false">
+
+            <ImageView
+                android:id="@+id/meal1Id"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/meal1"
+                tools:ignore="ImageContrastCheck"
+                tools:srcCompat="@drawable/couscous" />
+
+            <ImageView
+                android:id="@+id/meal2Id"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/meal1"
+                tools:ignore="ImageContrastCheck"
+                tools:srcCompat="@drawable/paella" />
+
+            <ImageView
+                android:id="@+id/meal3Id"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/meal1"
+                tools:ignore="ImageContrastCheck"
+                tools:srcCompat="@drawable/fondue" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="155dp"
+        android:layout_height="155dp"
+        android:layout_marginTop="32dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <ImageView
+            android:id="@+id/ProfilePictureId"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:contentDescription="@string/profile_picture"
+            android:nestedScrollingEnabled="false"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/profile_img_male" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/NameId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sdp_fan"
+        android:textColor="#000000"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintVertical_bias="0.046" />
+
+    <TextView
+        android:id="@+id/rateID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4_7"
+        android:textColor="#0E0310"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.139"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NameId"
+        app:layout_constraintVertical_bias="0.075" />
+
+    <TextView
+        android:id="@+id/LikesId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_103"
+        android:textColor="#0E0310"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.246"
+        app:layout_constraintStart_toEndOf="@+id/StarId"
+        app:layout_constraintTop_toTopOf="@+id/rateID"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/likesId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_61"
+        android:textColor="#0E0310"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.394"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/rateID"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/ReviewNbrId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_50_reviews"
+        android:textColor="#535353"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/StarId"
+        app:layout_constraintStart_toStartOf="@+id/rateID"
+        app:layout_constraintTop_toBottomOf="@+id/rateID"
+        app:layout_constraintVertical_bias="0.002" />
+
+    <TextView
+        android:id="@+id/subscribeTextID"
+        android:layout_width="63dp"
+        android:layout_height="19dp"
+        android:text="@string/subscribe"
+        android:textColor="#535353"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/SubscribeId"
+        app:layout_constraintStart_toStartOf="@+id/SubscribeId"
+        app:layout_constraintTop_toBottomOf="@+id/SubscribeId" />
+
+    <TextView
+        android:id="@+id/notifymeTextId"
+        android:layout_width="63dp"
+        android:layout_height="21dp"
+        android:text="@string/notify_me"
+        android:textColor="#535353"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/notificationId"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="@+id/notificationId"
+        app:layout_constraintTop_toBottomOf="@+id/notificationId" />
+
+    <TextView
+        android:id="@+id/reviewNbrId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/likes"
+        android:textColor="#535353"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView4"
+        app:layout_constraintStart_toStartOf="@+id/LikesId"
+        app:layout_constraintTop_toBottomOf="@+id/LikesId"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textMealsId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/meals"
+        android:textColor="#535353"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/likesId"
+        app:layout_constraintTop_toBottomOf="@+id/likesId" />
+
+    <ImageView
+        android:id="@+id/StarId"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="4dp"
+        android:contentDescription="@string/star"
+        app:layout_constraintStart_toEndOf="@+id/rateID"
+        app:layout_constraintTop_toTopOf="@+id/rateID"
+        app:srcCompat="@android:drawable/btn_star_big_on"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/TwitterId"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:contentDescription="@string/facebookicon"
+        app:layout_constraintBottom_toBottomOf="@+id/InstagramId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.841"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/InstagramId"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/twitter"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/InstagramId"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:contentDescription="@string/facebookicon"
+        app:layout_constraintBottom_toBottomOf="@+id/facebookId"
+        app:layout_constraintEnd_toStartOf="@+id/TwitterId"
+        app:layout_constraintStart_toEndOf="@+id/facebookId"
+        app:layout_constraintTop_toTopOf="@+id/facebookId"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/instagram"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/facebookId"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/facebookicon"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/cardView"
+        app:srcCompat="@drawable/facebook"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/SubscribeId"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:contentDescription="@string/facebookicon"
+        app:layout_constraintEnd_toStartOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardView"
+        app:srcCompat="@drawable/empty_heart"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/notificationId"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="48dp"
+        android:contentDescription="@string/facebookicon"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="@+id/SubscribeId"
+        app:layout_constraintStart_toStartOf="@+id/SubscribeId"
+        app:layout_constraintTop_toBottomOf="@+id/subscribeTextID"
+        app:srcCompat="@drawable/empty_notif"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="24dp"
+        android:layout_height="27dp"
+        android:contentDescription="@string/heart"
+        app:layout_constraintStart_toEndOf="@+id/LikesId"
+        app:layout_constraintTop_toTopOf="@+id/LikesId"
+        app:srcCompat="@drawable/red_heart" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="25dp"
+        android:layout_height="27dp"
+        android:contentDescription="@string/meals"
+        app:layout_constraintStart_toEndOf="@+id/likesId"
+        app:layout_constraintTop_toTopOf="@+id/likesId"
+        app:srcCompat="@drawable/meal_icon"
+        tools:ignore="ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/bioLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bio"
+        android:textColor="#FF9C27B0"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/bioLabel3"
+        app:layout_constraintTop_toBottomOf="@+id/reviewNbrId"
+        app:layout_constraintVertical_bias="0.039" />
+
+    <TextView
+        android:id="@+id/bioLabel3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/past_meals"
+        android:textColor="#FF9C27B0"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewNbrId"
+        app:layout_constraintVertical_bias="0.462" />
+
+    <TextView
+        android:id="@+id/bioValue2"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:hint="@string/bio"
+        android:minHeight="100dp"
+        android:textColorHint="#757575"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bioLabel2"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
