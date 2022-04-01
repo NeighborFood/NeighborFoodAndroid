@@ -73,7 +73,6 @@ public class SignUpActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Account account = loginModel.getLoginHandler().handleOnLoginIntentResult(requestCode, data);
         loginModel.getFirebaseLogin().loginWithCredential(((GoogleAccount)account).getAccountCredential(),this);
-
     }
 
     /**

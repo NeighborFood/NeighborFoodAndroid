@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navBarAccount:
                 setCurrentFragment(AccountFragment.class);
                 return true;
+            case R.id.navBarOrderHistory:
+                Intent orderIntent = new Intent(this, OrderHistoryActivity.class);
+                startActivity(orderIntent);
             default:
                 return false;
         }

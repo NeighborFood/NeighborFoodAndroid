@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.epfl.neighborfood.neighborfoodandroid" >
+    package="com.epfl.neighborfood.neighborfoodandroid">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -11,21 +12,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NeighborFood.NoActionBar">
         <activity
-            android:name=".ui.activities.ProfileEditingActivity"
-            android:label="Edit Profile"
+            android:name=".ui.activities.OrderHistoryActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.activities.ProfileEditingActivity"
+            android:exported="false"
+            android:label="Edit Profile" />
         <activity android:name=".ui.activities.DisplayMessageActivity" />
         <activity
             android:name=".ui.activities.PlaceMealActivity"
             android:exported="true"
-            android:label="Add a meal"/>
+            android:label="Add a meal" />
         <activity
             android:name=".ui.activities.ConversationsActivity"
             android:exported="true" />
         <activity
             android:name=".ui.activities.MealActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.activities.ChatRoomActivity"
             android:exported="false" />
@@ -42,4 +45,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
