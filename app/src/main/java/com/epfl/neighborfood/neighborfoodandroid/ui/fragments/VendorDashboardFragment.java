@@ -8,33 +8,47 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.MealListAdapter;
+import com.epfl.neighborfood.neighborfoodandroid.adapters.OrderListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.FragmentVendorDashboardBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PlaceMealActivity;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class VendorDashboardFragment extends Fragment {
 
     private FragmentVendorDashboardBinding binding;
+    private ArrayList<String> nm;
+    private ArrayList<Integer> id;
 
     @Override
     public View onCreateView (LayoutInflater inflater,
                               ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentVendorDashboardBinding.inflate(getLayoutInflater());
-        return binding.getRoot();}
+        return binding.getRoot();
+
+    }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
 
-        int[] imageId = {R.drawable.poulet, R.drawable.couscous, R.drawable.paella};
+        id = new ArrayList<Integer>();
+        id.add(R.drawable.poulet);
+        id.add(R.drawable.couscous);
+        id.add(R.drawable.paella);
 
-        String[] mealsName = {"Poulet au miel",
-                "Couscous aux légumes",
-                "Paella aux crevettes"};
+        nm = new ArrayList<String>();
+        nm.add("Poulet au miel");
+        nm.add("Couscous aux légumes");
+        nm.add("Paella aux crevettes");
+
+
 
         String[] mealsShortDes = {"Un délicieux poulet au miel",
                 "Un couscous comme à la maison",
@@ -46,29 +60,24 @@ public class VendorDashboardFragment extends Fragment {
 
         ArrayList<Meal> mealArrayList = new ArrayList<>();
 
-        for (int i = 0; i < imageId.length; i++) {
-            Meal meal = new Meal(mealsName[i], mealsShortDes[i], mealsLongDes[i], imageId[i]);
+        for (int i = 0; i < mealsLongDes.length; i++) {
+            Meal meal = new Meal(nm.get(i), mealsShortDes[i], mealsLongDes[i], id.get(i));
             mealArrayList.add(meal);
         }
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        MealListAdapter listAdapter = new MealListAdapter(getActivity(), mealArrayList);
+        OrderListAdapter adapter = new OrderListAdapter(getContext(), nm, id);
 
-        //fill with placeholder meals till we define order model
-        /*
-        binding.curOrderView.setAdapter(listAdapter);
-        binding.curOrderView.setClickable(true);
-        binding.curOrderView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //to do
-            }
-        }); */
-
-
-
+        RecyclerView recyclerView = binding.recyclerView;
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
 
     }
+    private void initRecyclerView(){
+
+    }
+
     public void onClick(View v){
         Intent intent = null;
         switch(v.getId()){
