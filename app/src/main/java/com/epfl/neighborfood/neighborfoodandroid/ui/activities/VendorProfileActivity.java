@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
 public class VendorProfileActivity extends AppCompatActivity implements View.OnClickListener{
-
     ImageView subscribeButton;
     Boolean subscribed = false;
     ImageView notificationButton;
@@ -62,44 +61,29 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
                 }
                 break;
             case R.id.facebookId:{
-
-                String appLinkStr = "fb://page/100000647572282";//1316185465079693
-                String packageStr = "com.facebook.katana";
                 String webLinkStr = "https://www.facebook.com/gordonramsay";
-                openLink(appLinkStr,packageStr,webLinkStr);
+                openLink(webLinkStr);
                 break;
             }
             case R.id.instagramId:{
-                String appLinkStr = "https://www.instagram.com/gordongram";
-                String packageStr = "com.facebook.katana";
-                openLink(appLinkStr,packageStr,appLinkStr);
+                String webLinkStr = "https://www.instagram.com/gordongram";
+                openLink(webLinkStr);
                 break;
             }
             case R.id.TwitterId:{
-
-                String appLinkStr = "https://twitter.com/GordonRamsay";
-                String packageStr = "com.instagram.android";
-                openLink(appLinkStr,packageStr,appLinkStr);
+                String webLinkStr = "https://twitter.com/GordonRamsay";
+                openLink(webLinkStr);
                 break;
             }
 
         }
     }
-    public void openLink(String appLinkStr,String packageStr,String webLinkStr){
-        try{
-            Uri uri = Uri.parse(appLinkStr);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(uri);
-            intent.setPackage(packageStr);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
-        catch(ActivityNotFoundException anfe){
-            Uri uri = Uri.parse(webLinkStr);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(uri);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
+    public void openLink(String webLinkStr){
+        //TODO: try catch later
+        Uri uri = Uri.parse(webLinkStr);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(uri);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }
