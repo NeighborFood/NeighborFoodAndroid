@@ -67,20 +67,20 @@ public class ConversationsActivityTest {
 
         DummyDatabase db = DummyDatabase.getInstance();
         User[] users = {
-                new User(1, "test1@machin.com", "Test", "One"),
-                new User(2, "test2@machin.com", "Test", "Two"),
-                new User(3, "test3@machin.com", "Test", "Three")
+                new User("1", "test1@machin.com", "Test", "One"),
+                new User("2", "test2@machin.com", "Test", "Two"),
+                new User("3", "test3@machin.com", "Test", "Three")
         };
 
         User currentUser = AuthenticatorFactory.getDependency().getCurrentUser();
         Message[] messages = {
                 new Message("All good !", currentUser,
-                        new User(1, "test1@machin.com", "Test", "One")),
+                        new User("1", "test1@machin.com", "Test", "One")),
 
-                new Message("Where are You ? ", new User(2, "test2@machin.com", "Test", "Two"),
+                new Message("Where are You ? ", new User("2", "test2@machin.com", "Test", "Two"),
                         currentUser),
 
-                new Message("Thanks! very nice Meal", new User(3, "test3@machin.com", "Test", "Three"),
+                new Message("Thanks! very nice Meal", new User("3", "test3@machin.com", "Test", "Three"),
                         currentUser)};
 
         Intent intent = new Intent(ApplicationProvider.getApplicationContext(), ConversationsActivity.class);
@@ -130,19 +130,19 @@ public class ConversationsActivityTest {
 
         DummyDatabase db = DummyDatabase.getInstance();
         User[] users = {
-                new User(1, "test1@machin.com", "Test", "One"),
-                new User(2, "test2@machin.com", "Test", "Two"),
+                new User("1", "test1@machin.com", "Test", "One"),
+                new User("2", "test2@machin.com", "Test", "Two"),
         };
 
         User currentUser = AuthenticatorFactory.getDependency().getCurrentUser();
         Message[] messages = {
                 new Message("All good !", currentUser,
-                        new User(1, "test1@machin.com", "Test", "One")),
+                        new User("1", "test1@machin.com", "Test", "One")),
 
-                new Message("Where are You ? ", new User(2, "test2@machin.com", "Test", "Two"),
+                new Message("Where are You ? ", new User("2", "test2@machin.com", "Test", "Two"),
                         currentUser),
 
-                new Message("Thanks! very nice Meal", new User(3, "test3@machin.com", "Test", "Three"),
+                new Message("Thanks! very nice Meal", new User("3", "test3@machin.com", "Test", "Three"),
                         currentUser)};
 
 

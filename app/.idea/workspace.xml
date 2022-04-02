@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e6aaf1a9-8f79-4772-b307-e2ff8470e925" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/NeighborFoodApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/authentication/FirebaseAuthenticator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/models/UserFirebaseImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/modules/AppModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/repositories/AuthAppRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/ui/activities/SignUpActivityOld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/ui/viewmodels/EditProfileViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/ui/viewmodels/SignUpViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/androidTest/java/com/epfl/neighborfood/neighborfoodandroid/ui/layouts/SignUpActivityTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/androidTest/java/com/epfl/neighborfood/neighborfoodandroid/ui/layouts/SignUpActivityTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/authentication/Authenticator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/authentication/Authenticator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/authentication/AuthenticatorFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/authentication/AuthenticatorFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/authentication/DummyAuthenticator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/authentication/DummyAuthenticator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/login/LoggedInUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/login/firebase/FirebaseLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/login/firebase/FirebaseLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/login/googleLogin/GoogleAccountConfigurator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/login/googleLogin/GoogleAccountConfigurator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/login/googleLogin/GoogleLoginModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/login/googleLogin/GoogleLoginModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/ui/activities/ProfileEditingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/ui/activities/ProfileEditingActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/ui/activities/SignUpActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epfl/neighborfood/neighborfoodandroid/ui/activities/SignUpActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../build.gradle" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="27AgPyJVjRIRWQPV151QB5vb4de" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e6aaf1a9-8f79-4772-b307-e2ff8470e925" name="Default Changelist" comment="" />
+      <created>1648768293980</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1648768293980</updated>
+    </task>
+    <servers />
+  </component>
+</project>
