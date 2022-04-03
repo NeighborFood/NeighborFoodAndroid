@@ -70,13 +70,14 @@ public class ProfileEditingActivityTest {
         Intents.init();
   //      hiltRule.inject();
     }
+    /*
     @Test
     public void buttonSaveTest(){
 
         onView(withId(R.id.saveButton)).perform(click());
         //assertTrue(testRule.getScenario().getState() == Lifecycle.State.DESTROYED);
 
-    }
+    }*/
 
     //Clicking on the image shows the image picker
     @Test
