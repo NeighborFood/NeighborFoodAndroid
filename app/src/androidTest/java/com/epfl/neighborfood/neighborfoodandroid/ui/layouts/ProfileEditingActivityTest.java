@@ -122,6 +122,9 @@ public class ProfileEditingActivityTest {
         User c = new User("-1","zbiba@epfl.ch","Zbiba","Zabboub");
         ((AuthRepositoryTestImplementation)authRepository).updateUser(c);
         onView(withId(R.id.nameValue)).check(matches(withText(c.getFirstName())));
+        onView(withId(R.id.surnameValue)).check(matches(withText(c.getLastName())));
+        onView(withId(R.id.emailValue)).check(matches(withText(c.getEmail())));
+
     }*/
     @After
     public void tearDown() throws Exception {

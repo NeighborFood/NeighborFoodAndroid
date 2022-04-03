@@ -63,6 +63,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
     private void updateUserFields(User user) {
         ((TextView)findViewById(R.id.nameValue)).setText(user.getFirstName());
         ((TextView)findViewById(R.id.surnameValue)).setText(user.getLastName());
+        ((TextView)findViewById(R.id.emailValue)).setText(user.getEmail());
         Picasso.with(this).load(user.getProfilePictureURI())
                 .fit().into(ppView);
 
