@@ -2,6 +2,8 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 
 
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 
@@ -14,12 +16,12 @@ public class User implements Serializable {
     private static final String KEY_LASTNAME = "lastname";
 
     /* Fields concerning the User object */
-    private long id = -1;
+    private String id = "";
     private String email = "";
     private String firstName = "";
     private String lastName = "";
     //private Profile _profile = null;
-    //private Image img;
+    private Uri ppUri;
 
     /**
      * Create a new User object, holding database
@@ -30,7 +32,7 @@ public class User implements Serializable {
      * @param firstName First name of user
      * @param lastName Last name of user
      */
-    public User(long id, String email, String firstName, String lastName) {
+    public User(String id, String email, String firstName, String lastName) {
         setId(id);
         setEmail(email);
         setFirstName(firstName);
@@ -48,7 +50,7 @@ public class User implements Serializable {
     /**
      * @return ID of the user corresponding to the one in the database
      */
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -57,7 +59,7 @@ public class User implements Serializable {
      * also update their user ID.
      * @param id ID of the user
      */
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -104,6 +106,14 @@ public class User implements Serializable {
      */
     public void setLastName(String lastname) {
         this.lastName = lastname;
+    }
+
+    /**
+     * Getter for the profile picture URI
+     * @return URI
+     */
+    public Uri getProfilePictureURI(){
+        return ppUri;
     }
 
     @Override
