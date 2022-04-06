@@ -28,7 +28,7 @@ public class MessageTest {
 
     @Test
     public void getSenderTest(){
-        long id = 1 ;
+        String id = "1" ;
         User sender = new User(id,null,null,null);
         Message msg = new Message(null,sender,null);
         assertThat(msg.getSender().getId(),equalTo(id));
@@ -37,7 +37,7 @@ public class MessageTest {
 
     @Test
     public void setSenderTest(){
-        long id = 1 ;
+        String id = "1" ;
         User sender = new User(id,null,null,null);
         Message msg = new Message(null,null,null);
         msg.setSender(sender);
@@ -45,7 +45,7 @@ public class MessageTest {
     }
     @Test
     public void getReceiverTest(){
-        long id = 1 ;
+        String id = "1" ;
         User rec= new User(id,null,null,null);
         Message msg = new Message(null,null,rec);
         assertThat(msg.getReceiver().getId(),equalTo(id));
@@ -54,7 +54,7 @@ public class MessageTest {
 
     @Test
     public void setReceiverTest(){
-        long id = 1 ;
+        String id = "1" ;
         User rec = new User(id,null,null,null);
         Message msg = new Message(null,null,null);
         msg.setReceiver(rec);
