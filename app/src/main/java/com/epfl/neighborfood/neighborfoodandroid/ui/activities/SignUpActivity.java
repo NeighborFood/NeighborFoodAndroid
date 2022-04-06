@@ -2,6 +2,7 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,17 +10,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.epfl.neighborfood.neighborfoodandroid.login.Account;
-import com.epfl.neighborfood.neighborfoodandroid.login.LoggedInUser;
-import com.epfl.neighborfood.neighborfoodandroid.login.LoginModel;
-import com.epfl.neighborfood.neighborfoodandroid.login.googleLogin.GoogleAccount;
-import com.epfl.neighborfood.neighborfoodandroid.login.googleLogin.GoogleLoginModel;
+import com.epfl.neighborfood.neighborfoodandroid.models.User;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.SignUpViewModel;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
-import com.google.firebase.auth.FirebaseUser;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
-public class SignUpActivity extends AppCompatActivity {
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
+public class SignUpActivity extends AppCompatActivity {
+    private SignUpViewModel viewModel;
     // the button used to log in
     private SignInButton signInButton;
     // the button used to log out
@@ -28,8 +31,10 @@ public class SignUpActivity extends AppCompatActivity {
     private Button startButton;
     // a guiding text view, telling the user what to do next
     private TextView guideTextView;
-    // a login model allowing signing up/signing out from the app
-    private LoginModel loginModel;
+
+    private GoogleSignInClient googleSignInClient;
+
+
     // a request code for the sign in intent
     int RC_SIGN_IN = 1;
 
@@ -37,70 +42,86 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        loginModel = new GoogleLoginModel(this);
 
-        signInButton = findViewById(R.id.sign_in_button);
-        signOutButton = findViewById(R.id.sign_out_button);
         startButton = findViewById(R.id.start_button);
         guideTextView = findViewById(R.id.guide_textView);
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn();
-            }
-        });
 
-        signOutButton.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signOut();
-            }
-        }));
+
+        initSignInButton();
+        initSignOutButton();
+        initAuthViewModel();
+        initGoogleSignInClient();
+    }
+
+    private void initSignOutButton() {
+        signOutButton = findViewById(R.id.sign_out_button);
+        signOutButton.setOnClickListener(v->signOut());
+    }
+
+    private void initSignInButton() {
+        signInButton = findViewById(R.id.sign_in_button);
+        signInButton.setOnClickListener(v -> signIn());
+    }
+
+    private void initAuthViewModel() {
+        viewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
+        viewModel.getCurrentUser().observe(this,(user->updateUI(user)));
+    }
+
+    private void initGoogleSignInClient() {
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
+                .requestEmail()
+                .build();
+
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = loginModel.getFirebaseLogin().getCurrentUser();
-        LoggedInUser loggedInUser = currentUser != null ? new LoggedInUser(currentUser) : null;
-        updateUI(loggedInUser);
+        updateUI(viewModel.getCurrentUser().getValue());
+
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Account account = loginModel.getLoginHandler().handleOnLoginIntentResult(requestCode, data);
-        loginModel.getFirebaseLogin().loginWithCredential(((GoogleAccount)account).getAccountCredential(),this);
+        if (requestCode == RC_SIGN_IN) {
+            viewModel.handleGoogleLoginResponse(resultCode, data);
+        }
 
     }
+
 
     /**
      * Log in into the app using the loginModel intent
      */
     private void signIn(){
-        startActivityForResult(loginModel.signIn(), RC_SIGN_IN);
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     /**
      * Log out from the app by shutting off(and signing out) the service responsible for the log in feature
      */
     public void signOut(){
-        loginModel.signOut();
-        updateUI(null);
-    }
+        viewModel.signOut();
 
+    }
     /**
      * Updates the UI according to whether there is a logged in user or not
-     * @param loggedInUser: the current logged in user
+     * @param user: the current logged in user
      */
-    public void updateUI(LoggedInUser loggedInUser){
-        if(loggedInUser != null) {
+    public void updateUI(User user){
+        if(user != null) {
             signOutButton.setVisibility(View.VISIBLE);
             signInButton.setVisibility(View.INVISIBLE);
             startButton.setVisibility(View.VISIBLE);
-            guideTextView.setText("Welcome: "+ loggedInUser.toString()+". Click start to discover the daily meals");
+            guideTextView.setText("Welcome: "+ user.getFullName()+". Click start to discover the daily meals");
 
 
         } else {
@@ -110,6 +131,7 @@ public class SignUpActivity extends AppCompatActivity {
             guideTextView.setText("Please connect via your google account!");
         }
     }
+
 
     /**
      * the onClick handler of the start button which will allow the user to go the meal activity

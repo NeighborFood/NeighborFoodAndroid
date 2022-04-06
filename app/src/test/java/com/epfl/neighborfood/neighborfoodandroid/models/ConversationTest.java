@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ConversationTest {
     @Test
     public void getChatterTest(){
-        User usr = new User(1,null,null,null);
+        User usr = new User("1",null,null,null);
         Conversation conversation = new Conversation(usr,new ArrayList<>());
         assertThat(conversation.getChatter().getId(),equalTo(usr.getId()));
     }

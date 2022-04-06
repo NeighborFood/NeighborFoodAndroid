@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.AccountFragment;
+import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.ConversationsFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.VendorDashboardFragment;
 import com.google.android.material.navigation.NavigationBarView;
@@ -50,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
             }
                 return true;
             case R.id.navBarMessages:
+                setCurrentFragment(ConversationsFragment.class);
+                /*
                 Intent intent = new Intent(this,ConversationsActivity.class);
-                startActivity(intent);
+                startActivity(intent);*/
                 //Toast.makeText(this, "Not yet Implemented!", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.navBarAccount:
