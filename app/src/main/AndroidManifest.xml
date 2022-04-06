@@ -33,10 +33,10 @@
             android:name=".ui.activities.SignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activities.VendorProfileActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.VendorProfileActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

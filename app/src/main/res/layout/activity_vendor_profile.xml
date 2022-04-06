@@ -5,46 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:contentDescription="@string/_61"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bioLabel3">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:baselineAligned="false">
-
-            <ImageView
-                android:id="@+id/meal1Id"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/meal1"
-                tools:ignore="ImageContrastCheck"
-                tools:srcCompat="@drawable/couscous" />
-
-            <ImageView
-                android:id="@+id/meal2Id"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="@string/meal1"
-                tools:ignore="ImageContrastCheck"
-                tools:srcCompat="@drawable/paella" />
-
-            <ImageView
-                android:id="@+id/meal3Id"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="@string/meal1"
-                tools:ignore="ImageContrastCheck"
-                tools:srcCompat="@drawable/fondue" />
-        </LinearLayout>
-    </HorizontalScrollView>
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
@@ -308,20 +268,19 @@
         android:id="@+id/bioLabel3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/past_meals"
         android:textColor="#FF9C27B0"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reviewNbrId"
-        app:layout_constraintVertical_bias="0.462" />
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="@+id/bioValue2"
+        app:layout_constraintTop_toBottomOf="@+id/bioValue2" />
 
     <TextView
         android:id="@+id/bioValue2"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="81dp"
         android:layout_alignParentStart="true"
         android:hint="@string/bio"
         android:minHeight="100dp"
@@ -333,5 +292,49 @@
         app:layout_constraintTop_toBottomOf="@+id/bioLabel2"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollViewId"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:contentDescription="@string/_61"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bioLabel3">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:baselineAligned="false">
+
+            <ImageView
+                android:id="@+id/mealCouscousId"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:contentDescription="@string/meal1"
+                android:src="@drawable/couscous" />
+
+            <ImageView
+                android:id="@+id/mealPaellaId"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:layout_marginStart="20dp"
+                android:contentDescription="@string/meal1"
+                android:src="@drawable/paella" />
+
+            <ImageView
+                android:id="@+id/mealFondueId"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:layout_marginStart="20dp"
+                android:contentDescription="@string/meal1"
+                android:src="@drawable/fondue" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
