@@ -19,6 +19,7 @@ import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertTrue;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -28,13 +29,17 @@ import android.provider.MediaStore;
 
 
 import androidx.lifecycle.Lifecycle;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.epfl.neighborfood.neighborfoodandroid.AppContainerTestImplementation;
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
+import com.epfl.neighborfood.neighborfoodandroid.models.UserTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepositoryTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
@@ -49,35 +54,31 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import dagger.hilt.android.testing.HiltAndroidRule;
-import dagger.hilt.android.testing.HiltAndroidTest;
 
-@RunWith(AndroidJUnit4.class)
-//@HiltAndroidTest
+//@RunWith(AndroidJUnit4.class)
+
 public class ProfileEditingActivityTest {
     public static final String KEY_IMAGE_DATA = "data";
-
+    private AuthRepository authRepo;
     @Rule
     public ActivityScenarioRule<ProfileEditingActivity> testRule = new ActivityScenarioRule<>(ProfileEditingActivity.class);
-    //public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
-    /*@Rule public RuleChain rule = RuleChain.outerRule(hiltRule)
-            .around(testRule);*/
-    /*@Inject
-    AuthRepository authRepository;
-*/
+
     @Before
     public void setUp() throws Exception {
+
         Intents.init();
-  //      hiltRule.inject();
+        NeighborFoodApplication app = ApplicationProvider.getApplicationContext();
+        authRepo = app.getAppContainer().getAuthRepo();
+        authRepo.logOut();
     }
-    /*
+
     @Test
     public void buttonSaveTest(){
 
         onView(withId(R.id.saveButton)).perform(click());
         //assertTrue(testRule.getScenario().getState() == Lifecycle.State.DESTROYED);
 
-    }*/
+    }
 
     //Clicking on the image shows the image picker
     @Test
@@ -117,16 +118,18 @@ public class ProfileEditingActivityTest {
         bundle.putParcelable(ProfileEditingActivity.KEY_IMAGE_DATA, BitmapFactory.decodeResource(res,R.drawable.ic_launcher_background));
         return new Instrumentation.ActivityResult(Activity.RESULT_OK,new Intent().putExtras(bundle));
     }
-/*
+
     @Test
     public void uiReflectsUser(){
-        User c = new User("-1","zbiba@epfl.ch","Zbiba","Zabboub");
-        ((AuthRepositoryTestImplementation)authRepository).updateUser(c);
+        User c = new UserTestImplementation("-1","zbiba@epfl.ch","Zbiba","Zabboub");
+        testRule.getScenario().onActivity(activity -> {
+            activity.updateUserFields(c);
+        });
         onView(withId(R.id.nameValue)).check(matches(withText(c.getFirstName())));
         onView(withId(R.id.surnameValue)).check(matches(withText(c.getLastName())));
         onView(withId(R.id.emailValue)).check(matches(withText(c.getEmail())));
 
-    }*/
+    }
     @After
     public void tearDown() throws Exception {
         Intents.release();

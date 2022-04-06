@@ -20,15 +20,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.epfl.neighborfood.neighborfoodandroid.AppContainer;
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityProfileEditingBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.EditProfileViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.EditProfileViewModelFactory;
 import com.squareup.picasso.Picasso;
 
-import dagger.hilt.android.AndroidEntryPoint;
 
-@AndroidEntryPoint
 public class ProfileEditingActivity extends AppCompatActivity {
     private ActivityProfileEditingBinding binding;
     private EditProfileViewModel vmodel;
@@ -46,8 +47,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
         binding = ActivityProfileEditingBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
-        vmodel = new ViewModelProvider(this).get(EditProfileViewModel.class);
+        vmodel = new ViewModelProvider(this, new EditProfileViewModelFactory((NeighborFoodApplication) this.getApplication())).get(EditProfileViewModel.class);
         vmodel.getCurrentUser().observe(this,user -> {
             updateUserFields(user);
         });
@@ -60,12 +60,13 @@ public class ProfileEditingActivity extends AppCompatActivity {
 
     }
 
-    private void updateUserFields(User user) {
-        ((TextView)findViewById(R.id.nameValue)).setText(user.getFirstName());
-        ((TextView)findViewById(R.id.surnameValue)).setText(user.getLastName());
-        ((TextView)findViewById(R.id.emailValue)).setText(user.getEmail());
-        Picasso.with(this).load(user.getProfilePictureURI())
-                .fit().into(ppView);
+    public void updateUserFields(User user) {
+        if(user != null){
+            ((TextView)findViewById(R.id.nameValue)).setText(user.getFirstName());
+            ((TextView)findViewById(R.id.surnameValue)).setText(user.getLastName());
+            ((TextView)findViewById(R.id.emailValue)).setText(user.getEmail());
+            Picasso.with(this).load(user.getProfilePictureURI()).fit().into(ppView);
+        }
 
     }
 

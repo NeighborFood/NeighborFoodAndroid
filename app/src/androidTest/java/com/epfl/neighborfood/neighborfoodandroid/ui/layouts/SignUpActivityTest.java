@@ -10,6 +10,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibilit
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import android.app.Activity;
+
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -163,6 +165,12 @@ public class SignUpActivityTest {
         onView(withId(R.id.sign_out_button)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
         onView(withId(R.id.start_button)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
 
+    }
+    @Test
+    public void doesNotFailWithNullGoogleResult(){
+        testRule.getScenario().onActivity(activity -> {
+            activity.onActivityResult(SignUpActivity.RC_SIGN_IN, Activity.RESULT_OK,null);
+        });
     }
 
 
