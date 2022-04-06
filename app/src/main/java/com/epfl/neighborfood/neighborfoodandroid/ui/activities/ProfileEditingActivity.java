@@ -7,6 +7,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,11 +17,21 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityProfileEditingBinding;
+import com.epfl.neighborfood.neighborfoodandroid.models.User;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.EditProfileViewModel;
+import com.squareup.picasso.Picasso;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ProfileEditingActivity extends AppCompatActivity {
+    private ActivityProfileEditingBinding binding;
+    private EditProfileViewModel vmodel;
     @VisibleForTesting
     public static final String KEY_IMAGE_DATA = "data";
     private ImageView ppView;
@@ -31,11 +43,28 @@ public class ProfileEditingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityProfileEditingBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
+        vmodel = new ViewModelProvider(this).get(EditProfileViewModel.class);
+        vmodel.getCurrentUser().observe(this,user -> {
+            updateUserFields(user);
+        });
         setContentView(R.layout.activity_profile_editing);
         Toolbar toolbar = findViewById(R.id.profileEditToolbar);
         setSupportActionBar(toolbar);
+
         ppView = findViewById(R.id.profilePictureImageView);
         ppView.setOnClickListener(this::onClick);
+
+    }
+
+    private void updateUserFields(User user) {
+        ((TextView)findViewById(R.id.nameValue)).setText(user.getFirstName());
+        ((TextView)findViewById(R.id.surnameValue)).setText(user.getLastName());
+        Picasso.with(this).load(user.getProfilePictureURI())
+                .fit().into(ppView);
 
     }
 
@@ -47,6 +76,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
                 activityResultLauncher.launch(galleryIntent);
                 break;
             case R.id.saveButton:
+                vmodel.saveUserData();
                 Toast.makeText(this, "Successfully Saved!", Toast.LENGTH_SHORT).show();
                 finish();
             default:
