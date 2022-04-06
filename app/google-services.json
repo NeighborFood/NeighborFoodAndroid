@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "743325402792-d11fhpelqr85008iqn2qururgo67n3rv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.epfl.neighborfood.neighborfoodandroid",
+            "certificate_hash": "66d626085a9e1dfacb136a7cc7f5e9ffe9601871"
+          }
+        },
+        {
           "client_id": "743325402792-vp4vpjfldpip4kqcssg6748sgcsdfv9a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
