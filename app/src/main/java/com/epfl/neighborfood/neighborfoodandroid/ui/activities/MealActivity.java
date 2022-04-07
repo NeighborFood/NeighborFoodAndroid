@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -26,7 +27,16 @@ public class MealActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
+        Button vendorButton = (Button)findViewById(R.id.go_vendor_profile);
 
+
+        // To adapt when
+        vendorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MealActivity.this, PlaceMealActivity.class));
+            }
+        });
 
         Intent intent = this.getIntent();
 
