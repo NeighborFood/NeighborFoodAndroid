@@ -14,16 +14,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import javax.inject.Inject;
-
-import dagger.hilt.android.lifecycle.HiltViewModel;
-
-@HiltViewModel
 public class SignUpViewModel extends ViewModel {
     private AuthRepository authRepo;
     private LiveData<User> user;
-    @Inject
-    SignUpViewModel(AuthRepository authRepo){
+    public SignUpViewModel(AuthRepository authRepo){
         this.authRepo = authRepo;
     }
     public LiveData<User> getCurrentUser (){
@@ -51,10 +45,6 @@ public class SignUpViewModel extends ViewModel {
     private void getGoogleAuthCredential(GoogleSignInAccount googleSignInAccount) {
         String googleTokenId = googleSignInAccount.getIdToken();
         AuthCredential googleAuthCredential = GoogleAuthProvider.getCredential(googleTokenId, null);
-        authenticateWithCredential(googleAuthCredential);
-    }
-
-    private void authenticateWithCredential(AuthCredential credential){
-        authRepo.authenticateWithCredential(credential);
+        authRepo.authenticateWithCredential(googleAuthCredential);
     }
 }

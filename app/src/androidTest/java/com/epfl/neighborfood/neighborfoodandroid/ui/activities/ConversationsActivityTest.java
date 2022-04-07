@@ -1,4 +1,4 @@
-package com.epfl.neighborfood.neighborfoodandroid.ui.layouts;
+package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
@@ -14,8 +14,6 @@ import com.epfl.neighborfood.neighborfoodandroid.database.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ConversationsActivity;
 
 
 import org.junit.After;

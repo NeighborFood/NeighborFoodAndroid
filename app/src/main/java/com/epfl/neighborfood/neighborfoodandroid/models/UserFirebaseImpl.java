@@ -14,7 +14,7 @@ public class UserFirebaseImpl extends User {
     public UserFirebaseImpl(com.google.firebase.auth.FirebaseUser firebaseUser) {
         super(firebaseUser.getUid(),firebaseUser.getEmail(),firebaseUser.getDisplayName(),firebaseUser.getDisplayName());
         this.firebaseUser = firebaseUser;
-        String[] nameLastName = getNameLastNameFromDisplayName(firebaseUser.getDisplayName());
+        String[] nameLastName = getNameLastNameFromDisplayName(firebaseUser == null ? "Flen Fouleni":firebaseUser.getDisplayName());
         setFirstName(nameLastName[0]);
         setLastName(nameLastName[1]);
     }
@@ -30,7 +30,7 @@ public class UserFirebaseImpl extends User {
 
     @Override
     public Uri getProfilePictureURI() {
-        return firebaseUser.getPhotoUrl();
+        return firebaseUser==null? Uri.EMPTY : firebaseUser.getPhotoUrl();
     }
 }
 

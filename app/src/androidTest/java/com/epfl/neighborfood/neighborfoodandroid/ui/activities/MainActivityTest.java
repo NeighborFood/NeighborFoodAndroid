@@ -1,9 +1,8 @@
-package com.epfl.neighborfood.neighborfoodandroid.ui.layouts;
+package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.espresso.intent.Intents;
@@ -16,17 +15,13 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity.EXTRA_MESSAGE;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ConversationsActivity;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.AccountFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
 
