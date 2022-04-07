@@ -2,11 +2,10 @@ package com.epfl.neighborfood.neighborfoodandroid;
 
 import android.app.Application;
 
-public class NeighborFoodApplication extends Application {
-    protected AppContainer appContainer;
+public class TestApplication extends NeighborFoodApplication {
     public AppContainer getAppContainer(){
         if(appContainer == null){
-            appContainer = new AppContainerImplementation();
+            appContainer = new AppContainerTestImplementation();
         }
         return appContainer;
     }

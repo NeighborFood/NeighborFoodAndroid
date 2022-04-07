@@ -1,6 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -10,17 +11,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.EditProfileViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.SignUpViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.EditProfileViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.SignupActivityViewModelFactory;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
-import dagger.hilt.android.AndroidEntryPoint;
-
-@AndroidEntryPoint
 public class SignUpActivity extends AppCompatActivity {
     private SignUpViewModel viewModel;
     // the button used to log in
@@ -36,7 +38,8 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     // a request code for the sign in intent
-    int RC_SIGN_IN = 1;
+    @VisibleForTesting
+    public final static int RC_SIGN_IN = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +68,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void initAuthViewModel() {
-        viewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
+
+        viewModel = new ViewModelProvider(this, new SignupActivityViewModelFactory((NeighborFoodApplication) getApplication())).get(SignUpViewModel.class);
         viewModel.getCurrentUser().observe(this,(user->updateUI(user)));
     }
 
