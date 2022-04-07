@@ -17,6 +17,7 @@ import com.epfl.neighborfood.neighborfoodandroid.adapters.OrderListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.FragmentVendorDashboardBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PlaceMealActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class VendorDashboardFragment extends Fragment {
 
     private FragmentVendorDashboardBinding binding;
+    private FloatingActionButton button;
     private ArrayList<String> nm;
     private ArrayList<Integer> id;
 
@@ -32,6 +34,20 @@ public class VendorDashboardFragment extends Fragment {
                               ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentVendorDashboardBinding.inflate(getLayoutInflater());
+        button = binding.getRoot().findViewById(R.id.addMealButton);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = null;
+                switch(v.getId()){
+                    case R.id.addMealButton:
+                        intent = new Intent(getActivity(), PlaceMealActivity.class);
+                }
+                startActivity(intent);
+            }
+                                  }
+
+        );
         return binding.getRoot();
 
     }
@@ -78,13 +94,6 @@ public class VendorDashboardFragment extends Fragment {
 
     }
 
-    public void onClick(View v){
-        Intent intent = null;
-        switch(v.getId()){
-            case R.id.addMealButton:
-                intent = new Intent(getActivity(), PlaceMealActivity.class);
-        }
-        startActivity(intent);
-    }
+
 
 }
