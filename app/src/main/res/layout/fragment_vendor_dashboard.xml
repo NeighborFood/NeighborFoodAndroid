@@ -34,6 +34,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addMealButton"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:theme="@style/Theme.MaterialComponents.Light"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="116dp"
@@ -43,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/add_meal" />
+        app:srcCompat="@drawable/add_meal"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
