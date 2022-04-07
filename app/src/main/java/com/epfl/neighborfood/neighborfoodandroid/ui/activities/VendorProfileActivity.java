@@ -39,15 +39,16 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.SubscribeId:
+                subscribed= !subscribed;
                 heart= (subscribed)?R.drawable.full_heart:R.drawable.empty_heart;
                 subscribeButton.setImageResource(heart);
                 subscribeButton.setTag(heart);
-                subscribed= !subscribed;
                 break;
             case R.id.notificationId:
-                notif= (notifyOn)?R.drawable.full_notif:R.drawable.empty_notif;
-                notificationButton.setTag(notif);
                 notifyOn= !notifyOn;
+                notif= (notifyOn)?R.drawable.full_notif:R.drawable.empty_notif;
+                notificationButton.setImageResource(notif);
+                notificationButton.setTag(notif);
                 break;
             case R.id.facebookId:{
                 String webLinkStr = "https://www.facebook.com/gordonramsay";
