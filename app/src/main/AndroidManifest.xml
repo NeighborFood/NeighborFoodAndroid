@@ -21,13 +21,7 @@
         <activity
             android:name=".ui.activities.PlaceMealActivity"
             android:exported="true"
-            android:label="Add a meal">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="Add a meal"/>
         <activity
             android:name=".ui.activities.ConversationsActivity"
             android:exported="true" />
