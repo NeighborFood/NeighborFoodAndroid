@@ -41,11 +41,12 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
             case R.id.SubscribeId:
                 heart= (subscribed)?R.drawable.full_heart:R.drawable.empty_heart;
                 subscribeButton.setImageResource(heart);
+                subscribeButton.setTag(heart);
                 subscribed= !subscribed;
                 break;
             case R.id.notificationId:
                 notif= (notifyOn)?R.drawable.full_notif:R.drawable.empty_notif;
-                notificationButton.setImageResource(notif);
+                notificationButton.setTag(notif);
                 notifyOn= !notifyOn;
                 break;
             case R.id.facebookId:{
