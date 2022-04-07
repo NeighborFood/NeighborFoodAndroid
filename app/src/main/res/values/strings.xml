@@ -41,6 +41,25 @@
     <string name="log_out">Log Out</string>
     <string name="start">Start</string>
     <string name="textview">TextView</string>
+    <string name="likes">Likes</string>
+    <string name="meals">meals</string>
+    <string name="heart">heart</string>
+    <string name="_50_reviews">50 reviews</string>
+    <string name="_61">61</string>
+    <string name="_103">103</string>
+    <string name="mr_fish">Mr.Fish</string>
+    <string name="_4_7">4.7</string>
+    <string name="star">star</string>
+    <string name="facebookicon">facebookIcon</string>
+    <string name="subscribe">subscribe</string>
+    <string name="notify_me">notify me</string>
+    <string name="past_meals">Past_meals</string>
+    <string name="meal1">Meal1</string>
+    <string name="sdp_fan">SDP fan</string>
+    <string name="gordon_ramsey">Gordon Ramsey</string>
+    <string name="_4_9">4.9</string>
+    <string name="_5921">5921</string>
+    <string name="_3100">3100</string>
+    <string name="_50304_reviews">50304 reviews</string>
     <string name="email">E-mail</string>
-
 </resources>
