@@ -30,7 +30,7 @@ public class MealActivity extends AppCompatActivity {
         Button vendorButton = (Button)findViewById(R.id.go_vendor_profile);
 
 
-        // To adapt when
+        // TODO adapt when vendor activity will be merge
         vendorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
