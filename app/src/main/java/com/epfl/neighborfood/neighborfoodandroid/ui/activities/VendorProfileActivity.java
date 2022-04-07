@@ -18,6 +18,8 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
     ImageView notificationButton;
     Boolean notifyOn = false;
     ImageView facebookIcon,instagramIcon, twitterIcon;
+    private int heart = R.drawable.empty_heart;
+    private int notif = R.drawable.empty_notif;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,28 +39,14 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.SubscribeId:
-                if(!subscribed){
-                    subscribeButton.setImageResource(R.drawable.full_heart);
-                    subscribeButton.setTag(R.drawable.full_heart);
-                    subscribed = true;
-                }
-                else{
-                    subscribeButton.setImageResource(R.drawable.empty_heart);
-                    subscribeButton.setTag(R.drawable.empty_heart);
-                    subscribed = false;
-                }
+                heart= (subscribed)?R.drawable.full_heart:R.drawable.empty_heart;
+                subscribeButton.setImageResource(heart);
+                subscribed= !subscribed;
                 break;
             case R.id.notificationId:
-                if(!notifyOn){
-                    notificationButton.setImageResource(R.drawable.full_notif);
-                    notificationButton.setTag(R.drawable.full_notif);
-                    notifyOn = true;
-                }
-                else{
-                    notificationButton.setImageResource(R.drawable.empty_notif);
-                    notificationButton.setTag(R.drawable.empty_notif);
-                    notifyOn = false;
-                }
+                notif= (notifyOn)?R.drawable.full_notif:R.drawable.empty_notif;
+                notificationButton.setImageResource(notif);
+                notifyOn= !notifyOn;
                 break;
             case R.id.facebookId:{
                 String webLinkStr = "https://www.facebook.com/gordonramsay";
@@ -86,4 +74,5 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
 }
