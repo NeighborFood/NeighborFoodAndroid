@@ -19,4 +19,6 @@ I reviewed the pull requests of khalil, yassine and Badis.
 
 
 ## Overall team
-
+Overall, this week we were a bit more efficient, workflow-wise. We each tried to finish our work earlier than usual and we set up a third standup zoom meeting on thursday night to finalize our work for this sprint.
+The issue remains that on monday's standup meeting, not many of us have made substantial progress so we may have to postpone it to tuesday instead.
+Time estimations are still relatively off but are improving.
