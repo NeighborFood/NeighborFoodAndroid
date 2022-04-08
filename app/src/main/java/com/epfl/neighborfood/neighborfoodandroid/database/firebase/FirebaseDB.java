@@ -8,6 +8,7 @@ import com.epfl.neighborfood.neighborfoodandroid.database.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.database.TentativeDB;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
@@ -18,8 +19,13 @@ public class FirebaseDB implements TentativeDB {
     private static FirebaseDB instance;
 
 
-    private static final FirebaseFirestore database = FirebaseFirestore.getInstance();
+    private static FirebaseFirestore database;
 
+
+    public FirebaseDB() {
+        //database = FirebaseFirestore.getInstance();
+        //FirebaseAuth.getInstance();
+    }
 
     public static  FirebaseDB getInstance() {
         if (instance== null) {

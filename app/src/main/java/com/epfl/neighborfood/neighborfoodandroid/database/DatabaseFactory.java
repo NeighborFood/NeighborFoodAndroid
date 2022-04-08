@@ -5,7 +5,7 @@ import com.epfl.neighborfood.neighborfoodandroid.database.firebase.FirebaseDB;
 
 public class DatabaseFactory {
 
-    private static TentativeDB dependency;
+    private static TentativeDB dependency = FirebaseDB.getInstance();
 
 
     /**

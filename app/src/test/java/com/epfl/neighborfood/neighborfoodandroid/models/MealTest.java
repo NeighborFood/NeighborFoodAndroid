@@ -2,17 +2,34 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MealTest {
-    private String name = "Tofu";
-    private String shortDescription = "Yumi tofu";
-    private String longDescription = "Plant based proteins";
-    private String allergens = "Wheat";
-    private double price = 2.23;
-    private int imageId = 5;
+    private String name;
+    private String shortDescription;
+    private String longDescription;
+    private List<Allergen> allergens;
+    private double price;
+    private int imageId;
+
+    @Before
+    public void initTestVariables() {
+        name = "Tofu";
+        shortDescription = "Yumi tofu";
+        longDescription = "Plant based proteins";
+        allergens = new ArrayList<>();
+        allergens.add(Allergen.EGGS);
+        allergens.add(Allergen.HONEY);
+        allergens.add(Allergen.SOY);
+        price = 2.23;
+        imageId = 5;
+    }
 
 
     @Test
@@ -42,7 +59,7 @@ public class MealTest {
     @Test
     public void getAllergens() {
         Meal meal = new Meal(name, shortDescription, longDescription, imageId, allergens, price);
-        assertEquals(allergens, meal.getAllergens());
+        assertArrayEquals(allergens.toArray(), meal.getAllergens().toArray());
     }
 
     @Test

@@ -10,8 +10,10 @@ import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.AccountFragment;
+import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.ConversationsFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.epfl.neighborfood.MESSAGE";
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setCurrentFragment(MealListFragment.class);
-        navbar =findViewById(R.id.bottomNavigationView);
+        navbar = findViewById(R.id.bottomNavigationView);
         navbar.setOnItemSelectedListener(this::switchFragment);
     }
     private boolean switchFragment(MenuItem it){
@@ -31,8 +33,10 @@ public class MainActivity extends AppCompatActivity {
                 setCurrentFragment(MealListFragment.class);
                 return true;
             case R.id.navBarMessages:
+                setCurrentFragment(ConversationsFragment.class);
+                /*
                 Intent intent = new Intent(this,ConversationsActivity.class);
-                startActivity(intent);
+                startActivity(intent);*/
                 //Toast.makeText(this, "Not yet Implemented!", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.navBarAccount:
