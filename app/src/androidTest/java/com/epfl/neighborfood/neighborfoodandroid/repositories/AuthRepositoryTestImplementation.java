@@ -18,7 +18,7 @@ public class AuthRepositoryTestImplementation extends AuthRepository{
         }, 1000); //Fake Delay to simulate network request
     }
 
-    public void updateUser(User user){
+    public void setUser(User user){
         userLiveData.postValue(user);
         loggedOutLiveData.postValue(false);
     }

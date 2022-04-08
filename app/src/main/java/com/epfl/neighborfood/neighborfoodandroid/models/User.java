@@ -5,6 +5,8 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 import android.net.Uri;
 
 import java.io.Serializable;
+import java.net.URI;
+import java.util.ArrayList;
 
 
 public class User implements Serializable {
@@ -20,6 +22,8 @@ public class User implements Serializable {
     private String email = "";
     private String firstName = "";
     private String lastName = "";
+    private String bio = "";
+    private ArrayList<String> links = new ArrayList<>();
     //private Profile _profile = null;
     private Uri ppUri;
 
@@ -115,6 +119,37 @@ public class User implements Serializable {
     public Uri getProfilePictureURI(){
         return ppUri;
     }
+    /**
+     * Setter for the profile picture URI
+     * @param uri
+     */
+    public void setProfilePictureURI(Uri uri){
+        ppUri = uri == null ? Uri.EMPTY : uri;
+    }
+
+    /**
+     * Getter for the bio of the user
+     * @return the bio
+     */
+    public String getBio(){
+        return bio;
+    }
+    /**
+     * Setter for the bio of the user
+     * @param bio
+     */
+    public void setBio(String bio){
+        this.bio = bio;
+    }
+
+    public ArrayList<String> getLinks(){
+        return (ArrayList<String>) links.clone();
+    }
+    public void setLinks(ArrayList<String>links){
+        this.links = links;
+    }
+
+
 
     @Override
     public String toString() {

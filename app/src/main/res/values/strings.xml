@@ -62,4 +62,7 @@
     <string name="_3100">3100</string>
     <string name="_50304_reviews">50304 reviews</string>
     <string name="email">E-mail</string>
+    <string name="add_link">Add link</string>
+    <string name="external_link">External Link</string>
+    <string name="links">Links</string>
 </resources>

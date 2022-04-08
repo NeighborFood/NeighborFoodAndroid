@@ -26,6 +26,11 @@ public abstract class AuthRepository {
             userLiveData.postValue(authenticator.getCurrentUser());
             loggedOutLiveData.postValue(false);
         }
+    }
+    public void updateUser(User user){
+        userLiveData.postValue(user);
+        loggedOutLiveData.postValue(user==null);
+        //TODO: Update user attributes in db
 
     }
     public void logOut(){

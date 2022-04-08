@@ -24,7 +24,15 @@ public class EditProfileViewModel extends ViewModel {
         return currentUser;
     }
 
-    public void saveUserData(){
+    public void updateUser(User user){
+        if(user == null){
+            return;
+        }
+        if(user.getId() != currentUser.getValue().getId()){
+            throw new IllegalArgumentException("Cannot update user fields for another user");
+        }
+        //Verify user attributes
+        authRepo.updateUser(user);
     }
 
     private void loadUser(){

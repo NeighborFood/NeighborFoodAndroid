@@ -29,27 +29,37 @@ import android.provider.MediaStore;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.epfl.neighborfood.neighborfoodandroid.AppContainerTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.models.UserTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
+import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepositoryTestImplementation;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 
-//@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidJUnit4.class)
 
 public class ProfileEditingActivityTest {
     public static final String KEY_IMAGE_DATA = "data";
     private AuthRepository authRepo;
     @Rule
     public ActivityScenarioRule<ProfileEditingActivity> testRule = new ActivityScenarioRule<>(ProfileEditingActivity.class);
+
+    @BeforeClass
+    public static void setupApp(){
+        NeighborFoodApplication.appContainer = new AppContainerTestImplementation();
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -110,9 +120,7 @@ public class ProfileEditingActivityTest {
     @Test
     public void uiReflectsUser(){
         User c = new UserTestImplementation("-1","zbiba@epfl.ch","Zbiba","Zabboub");
-        testRule.getScenario().onActivity(activity -> {
-            activity.updateUserFields(c);
-        });
+        ((AuthRepositoryTestImplementation)authRepo).setUser(c);
         onView(withId(R.id.nameValue)).check(matches(withText(c.getFirstName())));
         onView(withId(R.id.surnameValue)).check(matches(withText(c.getLastName())));
         onView(withId(R.id.emailValue)).check(matches(withText(c.getEmail())));
