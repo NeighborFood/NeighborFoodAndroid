@@ -1,4 +1,4 @@
-package com.epfl.neighborfood.neighborfoodandroid.ui.layouts;
+package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -8,7 +8,6 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasData;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -27,53 +26,44 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 
 
-import androidx.lifecycle.Lifecycle;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
+import com.epfl.neighborfood.neighborfoodandroid.models.UserTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
-import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepositoryTestImplementation;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ProfileEditingActivity;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 
-import javax.inject.Inject;
 
-import dagger.hilt.android.testing.HiltAndroidRule;
-import dagger.hilt.android.testing.HiltAndroidTest;
+//@RunWith(AndroidJUnit4.class)
 
-@RunWith(AndroidJUnit4.class)
-//@HiltAndroidTest
 public class ProfileEditingActivityTest {
     public static final String KEY_IMAGE_DATA = "data";
-
+    private AuthRepository authRepo;
     @Rule
     public ActivityScenarioRule<ProfileEditingActivity> testRule = new ActivityScenarioRule<>(ProfileEditingActivity.class);
-    //public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
-    /*@Rule public RuleChain rule = RuleChain.outerRule(hiltRule)
-            .around(testRule);*/
-    /*@Inject
-    AuthRepository authRepository;
-*/
+
     @Before
     public void setUp() throws Exception {
+
         Intents.init();
-  //      hiltRule.inject();
+        NeighborFoodApplication app = ApplicationProvider.getApplicationContext();
+        authRepo = app.getAppContainer().getAuthRepo();
+        authRepo.logOut();
     }
+
     @Test
     public void buttonSaveTest(){
 
-        onView(withId(R.id.saveButton)).perform(click());
+        onView(withId(R.id.saveButton)).perform(scrollTo(),click());
         //assertTrue(testRule.getScenario().getState() == Lifecycle.State.DESTROYED);
 
     }
@@ -116,13 +106,18 @@ public class ProfileEditingActivityTest {
         bundle.putParcelable(ProfileEditingActivity.KEY_IMAGE_DATA, BitmapFactory.decodeResource(res,R.drawable.ic_launcher_background));
         return new Instrumentation.ActivityResult(Activity.RESULT_OK,new Intent().putExtras(bundle));
     }
-/*
+
     @Test
     public void uiReflectsUser(){
-        User c = new User("-1","zbiba@epfl.ch","Zbiba","Zabboub");
-        ((AuthRepositoryTestImplementation)authRepository).updateUser(c);
+        User c = new UserTestImplementation("-1","zbiba@epfl.ch","Zbiba","Zabboub");
+        testRule.getScenario().onActivity(activity -> {
+            activity.updateUserFields(c);
+        });
         onView(withId(R.id.nameValue)).check(matches(withText(c.getFirstName())));
-    }*/
+        onView(withId(R.id.surnameValue)).check(matches(withText(c.getLastName())));
+        onView(withId(R.id.emailValue)).check(matches(withText(c.getEmail())));
+
+    }
     @After
     public void tearDown() throws Exception {
         Intents.release();

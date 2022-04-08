@@ -1,4 +1,4 @@
-package com.epfl.neighborfood.neighborfoodandroid.ui.layouts;
+package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import android.content.Intent;
 
@@ -14,7 +14,6 @@ import com.epfl.neighborfood.neighborfoodandroid.authentication.DummyAuthenticat
 import com.epfl.neighborfood.neighborfoodandroid.database.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
 
 import org.junit.After;
 import org.junit.Before;
