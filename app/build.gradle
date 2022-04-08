@@ -4,8 +4,6 @@ plugins {
     id 'com.google.gms.google-services'  // Google Services plugin
 }
 apply plugin: 'com.android.application'
-apply plugin: 'dagger.hilt.android.plugin'
-
 android {
     compileSdk 31
 
@@ -17,7 +15,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        //testInstrumentationRunner "com.epfl.neighborfood.neighborfoodandroid.CustomTestRunner"
     }
 
     buildTypes {
@@ -73,19 +70,10 @@ dependencies {
     implementation "com.google.android.material:material:1.2.0-alpha3"
 
 
+
+
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 
-    //Dagger-Hilt
-    implementation 'com.google.dagger:hilt-android:2.41'
-    annotationProcessor 'com.google.dagger:hilt-compiler:2.41'
-
-    // For instrumentation tests
-    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.41'
-    androidTestAnnotationProcessor 'com.google.dagger:hilt-compiler:2.41'
-
-    // For local unit tests
-    testImplementation 'com.google.dagger:hilt-android-testing:2.41'
-    testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.41'
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
 }

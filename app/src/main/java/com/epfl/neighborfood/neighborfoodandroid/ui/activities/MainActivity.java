@@ -6,18 +6,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.AccountFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.ConversationsFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
+import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.VendorDashboardFragment;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.epfl.neighborfood.MESSAGE";
     private NavigationBarView navbar;
+    private Button toggleButton;
+    private boolean isVendor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,12 +30,26 @@ public class MainActivity extends AppCompatActivity {
         setCurrentFragment(MealListFragment.class);
         navbar = findViewById(R.id.bottomNavigationView);
         navbar.setOnItemSelectedListener(this::switchFragment);
+        isVendor=false;
+        toggleButton=findViewById(R.id.button2);
+        toggleButton.setOnClickListener(this::toggleView);
     }
+
+    private void toggleView(View view) {
+        isVendor=!isVendor;
+        switchFragment(navbar.getMenu().findItem(navbar.getSelectedItemId()));
+    }
+
     private boolean switchFragment(MenuItem it){
 
         switch (it.getItemId()) {
             case R.id.navBarHome:
-                setCurrentFragment(MealListFragment.class);
+                if (isVendor){
+                setCurrentFragment(VendorDashboardFragment.class);
+                }
+                else{
+                    setCurrentFragment(MealListFragment.class);
+            }
                 return true;
             case R.id.navBarMessages:
                 setCurrentFragment(ConversationsFragment.class);
@@ -50,4 +69,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment,null)/*.addToBackStack(null)*/.commit();
 
     }
+
+
+
 }

@@ -20,7 +20,7 @@
     <ScrollView
         android:id="@+id/profileEditScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -105,10 +105,33 @@
                 android:textColor="#757575" />
 
             <TextView
-                android:id="@+id/bioLabel"
+                android:id="@+id/emailLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/usernameValue"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/profilePictureImageView"
+                android:text="@string/email"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/emailValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/emailLabel"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/profilePictureImageView"
+                android:text="email@example.com"
+                android:textColor="#757575" />
+
+            <TextView
+                android:id="@+id/bioLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/emailValue"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/bio"
@@ -125,16 +148,16 @@
                 android:hint="@string/bio"
                 android:minHeight="150dp"
                 tools:ignore="DuplicateSpeakableTextCheck" />
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bioValue"
+                android:onClick="onClick"
+                android:text="@string/save" />
+
         </RelativeLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:onClick="onClick"
-        android:text="@string/save" />
 
 
 </LinearLayout>
