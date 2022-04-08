@@ -1,6 +1,7 @@
 # Summary for sprint 6
 
 ## Badis (scrum master)
+I have worked on the VendorDashboard fragment which still had some errors that needed to be fixed before merging into the main branch. This included fixing things such as dependency issues caused by the FloatingActionButton and the fragment not integrating well with other relevant activities.
 
 ## Elior
 I got caught up by the time and could not implement everything I had to.
