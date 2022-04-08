@@ -30,11 +30,11 @@ public class MealActivity extends AppCompatActivity {
         Button vendorButton = (Button)findViewById(R.id.go_vendor_profile);
 
 
-        // TODO adapt when vendor activity will be merge
+        // Listener to enable the click button to go to the vendor profile
         vendorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MealActivity.this, PlaceMealActivity.class));
+                startActivity(new Intent(MealActivity.this, VendorProfileActivity.class));
             }
         });
 
