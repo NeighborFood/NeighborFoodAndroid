@@ -37,6 +37,7 @@ android {
 
 dependencies {
     implementation 'androidx.test.espresso:espresso-contrib:3.4.0'
+    implementation 'com.google.firebase:firebase-firestore:24.1.0'
     def fragment_version = "1.4.1"
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -58,9 +59,12 @@ dependencies {
 
     //Firebase google authentication setup
 
-    implementation platform('com.google.firebase:firebase-bom:29.1.0')
+    implementation platform('com.google.firebase:firebase-bom:29.3.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
+    implementation ('com.google.firebase:firebase-firestore:24.1.0'){
+        exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
+    }
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
 
     implementation "com.google.android.material:material:1.2.0-alpha3"
