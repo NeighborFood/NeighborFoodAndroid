@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -62,7 +63,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
         ppView.setOnClickListener(this::onClick);
         findViewById(R.id.profileEditAddLinkButton).setOnClickListener(this::onClick);
         linksLayout = (LinearLayout) findViewById(R.id.profileEditLinksLayout);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void updateUserFields(User user) {
@@ -105,7 +106,9 @@ public class ProfileEditingActivity extends AppCompatActivity {
                 Toast.makeText(this, "Successfully Saved!", Toast.LENGTH_SHORT).show();
                 finish();
             case R.id.profileEditAddLinkButton:
-                addLinkInput();
+                TextInputEditText empty = addLinkInput();
+                empty.requestFocus();
+
                 break;
             default:
                 break;
@@ -114,6 +117,9 @@ public class ProfileEditingActivity extends AppCompatActivity {
     private User getUserWithUpdatedData(){
         //TODO: create User builder and replace this
         User currUser = vmodel.getCurrentUser().getValue();
+        if(currUser == null){
+            return null;
+        }
         String bio = ((TextInputEditText)findViewById(R.id.bioValue)).getEditableText().toString();
         User newUser = new User(currUser.getId(), currUser.getEmail(), currUser.getFirstName(), currUser.getLastName());
         newUser.setBio(bio);
@@ -144,5 +150,14 @@ public class ProfileEditingActivity extends AppCompatActivity {
         empty.setHint("External Link");
         textEdits.add(empty);
         return empty;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) // Press Back Icon
+        {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
