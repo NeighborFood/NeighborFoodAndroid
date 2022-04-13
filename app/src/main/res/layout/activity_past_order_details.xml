@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mealName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/couscous"
+                app:layout_constraintEnd_toEndOf="@+id/mealImage"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="@+id/mealImage"
+                app:layout_constraintTop_toBottomOf="@+id/mealImage" />
+
+            <Button
+                android:id="@+id/go_vendor_profile_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/see_vendor_profile"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.023" />
+
+            <ImageView
+                android:id="@+id/mealImage"
+                android:layout_width="229dp"
+                android:layout_height="147dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/meal1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/go_vendor_profile_id"
+                app:srcCompat="@drawable/couscous" />
+
+            <TextView
+                android:id="@+id/mealDesc"
+                android:layout_width="286dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="64dp"
+                android:text="@string/meal_description"
+                app:layout_constraintEnd_toEndOf="@+id/mealImage"
+                app:layout_constraintHorizontal_bias="0.508"
+                app:layout_constraintStart_toStartOf="@+id/mealImage"
+                app:layout_constraintTop_toBottomOf="@+id/mealName" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="143dp"
+                android:layout_height="65dp"
+                android:text="@string/order_meal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.944" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -42,6 +42,9 @@
             android:name=".ui.activities.MainActivity"
             android:exported="true" />
         <activity
+            android:name=".ui.activities.PastOrderDetailsActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activities.PastOrdersActivity"
             android:exported="true">
             <intent-filter>

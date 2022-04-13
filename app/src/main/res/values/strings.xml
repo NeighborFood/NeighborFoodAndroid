@@ -62,5 +62,8 @@
     <string name="_3100">3100</string>
     <string name="_50304_reviews">50304 reviews</string>
     <string name="email">E-mail</string>
-    <string name="past_orders">Past Orders</string>
+    <string name="meal_description">meal_description</string>
+    <string name="couscous">couscous</string>
+    <string name="see_vendor_profile">See Vendor Profile</string>
+    <string name="order_meal">Order Meal</string>
 </resources>

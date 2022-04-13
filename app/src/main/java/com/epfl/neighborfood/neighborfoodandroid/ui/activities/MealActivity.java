@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.AllergensAdapter;
@@ -27,7 +25,7 @@ public class MealActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        Button vendorButton = (Button)findViewById(R.id.go_vendor_profile);
+        Button vendorButton = (Button)findViewById(R.id.go_vendor_profile_id);
 
 
         // Listener to enable the click button to go to the vendor profile
