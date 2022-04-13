@@ -33,13 +33,16 @@
             android:name=".ui.activities.ChatRoomActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.SignUpActivity"
             android:exported="true" />
         <activity
             android:name=".ui.activities.VendorProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activities.SignUpActivity"
+            android:name=".ui.activities.MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activities.PastOrdersActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
