@@ -3,6 +3,7 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.intent.Intents.getIntents;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
@@ -12,6 +13,7 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
+import static org.junit.Assert.assertEquals;
 
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -59,6 +61,7 @@ public class PastOrdersActivityTest {
         onData(anything()).inAdapterView(withId(R.id.order_list_view)).atPosition(0).
                 perform(click());
         intended(hasComponent(PastOrderDetailsActivity.class.getName()));
-        //intended(hasExtra("order", order));
+        Order intentOrder = (Order) getIntents().get(0).getSerializableExtra("order");
+        assertEquals(order.getMealVendor(),intentOrder.getMealVendor());
     }
 }
