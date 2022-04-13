@@ -1,4 +1,4 @@
-package com.epfl.neighborfood.neighborfoodandroid.ui.layouts;
+package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;

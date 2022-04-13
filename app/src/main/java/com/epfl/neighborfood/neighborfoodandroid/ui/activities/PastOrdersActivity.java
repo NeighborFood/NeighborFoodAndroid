@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -89,6 +90,7 @@ public class PastOrdersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(PastOrdersActivity.this, PastOrderDetailsActivity.class);
+                intent.putExtra("order", orderArrayList.get(position).getOrder());
                 startActivity(intent);
             }
         });

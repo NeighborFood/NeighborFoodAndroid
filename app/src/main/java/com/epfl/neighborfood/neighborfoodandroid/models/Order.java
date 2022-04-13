@@ -1,8 +1,9 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable {
 
     private Meal meal;
     private Date orderDate;
@@ -44,5 +45,8 @@ public class Order {
             return ORDER_DELIVERED + orderDate.toString();
         }
         return ORDER_NOT_YET_DELIVERED;
+    }
+    public Order getOrder(){
+        return new Order(meal,orderDate,status,mealVendor);
     }
 }

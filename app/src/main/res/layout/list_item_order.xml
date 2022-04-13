@@ -18,7 +18,7 @@
             <ImageView
                 android:id="@+id/order_image"
                 android:layout_width="60dp"
-                android:layout_height="60dp"/>
+                android:layout_height="60dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -31,10 +31,10 @@
                     style="@style/TextAppearance.AppCompat.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Title"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:text="Title"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/order_des"
@@ -44,8 +44,8 @@
                     android:layout_marginTop="5dp"
                     android:maxLength="50"
                     android:singleLine="true"
-                    android:textSize="12sp"
-                    android:text="order received the 22/22/2222"/>
+                    android:text="order received the 22/22/2222"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
