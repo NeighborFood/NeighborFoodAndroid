@@ -25,6 +25,9 @@
         <activity
             android:name=".ui.activities.ConversationsActivity"
             android:exported="true" />
+        <activity
+            android:name=".ui.activities.MealActivity"
+            android:exported="false" />
 
         <activity
             android:name=".ui.activities.ChatRoomActivity"
