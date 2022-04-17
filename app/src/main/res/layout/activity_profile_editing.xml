@@ -148,13 +148,66 @@
                 android:hint="@string/bio"
                 android:minHeight="150dp"
                 tools:ignore="DuplicateSpeakableTextCheck" />
+            <TextView
+                android:id="@+id/profileEditLinksLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bioValue"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/links"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/profileEditLinksWrapperLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/profileEditLinksLabel"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/profileEditLinksLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:hint="@string/external_link"
+                        tools:ignore="DuplicateSpeakableTextCheck" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:hint="@string/external_link"
+                        tools:ignore="DuplicateSpeakableTextCheck" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:hint="@string/external_link"
+                        tools:ignore="DuplicateSpeakableTextCheck" />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/profileEditAddLinkButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_link"
+                    android:layout_gravity="center_horizontal"
+                    />
+            </LinearLayout>
             <Button
                 android:id="@+id/saveButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/bioValue"
+                android:layout_below="@id/profileEditLinksWrapperLayout"
+                android:layout_centerHorizontal="true"
                 android:onClick="onClick"
                 android:text="@string/save" />
+
 
         </RelativeLayout>
     </ScrollView>
