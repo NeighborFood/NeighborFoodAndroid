@@ -33,10 +33,16 @@
             android:name=".ui.activities.ChatRoomActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.PastOrdersActivity"
             android:exported="true" />
         <activity
             android:name=".ui.activities.VendorProfileActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activities.PastOrderDetailsActivity"
             android:exported="true" />
         <activity
             android:name=".ui.activities.SignUpActivity"
