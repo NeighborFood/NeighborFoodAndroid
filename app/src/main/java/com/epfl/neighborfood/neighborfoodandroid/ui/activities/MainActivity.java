@@ -16,6 +16,7 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.ConversationsFragm
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.VendorDashboardFragment;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.epfl.neighborfood.MESSAGE";
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setCurrentFragment(MealListFragment.class);
-        navbar =findViewById(R.id.bottomNavigationView);
+        navbar = findViewById(R.id.bottomNavigationView);
         navbar.setOnItemSelectedListener(this::switchFragment);
         isVendor=false;
         toggleButton=findViewById(R.id.button2);
