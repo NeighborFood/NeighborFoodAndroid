@@ -1,5 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
+import java.util.ArrayList;
+
 public class UserTestImplementation extends User{
     /**
      * Create a new User object, holding database
@@ -13,5 +15,7 @@ public class UserTestImplementation extends User{
      */
     public UserTestImplementation(String id, String email, String firstName, String lastName) {
         super(id, email, firstName, lastName);
+        setBio("");
+        setLinks(new ArrayList<>());
     }
 }

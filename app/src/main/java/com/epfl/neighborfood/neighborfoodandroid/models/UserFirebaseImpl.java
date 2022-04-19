@@ -18,6 +18,10 @@ public class UserFirebaseImpl extends User {
         setFirstName(nameLastName[0]);
         setLastName(nameLastName[1]);
     }
+    public UserFirebaseImpl(){
+        super("","","","");
+
+    }
 
     private String[] getNameLastNameFromDisplayName(String str){
         String[] res = new String[2];

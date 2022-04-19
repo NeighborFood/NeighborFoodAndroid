@@ -66,4 +66,7 @@
     <string name="couscous">couscous</string>
     <string name="see_vendor_profile">See Vendor Profile</string>
     <string name="order_meal">Order Meal</string>
+    <string name="add_link">Add link</string>
+    <string name="external_link">External Link</string>
+    <string name="links">Links</string>
 </resources>
