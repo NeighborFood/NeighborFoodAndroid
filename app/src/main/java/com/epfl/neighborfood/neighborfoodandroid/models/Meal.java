@@ -1,10 +1,11 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Meal {
+public class Meal implements Serializable {
     private String name, shortDescription, longDescription;
     private double price;
     private int imageId;
