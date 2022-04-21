@@ -2,29 +2,27 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 
 import static org.junit.Assert.assertEquals;
 
-import com.epfl.neighborfood.neighborfoodandroid.database.DBData;
-import com.epfl.neighborfood.neighborfoodandroid.database.DBDataCollection;
+import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
+import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.TentativeDB;
+import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.google.android.gms.tasks.Task;
 
 import org.junit.Test;
-
-import java.util.Map;
 
 public class DatabaseFactoryTest {
 
     @Test
     public void dependencyTest() {
 
-        TentativeDB dep = new TentativeDB() {
+        Database dep = new Database() {
             @Override
-            public Task<DBData> fetch(String collectionPath, String documentPath) {
+            public Task<DocumentSnapshot> fetch(String collectionPath, String documentPath) {
                 return null;
             }
 
             @Override
-            public Task<Void> set(String collectionPath, String documentPath, Map<String, Object> data) {
+            public Task<Void> set(String collectionPath, String documentPath, Object data) {
                 return null;
             }
 
@@ -34,12 +32,12 @@ public class DatabaseFactoryTest {
             }
 
             @Override
-            public Task<String> add(String collectionPath, Map<String, Object> data) {
+            public Task<String> add(String collectionPath, Object data) {
                 return null;
             }
 
             @Override
-            public Task<DBDataCollection> fetchAll(String collectionPath) {
+            public Task<CollectionSnapshot> fetchAll(String collectionPath) {
                 return null;
             }
         };

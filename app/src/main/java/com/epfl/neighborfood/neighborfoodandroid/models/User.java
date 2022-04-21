@@ -9,13 +9,14 @@ import java.net.URI;
 import java.util.ArrayList;
 
 
-public class User implements Serializable {
+public class User extends Model implements Serializable {
 
     /* Keys of the data received from the server */
     private static final String KEY_ID = "id";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_FIRSTNAME = "firstname";
     private static final String KEY_LASTNAME = "lastname";
+
 
     /* Fields concerning the User object */
     private String id = "";
@@ -41,6 +42,9 @@ public class User implements Serializable {
         setEmail(email);
         setFirstName(firstName);
         setLastName(lastName);
+    }
+
+    public User(){
     }
 
 

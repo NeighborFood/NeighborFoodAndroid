@@ -1,5 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
+import com.google.android.gms.tasks.Task;
+
 import java.util.List;
 
 public class Conversation extends Model{

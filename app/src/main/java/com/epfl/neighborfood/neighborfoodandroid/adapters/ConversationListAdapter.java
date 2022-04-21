@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.DummyDatabase;
+import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 

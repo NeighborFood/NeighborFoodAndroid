@@ -1,12 +1,16 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
+
 import java.util.Date;
+
 
 public class Message extends Model{
     private String content;
     private User sender;
     private User receiver;
     private Date date;
+
+
 
     public Message(String messageText, User sender, User receiver) {
         this.content = messageText;
@@ -56,4 +60,6 @@ public class Message extends Model{
     public Date getDate() {
         return date;
     }
+
+
 }
