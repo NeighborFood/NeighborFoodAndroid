@@ -1,14 +1,16 @@
-package com.epfl.neighborfood.neighborfoodandroid.database;
+package com.epfl.neighborfood.neighborfoodandroid.database.dummy;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
+import com.epfl.neighborfood.neighborfoodandroid.database.Database;
+import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
+import com.google.android.gms.tasks.Task;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -61,4 +63,28 @@ public class DummyDatabase implements Database {
         conversationsDB.removeAll(conversationsDB);
     }
 
+    @Override
+    public Task<DocumentSnapshot> fetch(String collectionPath, String documentPath) {
+        return null;
+    }
+
+    @Override
+    public Task<Void> set(String collectionPath, String documentPath, Object data) {
+        return null;
+    }
+
+    @Override
+    public Task<Void> delete(String collectionPath, String documentPath) {
+        return null;
+    }
+
+    @Override
+    public Task<String> add(String collectionPath, Object data) {
+        return null;
+    }
+
+    @Override
+    public Task<CollectionSnapshot> fetchAll(String collectionPath) {
+        return null;
+    }
 }

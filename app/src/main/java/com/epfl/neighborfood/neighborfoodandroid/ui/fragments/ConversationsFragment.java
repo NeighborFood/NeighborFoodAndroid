@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.ConversationListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.DummyDatabase;
+import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;

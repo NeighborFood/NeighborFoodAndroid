@@ -3,6 +3,7 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.navBarMessages:
                 setCurrentFragment(ConversationsFragment.class);
+
                 /*
                 Intent intent = new Intent(this,ConversationsActivity.class);
                 startActivity(intent);*/
