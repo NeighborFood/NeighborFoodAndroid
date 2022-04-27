@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.AccountFragment;
+import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.ConversationsFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.VendorDashboardFragment;
 import com.google.android.material.navigation.NavigationBarView;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.navBarMessages:
+                setCurrentFragment(ConversationsFragment.class);
                 return true;
             case R.id.navBarAccount:
                 setCurrentFragment(AccountFragment.class);
