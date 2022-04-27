@@ -8,36 +8,46 @@ import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 
 
-
+/**
+ * The Profile Editing activity ViewModel
+ * It serves as the entry point to the models and handles checking the user parameters
+ */
 public class EditProfileViewModel extends ViewModel {
-    MutableLiveData<User> currentUser ;
-    AuthRepository authRepo;
+    private MutableLiveData<User> currentUser;
+    private AuthRepository authRepo;
 
-    public EditProfileViewModel (AuthRepository repository){
+    public EditProfileViewModel(AuthRepository repository) {
         authRepo = repository;
     }
-    public LiveData<User> getCurrentUser(){
-        if(currentUser == null){
+
+    /**
+     * Gets an observable object on the currently autheticated user
+     *
+     * @return the currently authenticated user LiveData
+     */
+    public LiveData<User> getCurrentUser() {
+        if (currentUser == null) {
             //fetch current user
-            loadUser();
+            currentUser = authRepo.getUserLiveData();
         }
         return currentUser;
     }
 
-    public void updateUser(User user){
-        if(user == null){
+
+    /**
+     * Updates the currently authenticated user with the user passed as parameter
+     *
+     * @param user : The user with updated fields
+     */
+    public void updateUser(User user) {
+        if (user == null) {
             return;
         }
-        if(user.getId() != currentUser.getValue().getId()){
-            throw new IllegalArgumentException("Cannot update user fields for another user");
-        }
         //Verify user attributes
+        if (!user.getId().equals(currentUser.getValue().getId())) {
+            return;
+        }
         authRepo.updateUser(user);
-    }
-
-    private void loadUser(){
-        currentUser = authRepo.getUserLiveData();
-
     }
 
 }
