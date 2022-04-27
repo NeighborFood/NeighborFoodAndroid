@@ -11,6 +11,10 @@ public class Order extends Model {
     private boolean status;
     private String mealVendor;
 
+
+    public Order(){
+    }
+
     public Order(Meal meal, Date orderDate) {
         this.meal = meal;
         this.orderDate = orderDate;

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.ConversationListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
@@ -18,8 +19,7 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class ConversationsFragment extends Fragment {
     public static final int IMGID = R.drawable.profile_img_male;
@@ -59,11 +59,12 @@ public class ConversationsFragment extends Fragment {
         DummyDatabase.getInstance().reset();
 
         for (int i = 0; i < users.length; i++) {
-            Set<User> aux = new HashSet<>();
+            List<User> aux = new ArrayList<>();
             aux.add(users[i]);
             aux.add(AuthenticatorFactory.getDependency().getCurrentUser());
             Conversation conv = new Conversation(aux, Arrays.asList(messages[i]));
             dep.pushConversation(conv);
+            DatabaseFactory.getDependency().add("/test",conv);
         }
         conversations = dep.fetchConversations();
 
@@ -77,7 +78,7 @@ public class ConversationsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent i = new Intent(view.getContext(), ChatRoomActivity.class);
-                i.putExtra("Chatter",conversations.get(position).getChatter());
+                i.putExtra("Chatter",conversations.get(position).chatter());
                 startActivity(i);
             }
         });

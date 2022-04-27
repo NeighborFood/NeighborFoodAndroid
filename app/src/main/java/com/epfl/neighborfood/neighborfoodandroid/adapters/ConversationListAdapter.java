@@ -41,10 +41,10 @@ public class ConversationListAdapter extends ArrayAdapter {
         TextView userLastmsg = convertView.findViewById(R.id.user_last_message);
 
         imageView.setImageResource(DummyDatabase.PROFILE_IMG_ID);
-        userName.setText(conv.getChatter().getFullName());
+        userName.setText(conv.chatter().getFullName());
 
         String txt = "";
-        Message last = conv.getLastMessage();
+        Message last = conv.lastMessage();
 
         if (last != null) {
             txt = last.getContent();

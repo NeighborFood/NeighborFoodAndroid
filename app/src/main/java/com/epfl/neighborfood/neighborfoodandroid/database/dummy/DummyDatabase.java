@@ -51,7 +51,7 @@ public class DummyDatabase implements Database {
     public List<Message> fetchUserConversation(User chatter){
         if (chatter != null){
             for (Conversation conv: conversationsDB){
-                if (chatter.getId()==conv.getChatter().getId()){
+                if (chatter.getId()==conv.chatter().getId()){
                     return conv.getMessages();
                 }
             }

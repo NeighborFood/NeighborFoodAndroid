@@ -41,8 +41,10 @@ import static org.hamcrest.Matchers.instanceOf;
 import android.content.Intent;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RunWith(AndroidJUnit4.class)
@@ -89,7 +91,7 @@ public class ConversationsActivityTest {
         DummyDatabase.getInstance().reset();
 
         for (int i = 0; i < users.length; i++) {
-            Set<User> aux = new HashSet<>();
+            List<User> aux = new ArrayList<>();
             aux.add(users[i]);
             aux.add(AuthenticatorFactory.getDependency().getCurrentUser());
             Conversation conv = new Conversation(aux, Arrays.asList(messages[i]));
@@ -156,7 +158,7 @@ public class ConversationsActivityTest {
 
 
         for (int i = 0; i < users.length; i++) {
-            Set<User> aux = new HashSet<>();
+            List<User> aux = new ArrayList<>();
             aux.add(users[i]);
             aux.add(AuthenticatorFactory.getDependency().getCurrentUser());
             Conversation conv = new Conversation(aux, Arrays.asList(messages[i]));

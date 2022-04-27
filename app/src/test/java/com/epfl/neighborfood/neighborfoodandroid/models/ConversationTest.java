@@ -1,6 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
-import static org.junit.Assert.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -10,17 +9,18 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ConversationTest {
     @Test
     public void getChatterTest(){
         User usr = new User("1",null,null,null);
-        Set<User> chatters = new HashSet<User>();
+        List<User> chatters = new ArrayList<>();
         chatters.add(usr);
         chatters.add(AuthenticatorFactory.getDependency().getCurrentUser());
         Conversation conversation = new Conversation(chatters,new ArrayList<>());
-        assertThat(conversation.getChatter().getId(),equalTo(usr.getId()));
+        assertThat(conversation.chatter().getId(),equalTo(usr.getId()));
     }
 
     @Test

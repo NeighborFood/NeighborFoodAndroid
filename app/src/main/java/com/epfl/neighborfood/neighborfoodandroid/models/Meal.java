@@ -5,11 +5,11 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Meal extends Model implements Serializable {
-    private final String name;
-    private final String shortDescription;
-    private final String longDescription;
+    private String name;
+    private String shortDescription;
+    private String longDescription;
     private double price;
-    private final int imageId;
+    private int imageId;
     private List<Allergen> allergens;
 
 
@@ -27,6 +27,9 @@ public class Meal extends Model implements Serializable {
         this.imageId = imageId;
         this.allergens = allergens;
         this.price = price;
+    }
+
+    public Meal(){
     }
 
     public String getName() {

@@ -3,14 +3,13 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Mohamed Yassine Boukhari
  *
  */
 public class Conversation extends Model {
-    private final Set<User> users;
+    private final List<User> users;
     private final List<Message> messages;
 
     /**
@@ -19,7 +18,7 @@ public class Conversation extends Model {
      * @param messages the initial list of messages to start
      * the conversation with
      */
-    public Conversation(Set<User> users, List<Message> messages) {
+    public Conversation(List<User> users, List<Message> messages) {
         this.users = users;
         this.messages = messages;
     }
@@ -29,7 +28,7 @@ public class Conversation extends Model {
      * user is chatting
      * @return a User
      */
-    public User getChatter() {
+    public User chatter() {
         User chatter = null;
         for (User usr: users){
             if(!usr.getId().equals(AuthenticatorFactory.getDependency().getCurrentUser().getId())){
@@ -42,7 +41,7 @@ public class Conversation extends Model {
     /**
      * @return the set of users for this conversation
      */
-    public Set<User> getUsers(){
+    public List<User> getUsers(){
         return users;
     }
 
@@ -59,7 +58,7 @@ public class Conversation extends Model {
      * this conversation
      * @return
      */
-    public Message getLastMessage() {
+    public Message lastMessage() {
         if (messages != null) {
             return messages.get(messages.size() - 1);
         }
