@@ -23,6 +23,9 @@ public class Order extends Model {
         this.mealVendor = mealVendor;
     }
 
+    public Order(){
+    }
+
     public Meal getMeal() {
         return meal;
     }

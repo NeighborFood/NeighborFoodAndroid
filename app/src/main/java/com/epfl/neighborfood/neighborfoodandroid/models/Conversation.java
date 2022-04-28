@@ -10,8 +10,8 @@ import java.util.Set;
  *
  */
 public class Conversation extends Model {
-    private final Set<User> users;
-    private final List<Message> messages;
+    private Set<User> users;
+    private List<Message> messages;
 
     /**
      * constructor for the conversation class
