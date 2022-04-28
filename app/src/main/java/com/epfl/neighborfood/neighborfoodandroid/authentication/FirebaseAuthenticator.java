@@ -8,6 +8,9 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+/**
+ * A firebase implementation of the authenticator
+ */
 public class FirebaseAuthenticator implements Authenticator {
 
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -27,10 +30,11 @@ public class FirebaseAuthenticator implements Authenticator {
     }
 
     @Override
-    public Task logInWithGoogleAccount(GoogleSignInAccount googleAccount) {
+    public Task<Void> logInWithGoogleAccount(GoogleSignInAccount googleAccount) {
         String googleTokenId = googleAccount.getIdToken();
         AuthCredential googleAuthCredential = GoogleAuthProvider.getCredential(googleTokenId, null);
-        return mAuth.signInWithCredential(googleAuthCredential);
+        return mAuth.signInWithCredential(googleAuthCredential).continueWith(task -> null);
     }
+
 
 }

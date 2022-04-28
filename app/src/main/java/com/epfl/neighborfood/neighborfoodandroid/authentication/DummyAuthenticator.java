@@ -3,6 +3,7 @@ package com.epfl.neighborfood.neighborfoodandroid.authentication;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 
 
 public class DummyAuthenticator implements Authenticator {
@@ -16,9 +17,8 @@ public class DummyAuthenticator implements Authenticator {
     }
 
     @Override
-    public Task logInWithGoogleAccount(GoogleSignInAccount googleAccount) {
-        //TODO: Change implementation with mockito
-        return null;
+    public Task<Void> logInWithGoogleAccount(GoogleSignInAccount googleAccount) {
+        return Tasks.forResult(null);
     }
 
 

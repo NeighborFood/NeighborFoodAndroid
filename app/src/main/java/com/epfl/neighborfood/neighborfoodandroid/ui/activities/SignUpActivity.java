@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,7 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Button startButton;
     // a guiding text view, telling the user what to do next
     private TextView guideTextView;
-
+    private ActivityResultLauncher<Intent> activityResultLauncher;
     private GoogleSignInClient googleSignInClient;
 
 
@@ -76,7 +79,11 @@ public class SignUpActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
-
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    activityResult(result.getResultCode(), result.getData());
+                });
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
     }
 
@@ -88,13 +95,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            viewModel.handleGoogleLoginResponse(resultCode, data);
-        }
-
+    public void activityResult(int resultCode, Intent data) {
+        viewModel.handleGoogleLoginResponse(resultCode, data);
     }
 
 
@@ -103,7 +105,8 @@ public class SignUpActivity extends AppCompatActivity {
      */
     private void signIn() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+
+        activityResultLauncher.launch(signInIntent);
     }
 
     /**
@@ -124,22 +127,20 @@ public class SignUpActivity extends AppCompatActivity {
             signOutButton.setVisibility(View.VISIBLE);
             signInButton.setVisibility(View.INVISIBLE);
             startButton.setVisibility(View.VISIBLE);
-            guideTextView.setText("Welcome: " + user.getFullName() + ". Click start to discover the daily meals");
+            guideTextView.setText(getResources().getString(R.string.welcome_message, user.getFullName()));
 
 
         } else {
             signOutButton.setVisibility(View.INVISIBLE);
             signInButton.setVisibility(View.VISIBLE);
             startButton.setVisibility(View.INVISIBLE);
-            guideTextView.setText("Please connect via your google account!");
+            guideTextView.setText(R.string.connection_invitation);
         }
     }
 
 
     /**
      * the onClick handler of the start button which will allow the user to go the meal activity
-     *
-     * @param view(View)
      */
     public void startScrolling(View view) {
         Intent intent = new Intent(this, MainActivity.class);

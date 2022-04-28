@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.Task;
  * Serves as the entry point for the view to the authentication repository
  */
 public class SignUpViewModel extends ViewModel {
-    private AuthRepository authRepo;
+    private final AuthRepository authRepo;
     private LiveData<User> user;
 
     /**
@@ -53,8 +53,9 @@ public class SignUpViewModel extends ViewModel {
      * @param resultCode the result code of the intent
      * @param data       the data received from login activity
      */
-    public void handleGoogleLoginResponse(int resultCode, Intent data) {
-        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-        task.addOnSuccessListener(authRepo::logInWithGoogleAccount);
+    public Task<Void> handleGoogleLoginResponse(int resultCode, Intent data) {
+        Task<GoogleSignInAccount> getAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+        getAccountTask.addOnSuccessListener(authRepo::logInWithGoogleAccount);
+        return getAccountTask.continueWith(task->null);
     }
 }

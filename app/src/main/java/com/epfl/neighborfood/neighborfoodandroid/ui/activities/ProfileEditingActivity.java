@@ -28,6 +28,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class ProfileEditingActivity extends AppCompatActivity {
@@ -38,6 +39,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
     @VisibleForTesting
     public static final String KEY_IMAGE_DATA = "data";
     private ImageView ppView;
+    private ActivityResultLauncher activityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +55,13 @@ public class ProfileEditingActivity extends AppCompatActivity {
         ppView = findViewById(R.id.profilePictureImageView);
         ppView.setOnClickListener(this::onClick);
         findViewById(R.id.profileEditAddLinkButton).setOnClickListener(this::onClick);
-        linksLayout = (LinearLayout) findViewById(R.id.profileEditLinksLayout);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        linksLayout = findViewById(R.id.profileEditLinksLayout);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    activityResult(result.getResultCode(), result.getData());
+                });
     }
 
     /**
@@ -97,11 +104,6 @@ public class ProfileEditingActivity extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.profilePictureImageView:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-                        new ActivityResultContracts.StartActivityForResult(),
-                        result -> {
-                            activityResult(result.getResultCode(), result.getData());
-                        });
 
                 activityResultLauncher.launch(galleryIntent);
                 break;

@@ -13,7 +13,7 @@ public interface Authenticator {
     /**
      * Returns the user currently signed in
      *
-     * @return user
+     * @return user, null if no user is logged in
      */
     User getCurrentUser();
 
@@ -28,7 +28,7 @@ public interface Authenticator {
      * @param googleAccount the google account to sign in with
      * @return the Authentication task
      */
-    Task logInWithGoogleAccount(GoogleSignInAccount googleAccount);
+    Task<Void> logInWithGoogleAccount(GoogleSignInAccount googleAccount);
 
 
 }
