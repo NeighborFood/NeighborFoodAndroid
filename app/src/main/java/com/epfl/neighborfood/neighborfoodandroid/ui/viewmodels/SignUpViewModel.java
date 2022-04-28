@@ -9,42 +9,53 @@ import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.GoogleAuthProvider;
 
+/**
+ * ViewModel for the SignUp Activity
+ * Serves as the entry point for the view to the authentication repository
+ */
 public class SignUpViewModel extends ViewModel {
-    private AuthRepository authRepo;
+    private final AuthRepository authRepo;
     private LiveData<User> user;
-    public SignUpViewModel(AuthRepository authRepo){
+
+    /**
+     * Constructor for the SignupViewModel
+     *
+     * @param authRepo the Authentication repository of the app
+     */
+    public SignUpViewModel(AuthRepository authRepo) {
         this.authRepo = authRepo;
     }
-    public LiveData<User> getCurrentUser (){
-        if(user == null){
+
+    /**
+     * Returns an observable object on the currently authenticated user
+     *
+     * @return the current
+     */
+    public LiveData<User> getCurrentUser() {
+        if (user == null) {
             user = authRepo.getUserLiveData();
         }
         return user;
     }
-    public void signOut(){
+
+    /**
+     * Requests to Sign out the currently authenticated user
+     */
+    public void signOut() {
         authRepo.logOut();
     }
 
-    public void handleGoogleLoginResponse(int resultCode, Intent data){
-        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-        try {
-            GoogleSignInAccount googleSignInAccount = task.getResult(ApiException.class);
-            if (googleSignInAccount != null) {
-                getGoogleAuthCredential(googleSignInAccount);
-            }
-        } catch (ApiException e) {
-            System.out.println(e);
-
-        }
-    }
-    private void getGoogleAuthCredential(GoogleSignInAccount googleSignInAccount) {
-        String googleTokenId = googleSignInAccount.getIdToken();
-        AuthCredential googleAuthCredential = GoogleAuthProvider.getCredential(googleTokenId, null);
-        authRepo.authenticateWithCredential(googleAuthCredential);
+    /**
+     * Handles the result of the google login activity
+     *
+     * @param resultCode the result code of the intent
+     * @param data       the data received from login activity
+     */
+    public Task<Void> handleGoogleLoginResponse(int resultCode, Intent data) {
+        Task<GoogleSignInAccount> getAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+        getAccountTask.addOnSuccessListener(authRepo::logInWithGoogleAccount);
+        return getAccountTask.continueWith(task->null);
     }
 }
