@@ -11,7 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
 /**
- * Activity displays the profile of the vendor with all his details.
+ * Activity that displays for the user the profile of the vendor with all his details.
+ * Users can subscribe to the vendor,set notifications on and access their social media links.
  *
  */
 public class VendorProfileActivity extends AppCompatActivity implements View.OnClickListener {

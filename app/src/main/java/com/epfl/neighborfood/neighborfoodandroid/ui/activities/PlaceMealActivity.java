@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Activity where vendors can place their meals
+ * Activity where vendors can place their meals, by uploading meal picture, selecting date, choosing allergens, and writing other details.
  */
 public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     private static final int RESULT_LOAD_IMAGE = 1;
