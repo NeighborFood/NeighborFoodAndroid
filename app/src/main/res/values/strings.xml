@@ -29,6 +29,7 @@
     <string name="user_profile_picture">User Profile Picture</string>
     <string name="sign_in_with_google">Sign In with Google</string>
     <string name="addpicturebutton">addPictureButton</string>
+    <string name="order">order</string>
     <string name="meal_picture" />
     <string name="add_picture_button" />
     <string name="propose_meal">Propose meal</string>
@@ -73,4 +74,7 @@
     <string name="get_google_account_failure">Failed to get Google Account :(</string>
     <string name="welcome_message">Welcome, %1$s! Click start to discover the daily meals!</string>
     <string name="connection_invitation">Please connect via your google account!</string>
+    <string name="twitterLink">https://twitter.com/</string>
+    <string name="InstagramLink">https://www.instagram.com/</string>
+    <string name="FacebookLink">https://www.facebook.com/</string>
 </resources>

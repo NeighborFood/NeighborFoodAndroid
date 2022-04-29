@@ -17,6 +17,7 @@ import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PastOrdersActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ProfileEditingActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.SignUpActivity;
 
@@ -37,7 +38,13 @@ public class AccountFragmentTest {
         controller.onFragment(fragment -> {
             fragment.getActivity().findViewById(R.id.profilePageButton).callOnClick();
         });
-
+    }
+    @Test
+    public void buttonPastOrdersTest() {
+        intending(toPackage(PastOrdersActivity.class.getName()));
+        controller.onFragment(fragment -> {
+            fragment.getActivity().findViewById(R.id.PastOrdersButton).callOnClick();
+        });
     }
     @Test
     public void buttonDisconnectTest(){
