@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * Adapter class for a list of ongoing orders
+ */
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.ViewHolder> {
     private static final String TAG = "OrderListAdapter";
 
@@ -22,6 +25,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     private ArrayList<Integer> imageIds = new ArrayList<>();
     private Context context;
 
+    /**
+     *
+     * @param context context for order
+     * @param names names of orders
+     * @param ids ids of orders
+     */
     public OrderListAdapter(Context context, ArrayList<String> names, ArrayList<Integer> ids) {
         this.names = names;
         imageIds = ids;
@@ -47,7 +56,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         return names.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView image;
         TextView name;

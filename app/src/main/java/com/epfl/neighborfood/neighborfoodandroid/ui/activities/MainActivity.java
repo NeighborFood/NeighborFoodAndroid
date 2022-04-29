@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 
 import android.content.Intent;
@@ -20,10 +21,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.models.UserLocation;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.AccountFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.ConversationsFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.VendorDashboardFragment;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.EditProfileViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MainViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.MainViewModelFactory;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,9 +38,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView lon;
     private Button toggleButton;
     private boolean isVendor;
+    private UserLocation location;
+
     private LocationManager locationManager;
     private LocationListener locationListener;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +54,11 @@ public class MainActivity extends AppCompatActivity {
         toggleButton=findViewById(R.id.button2);
         toggleButton.setOnClickListener(this::toggleView);
 
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        UserLocation location = new UserLocation(locationManager, this);
+
         lat = findViewById(R.id.latitude);
         lon = findViewById(R.id.longitude);
-
-        setupLocation();
 
     }
 
@@ -59,23 +66,6 @@ public class MainActivity extends AppCompatActivity {
     private void toggleView(View view) {
         isVendor=!isVendor;
         switchFragment(navbar.getMenu().findItem(navbar.getSelectedItemId()));
-    }
-
-    private void setupLocation(){
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this , new String[] {android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION},1);
-        }
-
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 1, new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location){
-                lon.setText(String.valueOf(location.getLongitude()));
-                lat.setText(String.valueOf(location.getLatitude()));
-            }
-        });
     }
 
     private boolean switchFragment(MenuItem it){

@@ -22,6 +22,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.sql.Array;
 import java.util.ArrayList;
 
+/**
+ * Fragment for the dashboard when user is on Vendor mode
+ */
+
 public class VendorDashboardFragment extends Fragment {
 
     private FragmentVendorDashboardBinding binding;
@@ -30,29 +34,30 @@ public class VendorDashboardFragment extends Fragment {
     private ArrayList<Integer> id;
 
     @Override
-    public View onCreateView (LayoutInflater inflater,
-                              ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentVendorDashboardBinding.inflate(getLayoutInflater());
         button = binding.getRoot().findViewById(R.id.addMealButton);
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = null;
-                switch(v.getId()){
-                    case R.id.addMealButton:
-                        intent = new Intent(getActivity(), PlaceMealActivity.class);
-                }
-                startActivity(intent);
-            }
+        button.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View v) {
+                                          Intent intent = null;
+                                          switch (v.getId()) {
+                                              case R.id.addMealButton:
+                                                  intent = new Intent(getActivity(), PlaceMealActivity.class);
+                                          }
+                                          startActivity(intent);
+                                      }
                                   }
 
         );
         return binding.getRoot();
 
     }
+
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
         id = new ArrayList<Integer>();
         id.add(R.drawable.poulet);
@@ -63,7 +68,6 @@ public class VendorDashboardFragment extends Fragment {
         nm.add("Poulet au miel");
         nm.add("Couscous aux légumes");
         nm.add("Paella aux crevettes");
-
 
 
         String[] mealsShortDes = {"Un délicieux poulet au miel",
@@ -90,10 +94,5 @@ public class VendorDashboardFragment extends Fragment {
 
 
     }
-    private void initRecyclerView(){
-
-    }
-
-
 
 }

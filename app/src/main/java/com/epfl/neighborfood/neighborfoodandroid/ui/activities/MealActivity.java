@@ -14,6 +14,9 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
 
 import java.util.ArrayList;
 
+/**
+ * Activity for showing the details of a meal
+ */
 public class MealActivity extends AppCompatActivity {
 
     ActivityMealBinding binding;
@@ -25,7 +28,7 @@ public class MealActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        Button vendorButton = (Button)findViewById(R.id.go_vendor_profile_id);
+        Button vendorButton = (Button) findViewById(R.id.go_vendor_profile_id);
 
 
         // Listener to enable the click button to go to the vendor profile
