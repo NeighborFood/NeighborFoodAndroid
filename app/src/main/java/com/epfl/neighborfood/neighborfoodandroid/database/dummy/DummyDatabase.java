@@ -21,6 +21,9 @@ public class DummyDatabase implements Database {
     private static DummyDatabase instance;
     public static final int PROFILE_IMG_ID = R.drawable.profile_img_male;
 
+    private DummyDatabase(){
+    }
+
 
     public static DummyDatabase getInstance() {
         if (instance == null) {

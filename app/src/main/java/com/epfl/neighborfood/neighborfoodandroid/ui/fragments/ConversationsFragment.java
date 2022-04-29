@@ -18,6 +18,8 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ConversationsFragment extends Fragment {
     public static final int IMGID = R.drawable.profile_img_male;
@@ -57,7 +59,10 @@ public class ConversationsFragment extends Fragment {
         DummyDatabase.getInstance().reset();
 
         for (int i = 0; i < users.length; i++) {
-            Conversation conv = new Conversation(users[i], Arrays.asList(messages[i]));
+            Set<User> aux = new HashSet<>();
+            aux.add(users[i]);
+            aux.add(AuthenticatorFactory.getDependency().getCurrentUser());
+            Conversation conv = new Conversation(aux, Arrays.asList(messages[i]));
             dep.pushConversation(conv);
         }
         conversations = dep.fetchConversations();

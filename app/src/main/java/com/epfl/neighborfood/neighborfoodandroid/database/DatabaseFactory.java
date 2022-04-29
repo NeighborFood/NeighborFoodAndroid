@@ -1,7 +1,9 @@
 package com.epfl.neighborfood.neighborfoodandroid.database;
 
 
-
+/**
+ * @author Mohamed Yassine Boukhari
+ */
 public class DatabaseFactory {
 
     private static Database dependency;
