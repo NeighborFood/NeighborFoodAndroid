@@ -16,7 +16,7 @@ public class FirebaseDatabase implements Database {
     private static FirebaseFirestore database = FirebaseFirestore.getInstance();
 
 
-    public FirebaseDatabase() {
+    private FirebaseDatabase() {
     }
 
     public static FirebaseDatabase getInstance() {
@@ -56,6 +56,9 @@ public class FirebaseDatabase implements Database {
 
     @Override
     public Task<CollectionSnapshot> fetchAll(String collectionPath) {
-        return null;
+        return database.collection(collectionPath).get().onSuccessTask(
+                (collectionSnapshot ->
+                Tasks.forResult(new FirebaseCollectionSnapshot(collectionSnapshot))
+        ));
     }
 }

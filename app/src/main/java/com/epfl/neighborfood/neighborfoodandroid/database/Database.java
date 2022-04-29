@@ -2,6 +2,9 @@ package com.epfl.neighborfood.neighborfoodandroid.database;
 
 import com.google.android.gms.tasks.Task;
 
+/**
+ * @author Mohamed Yassine Boukhari
+ */
 public interface Database {
 
 

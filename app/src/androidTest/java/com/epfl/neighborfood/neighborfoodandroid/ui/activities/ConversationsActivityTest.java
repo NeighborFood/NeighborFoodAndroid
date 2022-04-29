@@ -42,6 +42,8 @@ import android.content.Intent;
 
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @RunWith(AndroidJUnit4.class)
 public class ConversationsActivityTest {
@@ -87,7 +89,10 @@ public class ConversationsActivityTest {
         DummyDatabase.getInstance().reset();
 
         for (int i = 0; i < users.length; i++) {
-            Conversation conv = new Conversation(users[i], Arrays.asList(messages[i]));
+            Set<User> aux = new HashSet<>();
+            aux.add(users[i]);
+            aux.add(AuthenticatorFactory.getDependency().getCurrentUser());
+            Conversation conv = new Conversation(aux, Arrays.asList(messages[i]));
             db.pushConversation(conv);
         }
 
@@ -151,7 +156,10 @@ public class ConversationsActivityTest {
 
 
         for (int i = 0; i < users.length; i++) {
-            Conversation conv = new Conversation(users[i], Arrays.asList(messages[i]));
+            Set<User> aux = new HashSet<>();
+            aux.add(users[i]);
+            aux.add(AuthenticatorFactory.getDependency().getCurrentUser());
+            Conversation conv = new Conversation(aux, Arrays.asList(messages[i]));
             db.pushConversation(conv);
         }
 

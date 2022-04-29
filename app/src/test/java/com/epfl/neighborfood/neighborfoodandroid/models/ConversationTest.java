@@ -4,15 +4,22 @@ import static org.junit.Assert.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ConversationTest {
     @Test
     public void getChatterTest(){
         User usr = new User("1",null,null,null);
-        Conversation conversation = new Conversation(usr,new ArrayList<>());
+        Set<User> chatters = new HashSet<User>();
+        chatters.add(usr);
+        chatters.add(AuthenticatorFactory.getDependency().getCurrentUser());
+        Conversation conversation = new Conversation(chatters,new ArrayList<>());
         assertThat(conversation.getChatter().getId(),equalTo(usr.getId()));
     }
 

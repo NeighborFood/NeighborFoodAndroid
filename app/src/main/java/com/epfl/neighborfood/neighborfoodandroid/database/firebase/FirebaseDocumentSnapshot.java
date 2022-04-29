@@ -5,8 +5,8 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Model;
 
 public class FirebaseDocumentSnapshot implements DocumentSnapshot {
 
-    private com.google.firebase.firestore.DocumentSnapshot documentSnapshot;
-    
+    private final com.google.firebase.firestore.DocumentSnapshot documentSnapshot;
+
 
     public FirebaseDocumentSnapshot(com.google.firebase.firestore.DocumentSnapshot documentSnapshot) {
         this.documentSnapshot = documentSnapshot;
