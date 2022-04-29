@@ -3,22 +3,23 @@ package com.epfl.neighborfood.neighborfoodandroid.repositories;
 import androidx.lifecycle.MutableLiveData;
 
 import com.epfl.neighborfood.neighborfoodandroid.authentication.Authenticator;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 /**
  * The entry point to the authentication repository
  */
-public abstract class AuthRepository {
+public class AuthRepository {
 
-    protected Authenticator authenticator;
+    protected final Authenticator authenticator;
     protected MutableLiveData<User> userLiveData;
     protected MutableLiveData<Boolean> loggedInLiveData;
 
-    public AuthRepository(Authenticator authenticator) {
+    public AuthRepository() {
         this.userLiveData = new MutableLiveData<>();
         this.loggedInLiveData = new MutableLiveData<>();
-        this.authenticator = authenticator;
+        this.authenticator = AuthenticatorFactory.getDependency();
         if (authenticator.getCurrentUser() != null) {
             userLiveData.postValue(authenticator.getCurrentUser());
             loggedInLiveData.postValue(true);
@@ -33,7 +34,6 @@ public abstract class AuthRepository {
     public void updateUser(User user) {
         userLiveData.postValue(user);
         loggedInLiveData.postValue(user != null);
-        //TODO: Update user attributes in db
 
     }
 
@@ -65,7 +65,7 @@ public abstract class AuthRepository {
     /**
      * Requests the authenticator to log in with a google account
      *
-     * @param googleSignInAccount
+     * @param googleSignInAccount : the google account that was signed in
      */
     public void logInWithGoogleAccount(GoogleSignInAccount googleSignInAccount) {
         authenticator.logInWithGoogleAccount(googleSignInAccount).addOnCompleteListener(task -> {
