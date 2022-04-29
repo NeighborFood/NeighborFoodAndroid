@@ -1,6 +1,8 @@
 # Summary for sprint 8
 
 ## Badis
+I worked on refactoring the location fetching in order to not have it done on the MainActivity. Started implementing the ViewModel for the main but it stil needs some work so i didn't push it. 
+Also added comments to the classes adressed in the easter break code review.
 ## Elior
 I did not take time to work this week.
 ## Khalil
