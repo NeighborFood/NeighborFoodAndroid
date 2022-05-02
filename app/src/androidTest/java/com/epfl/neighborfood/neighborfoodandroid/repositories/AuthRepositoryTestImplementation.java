@@ -7,9 +7,6 @@ import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 public class AuthRepositoryTestImplementation extends AuthRepository{
-    public AuthRepositoryTestImplementation(){
-        super(new DummyAuthenticator());
-    }
     @Override
     public void logInWithGoogleAccount(GoogleSignInAccount account) {
         (new Handler()).postDelayed(()->{
