@@ -22,6 +22,7 @@ public class PlaceMealViewModel extends ViewModel {
      */
     public Task<Void> placeMeal(Meal meal){
         meal.setVendorID(authRepository.getUserLiveData().getValue().getId());
+        System.out.println(meal.getVendorID());
         return mealRepository.postMeal(meal).continueWith(task -> null);
     }
 }

@@ -14,7 +14,7 @@ admin.initializeApp();
 exports.notifyNewMeal = functions.firestore.document('/Meals/{documentId}')
     .onCreate((snap, context) => {
       // Grab the current value of what was written to Firestore.
-      const mealId = snap.data().mealId;
+      const mealId = snap.id;
       const vendorID = snap.data().vendorID;
 
 

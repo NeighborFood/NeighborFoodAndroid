@@ -24,7 +24,7 @@ public class Meal extends Model implements Serializable {
     public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, int imageId){
         this(name,shortDescription,longDescription,imageId);
         this.id = id;
-        this.vendorID = id;
+        this.vendorID = vendorID;
     }
     public Meal(String name, String shortDescription, String longDescription, int imageId) {
         this.name = name;
