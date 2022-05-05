@@ -9,7 +9,11 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 
+import com.epfl.neighborfood.neighborfoodandroid.AppContainerTestImplementation;
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.DummyAuthenticator;
 import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 
@@ -33,6 +37,7 @@ public class ChatRoomActivityTest {
 
     @Before
     public void setUp() throws Exception {
+        NeighborFoodApplication.appContainer = new AppContainerTestImplementation();
         DummyDatabase.getInstance().reset();
         Intents.init();
     }

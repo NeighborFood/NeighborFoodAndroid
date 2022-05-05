@@ -4,8 +4,11 @@ import static org.junit.Assert.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.DummyAuthenticator;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,6 +16,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ConversationTest {
+    @Before
+    public void setup(){
+        AuthenticatorFactory.setDependency(DummyAuthenticator.getInstance());
+    }
     @Test
     public void getChatterTest(){
         User usr = new User("1",null,null,null);

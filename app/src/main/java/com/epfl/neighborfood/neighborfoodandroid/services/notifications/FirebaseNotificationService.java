@@ -51,8 +51,4 @@ public class FirebaseNotificationService  extends FirebaseMessagingService imple
                 .continueWith(task -> null);
     }
 
-    @Override
-    public void onNewToken(String token){
-
-    }
 }

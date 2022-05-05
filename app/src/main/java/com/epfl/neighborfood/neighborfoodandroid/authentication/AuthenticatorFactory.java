@@ -3,9 +3,8 @@ package com.epfl.neighborfood.neighborfoodandroid.authentication;
 public class AuthenticatorFactory {
 
 
-    private static Authenticator dependency = FirebaseAuthenticator.getInstance();
-    //private static Authenticator dependency = new DummyAuthenticator();
-
+    //private static Authenticator dependency = FirebaseAuthenticator.getInstance();
+    private static Authenticator dependency = DummyAuthenticator.getInstance();
 
     /**
      * Gets the authenticator instance currently used
