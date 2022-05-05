@@ -10,14 +10,12 @@ import com.google.android.gms.tasks.Tasks;
  * Entry point to manipulate Users in the database
  */
 public class UserRepository {
-    private final Database db;
     private final static String userDataCollectionPath = "Users";
 
     /**
      * Creates an instance of the User Repository
      */
-    public UserRepository() {
-        this.db = DatabaseFactory.getDependency();
+    public UserRepository(){
     }
 
     /** Fetches a user from the database, by the user's id
@@ -29,7 +27,7 @@ public class UserRepository {
         if (id == null) {
             return Tasks.forException(new IllegalArgumentException("The user ID cannot be null"));
         }
-        return db.fetch(userDataCollectionPath, id).continueWith(task -> {
+        return  DatabaseFactory.getDependency().fetch(userDataCollectionPath, id).continueWith(task -> {
             if (task.isSuccessful()) {
                 return task.getResult().toModel(User.class);
             }
@@ -46,7 +44,7 @@ public class UserRepository {
             return Tasks.forException(new IllegalArgumentException("Provided user is null"));
         }
         //push the user to the database
-        return db.set(userDataCollectionPath,user.getId(),user).continueWith(task->null);
+        return  DatabaseFactory.getDependency().set(userDataCollectionPath,user.getId(),user).continueWith(task->null);
     }
 
     /** Deletes a user from the database
@@ -57,7 +55,7 @@ public class UserRepository {
         if (id == null) {
             return Tasks.forException(new IllegalArgumentException("The user ID cannot be null"));
         }
-        return db.delete(userDataCollectionPath, id);
+        return DatabaseFactory.getDependency().delete(userDataCollectionPath, id);
     }
 
 }

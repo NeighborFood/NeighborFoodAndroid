@@ -1,5 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid;
 
+import com.epfl.neighborfood.neighborfoodandroid.authentication.Authenticator;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
@@ -53,12 +55,13 @@ public abstract class AppContainer {
      * @param mealRepo the app's user repository
      * @param dep      the app's database
      */
-    protected AppContainer(AuthRepository authRepo, MealRepository mealRepo, UserRepository userRepo, Database dep, NotificationService notificationService) {
+    protected AppContainer(AuthRepository authRepo, MealRepository mealRepo, UserRepository userRepo, Database dep, Authenticator authenticator, NotificationService notificationService) {
         this.authRepo = authRepo;
         this.userRepo = userRepo;
         this.mealRepo = mealRepo;
         this.notificationService = notificationService;
         DatabaseFactory.setDependency(dep);
+        AuthenticatorFactory.setDependency(authenticator);
     }
 
 }

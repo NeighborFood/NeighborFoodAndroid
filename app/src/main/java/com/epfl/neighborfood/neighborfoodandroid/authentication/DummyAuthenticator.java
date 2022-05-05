@@ -7,10 +7,19 @@ import com.google.android.gms.tasks.Tasks;
 
 
 public class DummyAuthenticator implements Authenticator {
+    private static DummyAuthenticator instance;
     public User getCurrentUser() {
         return new User("-1", "me@epfl.ch", "Me", "Notyou");
     }
+    private DummyAuthenticator(){
 
+    }
+    public static DummyAuthenticator getInstance(){
+        if(instance==null){
+            instance = new DummyAuthenticator();
+        }
+        return instance ;
+    }
     @Override
     public void logOut() {
 
