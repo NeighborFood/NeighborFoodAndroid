@@ -16,8 +16,15 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
+import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.PlaceMealViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.PlaceMealViewModelFactory;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +45,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     EditText descriptionText, priceText, mealNameText, dateText, timeText;
     Toolbar toolbar;
     Uri image;
+    private PlaceMealViewModel vmodel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         imageToUpload = findViewById(R.id.imageToUpload);
         confirmationButton = findViewById(R.id.ConfirmationButton);
         addImageButton = findViewById(R.id.addPictureButton);
+        vmodel = new ViewModelProvider(this, new PlaceMealViewModelFactory((NeighborFoodApplication) this.getApplication())).get(PlaceMealViewModel.class);
 
         allergensInMeal = new ArrayList<String>();
         allergensIcons = new HashMap<ImageView, String>();
@@ -98,8 +107,9 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.ConfirmationButton:
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                //@TODO push data to database
-                startActivity(i);
+                //TODO: replace with actual value of the place Meal
+                Task<Void> task = vmodel.placeMeal(new Meal(mealNameText.getText().toString(), descriptionText.getText().toString() , descriptionText.getText().toString() , 0, new ArrayList<>(), 0));
+                task.addOnCompleteListener((a)->{startActivity(i);});
                 break;
             case R.id.CalendarButton:
                 DatePickerDialog datePickerDialog = new DatePickerDialog(

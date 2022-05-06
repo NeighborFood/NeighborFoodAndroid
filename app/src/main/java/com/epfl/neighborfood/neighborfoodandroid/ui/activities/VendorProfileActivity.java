@@ -7,8 +7,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.PlaceMealViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorProfileViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.PlaceMealViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.VendorProfileViewModelFactory;
 
 /**
  * Activity that displays for the user the profile of the vendor with all his details.
@@ -22,7 +28,7 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
     private Boolean notifyOn = false;
     private int heart = R.drawable.empty_heart;
     private int notif = R.drawable.empty_notif;
-
+    private VendorProfileViewModel vmodel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +40,7 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
         findViewById(R.id.facebookId).setOnClickListener(this);
         findViewById(R.id.instagramId).setOnClickListener(this);
         findViewById(R.id.TwitterId).setOnClickListener(this);
+        vmodel = new ViewModelProvider(this, new VendorProfileViewModelFactory((NeighborFoodApplication) this.getApplication())).get(VendorProfileViewModel.class);
 
     }
 
@@ -42,6 +49,7 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
         switch (v.getId()) {
             case R.id.SubscribeId:
                 subscribed = !subscribed;
+                vmodel.subscribeToVendor("JDpBLvLCTefqXx03riPH9072KYu2").addOnCompleteListener((a)-> System.out.println("Subscribed"));
                 heart = (subscribed) ? R.drawable.full_heart : R.drawable.empty_heart;
                 subscribeButton.setImageResource(heart);
                 subscribeButton.setTag(heart);

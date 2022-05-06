@@ -12,9 +12,17 @@ import com.google.firebase.auth.GoogleAuthProvider;
  * A firebase implementation of the authenticator
  */
 public class FirebaseAuthenticator implements Authenticator {
-
-    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
+    private static FirebaseAuthenticator instance;
+    private static FirebaseAuth mAuth ;
+    private FirebaseAuthenticator(){
+    }
+    public static FirebaseAuthenticator getInstance(){
+        if(instance == null){
+            mAuth= FirebaseAuth.getInstance();
+            instance = new FirebaseAuthenticator();
+        }
+        return instance;
+    }
     @Override
     public User getCurrentUser() {
         if (mAuth.getCurrentUser() == null) {
