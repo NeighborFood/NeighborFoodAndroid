@@ -6,12 +6,12 @@
         <type value="QUICK_BOOT_TARGET" />
         <deviceKey>
           <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\HP\.android\avd\Pixel_2_API_31.avd" />
+            <type value="SERIAL_NUMBER" />
+            <value value="adb-RFCN90BSJCZ-H8T6Y6._adb-tls-connect._tcp" />
           </Key>
         </deviceKey>
       </Target>
-    </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2022-05-03T18:39:05.569819300Z" />
+    </runningDeviceTargetSelectedWithDropDown>
+    <timeTargetWasSelectedWithDropDown value="2022-05-05T22:14:29.301732800Z" />
   </component>
 </project>

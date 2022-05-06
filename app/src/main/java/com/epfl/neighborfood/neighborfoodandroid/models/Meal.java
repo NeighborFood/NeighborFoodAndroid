@@ -82,6 +82,10 @@ public class Meal extends Model implements Serializable {
     public String getVendorID(){
         return vendorID;
     }
+
+    /** Setter for the meal's vendor id
+     * @return the owner vendorID
+     */
     public void setVendorID(String vendorID){
         this.vendorID = vendorID;
     }

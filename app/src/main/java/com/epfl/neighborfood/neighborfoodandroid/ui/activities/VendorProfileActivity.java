@@ -49,7 +49,8 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
         switch (v.getId()) {
             case R.id.SubscribeId:
                 subscribed = !subscribed;
-                vmodel.subscribeToVendor("JDpBLvLCTefqXx03riPH9072KYu2").addOnCompleteListener((a)-> System.out.println("Subscribed"));
+                vmodel.subscribeToVendor("Uuc7WoQvx5QRfAxNJY5QbMurnHy1").addOnCompleteListener((a)-> System.out.println("Subscribed"));
+                System.out.println("hello");
                 heart = (subscribed) ? R.drawable.full_heart : R.drawable.empty_heart;
                 subscribeButton.setImageResource(heart);
                 subscribeButton.setTag(heart);
