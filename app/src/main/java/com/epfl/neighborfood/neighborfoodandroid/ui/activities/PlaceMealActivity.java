@@ -128,6 +128,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                     }
                 }
                 if (fieldsAreNotEmpty) {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     MealRepository mealRepository = new MealRepository();
                     Meal meal = new Meal(
                             mealNameText.getText().toString(),
@@ -137,12 +138,9 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                             null,//TODO: Should build the list of allergens
                             Double.parseDouble(priceText.getText().toString()),
                             null);//TODO: build the retrieval date
-                    mealRepository.postMeal(meal);
+                    Task<Void> task = vmodel.placeMeal(meal);
+                    task.addOnCompleteListener((a)->{startActivity(i);});
                 }
-                //Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                //TODO: replace with actual value of the place Meal
-                //Task<Void> task = vmodel.placeMeal(new Meal(mealNameText.getText().toString(), descriptionText.getText().toString() , descriptionText.getText().toString() , 0, new ArrayList<>(), 0, null));
-                //task.addOnCompleteListener((a)->{startActivity(i);});
 
                 break;
             case R.id.CalendarButton:
