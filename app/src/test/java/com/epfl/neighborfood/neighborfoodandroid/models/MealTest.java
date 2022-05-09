@@ -14,7 +14,7 @@ public class MealTest {
     private String name;
     private String shortDescription;
     private String longDescription;
-    private List<Allergen> allergens;
+    private List<String> allergens;
     private double price;
     private int imageId;
 
@@ -24,9 +24,9 @@ public class MealTest {
         shortDescription = "Yumi tofu";
         longDescription = "Plant based proteins";
         allergens = new ArrayList<>();
-        allergens.add(Allergen.EGGS);
-        allergens.add(Allergen.HONEY);
-        allergens.add(Allergen.SOY);
+        allergens.add(Allergen.EGGS.getLabel());
+        allergens.add(Allergen.HONEY.getLabel());
+        allergens.add(Allergen.SOY.getLabel());
         price = 2.23;
         imageId = 5;
     }

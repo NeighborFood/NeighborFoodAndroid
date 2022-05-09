@@ -180,7 +180,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.049"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textDesciption" />
+            app:layout_constraintTop_toBottomOf="@+id/textDescription" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textMealName"
@@ -233,7 +233,7 @@
             app:layout_constraintTop_toTopOf="@+id/DateTitle" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textDesciption"
+            android:id="@+id/textDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="write your description here .."

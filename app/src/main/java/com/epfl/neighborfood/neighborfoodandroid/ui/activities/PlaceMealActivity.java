@@ -65,6 +65,11 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
 
         allergensInMeal = new ArrayList<String>();
         allergensIcons = new HashMap<ImageView, String>();
+        /* TODO it would be better to create the allergen list that way but currently each item of the list is hard coded in the xml.
+        for (Allergen allergen : Allergen.values()) {
+            allergensIcons.put(findViewById(allergen.getId()), allergen.getLabel());
+        }
+        */
         allergensIcons.put(findViewById(R.id.CeleryIcon), "celery");
         allergensIcons.put(findViewById(R.id.MilkIcon), "milk");
         allergensIcons.put(findViewById(R.id.FishIcon), "fish");
@@ -76,7 +81,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         allergensIcons.put(findViewById(R.id.EggsIcon), "Eggs");
         allergensIcons.put(findViewById(R.id.ChocolateIcon), "Chocolate");
 
-        descriptionText = findViewById(R.id.textDesciption);
+        descriptionText = findViewById(R.id.textDescription);
         priceText = findViewById(R.id.textPrice);
         mealNameText = findViewById(R.id.textMealName);
         calendarButton = findViewById(R.id.CalendarButton);
@@ -90,6 +95,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         addImageButton.setOnClickListener(this);
         confirmationButton.setOnClickListener(this);
 
+        // This is to create a list that need to not be empty and be checked for it
         cannotBeEmptyFields = new ArrayList<>();
         cannotBeEmptyFields.add(descriptionText);
         cannotBeEmptyFields.add(priceText);
@@ -101,12 +107,12 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         if (allergensIcons.keySet().contains(v)) {
-            String allergenName = allergensIcons.get(v);
-            if (allergensInMeal.contains(allergensIcons.get(v))) {
-                allergensInMeal.remove(allergenName);
+            String allergenLabel = allergensIcons.get(v);
+            if (allergensInMeal.contains(allergenLabel)) {
+                allergensInMeal.remove(allergenLabel);
                 v.setBackgroundColor(0xFFFFFF);
             } else {
-                allergensInMeal.add(allergenName);
+                allergensInMeal.add(allergenLabel);
                 v.setBackgroundColor(0x666BEC70);
             }
         }
@@ -135,7 +141,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                             descriptionText.getText().toString(),
                             "Should add long description in the template", //TODO
                             0,//TODO: Should get the image id but it is not gettable yet
-                            null,//TODO: Should build the list of allergens
+                            allergensInMeal,//TODO: Should build the list of allergens
                             Double.parseDouble(priceText.getText().toString()),
                             null);//TODO: build the retrieval date
                     Task<Void> task = vmodel.placeMeal(meal);

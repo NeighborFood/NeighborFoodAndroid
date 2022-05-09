@@ -14,7 +14,7 @@ public class Meal extends Model implements Serializable {
     private double price;
     private Date retrievalDate;
     private int imageId;
-    private List<Allergen> allergens;
+    private List<String> allergens;
 
     /**
      * @param id the id to set
@@ -23,7 +23,7 @@ public class Meal extends Model implements Serializable {
     public Meal copyWithId(String id){
         return new Meal(id,vendorID,name,shortDescription,longDescription,imageId, allergens, price, retrievalDate);
     }
-    public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, int imageId, List<Allergen> allergens, double price, Date retrievalDate){
+    public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, int imageId, List<String> allergens, double price, Date retrievalDate){
         this(name,shortDescription,longDescription,imageId, allergens, price, retrievalDate);
         this.id = id;
         this.vendorID = vendorID;
@@ -35,7 +35,7 @@ public class Meal extends Model implements Serializable {
         this.imageId = imageId;
     }
 
-    public Meal(String name, String shortDescription, String longDescription, int imageId, List<Allergen> allergens, double price, Date retrievalDate) {
+    public Meal(String name, String shortDescription, String longDescription, int imageId, List<String> allergens, double price, Date retrievalDate) {
         this.name = name;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
@@ -57,7 +57,7 @@ public class Meal extends Model implements Serializable {
         return longDescription;
     }
 
-    public List<Allergen> getAllergens() {
+    public List<String> getAllergens() {
         return allergens;
     }
 
