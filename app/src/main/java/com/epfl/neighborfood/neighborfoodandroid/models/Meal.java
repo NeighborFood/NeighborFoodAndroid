@@ -45,9 +45,6 @@ public class Meal extends Model implements Serializable {
         this.retrievalDate = retrievalDate;
     }
 
-    public Meal(){
-    }
-
     public String getName() {
         return name;
     }
