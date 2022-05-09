@@ -35,6 +35,16 @@ public class Meal extends Model implements Serializable {
         this.imageId = imageId;
     }
 
+    /**
+     * Complete constructor of a Meal
+     * @param name
+     * @param shortDescription
+     * @param longDescription
+     * @param imageId
+     * @param allergens
+     * @param price
+     * @param retrievalDate
+     */
     public Meal(String name, String shortDescription, String longDescription, int imageId, List<String> allergens, double price, Date retrievalDate) {
         this.name = name;
         this.shortDescription = shortDescription;
