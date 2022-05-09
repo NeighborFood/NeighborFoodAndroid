@@ -109,15 +109,17 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
             case R.id.ConfirmationButton:
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 //TODO: replace with actual value of the place Meal
-                Task<Void> task = vmodel.placeMeal(new Meal(mealNameText.getText().toString(), descriptionText.getText().toString() , descriptionText.getText().toString() , 0, new ArrayList<>(), 0));
+                Task<Void> task = vmodel.placeMeal(new Meal(mealNameText.getText().toString(), descriptionText.getText().toString() , descriptionText.getText().toString() , 0, new ArrayList<>(), 0, null));
                 task.addOnCompleteListener((a)->{startActivity(i);});
                 MealRepository mealRepository = new MealRepository();
-                Meal meal = new Meal(mealNameText.getText().toString(),
+                Meal meal = new Meal(
+                        mealNameText.getText().toString(),
                         descriptionText.getText().toString(),
                         "Should add long description in the template", //TODO
                         0,//TODO: Should get the image id but it is not gettable yet
                         null,//TODO: Should build the list of allergens
-                        Integer.parseInt(priceText.getText().toString()));
+                        Integer.parseInt(priceText.getText().toString()),
+                        null);//TODO: build the retrieval date
                 mealRepository.postMeal(meal);
                 break;
             case R.id.CalendarButton:

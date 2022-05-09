@@ -2,6 +2,7 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class Meal extends Model implements Serializable {
@@ -11,6 +12,7 @@ public class Meal extends Model implements Serializable {
     private String shortDescription;
     private String longDescription;
     private double price;
+    private Date retrievalDate;
     private int imageId;
     private List<Allergen> allergens;
 
@@ -33,13 +35,14 @@ public class Meal extends Model implements Serializable {
         this.imageId = imageId;
     }
 
-    public Meal(String name, String shortDescription, String longDescription, int imageId, List<Allergen> allergens, double price) {
+    public Meal(String name, String shortDescription, String longDescription, int imageId, List<Allergen> allergens, double price, Date retrievalDate) {
         this.name = name;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
         this.imageId = imageId;
         this.allergens = allergens;
         this.price = price;
+        this.retrievalDate = retrievalDate;
     }
 
     public Meal(){
