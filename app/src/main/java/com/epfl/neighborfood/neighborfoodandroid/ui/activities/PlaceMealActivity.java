@@ -106,7 +106,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        if (allergensIcons.keySet().contains(v)) {
+        if (allergensIcons.containsKey(v)) {
             String allergenLabel = allergensIcons.get(v);
             if (allergensInMeal.contains(allergenLabel)) {
                 allergensInMeal.remove(allergenLabel);
