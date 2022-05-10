@@ -22,10 +22,10 @@ public class ConversationTest {
     }
     @Test
     public void getChatterTest(){
-        User usr = new User("1",null,null,null);
+        User usr = new User("1",null,null,null,"");
         Set<User> chatters = new HashSet<User>();
         chatters.add(usr);
-        chatters.add(AuthenticatorFactory.getDependency().getCurrentUser());
+        chatters.add(DummyAuthenticator.getInstance().getCurrentUser());
         Conversation conversation = new Conversation(chatters,new ArrayList<>());
         assertThat(conversation.getChatter().getId(),equalTo(usr.getId()));
     }

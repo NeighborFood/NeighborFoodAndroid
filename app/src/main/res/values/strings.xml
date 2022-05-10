@@ -71,8 +71,12 @@
     <string name="external_link">External Link</string>
     <string name="links">Links</string>
     <string name="save_success">Successfully Saved!</string>
+    <string name="save_failure"> Failed to saved :(</string>
+    <string name="load_failure">Failed to load data :(</string>
     <string name="get_google_account_failure">Failed to get Google Account :(</string>
-    <string name="welcome_message">Welcome, %1$s! Click start to discover the daily meals!</string>
+    <string name="welcome_message">Welcome, %1$s! We are glad that you joined us! \n Click on the button to setup your profile</string>
+    <string name="welcome_back_message">Welcome back, %1$s! Fresh meals are right at the tip of your fingers, click start to see them!</string>
+    <string name="finish_profile">Set up profile</string>
     <string name="connection_invitation">Please connect via your google account!</string>
     <string name="twitterLink">https://twitter.com/</string>
     <string name="InstagramLink">https://www.instagram.com/</string>

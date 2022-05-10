@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.SignUpViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.SignupActivityViewModelFactory;
@@ -36,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView guideTextView;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private GoogleSignInClient googleSignInClient;
+    private boolean newUser;
 
 
     // a request code for the sign in intent
@@ -70,7 +72,6 @@ public class SignUpActivity extends AppCompatActivity {
     private void initAuthViewModel() {
 
         viewModel = new ViewModelProvider(this, new SignupActivityViewModelFactory((NeighborFoodApplication) getApplication())).get(SignUpViewModel.class);
-        viewModel.getCurrentUser().observe(this, (user -> updateUI(user)));
     }
 
     private void initGoogleSignInClient() {
@@ -87,16 +88,13 @@ public class SignUpActivity extends AppCompatActivity {
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        updateUI(viewModel.getCurrentUser().getValue());
-
-    }
 
 
     public void activityResult(int resultCode, Intent data) {
-        viewModel.handleGoogleLoginResponse(resultCode, data);
+        viewModel.handleGoogleLoginResponse(resultCode, data).addOnSuccessListener(newUser->{
+            this.newUser = newUser;
+            updateUI(viewModel.getCurrentAuthUser());
+        }).addOnFailureListener(e-> Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show());
     }
 
 
@@ -114,6 +112,14 @@ public class SignUpActivity extends AppCompatActivity {
      */
     public void signOut() {
         viewModel.signOut();
+        updateUI(viewModel.getCurrentAuthUser());
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateUI(viewModel.getCurrentAuthUser());
 
     }
 
@@ -122,12 +128,18 @@ public class SignUpActivity extends AppCompatActivity {
      *
      * @param user: the current logged in user
      */
-    public void updateUI(User user) {
+    public void updateUI(AuthenticatorUser user) {
         if (user != null) {
             signOutButton.setVisibility(View.VISIBLE);
             signInButton.setVisibility(View.INVISIBLE);
             startButton.setVisibility(View.VISIBLE);
-            guideTextView.setText(getResources().getString(R.string.welcome_message, user.getFullName()));
+            if(newUser){
+                guideTextView.setText(getResources().getString(R.string.welcome_message, user.getFirstName()));
+                startButton.setText(R.string.finish_profile);
+            }else{
+                guideTextView.setText(getResources().getString(R.string.welcome_back_message, user.getFirstName()));
+                startButton.setText(R.string.start);
+            }
 
 
         } else {

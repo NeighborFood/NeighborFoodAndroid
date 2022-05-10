@@ -1,10 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,11 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.MessageListAdapter;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 
@@ -53,7 +53,7 @@ public class ChatRoomActivity extends AppCompatActivity{
 
         // add back arrow to toolbar and remove title
         if (getSupportActionBar() != null){
-            getSupportActionBar().setTitle(chatter.getFullName());
+            getSupportActionBar().setTitle(chatter.getUsername());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -76,7 +76,7 @@ public class ChatRoomActivity extends AppCompatActivity{
                 String messageText = message.getText().toString();
 
 
-                User currentUser = AuthenticatorFactory.getDependency().getCurrentUser();
+                User currentUser = ((NeighborFoodApplication)getApplication()).getAppContainer().getAuthRepo().getCurrentUser();
                 Message msg = new Message(messageText,currentUser,chatter);
                 mMessageAdapter.addMessage(msg);
                 message.setText("");

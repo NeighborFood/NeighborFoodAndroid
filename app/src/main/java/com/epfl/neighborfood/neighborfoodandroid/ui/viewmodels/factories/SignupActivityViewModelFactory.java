@@ -16,6 +16,6 @@ public class SignupActivityViewModelFactory implements ViewModelProvider.Factory
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new SignUpViewModel(app.getAppContainer().getAuthRepo());
+        return (T) new SignUpViewModel(app.getAppContainer().getAuthRepo(),app.getAppContainer().getUserRepo());
     }
 }

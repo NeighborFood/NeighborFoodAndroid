@@ -12,6 +12,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.net.Uri;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -20,6 +21,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.models.UserTestImplementation;
 
@@ -32,7 +34,8 @@ import org.junit.runner.RunWith;
 public class SignUpActivityTest {
 
     // a fake LoggedInUser that will be used to simulate the case where an actual account is logged in into the app
-    private User fakeUser = new UserTestImplementation("0", "FakeEmail@gmail.com", "Firstname", "Lastname");
+    private AuthenticatorUser fakeUser = new AuthenticatorUser("0", "FakeEmail@gmail.com", "Firstname", "Lastname", "") {
+    };
 
     @Rule
     public ActivityScenarioRule<SignUpActivity> testRule = new ActivityScenarioRule<>(SignUpActivity.class);
@@ -150,7 +153,7 @@ public class SignUpActivityTest {
     public void guideTextContainGreetingMessageWhenLoggedIn() {
         updateUIWithFakeLoggedInUser();
         Resources res = InstrumentationRegistry.getInstrumentation().getTargetContext().getResources();
-        onView(withId(R.id.guide_textView)).check(matches(withText(res.getString(R.string.welcome_message,fakeUser.getFullName()))));
+        onView(withId(R.id.guide_textView)).check(matches(withText(res.getString(R.string.welcome_message,fakeUser.getFirstName()))));
     }
 
 

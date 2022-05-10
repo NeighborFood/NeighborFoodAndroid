@@ -50,18 +50,18 @@ public abstract class AppContainer {
     }
 
     /**
-     * @param authRepo the app's authentication repository
-     * @param mealRepo the app's meal repository
+
      * @param mealRepo the app's user repository
      * @param dep      the app's database
      */
-    protected AppContainer(AuthRepository authRepo, MealRepository mealRepo, UserRepository userRepo, Database dep, Authenticator authenticator, NotificationService notificationService) {
-        this.authRepo = authRepo;
-        this.userRepo = userRepo;
-        this.mealRepo = mealRepo;
-        this.notificationService = notificationService;
+    protected AppContainer( Database dep, Authenticator authenticator, NotificationService notificationService) {
         DatabaseFactory.setDependency(dep);
         AuthenticatorFactory.setDependency(authenticator);
+        this.notificationService = notificationService;
+        this.authRepo = new AuthRepository();
+        this.userRepo = new UserRepository();
+        this.mealRepo = new MealRepository();
+
     }
 
 }

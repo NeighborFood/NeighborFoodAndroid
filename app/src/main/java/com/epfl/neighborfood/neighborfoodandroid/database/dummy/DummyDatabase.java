@@ -46,9 +46,9 @@ public class DummyDatabase implements Database {
     }
     private DummyDatabase(){
         users = new HashMap<>();
-        users.put("1", new UserDocumentSnapshot(new User("1","a","a","a")));
-        users.put("2", new UserDocumentSnapshot(new User("2","b","b","b")));
-        users.put("3", new UserDocumentSnapshot(new User("3","c","c","c")));
+        users.put("1", new UserDocumentSnapshot(new User("1","a","a","a","")));
+        users.put("2", new UserDocumentSnapshot(new User("2","b","b","b","")));
+        users.put("3", new UserDocumentSnapshot(new User("3","c","c","c","")));
 
     }
     public static DummyDatabase getInstance() {
@@ -141,5 +141,10 @@ public class DummyDatabase implements Database {
     public Task<CollectionSnapshot> fetchAll(String collectionPath) {
 
         return null;
+    }
+
+    @Override
+    public void addChangesListener(String collectionPath, String collectionId, ModelUpdateListener listener) {
+
     }
 }

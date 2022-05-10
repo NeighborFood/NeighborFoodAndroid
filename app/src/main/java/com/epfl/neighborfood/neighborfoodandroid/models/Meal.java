@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Meal extends Model implements Serializable {
-    private String id;
+    private String mealId;
     private String vendorID;
     private String name;
     private String shortDescription;
@@ -23,7 +23,7 @@ public class Meal extends Model implements Serializable {
     }
     public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, int imageId){
         this(name,shortDescription,longDescription,imageId);
-        this.id = id;
+        this.mealId = id;
         this.vendorID = vendorID;
     }
     public Meal(String name, String shortDescription, String longDescription, int imageId) {
@@ -73,9 +73,15 @@ public class Meal extends Model implements Serializable {
      * @return the meal id
      */
     public String getMealId(){
-        return id;
+        return mealId;
     }
 
+    /** getter for the meal id
+     * @return the meal id
+     */
+    public void setMealId(String id){
+        mealId = id;
+    }
     /** getter for the meal's vendor id
      * @return the owner vendorID
      */

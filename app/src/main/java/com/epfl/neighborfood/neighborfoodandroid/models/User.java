@@ -20,10 +20,10 @@ public class User extends Model {
     private String email = "";
     private String firstName = "";
     private String lastName = "";
+    private String username = "";
     private String bio = "";
     private ArrayList<String> links = new ArrayList<>();
-    //private Profile _profile = null;
-    private Uri ppUri;
+    private String ppUri;
 
     /**
      * Create a new User object, holding database
@@ -35,12 +35,16 @@ public class User extends Model {
      * @param firstName First name of user
      * @param lastName  Last name of user
      */
-    public User(String id, String email, String firstName, String lastName) {
+    public User(String id, String email, String firstName, String lastName, String uri) {
         setId(id);
         setEmail(email);
         setFirstName(firstName);
         setLastName(lastName);
+        setUsername(firstName+lastName);
+        setProfilePictureURI(uri);
     }
+
+
 
     public User() {
     }
@@ -49,8 +53,15 @@ public class User extends Model {
     /**
      * @return Full name of the user in the format "First name Last name"
      */
-    public String getFullName() {
-        return getFirstName() + " " + getLastName();
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username the username
+     */
+    private void setUsername(String username) {
+        this.username = username;
     }
 
     /**
@@ -123,7 +134,7 @@ public class User extends Model {
      *
      * @return URI
      */
-    public Uri getProfilePictureURI() {
+    public String getProfilePictureURI() {
         return ppUri;
     }
 
@@ -132,8 +143,8 @@ public class User extends Model {
      *
      * @param uri
      */
-    public void setProfilePictureURI(Uri uri) {
-        ppUri = uri == null ? Uri.EMPTY : uri;
+    public void setProfilePictureURI(String uri) {
+        ppUri = uri;
     }
 
     /**
