@@ -11,6 +11,8 @@ import java.util.List;
 public class Conversation extends Model {
     private final List<User> users;
     private final List<Message> messages;
+    private String id;
+
 
     /**
      * constructor for the conversation class
@@ -63,5 +65,13 @@ public class Conversation extends Model {
             return messages.get(messages.size() - 1);
         }
         return null;
+    }
+
+    public String id() {
+        return id;
+    }
+
+    public void setId(String id){
+        this.id=id;
     }
 }

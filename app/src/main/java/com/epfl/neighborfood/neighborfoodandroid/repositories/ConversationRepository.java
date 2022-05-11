@@ -7,18 +7,18 @@ import java.util.List;
 
 
 public abstract class ConversationRepository {
-    protected MutableLiveData<List<Conversation>> conversations;
+    public MutableLiveData<List<Conversation>> conversations;
 
     public ConversationRepository() {
-        this.conversations = new MutableLiveData<>(getAllConversations());
+        this.conversations = new MutableLiveData<>();
     }
 
 
-    abstract Conversation getConversation(String conversationID);
-    abstract List<Conversation> getAllConversations();
-    abstract void addConversation(Conversation conv);
-    abstract void updateConversation(Conversation conv,String conversationID);
-    abstract void removeConversation(String conversationID);
+    public abstract Conversation getConversation(String conversationID);
+    public abstract List<Conversation> getAllConversations();
+    public abstract void addConversation(Conversation conv);
+    public abstract void updateConversation(Conversation conv,String conversationID);
+    public abstract void removeConversation(String conversationID);
 
 
 }

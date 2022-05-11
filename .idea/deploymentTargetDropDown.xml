@@ -6,12 +6,12 @@
         <type value="QUICK_BOOT_TARGET" />
         <deviceKey>
           <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\benmu\.android\avd\sdpPhone.avd" />
+            <type value="SERIAL_NUMBER" />
+            <value value="adb-RFCN90BSJCZ-H8T6Y6._adb-tls-connect._tcp" />
           </Key>
         </deviceKey>
       </Target>
-    </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2022-03-30T23:58:44.363835800Z" />
+    </runningDeviceTargetSelectedWithDropDown>
+    <timeTargetWasSelectedWithDropDown value="2022-05-05T22:14:29.301732800Z" />
   </component>
 </project>

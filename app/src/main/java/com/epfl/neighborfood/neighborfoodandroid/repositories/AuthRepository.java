@@ -1,51 +1,78 @@
 package com.epfl.neighborfood.neighborfoodandroid.repositories;
 
-import android.app.Application;
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.epfl.neighborfood.neighborfoodandroid.authentication.Authenticator;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.FirebaseAuthenticator;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
-import com.epfl.neighborfood.neighborfoodandroid.models.UserFirebaseImpl;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-public abstract class AuthRepository {
+/**
+ * The entry point to the authentication repository
+ */
+public class AuthRepository {
 
-    protected Authenticator authenticator;
+    protected final Authenticator authenticator;
     protected MutableLiveData<User> userLiveData;
-    protected MutableLiveData<Boolean> loggedOutLiveData;
+    protected MutableLiveData<Boolean> loggedInLiveData;
 
-    public AuthRepository(Authenticator authenticator) {
+    public AuthRepository() {
         this.userLiveData = new MutableLiveData<>();
-        this.loggedOutLiveData = new MutableLiveData<>();
-        this.authenticator = authenticator;
+        this.loggedInLiveData = new MutableLiveData<>();
+        this.authenticator = AuthenticatorFactory.getDependency();
         if (authenticator.getCurrentUser() != null) {
             userLiveData.postValue(authenticator.getCurrentUser());
-            loggedOutLiveData.postValue(false);
+            loggedInLiveData.postValue(true);
         }
     }
-    public void updateUser(User user){
+
+    /**
+     * Request updates for the currently logged in user from the authenticator
+     *
+     * @param user
+     */
+    public void updateUser(User user) {
         userLiveData.postValue(user);
-        loggedOutLiveData.postValue(user==null);
-        //TODO: Update user attributes in db
+        loggedInLiveData.postValue(user != null);
 
     }
-    public void logOut(){
+
+    /**
+     * requests the authenticator to log out the current usser
+     */
+    public void logOut() {
         authenticator.logOut();
-        loggedOutLiveData.postValue(true);
+        loggedInLiveData.postValue(false);
         userLiveData.postValue(null);
     }
+
+    /**
+     * @return
+     */
     public MutableLiveData<User> getUserLiveData() {
         return userLiveData;
     }
 
-    public MutableLiveData<Boolean> getLoggedOutLiveData() {
-        return loggedOutLiveData;
+    /**
+     * get an observable objec on the current authentication state of the user
+     *
+     * @return the Logged In boolean live data
+     */
+    public MutableLiveData<Boolean> getLoggedInLiveData() {
+        return loggedInLiveData;
     }
 
-    public abstract void authenticateWithCredential(AuthCredential credential);
+    /**
+     * Requests the authenticator to log in with a google account
+     *
+     * @param googleSignInAccount : the google account that was signed in
+     */
+    public void logInWithGoogleAccount(GoogleSignInAccount googleSignInAccount) {
+        authenticator.logInWithGoogleAccount(googleSignInAccount).addOnCompleteListener(task -> {
+            userLiveData.postValue(task.isSuccessful() ? authenticator.getCurrentUser() : null);
+            loggedInLiveData.postValue(task.isSuccessful());
+        });
+    }
+
 
 }

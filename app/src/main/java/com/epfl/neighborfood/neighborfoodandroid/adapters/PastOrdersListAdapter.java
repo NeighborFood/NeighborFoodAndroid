@@ -12,13 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter class for past orders list
+ */
 public class PastOrdersListAdapter extends ArrayAdapter {
-
+    /**
+     *
+     * @param context context for pastOrders
+     * @param orderArrayList List of past orders
+     */
     public PastOrdersListAdapter(Context context, ArrayList<Order> orderArrayList) {
         super(context, R.layout.list_item_meal, orderArrayList);
     }
