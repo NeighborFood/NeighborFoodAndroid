@@ -4,6 +4,7 @@ import com.epfl.neighborfood.neighborfoodandroid.authentication.Authenticator;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
@@ -48,7 +49,15 @@ public abstract class AppContainer {
     public NotificationService getNotificationService(){
         return notificationService;
     }
-
+    protected void setAuthRepo(AuthRepository authRepo){
+        this.authRepo = authRepo;
+    }
+    protected void setMealRepo(MealRepository mealRepo){
+        this.mealRepo = mealRepo;
+    }
+    protected void setUserRepo(UserRepository userRepo){
+        this.userRepo = userRepo;
+    }
     /**
 
      * @param mealRepo the app's user repository

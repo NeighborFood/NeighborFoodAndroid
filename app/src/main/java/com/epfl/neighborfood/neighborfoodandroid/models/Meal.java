@@ -5,6 +5,17 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Meal extends Model implements Serializable {
+    /* Keys of the data received from the server */
+    public static final String KEY_ID = "id";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_FIRSTNAME = "firstName";
+    public static final String KEY_LASTNAME = "lastName";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PP_URI = "profilePictureURI";
+    public static final String KEY_BIO = "bio";
+    public static final String KEY_LINKS = "links";
+
+
     private String mealId;
     private String vendorID;
     private String name;

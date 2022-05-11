@@ -9,13 +9,13 @@ public class UserTest {
     @Test
     public void getIdTest(){
         String id = "1" ;
-        User user = new User(id,null,null,null);
+        User user = new User(id,null,null,null,null);
         assertThat(user.getId(),equalTo(id));
     }
     @Test
     public void setIdTest(){
         String id = "1" ;
-        User user = new User("0",null,null,null);
+        User user = new User("0",null,null,null,null);
         user.setId(id);
         assertThat(user.getId(),equalTo(id));
     }
@@ -23,7 +23,7 @@ public class UserTest {
     @Test
     public void getEmailTest(){
         String email = "toto@epfl.ch";
-        User user = new User("0",email,null,null);
+        User user = new User("0",email,null,null,null);
         assertThat(user.getEmail(),equalTo(email));
     }
 
@@ -31,7 +31,7 @@ public class UserTest {
     @Test
     public void setEmailTest(){
         String email = "toto@epfl.ch";
-        User user = new User("0",null,null,null);
+        User user = new User("0",null,null,null,null);
         user.setEmail(email);
         assertThat(user.getEmail(),equalTo(email));
     }
@@ -39,7 +39,7 @@ public class UserTest {
     @Test
     public void getFirstNameTest(){
         String name = "toto";
-        User user = new User("0",null,name,null);
+        User user = new User("0",null,name,null,null);
         assertThat(user.getFirstName(),equalTo(name));
     }
 
@@ -47,7 +47,7 @@ public class UserTest {
     @Test
     public void setFirstNameTest(){
         String name = "toto";
-        User user = new User("0",null,null,null);
+        User user = new User("0",null,null,null,null);
         user.setFirstName(name);
         assertThat(user.getFirstName(),equalTo(name));
     }
@@ -56,7 +56,7 @@ public class UserTest {
     @Test
     public void getLastNameTest(){
         String name = "toto";
-        User user = new User("0",null,null,name);
+        User user = new User("0",null,null,name,null);
         assertThat(user.getLastName(),equalTo(name));
     }
 
@@ -64,7 +64,7 @@ public class UserTest {
     @Test
     public void setLastNameTest(){
         String name = "toto";
-        User user = new User("0",null,null,null);
+        User user = new User("0",null,null,null,null);
         user.setLastName(name);
         assertThat(user.getLastName(),equalTo(name));
     }
@@ -73,8 +73,8 @@ public class UserTest {
     public void getFullNameTest(){
         String fn = "toto";
         String ln = "titi";
-        String name = fn+" "+ln;
-        User user = new User("0",null,fn,ln);
+        String name = fn+ln;
+        User user = new User("0",null,fn,ln,null);
         assertThat(user.getUsername(),equalTo(name));
     }
 
@@ -84,13 +84,13 @@ public class UserTest {
         String email = "toto@epfl.ch";
         String firstName = "toto";
         String lastName = "titi";
-        User user = new User(id,email,firstName,lastName);
+        User user = new User(id,email,firstName,lastName,null);
 
         String result = "{\n" +
                 "id" + " : " + id + ", " + "\n" +
                 "email" + " : " + email + ", " + "\n" +
-                "firstname" + " : " + firstName + ", " + "\n" +
-                "lastname" + " : " + lastName + " " + "\n" +
+                "firstName" + " : " + firstName + ", " + "\n" +
+                "lastName" + " : " + lastName + " " + "\n" +
                 "}";
         assertThat(user.toString(),equalTo(result));
     }

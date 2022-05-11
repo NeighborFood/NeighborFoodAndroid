@@ -44,8 +44,7 @@ public class MealListFragment extends Fragment {
         viewModel.getAllMeals().addOnSuccessListener(mealList->{
             listAdapter.clear();
             listAdapter.addAll(mealList);
-        });
-        viewModel.getAllMeals().addOnFailureListener(System.out::println);
+        }).addOnFailureListener(System.out::println);
         binding.mealListView.setAdapter(listAdapter);
         binding.mealListView.setClickable(true);
         binding.mealListView.setOnItemClickListener((parent, view1, position, id) -> {

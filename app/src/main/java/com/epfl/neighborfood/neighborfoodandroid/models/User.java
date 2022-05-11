@@ -9,10 +9,14 @@ import java.util.ArrayList;
 public class User extends Model {
 
     /* Keys of the data received from the server */
-    private static final String KEY_ID = "id";
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_FIRSTNAME = "firstname";
-    private static final String KEY_LASTNAME = "lastname";
+    public static final String KEY_ID = "id";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_FIRSTNAME = "firstName";
+    public static final String KEY_LASTNAME = "lastName";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PP_URI = "profilePictureURI";
+    public static final String KEY_BIO = "bio";
+    public static final String KEY_LINKS = "links";
 
 
     /* Fields concerning the User object */

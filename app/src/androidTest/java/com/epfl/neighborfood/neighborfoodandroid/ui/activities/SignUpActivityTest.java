@@ -153,7 +153,7 @@ public class SignUpActivityTest {
     public void guideTextContainGreetingMessageWhenLoggedIn() {
         updateUIWithFakeLoggedInUser();
         Resources res = InstrumentationRegistry.getInstrumentation().getTargetContext().getResources();
-        onView(withId(R.id.guide_textView)).check(matches(withText(res.getString(R.string.welcome_message,fakeUser.getFirstName()))));
+        onView(withId(R.id.guide_textView)).check(matches(withText(res.getString(R.string.welcome_back_message,fakeUser.getFirstName()))));
     }
 
 

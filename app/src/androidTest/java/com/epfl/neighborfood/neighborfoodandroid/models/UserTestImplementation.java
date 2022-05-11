@@ -14,7 +14,7 @@ public class UserTestImplementation extends User{
      * @param lastName  Last name of user
      */
     public UserTestImplementation(String id, String email, String firstName, String lastName) {
-        super(id, email, firstName, lastName);
+        super(id, email, firstName, lastName,"");
         setBio("");
         setLinks(new ArrayList<>());
     }
