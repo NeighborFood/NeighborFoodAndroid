@@ -9,11 +9,13 @@ import java.util.List;
  *
  */
 public class Conversation extends Model {
-    private final List<User> users;
-    private final List<Message> messages;
+    private List<User> users;
+    private List<Message> messages;
     private String id;
 
 
+    public Conversation(){
+    }
     /**
      * constructor for the conversation class
      * @param users the set of users(2) in this conversation
@@ -31,13 +33,16 @@ public class Conversation extends Model {
      * @return a User
      */
     public User chatter() {
-        User chatter = null;
-        for (User usr: users){
-            if(!usr.getId().equals(AuthenticatorFactory.getDependency().getCurrentUser().getId())){
-                chatter = usr;
+        if (users != null) {
+            User chatter = null;
+            for (User usr: users){
+                if(!usr.getId().equals(AuthenticatorFactory.getDependency().getCurrentUser().getId())){
+                    chatter = usr;
+                }
             }
+            return chatter;
         }
-        return chatter;
+        else return null;
     }
 
     /**
@@ -48,6 +53,11 @@ public class Conversation extends Model {
     }
 
     /**
+    }
+
+    public String id() {
+        return id;
+    }
      * the messages sent in this conversation
      * @return
      */
@@ -73,5 +83,10 @@ public class Conversation extends Model {
 
     public void setId(String id){
         this.id=id;
+    }
+
+    public List<Message> addMessage(Message msg){
+        messages.add(msg);
+        return  messages;
     }
 }

@@ -1,6 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
-import static org.junit.Assert.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -76,7 +75,7 @@ public class UserTest {
         String ln = "titi";
         String name = fn+" "+ln;
         User user = new User("0",null,fn,ln);
-        assertThat(user.getFullName(),equalTo(name));
+        assertThat(user.fullName(),equalTo(name));
     }
 
     @Test

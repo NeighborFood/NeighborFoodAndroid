@@ -18,6 +18,7 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ConversationListAdapter extends ArrayAdapter {
 
@@ -41,7 +42,7 @@ public class ConversationListAdapter extends ArrayAdapter {
         TextView userLastmsg = convertView.findViewById(R.id.user_last_message);
 
         imageView.setImageResource(DummyDatabase.PROFILE_IMG_ID);
-        userName.setText(conv.chatter().getFullName());
+        userName.setText(conv.chatter().fullName());
 
         String txt = "";
         Message last = conv.lastMessage();
@@ -56,4 +57,10 @@ public class ConversationListAdapter extends ArrayAdapter {
         userLastmsg.setText(txt);
         return convertView;
     }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
 }

@@ -49,9 +49,10 @@ public class User extends Model {
     /**
      * @return Full name of the user in the format "First name Last name"
      */
-    public String getFullName() {
+    public String fullName() {
         return getFirstName() + " " + getLastName();
     }
+
 
     /**
      * @return ID of the user corresponding to the one in the database
@@ -132,8 +133,8 @@ public class User extends Model {
      *
      * @param uri
      */
-    public void setProfilePictureURI(Uri uri) {
-        ppUri = uri == null ? Uri.EMPTY : uri;
+    public void setProfilePictureURI(String uri) {
+        //ppUri = Uri.parse(uri);
     }
 
     /**

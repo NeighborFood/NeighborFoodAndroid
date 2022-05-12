@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -127,7 +126,7 @@ public class SignUpActivity extends AppCompatActivity {
             signOutButton.setVisibility(View.VISIBLE);
             signInButton.setVisibility(View.INVISIBLE);
             startButton.setVisibility(View.VISIBLE);
-            guideTextView.setText(getResources().getString(R.string.welcome_message, user.getFullName()));
+            guideTextView.setText(getResources().getString(R.string.welcome_message, user.fullName()));
 
 
         } else {

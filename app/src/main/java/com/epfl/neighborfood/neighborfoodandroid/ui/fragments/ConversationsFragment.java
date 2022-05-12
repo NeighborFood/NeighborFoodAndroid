@@ -28,8 +28,10 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class ConversationsFragment extends Fragment {
@@ -47,6 +49,8 @@ public class ConversationsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         //ConversationRepository rep = new ConversationRepositoryImplementation();
 
+
+
         listView = (ListView) view.findViewById(R.id.conversationsFragmentListView);
         adapter = new ConversationListAdapter(view.getContext(), (ArrayList<Conversation>) conversations);
         listView.setAdapter(adapter);
@@ -56,8 +60,9 @@ public class ConversationsFragment extends Fragment {
             if (task.isSuccessful()){
                 for (DocumentSnapshot d : task.getResult().getDocuments()){
                     Conversation c = d.toModel(Conversation.class);
+                    c.setId(d.getId());
                     for (User u : c.getUsers()){
-                        if (u.getId().equals("-1")){
+                        if (u.getId().equals(AuthenticatorFactory.getDependency().getCurrentUser().getId())){
                             aux.add(c);
                         }
                     }
@@ -65,9 +70,15 @@ public class ConversationsFragment extends Fragment {
             }
             return aux;
         }).addOnSuccessListener(l-> {
-                conversations = l;
-                Toast.makeText(getContext(),"I am here",Toast.LENGTH_LONG).show();
-                adapter.notifyDataSetChanged();
+            l.sort(new Comparator<Conversation>() {
+                @Override
+                public int compare(Conversation a, Conversation b) {
+                    return b.lastMessage().getDate().compareTo(a.lastMessage().getDate());
+                }
+            });
+            adapter.clear();
+            adapter.addAll(l);
+
         });
 
 
@@ -77,6 +88,7 @@ public class ConversationsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent i = new Intent(view.getContext(), ChatRoomActivity.class);
                 i.putExtra("Chatter",conversations.get(position).chatter());
+                i.putExtra("ConversationID",conversations.get(position).id());
                 startActivity(i);
             }
         });

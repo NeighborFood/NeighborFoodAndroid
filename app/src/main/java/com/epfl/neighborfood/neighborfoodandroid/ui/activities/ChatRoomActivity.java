@@ -12,14 +12,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.MessageListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
+import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
+import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
+import com.google.android.gms.tasks.Continuation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +37,18 @@ public class ChatRoomActivity extends AppCompatActivity{
     private MessageListAdapter mMessageAdapter;
     private List<Message> messageList = new ArrayList<>();
     private User chatter;
+    private Conversation conv;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Database dep = DatabaseFactory.getDependency();
         messageList = new ArrayList<>();
 
 
         Intent i = getIntent();
         chatter = (User)i.getSerializableExtra("Chatter");
-
+        id = (String) i.getSerializableExtra("ConversationID");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
@@ -53,7 +59,7 @@ public class ChatRoomActivity extends AppCompatActivity{
 
         // add back arrow to toolbar and remove title
         if (getSupportActionBar() != null){
-            getSupportActionBar().setTitle(chatter.getFullName());
+            getSupportActionBar().setTitle(chatter.fullName());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -61,8 +67,21 @@ public class ChatRoomActivity extends AppCompatActivity{
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+
         mMessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
         mMessageAdapter = new MessageListAdapter(this, messageList);
+
+        DatabaseFactory.getDependency().fetch("Conversations",id).continueWith(
+                t -> {
+                    Conversation c = t.getResult().toModel(Conversation.class);
+                    return c;
+                }
+        ).addOnSuccessListener(
+                c -> {
+                    messageList.addAll(c.getMessages());
+                    mMessageAdapter.notifyDataSetChanged();
+                }
+        );
 
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
         mMessageRecycler.setAdapter(mMessageAdapter);
@@ -75,11 +94,25 @@ public class ChatRoomActivity extends AppCompatActivity{
                 EditText message = (EditText) findViewById(R.id.edit_gchat_message);
                 String messageText = message.getText().toString();
 
-
                 User currentUser = AuthenticatorFactory.getDependency().getCurrentUser();
                 Message msg = new Message(messageText,currentUser,chatter);
                 mMessageAdapter.addMessage(msg);
-                message.setText("");
+
+                DatabaseFactory.getDependency().fetch("Conversations",id).continueWith((Continuation<DocumentSnapshot,Conversation>) task ->{
+                    Conversation aux = null;
+                    if (task.isSuccessful()){
+                        aux = task.getResult().toModel(Conversation.class);
+                    }
+                    return aux;
+                }).continueWith(
+                        t ->{
+                            Conversation c = t.getResult();
+                            c.addMessage(msg);
+                            DatabaseFactory.getDependency().set("Conversations",id,c);
+                            return null;
+
+                        }
+                );
             }
         });
     }

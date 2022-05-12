@@ -12,7 +12,6 @@ import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 
-import com.epfl.neighborfood.neighborfoodandroid.authentication.DummyAuthenticator;
 import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
@@ -46,9 +45,7 @@ import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RunWith(AndroidJUnit4.class)
 public class ConversationsActivityTest {
@@ -115,7 +112,7 @@ public class ConversationsActivityTest {
             User usr = users[i];
             onData(anything()).inAdapterView(withId(R.id.conversationsListView)).atPosition(i).
                     onChildView(withId(R.id.user_name)).
-                    check(matches(withText(usr.getFullName())));
+                    check(matches(withText(usr.fullName())));
         }
 
 

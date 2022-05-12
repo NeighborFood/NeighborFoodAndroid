@@ -25,8 +25,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 /**
  * Firebase implementation of the Notification Service
  */
@@ -73,7 +71,7 @@ public class FirebaseNotificationService  extends FirebaseMessagingService imple
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,getString(R.string.channel_id))
                 .setSmallIcon(R.drawable.full_notif)
                 .setContentTitle("New meal available!")
-                .setContentText(meal.getName() + " have been prepared by " + vendor.getFullName())
+                .setContentText(meal.getName() + " have been prepared by " + vendor.fullName())
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)
