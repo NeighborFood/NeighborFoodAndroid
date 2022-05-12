@@ -27,7 +27,7 @@ public class PastOrderDetailsActivity extends AppCompatActivity {
         binding.mealImage.setImageResource(order.getMeal().getImageId());
         binding.mealName.setText(order.getMeal().getName());
         binding.mealDesc.setText(order.getMeal().getShortDescription());
-        binding.goVendorProfileId.setText(order.getMealVendor());
+        binding.goVendorProfileId.setText(order.getVendorId());
         binding.goVendorProfileId.setOnClickListener(e ->
         {
             Intent intentVendor = new Intent(PastOrderDetailsActivity.this, VendorProfileActivity.class);

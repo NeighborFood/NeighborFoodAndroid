@@ -76,11 +76,22 @@ public class PastOrdersActivity extends AppCompatActivity {
                 "Vendor H",
                 "Vendor H"
         };
+        String[] buyers = {"Vendor A",
+                "Vendor B",
+                "Vendor C",
+                "Vendor D",
+                "Vendor E",
+                "Vendor F",
+                "Vendor H",
+                "Vendor H",
+                "Vendor H",
+                "Vendor H"
+        };
         for (int i = 0; i < imageId.length; i++) {
             Date date = new GregorianCalendar(2022, Calendar.FEBRUARY, 1 + i).getTime();
             Meal meal = new Meal(mealsName[i], mealsShortDes[i], mealsLongDes[i], imageId[i]);
             //this will be changed later with actual meals.
-            orderArrayList.add(new Order(meal, date, status[i], orderMealPrep[i]));
+            orderArrayList.add(new Order(meal, date, status[i], orderMealPrep[i],buyers[i]));
         }
 
         listView = (ListView) findViewById(R.id.order_list_view);

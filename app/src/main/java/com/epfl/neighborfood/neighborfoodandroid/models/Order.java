@@ -6,28 +6,29 @@ public class Order extends Model {
 
     private static final String ORDER_DELIVERED = "This order was achieved the";
     private static final String ORDER_NOT_YET_DELIVERED = "This order is being processed";
-    private Meal meal;
+    private String orderId;
+    private String mealId;
     private Date orderDate;
     private boolean status;
-    private String mealVendor;
+    private String vendorId;
+    private String buyerId;
 
-    public Order(Meal meal, Date orderDate) {
-        this.meal = meal;
-        this.orderDate = orderDate;
-    }
 
-    public Order(Meal meal, Date orderDate, boolean status, String mealVendor) {
-        this.meal = meal;
+    public Order(String orderId, String mealId, Date orderDate, boolean status, String VendorId, String buyerId) {
+        this.orderId = orderId;
+        this.mealId = mealId;
         this.orderDate = orderDate;
         this.status = status;
-        this.mealVendor = mealVendor;
+        this.vendorId = VendorId;
+        this.buyerId = buyerId;
     }
 
-    public Order(){
+    public String getOrderId() {
+        return orderId;
     }
 
-    public Meal getMeal() {
-        return meal;
+    public String getMealId() {
+        return mealId;
     }
 
     public Date getOrderDate() {
@@ -38,18 +39,27 @@ public class Order extends Model {
         return status;
     }
 
-    public String getMealVendor() {
-        return mealVendor;
+    public String getVendorId() {
+        return vendorId;
     }
 
+    public String getBuyerIdId() {
+        return vendorId;
+    }
+
+    /*
+    returns description about the order status
+     */
     public String orderStatusDes() {
         if (status) {
             return ORDER_DELIVERED + orderDate.toString();
         }
         return ORDER_NOT_YET_DELIVERED;
     }
-
+    public Order copyWithId(String orderId){
+        return new Order(orderId, mealId, orderDate, status, vendorId, buyerId);
+    }
     public Order getOrder() {
-        return new Order(meal, orderDate, status, mealVendor);
+        return new Order(orderId, mealId, orderDate, status, vendorId, buyerId);
     }
 }

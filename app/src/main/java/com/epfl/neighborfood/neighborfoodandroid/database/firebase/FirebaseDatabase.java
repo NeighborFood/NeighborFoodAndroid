@@ -61,4 +61,14 @@ public class FirebaseDatabase implements Database {
                 Tasks.forResult(new FirebaseCollectionSnapshot(collectionSnapshot))
         ));
     }
+
+    @Override
+    public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath,String attributeName, Object attributeValue) {
+        ;
+        return database.collection(collectionPath).whereEqualTo(attributeName,attributeValue).get().onSuccessTask(
+                (collectionSnapshot ->
+                        Tasks.forResult(new FirebaseCollectionSnapshot(collectionSnapshot))
+                ));
+    }
+
 }
