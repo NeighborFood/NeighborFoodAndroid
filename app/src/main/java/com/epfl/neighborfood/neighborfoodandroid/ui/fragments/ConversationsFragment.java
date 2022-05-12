@@ -5,12 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.ConversationListAdapter;
@@ -18,19 +14,12 @@ import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFac
 import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
-import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
-import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
-import com.epfl.neighborfood.neighborfoodandroid.repositories.ConversationRepository;
-import com.epfl.neighborfood.neighborfoodandroid.repositories.ConversationRepositoryImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
 import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 

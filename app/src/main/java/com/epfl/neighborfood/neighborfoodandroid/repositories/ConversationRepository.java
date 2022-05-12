@@ -6,7 +6,7 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import java.util.List;
 
 
-public abstract class ConversationRepository {
+public class ConversationRepository {
     public MutableLiveData<List<Conversation>> conversations;
 
     public ConversationRepository() {
@@ -14,11 +14,24 @@ public abstract class ConversationRepository {
     }
 
 
-    public abstract Conversation getConversation(String conversationID);
-    public abstract List<Conversation> getAllConversations();
-    public abstract void addConversation(Conversation conv);
-    public abstract void updateConversation(Conversation conv,String conversationID);
-    public abstract void removeConversation(String conversationID);
+    public Conversation getConversation(String conversationID) {
+        return null;
+    }
+
+    public List<Conversation> getAllConversations() {
+        return null;
+    }
+
+    public void addConversation(Conversation conv) {
+
+    }
+
+    public void updateConversation(Conversation conv, String conversationID) {
+    }
+
+    public void removeConversation(String conversationID) {
+
+    }
 
 
 }
