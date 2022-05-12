@@ -49,19 +49,31 @@ public abstract class AppContainer {
     public NotificationService getNotificationService(){
         return notificationService;
     }
+
+    /**Setter for the auth repository
+     * @param authRepo the authrepo to set
+     */
     protected void setAuthRepo(AuthRepository authRepo){
         this.authRepo = authRepo;
     }
+
+    /** Setter for the meal repository
+     * @param mealRepo the meal repo to set
+     */
     protected void setMealRepo(MealRepository mealRepo){
         this.mealRepo = mealRepo;
     }
+
+    /**Setter for the user repository
+     * @param userRepo the user repository
+     */
     protected void setUserRepo(UserRepository userRepo){
         this.userRepo = userRepo;
     }
     /**
-
-     * @param mealRepo the app's user repository
-     * @param dep      the app's database
+     * @param dep the app's Database instance
+     * @param authenticator the app's authenticator
+     * @param notificationService the app's notification service
      */
     protected AppContainer( Database dep, Authenticator authenticator, NotificationService notificationService) {
         DatabaseFactory.setDependency(dep);

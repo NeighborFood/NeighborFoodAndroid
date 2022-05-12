@@ -15,11 +15,4 @@ public class NeighborFoodApplication extends Application {
         }
         return appContainer;
     }
-
-    /** Getter for the app Context
-     * @return the app context
-     */
-    public static Context getAppContext(){
-        return getAppContext();
-    }
 }

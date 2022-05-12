@@ -73,7 +73,7 @@
     <string name="save_success">Successfully Saved!</string>
     <string name="save_failure"> Failed to saved :(</string>
     <string name="load_failure">Failed to load data :(</string>
-    <string name="get_google_account_failure">Failed to get Google Account :(</string>
+    <string name="login_failure">Failed to login :(</string>
     <string name="welcome_message">Welcome, %1$s! We are glad that you joined us! \n Click on the button to setup your profile</string>
     <string name="welcome_back_message">Welcome back, %1$s! Fresh meals are right at the tip of your fingers, click start to see them!</string>
     <string name="finish_profile">Set up profile</string>

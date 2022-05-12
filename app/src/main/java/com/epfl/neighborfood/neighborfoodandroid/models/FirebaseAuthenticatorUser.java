@@ -3,13 +3,16 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * A firebase authenticator user
+ */
 public class FirebaseAuthenticatorUser extends AuthenticatorUser {
-    private FirebaseUser firebaseUser;
+    private final FirebaseUser firebaseUser;
 
     /**
      * create a LoggedInUser instance from a FirebaseUser
      *
-     * @param firebaseUser(FirebaseUser)
+     * @param firebaseUser(FirebaseUser) : the user returned by firebase
      */
     public FirebaseAuthenticatorUser(com.google.firebase.auth.FirebaseUser firebaseUser) {
         super(firebaseUser.getUid(), firebaseUser.getEmail(), firebaseUser.getDisplayName(), firebaseUser.getDisplayName(),firebaseUser.getPhotoUrl().toString());
@@ -20,6 +23,10 @@ public class FirebaseAuthenticatorUser extends AuthenticatorUser {
     }
 
 
+    /** Separates the first name from the lastname of the user
+     * @param str the string containing the full name
+     * @return a list containing the first name and the lastname of the user, if not found, it will be an empty string
+     */
     private String[] getNameLastNameFromDisplayName(String str) {
         String[] res = new String[2];
         String[] split = str.split(" ");
