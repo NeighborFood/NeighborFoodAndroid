@@ -1,21 +1,19 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
 
-
 import android.net.Uri;
 
-import java.io.Serializable;
-import java.net.URI;
 import java.util.ArrayList;
 
 
-public class User implements Serializable {
+public class User extends Model {
 
     /* Keys of the data received from the server */
     private static final String KEY_ID = "id";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_FIRSTNAME = "firstname";
     private static final String KEY_LASTNAME = "lastname";
+
 
     /* Fields concerning the User object */
     private String id = "";
@@ -31,16 +29,20 @@ public class User implements Serializable {
      * Create a new User object, holding database
      * information related to the user.
      * Most of values are given by tequila.
-     * @param id ID of the user in database
-     * @param email E-mail of user
+     *
+     * @param id        ID of the user in database
+     * @param email     E-mail of user
      * @param firstName First name of user
-     * @param lastName Last name of user
+     * @param lastName  Last name of user
      */
     public User(String id, String email, String firstName, String lastName) {
         setId(id);
         setEmail(email);
         setFirstName(firstName);
         setLastName(lastName);
+    }
+
+    public User() {
     }
 
 
@@ -61,6 +63,7 @@ public class User implements Serializable {
     /**
      * Define the user ID and if a profile / avatar is attached,
      * also update their user ID.
+     *
      * @param id ID of the user
      */
     public void setId(String id) {
@@ -76,6 +79,7 @@ public class User implements Serializable {
 
     /**
      * Define the e-mail of the user
+     *
      * @param email E-mail of the user
      */
     public void setEmail(String email) {
@@ -91,6 +95,7 @@ public class User implements Serializable {
 
     /**
      * Define the First name of the user
+     *
      * @param firstName First name of the user
      */
     public void setFirstName(String firstName) {
@@ -106,6 +111,7 @@ public class User implements Serializable {
 
     /**
      * Define the Last name of the user
+     *
      * @param lastname Last name of the user
      */
     public void setLastName(String lastname) {
@@ -114,51 +120,56 @@ public class User implements Serializable {
 
     /**
      * Getter for the profile picture URI
+     *
      * @return URI
      */
-    public Uri getProfilePictureURI(){
+    public Uri getProfilePictureURI() {
         return ppUri;
     }
+
     /**
      * Setter for the profile picture URI
+     *
      * @param uri
      */
-    public void setProfilePictureURI(Uri uri){
+    public void setProfilePictureURI(Uri uri) {
         ppUri = uri == null ? Uri.EMPTY : uri;
     }
 
     /**
      * Getter for the bio of the user
+     *
      * @return the bio
      */
-    public String getBio(){
+    public String getBio() {
         return bio;
     }
+
     /**
      * Setter for the bio of the user
+     *
      * @param bio
      */
-    public void setBio(String bio){
+    public void setBio(String bio) {
         this.bio = bio;
     }
 
-    public ArrayList<String> getLinks(){
+    public ArrayList<String> getLinks() {
         return (ArrayList<String>) links.clone();
     }
-    public void setLinks(ArrayList<String>links){
+
+    public void setLinks(ArrayList<String> links) {
         this.links = links;
     }
 
 
-
     @Override
     public String toString() {
-        return "{\n" +
-                KEY_ID + " : " + getId() + ", " + "\n" +
-                KEY_EMAIL + " : " + getEmail() + ", " + "\n" +
-                KEY_FIRSTNAME + " : " + getFirstName() + ", " + "\n" +
-                KEY_LASTNAME + " : " + getLastName() + " " + "\n" +
-                "}";
+        return "{\n" + KEY_ID + " : " + getId() + ", " +
+                "\n" + KEY_EMAIL + " : " + getEmail() + ", " +
+                "\n" + KEY_FIRSTNAME + " : " + getFirstName() + ", " +
+                "\n" + KEY_LASTNAME + " : " + getLastName() + " " +
+                "\n" + "}";
     }
 
 }

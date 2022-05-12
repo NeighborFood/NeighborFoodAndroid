@@ -1,8 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,22 +12,30 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
+import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.PlaceMealViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.PlaceMealViewModelFactory;
+import com.google.android.gms.tasks.Task;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener,DatePickerDialog.OnDateSetListener {
+/**
+ * Activity where vendors can place their meals, by uploading meal picture, selecting date, choosing allergens, and writing other details.
+ */
+public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     private static final int RESULT_LOAD_IMAGE = 1;
     ImageView imageToUpload;
     Map<ImageView, String> allergensIcons;
@@ -40,6 +45,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     EditText descriptionText, priceText, mealNameText, dateText, timeText;
     Toolbar toolbar;
     Uri image;
+    private PlaceMealViewModel vmodel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         imageToUpload = findViewById(R.id.imageToUpload);
         confirmationButton = findViewById(R.id.ConfirmationButton);
         addImageButton = findViewById(R.id.addPictureButton);
+        vmodel = new ViewModelProvider(this, new PlaceMealViewModelFactory((NeighborFoodApplication) this.getApplication())).get(PlaceMealViewModel.class);
 
         allergensInMeal = new ArrayList<String>();
         allergensIcons = new HashMap<ImageView, String>();
@@ -95,21 +102,14 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.addPictureButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                //@TODO for sprint 9 I (Raed) will change the upload picture to be abstract and not deprecated
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 break;
             case R.id.ConfirmationButton:
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                i.putExtra("meal_name", String.valueOf(mealNameText.getText()));
-                i.putExtra("description", String.valueOf(descriptionText.getText()));
-                i.putExtra("price", String.valueOf(priceText.getText()));
-                i.putExtra("time", String.valueOf(priceText.getText()));
-                i.putExtra("date", String.valueOf(dateText.getText()));
-                i.putExtra("allergens", new ArrayList<>(allergensInMeal));
-                //***********************
-                //HERE the image should be put in extra for intent too
-                //mealImage = image;
-                //***********************
-                startActivity(i);
+                //TODO: replace with actual value of the place Meal
+                Task<Void> task = vmodel.placeMeal(new Meal(mealNameText.getText().toString(), descriptionText.getText().toString() , descriptionText.getText().toString() , 0, new ArrayList<>(), 0));
+                task.addOnCompleteListener((a)->{startActivity(i);});
                 break;
             case R.id.CalendarButton:
                 DatePickerDialog datePickerDialog = new DatePickerDialog(

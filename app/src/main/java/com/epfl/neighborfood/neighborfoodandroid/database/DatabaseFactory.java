@@ -1,25 +1,26 @@
 package com.epfl.neighborfood.neighborfoodandroid.database;
 
 
-import com.epfl.neighborfood.neighborfoodandroid.database.firebase.FirebaseDB;
-
+/**
+ * @author Mohamed Yassine Boukhari
+ */
 public class DatabaseFactory {
 
-    private static TentativeDB dependency = FirebaseDB.getInstance();
+    private static Database dependency;
 
 
     /**
      * Gets the authenticator instance currently used
      * @return authenticator
      */
-    public static TentativeDB getDependency() {
+    public static Database getDependency() {
         return dependency;
     }
 
     /**
      * Sets the authenticator instance to be used
      */
-    public static void setDependency(TentativeDB dep) {
+    public static void setDependency(Database dep) {
         dependency = dep;
     }
 }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PastOrdersActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ProfileEditingActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.SignUpActivity;
 
@@ -29,6 +30,11 @@ public class AccountFragment extends Fragment {
             Intent intent = new Intent(getActivity(), SignUpActivity.class);
             startActivity(intent);
         });
+        getView().findViewById(R.id.PastOrdersButton).setOnClickListener((View v) -> {
+            Intent intent = new Intent(getActivity(), PastOrdersActivity.class);
+            startActivity(intent);
+        });
+
     }
 
 }

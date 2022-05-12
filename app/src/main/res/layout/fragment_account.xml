@@ -52,7 +52,7 @@
                 android:text="@string/food_preferences" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/PastOrdersButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/order_history_small"

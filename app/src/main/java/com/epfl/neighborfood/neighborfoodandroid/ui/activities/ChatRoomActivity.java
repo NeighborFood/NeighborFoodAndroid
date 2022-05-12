@@ -16,7 +16,8 @@ import android.widget.TextView;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.MessageListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.DummyDatabase;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 
@@ -35,8 +36,8 @@ public class ChatRoomActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        DummyDatabase dep = DummyDatabase.getInstance();
-        messageList = new ArrayList<>(dep.fetchMessages());
+        Database dep = DatabaseFactory.getDependency();
+        messageList = new ArrayList<>();
 
 
         Intent i = getIntent();
@@ -74,9 +75,9 @@ public class ChatRoomActivity extends AppCompatActivity{
                 EditText message = (EditText) findViewById(R.id.edit_gchat_message);
                 String messageText = message.getText().toString();
 
+
                 User currentUser = AuthenticatorFactory.getDependency().getCurrentUser();
                 Message msg = new Message(messageText,currentUser,chatter);
-                dep.pushMessage(msg);
                 mMessageAdapter.addMessage(msg);
                 message.setText("");
             }

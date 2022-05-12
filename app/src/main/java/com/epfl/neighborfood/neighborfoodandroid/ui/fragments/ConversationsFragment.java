@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.ConversationListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.DummyDatabase;
+import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
@@ -18,6 +18,8 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ConversationsFragment extends Fragment {
     public static final int IMGID = R.drawable.profile_img_male;
@@ -57,7 +59,10 @@ public class ConversationsFragment extends Fragment {
         DummyDatabase.getInstance().reset();
 
         for (int i = 0; i < users.length; i++) {
-            Conversation conv = new Conversation(users[i], Arrays.asList(messages[i]));
+            Set<User> aux = new HashSet<>();
+            aux.add(users[i]);
+            aux.add(AuthenticatorFactory.getDependency().getCurrentUser());
+            Conversation conv = new Conversation(aux, Arrays.asList(messages[i]));
             dep.pushConversation(conv);
         }
         conversations = dep.fetchConversations();

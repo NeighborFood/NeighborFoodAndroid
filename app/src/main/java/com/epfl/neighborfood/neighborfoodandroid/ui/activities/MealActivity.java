@@ -56,7 +56,7 @@ public class MealActivity extends AppCompatActivity {
             AllergensAdapter allergensAdapter = new AllergensAdapter(this, allergens);
             binding.allergensMeal.setAdapter(allergensAdapter);
 
-            binding.mealImage.setImageResource(imageId);
+            binding.mealImage.setImageResource(R.drawable.paella);
             binding.mealName.setText(name);
             binding.mealDesc.setText(longDes);
 
