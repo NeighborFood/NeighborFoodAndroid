@@ -32,7 +32,7 @@ public class Conversation extends Model {
     public User getChatter() {
         User chatter = null;
         for (User usr: users){
-            if(!usr.getId().equals(AuthenticatorFactory.getDependency().getCurrentUser().getId())){
+            if(!usr.getId().equals(AuthenticatorFactory.getDependency().getCurrentAuthUser().getId())){
                 chatter = usr;
             }
         }

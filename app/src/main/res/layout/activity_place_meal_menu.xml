@@ -208,6 +208,19 @@
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
 
         <TextView
+            android:id="@+id/priceTitle4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Location:"
+            android:textColor="#9C27B0"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.554"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
+
+        <TextView
             android:id="@+id/priceTitle3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -309,6 +322,19 @@
             app:layout_constraintTop_toTopOf="@+id/DateText"
             app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/calendar" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="142dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:entries="@array/spinnerItems"
+            app:layout_constraintBottom_toTopOf="@+id/TimeText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/priceTitle4"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2"
+            app:layout_constraintVertical_bias="0.471" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

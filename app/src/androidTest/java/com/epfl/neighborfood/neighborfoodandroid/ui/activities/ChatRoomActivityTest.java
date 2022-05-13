@@ -33,11 +33,13 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 @RunWith(AndroidJUnit4.class)
 public class ChatRoomActivityTest {
 
-    private User other = new User("1","other@epfl.ch","George", "Other");
+    private User other = new User("1","other@epfl.ch","George", "Other","");
 
     @Before
     public void setUp() throws Exception {
         NeighborFoodApplication.appContainer = new AppContainerTestImplementation();
+        AuthenticatorFactory.setDependency(DummyAuthenticator.getInstance());
+        DummyAuthenticator.getInstance().logInWithGoogleAccount(null);
         DummyDatabase.getInstance().reset();
         Intents.init();
     }

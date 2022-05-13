@@ -2,6 +2,11 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationRequest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,9 +18,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
@@ -35,7 +43,7 @@ import java.util.Map;
 /**
  * Activity where vendors can place their meals, by uploading meal picture, selecting date, choosing allergens, and writing other details.
  */
-public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, LocationListener {
     private static final int RESULT_LOAD_IMAGE = 1;
     ImageView imageToUpload;
     Map<ImageView, String> allergensIcons;
@@ -45,6 +53,10 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     EditText descriptionText, priceText, mealNameText, dateText, timeText;
     Toolbar toolbar;
     Uri image;
+    Location location;
+    TextView lon;
+    TextView lat;
+    LocationManager locationManager;
     private PlaceMealViewModel vmodel;
 
     @Override
@@ -85,6 +97,12 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         addImageButton.setOnClickListener(this);
         confirmationButton.setOnClickListener(this);
 
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, this);
     }
 
     @Override
@@ -108,7 +126,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
             case R.id.ConfirmationButton:
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 //TODO: replace with actual value of the place Meal
-                Task<Void> task = vmodel.placeMeal(new Meal(mealNameText.getText().toString(), descriptionText.getText().toString() , descriptionText.getText().toString() , 0, new ArrayList<>(), 0));
+                Task<Void> task = vmodel.placeMeal(new Meal(mealNameText.getText().toString(), descriptionText.getText().toString() , descriptionText.getText().toString() , 0, new ArrayList<>(), 0, location));
                 task.addOnCompleteListener((a)->{startActivity(i);});
                 break;
             case R.id.CalendarButton:
@@ -137,5 +155,10 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         dateText.setText(dayOfMonth + "/" + (month + 1) + "/" + year, TextView.BufferType.EDITABLE);
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location loc) {
+        location = loc;
     }
 }

@@ -1,11 +1,24 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
 
+import android.location.Location;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class Meal extends Model implements Serializable {
-    private String id;
+    /* Keys of the data received from the server */
+    public static final String KEY_ID = "id";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_FIRSTNAME = "firstName";
+    public static final String KEY_LASTNAME = "lastName";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PP_URI = "profilePictureURI";
+    public static final String KEY_BIO = "bio";
+    public static final String KEY_LINKS = "links";
+
+
+    private String mealId;
     private String vendorID;
     private String name;
     private String shortDescription;
@@ -13,6 +26,7 @@ public class Meal extends Model implements Serializable {
     private double price;
     private int imageId;
     private List<Allergen> allergens;
+    private Location pickupLocation;
 
     /**
      * @param id the id to set
@@ -23,7 +37,7 @@ public class Meal extends Model implements Serializable {
     }
     public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, int imageId){
         this(name,shortDescription,longDescription,imageId);
-        this.id = id;
+        this.mealId = id;
         this.vendorID = vendorID;
     }
     public Meal(String name, String shortDescription, String longDescription, int imageId) {
@@ -33,13 +47,14 @@ public class Meal extends Model implements Serializable {
         this.imageId = imageId;
     }
 
-    public Meal(String name, String shortDescription, String longDescription, int imageId, List<Allergen> allergens, double price) {
+    public Meal(String name, String shortDescription, String longDescription, int imageId, List<Allergen> allergens, double price, Location pickupLocation) {
         this.name = name;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
         this.imageId = imageId;
         this.allergens = allergens;
         this.price = price;
+        this.pickupLocation = pickupLocation;
     }
 
     public Meal(){
@@ -73,9 +88,15 @@ public class Meal extends Model implements Serializable {
      * @return the meal id
      */
     public String getMealId(){
-        return id;
+        return mealId;
     }
 
+    /** getter for the meal id
+     * @return the meal id
+     */
+    public void setMealId(String id){
+        mealId = id;
+    }
     /** getter for the meal's vendor id
      * @return the owner vendorID
      */
@@ -90,4 +111,11 @@ public class Meal extends Model implements Serializable {
         this.vendorID = vendorID;
     }
 
+    public Location getPickupLocation() {
+        return pickupLocation;
+    }
+
+    public void setPickupLocation(Location pickupLocation) {
+        this.pickupLocation = pickupLocation;
+    }
 }
