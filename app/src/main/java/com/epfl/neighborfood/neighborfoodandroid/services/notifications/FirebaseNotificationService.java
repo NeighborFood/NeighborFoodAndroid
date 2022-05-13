@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -24,8 +25,6 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Firebase implementation of the Notification Service
@@ -58,7 +57,8 @@ public class FirebaseNotificationService  extends FirebaseMessagingService imple
           meal.set(result);
         });
         */
-        User vendor = new User("id1", "email@epfl.ch", "gordon"," ramsey");
+
+        User vendor = new User("id1", "email@epfl.ch", "gordon"," ramsey","");
         Meal meal = new Meal("paella","delicious paella","delicious paella",R.drawable.fondue);
 
         //create intent when clicking on notification which redirects to the mealActivity
@@ -69,20 +69,22 @@ public class FirebaseNotificationService  extends FirebaseMessagingService imple
         intent.putExtra("imageid", meal.getImageId());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        appContainer.getMealRepo().getMealById(mealId).continueWithTask(mealTask-> appContainer.getUserRepo().getUserById(vendorID).continueWith(fetchedVendor-> new Pair<>(mealTask.getResult(), fetchedVendor.getResult()))).addOnSuccessListener((result)->{
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this,getString(R.string.channel_id))
+                    .setSmallIcon(R.drawable.full_notif)
+                    .setContentTitle("New meal available!")
+                    .setContentText(result.first.getName() + " have been prepared by " + result.second.getUsername())
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    // Set the intent that will fire when the user taps the notification
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,getString(R.string.channel_id))
-                .setSmallIcon(R.drawable.full_notif)
-                .setContentTitle("New meal available!")
-                .setContentText(meal.getName() + " have been prepared by " + vendor.getFullName())
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        new Handler(Looper.getMainLooper()).post(() -> {
-            notificationManager.notify(0,builder.build());
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            new Handler(Looper.getMainLooper()).post(() -> {
+                notificationManager.notify(0,builder.build());
+            });
         });
+
     }
 
     @Override

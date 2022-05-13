@@ -1,5 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.authentication;
 
+import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.Task;
@@ -9,14 +10,21 @@ import com.google.android.gms.tasks.Task;
  * Represents the model for authentication
  */
 public interface Authenticator {
-
+    interface AuthUserStateChangeListener{
+        void onAuthStateChanged();
+    }
     /**
      * Returns the user currently signed in
      *
      * @return user, null if no user is logged in
      */
-    User getCurrentUser();
+    AuthenticatorUser getCurrentAuthUser();
 
+    /** Adds a listener to the
+     * @param listener the method to be called when the auth state changed
+     */
+
+    void addAuthStateChangeListener(AuthUserStateChangeListener listener);
     /**
      * Logs out the current User
      */

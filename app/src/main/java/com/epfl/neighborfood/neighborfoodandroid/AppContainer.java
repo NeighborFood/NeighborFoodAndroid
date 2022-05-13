@@ -4,6 +4,7 @@ import com.epfl.neighborfood.neighborfoodandroid.authentication.Authenticator;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
@@ -49,19 +50,39 @@ public abstract class AppContainer {
         return notificationService;
     }
 
-    /**
-     * @param authRepo the app's authentication repository
-     * @param mealRepo the app's meal repository
-     * @param mealRepo the app's user repository
-     * @param dep      the app's database
+    /**Setter for the auth repository
+     * @param authRepo the authrepo to set
      */
-    protected AppContainer(AuthRepository authRepo, MealRepository mealRepo, UserRepository userRepo, Database dep, Authenticator authenticator, NotificationService notificationService) {
+    protected void setAuthRepo(AuthRepository authRepo){
         this.authRepo = authRepo;
-        this.userRepo = userRepo;
+    }
+
+    /** Setter for the meal repository
+     * @param mealRepo the meal repo to set
+     */
+    protected void setMealRepo(MealRepository mealRepo){
         this.mealRepo = mealRepo;
-        this.notificationService = notificationService;
+    }
+
+    /**Setter for the user repository
+     * @param userRepo the user repository
+     */
+    protected void setUserRepo(UserRepository userRepo){
+        this.userRepo = userRepo;
+    }
+    /**
+     * @param dep the app's Database instance
+     * @param authenticator the app's authenticator
+     * @param notificationService the app's notification service
+     */
+    protected AppContainer( Database dep, Authenticator authenticator, NotificationService notificationService) {
         DatabaseFactory.setDependency(dep);
         AuthenticatorFactory.setDependency(authenticator);
+        this.notificationService = notificationService;
+        this.authRepo = new AuthRepository();
+        this.userRepo = new UserRepository();
+        this.mealRepo = new MealRepository();
+
     }
 
 }

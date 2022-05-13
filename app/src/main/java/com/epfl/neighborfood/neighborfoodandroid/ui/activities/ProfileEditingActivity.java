@@ -2,6 +2,7 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
@@ -48,7 +49,9 @@ public class ProfileEditingActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         vmodel = new ViewModelProvider(this, new EditProfileViewModelFactory((NeighborFoodApplication) this.getApplication())).get(EditProfileViewModel.class);
-        vmodel.getCurrentUser().observe(this, this::updateUserFields);
+        vmodel.loadCurrentUser()
+                .addOnSuccessListener(this, this::updateUserFields)
+                .addOnFailureListener(this,e-> Toast.makeText(this, R.string.load_failure, Toast.LENGTH_SHORT).show());
         setContentView(R.layout.activity_profile_editing);
         Toolbar toolbar = findViewById(R.id.profileEditToolbar);
         setSupportActionBar(toolbar);
@@ -77,7 +80,8 @@ public class ProfileEditingActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.surnameValue)).setText(user.getLastName());
         ((TextView) findViewById(R.id.emailValue)).setText(user.getEmail());
         ((TextView) findViewById(R.id.bioValue)).setText(user.getBio());
-        Picasso.with(this).load(user.getProfilePictureURI()).fit().into(ppView);
+        ((TextView) findViewById(R.id.usernameValue)).setText(user.getUsername());
+        Picasso.with(this).load(Uri.parse(user.getProfilePictureURI())).fit().into(ppView);
         updateUserLinks(user);
 
     }
@@ -108,9 +112,12 @@ public class ProfileEditingActivity extends AppCompatActivity {
                 activityResultLauncher.launch(galleryIntent);
                 break;
             case R.id.saveButton:
-                vmodel.updateUser(getUserWithUpdatedData());
-                Toast.makeText(this, R.string.save_success, Toast.LENGTH_SHORT).show();
-                finish();
+                vmodel.updateUser(getUserWithUpdatedData())
+                        .addOnSuccessListener((a)-> {
+                            Toast.makeText(this, R.string.save_success, Toast.LENGTH_SHORT).show();
+                            finish();
+                        }).addOnFailureListener((a)->Toast.makeText(this, R.string.save_failure, Toast.LENGTH_SHORT).show());
+
             case R.id.profileEditAddLinkButton:
                 TextInputEditText empty = addLinkInput();
                 empty.requestFocus();
@@ -128,12 +135,12 @@ public class ProfileEditingActivity extends AppCompatActivity {
      */
     private User getUserWithUpdatedData() {
         //TODO: create User builder and replace this
-        User currUser = vmodel.getCurrentUser().getValue();
+        User currUser = vmodel.getCurrentUser();
         if (currUser == null) {
             return null;
         }
         String bio = ((TextInputEditText) findViewById(R.id.bioValue)).getEditableText().toString();
-        User newUser = new User(currUser.getId(), currUser.getEmail(), currUser.getFirstName(), currUser.getLastName());
+        User newUser = new User(currUser.getId(), currUser.getEmail(), currUser.getFirstName(), currUser.getLastName(),currUser.getProfilePictureURI().toString());
         newUser.setBio(bio);
         ArrayList<String> links = new ArrayList<>();
         for (TextInputEditText view : textEdits) {

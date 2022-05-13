@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.ConversationListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
@@ -41,27 +42,27 @@ public class ConversationsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         DummyDatabase dep = DummyDatabase.getInstance();
         User[] users = {
-                new User("1", "test1@machin.com", "Test", "One"),
-                new User("2", "test2@machin.com", "Test", "Two"),
-                new User("3", "test3@machin.com", "Test", "Three")
+                new User("1", "test1@machin.com", "Test", "One",""),
+                new User("2", "test2@machin.com", "Test", "Two",""),
+                new User("3", "test3@machin.com", "Test", "Three","")
         };
 
-        User currentUser = AuthenticatorFactory.getDependency().getCurrentUser();
+        User currentUser = ((NeighborFoodApplication)getActivity().getApplication()).getAppContainer().getAuthRepo().getCurrentUser();
         Message[] messages = {
                 new Message("All good !", currentUser,
-                        new User("1", "test1@machin.com", "Test", "One")),
+                        new User("1", "test1@machin.com", "Test", "One","")),
 
-                new Message("Where are You ? ", new User("2", "test2@machin.com", "Test", "Two"),
+                new Message("Where are You ? ", new User("2", "test2@machin.com", "Test", "Two",""),
                         currentUser),
 
-                new Message("Thanks! very nice Meal", new User("3", "test3@machin.com", "Test", "Three"),
+                new Message("Thanks! very nice Meal", new User("3", "test3@machin.com", "Test", "Three",""),
                         currentUser)};
         DummyDatabase.getInstance().reset();
 
         for (int i = 0; i < users.length; i++) {
             Set<User> aux = new HashSet<>();
             aux.add(users[i]);
-            aux.add(AuthenticatorFactory.getDependency().getCurrentUser());
+            aux.add(currentUser);
             Conversation conv = new Conversation(aux, Arrays.asList(messages[i]));
             dep.pushConversation(conv);
         }
