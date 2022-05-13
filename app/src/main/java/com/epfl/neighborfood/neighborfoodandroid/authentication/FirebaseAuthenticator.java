@@ -1,7 +1,11 @@
 package com.epfl.neighborfood.neighborfoodandroid.authentication;
 
-import com.epfl.neighborfood.neighborfoodandroid.models.User;
-import com.epfl.neighborfood.neighborfoodandroid.models.UserFirebaseImpl;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
+import com.epfl.neighborfood.neighborfoodandroid.models.FirebaseAuthenticatorUser;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -15,6 +19,7 @@ public class FirebaseAuthenticator implements Authenticator {
     private static FirebaseAuthenticator instance;
     private static FirebaseAuth mAuth ;
     private FirebaseAuthenticator(){
+
     }
     public static FirebaseAuthenticator getInstance(){
         if(instance == null){
@@ -24,12 +29,16 @@ public class FirebaseAuthenticator implements Authenticator {
         return instance;
     }
     @Override
-    public User getCurrentUser() {
-        if (mAuth.getCurrentUser() == null) {
+    public AuthenticatorUser getCurrentAuthUser() {
+        if(mAuth.getCurrentUser() == null){
             return null;
         }
+        return new FirebaseAuthenticatorUser(mAuth.getCurrentUser()) ;
+    }
 
-        return new UserFirebaseImpl(mAuth.getCurrentUser());
+    @Override
+    public void addAuthStateChangeListener(AuthUserStateChangeListener listener) {
+        mAuth.addAuthStateListener(firebaseAuth -> listener.onAuthStateChanged());
     }
 
     @Override

@@ -12,7 +12,5 @@ import java.net.URI;
 public class UserFirebaseImplmentationTest {
     @Test
     public void getProfileURIReturnsEmptyURIOnNull(){
-        UserFirebaseImpl user = new UserFirebaseImpl();
-        assertThat(user.getProfilePictureURI(),is(Uri.EMPTY));
     }
 }

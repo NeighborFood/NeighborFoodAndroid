@@ -9,10 +9,14 @@ import java.util.ArrayList;
 public class User extends Model {
 
     /* Keys of the data received from the server */
-    private static final String KEY_ID = "id";
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_FIRSTNAME = "firstname";
-    private static final String KEY_LASTNAME = "lastname";
+    public static final String KEY_ID = "id";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_FIRSTNAME = "firstName";
+    public static final String KEY_LASTNAME = "lastName";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PP_URI = "profilePictureURI";
+    public static final String KEY_BIO = "bio";
+    public static final String KEY_LINKS = "links";
 
 
     /* Fields concerning the User object */
@@ -20,10 +24,10 @@ public class User extends Model {
     private String email = "";
     private String firstName = "";
     private String lastName = "";
+    private String username = "";
     private String bio = "";
     private ArrayList<String> links = new ArrayList<>();
-    //private Profile _profile = null;
-    private Uri ppUri;
+    private String ppUri;
 
     /**
      * Create a new User object, holding database
@@ -35,12 +39,16 @@ public class User extends Model {
      * @param firstName First name of user
      * @param lastName  Last name of user
      */
-    public User(String id, String email, String firstName, String lastName) {
+    public User(String id, String email, String firstName, String lastName, String uri) {
         setId(id);
         setEmail(email);
         setFirstName(firstName);
         setLastName(lastName);
+        setUsername(firstName+lastName);
+        setProfilePictureURI(uri);
     }
+
+
 
     public User() {
     }
@@ -49,8 +57,15 @@ public class User extends Model {
     /**
      * @return Full name of the user in the format "First name Last name"
      */
-    public String getFullName() {
-        return getFirstName() + " " + getLastName();
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username the username
+     */
+    private void setUsername(String username) {
+        this.username = username;
     }
 
     /**
@@ -123,7 +138,7 @@ public class User extends Model {
      *
      * @return URI
      */
-    public Uri getProfilePictureURI() {
+    public String getProfilePictureURI() {
         return ppUri;
     }
 
@@ -132,8 +147,8 @@ public class User extends Model {
      *
      * @param uri
      */
-    public void setProfilePictureURI(Uri uri) {
-        ppUri = uri == null ? Uri.EMPTY : uri;
+    public void setProfilePictureURI(String uri) {
+        ppUri = uri;
     }
 
     /**
