@@ -54,8 +54,6 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     Toolbar toolbar;
     Uri image;
     Location location;
-    TextView lon;
-    TextView lat;
     LocationManager locationManager;
     private PlaceMealViewModel vmodel;
 

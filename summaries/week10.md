@@ -1,6 +1,8 @@
 # Summary for sprint 10
 
 ## Badis
+I added the pickup location to the meal when placing the meal (the option to select another location other than the current one isn't implemented yet). I also worked on filtering through the meals that are fetched from the database (the fetching was implemented by Khalil) by location. I had issues with the build that are related to the location fetching.
+
 ## Elior (scrum master)
 I implemented the upload of the meal to the database and cleaned the way the Allergen were handled. I had issues with image and vendorId management.
 Some interdependencies between our tasks prevented me to do some tasks (but I could have used fake data anyway!)

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerItems">
+        <item>Current Location</item>
+        <item>Select Different Location</item>
+    </string-array>
+</resources>

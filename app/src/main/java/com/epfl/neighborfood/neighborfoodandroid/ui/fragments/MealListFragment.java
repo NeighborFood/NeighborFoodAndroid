@@ -1,12 +1,20 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -26,12 +34,30 @@ public class MealListFragment extends Fragment {
 
     private FragmentMealListBinding binding;
     private MealListViewModel viewModel;
+    private Button filterButton;
+    private Location currentLocation;
+    LocationManager locationManager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentMealListBinding.inflate(getLayoutInflater());
+        filterButton = getActivity().findViewById(R.id.button3);
+        filterButton.setOnClickListener(this::filterMeals);
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                currentLocation = location;
+            }
+        });
+
         return binding.getRoot();
     }
 
@@ -56,6 +82,22 @@ public class MealListFragment extends Fragment {
             startActivity(i);
         });
     }
+
+    private void filterMeals(View view) {
+        MealListAdapter listAdapter = new MealListAdapter(getActivity(), new ArrayList<Meal>());
+        viewModel.getAllMeals().addOnSuccessListener(mealList->{
+            listAdapter.clear();
+            for (Meal meal : mealList) {
+                //we approximate 1 degree of latitude/longitude = 111km
+                if (Math.abs(meal.getPickupLocation().getLongitude()-currentLocation.getLongitude())< 1/30
+                    && Math.abs(meal.getPickupLocation().getLatitude()-currentLocation.getLatitude())< 1/30) {
+                    listAdapter.add(meal);
+                }
+            }
+        }).addOnFailureListener(System.out::println);
+        binding.mealListView.setAdapter(listAdapter);
+    }
+
 
 
 }

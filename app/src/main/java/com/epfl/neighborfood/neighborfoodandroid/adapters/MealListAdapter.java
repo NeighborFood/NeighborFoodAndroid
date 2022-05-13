@@ -41,4 +41,5 @@ public class MealListAdapter extends ArrayAdapter {
 
         return convertView;
     }
+
 }
