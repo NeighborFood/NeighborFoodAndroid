@@ -86,9 +86,6 @@ public class Meal extends Model implements Serializable {
     public String getMealId(){
         return mealId;
     }
-    public void setMealId(String mealId) {
-        this.id = mealId;
-    }
 
     /** getter for the meal id
      * @return the meal id

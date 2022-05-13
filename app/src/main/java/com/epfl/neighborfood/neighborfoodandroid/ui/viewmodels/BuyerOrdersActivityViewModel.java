@@ -34,7 +34,7 @@ public class BuyerOrdersActivityViewModel extends ViewModel {
     }
 
     public Task<List<Order>> getUserOrders(){
-        return orderRepository.getAllOrdersByBuyerId(authRepository.getUserLiveData().getValue().getId());
+        return orderRepository.getAllOrdersByBuyerId(authRepository.getCurrentUser().getId());
     }
     /*
         fetches meal by id

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.BuyerOrdersActivityViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.BuyerOrderDetailsActivityViewModel;
 
 public class BuyerOrderDetailsViewModelFactory implements ViewModelProvider.Factory {
     private NeighborFoodApplication app;
@@ -17,6 +17,6 @@ public class BuyerOrderDetailsViewModelFactory implements ViewModelProvider.Fact
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new BuyerOrdersActivityViewModel(app.getAppContainer().getAuthRepo(), app.getAppContainer().getOrderRepo(),app.getAppContainer().getMealRepo(), app.getAppContainer().getUserRepo());
+        return (T) new BuyerOrderDetailsActivityViewModel(app.getAppContainer().getAuthRepo(), app.getAppContainer().getOrderRepo(),app.getAppContainer().getMealRepo(), app.getAppContainer().getUserRepo());
     }
 }
