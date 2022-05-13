@@ -6,6 +6,7 @@ import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
+import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
 import com.epfl.neighborfood.neighborfoodandroid.services.notifications.NotificationService;
 
@@ -16,6 +17,7 @@ public abstract class AppContainer {
     private AuthRepository authRepo;
     private MealRepository mealRepo;
     private UserRepository userRepo;
+    private OrderRepository orderRepo;
     private NotificationService notificationService;
     /**
      * getter for the Auth Repo of the app
@@ -24,6 +26,14 @@ public abstract class AppContainer {
      */
     public AuthRepository getAuthRepo() {
         return authRepo;
+    }
+    /**
+     * getter for the Order Repo of the app
+     *
+     * @return the authentication repository of the app
+     */
+    public OrderRepository getOrderRepo() {
+        return orderRepo;
     }
     /**
      * getter for the Meal Repo of the app
@@ -55,10 +65,11 @@ public abstract class AppContainer {
      * @param mealRepo the app's user repository
      * @param dep      the app's database
      */
-    protected AppContainer(AuthRepository authRepo, MealRepository mealRepo, UserRepository userRepo, Database dep, Authenticator authenticator, NotificationService notificationService) {
+    protected AppContainer(AuthRepository authRepo, MealRepository mealRepo, UserRepository userRepo, OrderRepository orderRepo, Database dep, Authenticator authenticator, NotificationService notificationService) {
         this.authRepo = authRepo;
         this.userRepo = userRepo;
         this.mealRepo = mealRepo;
+        this.orderRepo = orderRepo;
         this.notificationService = notificationService;
         DatabaseFactory.setDependency(dep);
         AuthenticatorFactory.setDependency(authenticator);

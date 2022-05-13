@@ -60,8 +60,11 @@ public class OrderRepository {
             return Tasks.forException(new IllegalArgumentException("Cannot make a null order"));
         }
         return DatabaseFactory.getDependency().add(ordersDataCollectionPath,order)
-                .continueWithTask(task ->
-                        DatabaseFactory.getDependency().
-                                set(ordersDataCollectionPath,task.getResult(),order.copyWithId(task.getResult())));
+                .continueWithTask(task ->{
+                        order.setOrderId(task.getResult());
+                        return DatabaseFactory.getDependency().
+                                set(ordersDataCollectionPath,task.getResult(),order);
+
+                        });
     }
 }

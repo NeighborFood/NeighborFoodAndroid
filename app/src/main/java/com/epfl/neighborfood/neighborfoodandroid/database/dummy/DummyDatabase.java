@@ -142,4 +142,9 @@ public class DummyDatabase implements Database {
 
         return null;
     }
+
+    @Override
+    public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath, String attributeName, Object attributeValue) {
+        return null;
+    }
 }

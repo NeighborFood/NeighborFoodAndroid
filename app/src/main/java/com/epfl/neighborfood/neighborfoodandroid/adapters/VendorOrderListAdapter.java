@@ -15,14 +15,14 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.ViewHolder> {
+public class VendorOrderListAdapter extends RecyclerView.Adapter<VendorOrderListAdapter.ViewHolder> {
     private static final String TAG = "OrderListAdapter";
 
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<Integer> imageIds = new ArrayList<>();
     private Context context;
 
-    public OrderListAdapter(Context context, ArrayList<String> names, ArrayList<Integer> ids) {
+    public VendorOrderListAdapter(Context context, ArrayList<String> names, ArrayList<Integer> ids) {
         this.names = names;
         imageIds = ids;
         this.context = context;
