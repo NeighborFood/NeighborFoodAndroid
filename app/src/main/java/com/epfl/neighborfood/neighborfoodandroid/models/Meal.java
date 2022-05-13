@@ -34,10 +34,14 @@ public class Meal extends Model implements Serializable {
     public Meal copyWithId(String id){
         return new Meal(id,vendorID,name,shortDescription,longDescription,imageId, allergens, price, retrievalDate);
     }
+
+    public Meal() {
+
+    }
   
     public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, int imageId, List<String> allergens, double price, Date retrievalDate){
         this(name,shortDescription,longDescription,imageId, allergens, price, retrievalDate);
-        this.id = id;
+        this.mealId = id;
     }
 
     public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, int imageId) {
