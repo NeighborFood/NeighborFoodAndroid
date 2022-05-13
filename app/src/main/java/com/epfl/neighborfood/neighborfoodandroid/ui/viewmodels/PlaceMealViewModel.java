@@ -21,7 +21,7 @@ public class PlaceMealViewModel extends ViewModel {
      * @return the completable task
      */
     public Task<Void> placeMeal(Meal meal){
-        meal.setVendorID(authRepository.getUserLiveData().getValue().getId());
+        meal.setVendorID(authRepository.getAuthUser().getId());
         System.out.println(meal.getVendorID());
         return mealRepository.postMeal(meal).continueWith(task -> null);
     }

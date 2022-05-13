@@ -8,8 +8,11 @@ import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
 import com.epfl.neighborfood.neighborfoodandroid.services.notifications.FirebaseNotificationService;
 
-public class AppContainerImplementation extends AppContainer {
+/**
+ * The production container of the application
+ */
+public class AppContainerImplementation extends AppContainer{
     protected AppContainerImplementation() {
-        super(new AuthRepository(), new MealRepository(), new UserRepository(), new OrderRepository(), FirebaseDatabase.getInstance(), FirebaseAuthenticator.getInstance(), new FirebaseNotificationService());
+        super(FirebaseDatabase.getInstance(), FirebaseAuthenticator.getInstance(),new FirebaseNotificationService());
     }
 }

@@ -1,12 +1,15 @@
 package com.epfl.neighborfood.neighborfoodandroid.database;
 
+import com.epfl.neighborfood.neighborfoodandroid.models.Model;
 import com.google.android.gms.tasks.Task;
 
 /**
  * @author Mohamed Yassine Boukhari
  */
 public interface Database {
-
+    interface ModelUpdateListener{
+        void onModelUpdate(DocumentSnapshot newModel);
+    }
 
     /**
      * Fetches the requested data
@@ -55,5 +58,6 @@ public interface Database {
      */
     Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath,String attributeName, Object attributeValue);
 
+    void addChangesListener(String collectionPath, String collectionId, ModelUpdateListener listener);
 
 }

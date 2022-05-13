@@ -58,7 +58,7 @@ public class UserRepositoryTest {
     public void updateUserWorks(){
         //String dummyPresentId = "1";
         //User old = repo.getUserById(dummyPresentId).getResult();
-        User fakeUser = new User("1"/*old.getId()*/,"a","b","c");
+        User fakeUser = new User("1"/*old.getId()*/,"a","b","c","");
         Task<Void> res = repo.updateUser(fakeUser);
         //assertThat(res.isSuccessful(), is(true));
         //assertThat(repo.getUserById(dummyPresentId).getResult().toString(), is(fakeUser.toString()));

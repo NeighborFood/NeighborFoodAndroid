@@ -1,8 +1,8 @@
 package com.epfl.neighborfood.neighborfoodandroid.database.firebase;
 
-import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
+import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -71,4 +71,10 @@ public class FirebaseDatabase implements Database {
                 ));
     }
 
+
+    public void addChangesListener(String collectionPath, String documentPath, ModelUpdateListener listener) {
+        database.collection(collectionPath).document(documentPath).addSnapshotListener(
+                (value, error) -> listener.onModelUpdate(new FirebaseDocumentSnapshot(value))
+        );
+    }
 }
