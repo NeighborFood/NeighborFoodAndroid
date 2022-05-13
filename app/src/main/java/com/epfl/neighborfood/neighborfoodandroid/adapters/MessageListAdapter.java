@@ -47,7 +47,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         Message message = (Message) mMessageList.get(position);
 
         if (message.getSender().getId() == AuthenticatorFactory.getDependency()
-                .getCurrentUser().getId()) {
+                .getCurrentAuthUser().getId()) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
         } else {
@@ -126,7 +126,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             // Format the stored timestamp into a readable String
             SimpleDateFormat dateFormatter = new SimpleDateFormat("d MMM yyyy, HH:mm");
             timeText.setText(dateFormatter.format(message.getDate()));
-            nameText.setText(message.getSender().getFullName());
+            nameText.setText(message.getSender().getUsername());
         }
     }
 

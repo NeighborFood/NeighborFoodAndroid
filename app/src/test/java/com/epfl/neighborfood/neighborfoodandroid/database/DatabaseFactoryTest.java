@@ -36,6 +36,11 @@ public class DatabaseFactoryTest {
             public Task<CollectionSnapshot> fetchAll(String collectionPath) {
                 return null;
             }
+
+            @Override
+            public void addChangesListener(String collectionPath, String collectionId, ModelUpdateListener listener) {
+
+            }
         };
 
         DatabaseFactory.setDependency(dep);
