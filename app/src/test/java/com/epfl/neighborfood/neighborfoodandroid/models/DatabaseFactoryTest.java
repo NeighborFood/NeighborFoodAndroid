@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class DatabaseFactoryTest {
 
-    @Test
+    /*@Test
     public void dependencyTest() {
 
         Database dep = new Database() {
@@ -49,5 +49,5 @@ public class DatabaseFactoryTest {
 
         DatabaseFactory.setDependency(dep);
         assertEquals(dep,DatabaseFactory.getDependency());
-    }
+    }*/
 }
