@@ -11,7 +11,8 @@ so I implemented saving the changes that were done in the profile editing page o
 our lovely and capricious Jacoco that showed 0% coverage (even when running locally) even when the tests are running and passing. so I also worked on fixing that.
 ## Raed 
 
-## Yassine 
+## Yassine
+I finished implementing the chatting feature and its integration into the firestore. Now you can see the conversations that are fetched from the database and sending a message will add it to the db. 
 ## Overall team
 We still get to work too late in the week, with late PR and not enough time for good code review.
 The database is being more and more used and the overall codebase starts to be more coherent!
