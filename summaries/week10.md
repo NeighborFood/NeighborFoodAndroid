@@ -10,7 +10,10 @@ so I implemented saving the changes that were done in the profile editing page o
 (while showing a different display message according to your registration status). After that, I had to adjust the tests so that the build works, but I had an issue with
 our lovely and capricious Jacoco that showed 0% coverage (even when running locally) even when the tests are running and passing. so I also worked on fixing that.
 ## Raed 
-
+I implemeted fetching only the orders that a buyer made from the order database to be displayed in the past orders activity and fetched meal details in the detailed order activity.
+This week's task was too long than usual as I had to change many things in the past code to make it coherent with the database implementation and I had a hard time with that(The content of the Order class, the activites, the adapter, tests...)
+and I had some difficulties with the implementation in itself as I wanted to make it as clean as possible to avoid recoding it later but I had some roadblocks that I had to find a way to fix them( orders adapter not compatible with multiple objects etc..)
+I didn't test the database implementation since khalil was working on that this week.
 ## Yassine
 I finished implementing the chatting feature and its integration into the firestore. Now you can see the conversations that are fetched from the database and sending a message will add it to the db. 
 ## Overall team
