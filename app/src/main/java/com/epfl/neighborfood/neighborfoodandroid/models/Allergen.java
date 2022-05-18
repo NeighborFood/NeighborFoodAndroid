@@ -2,6 +2,9 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
+/**
+ * An allergen is a pair of it's id in the fileSystem and its label
+ */
 public enum Allergen {
     CELERY (R.drawable.celery, "celery"),
     MILK (R.drawable.milk, "milk"),
@@ -14,8 +17,8 @@ public enum Allergen {
     EGGS (R.drawable.eggs, "Eggs"),
     CHOCOLATE (R.drawable.chocolate, "Chocolate");
 
-    private final int idIcon;   // in kilograms
-    private final String label; // in meters
+    private final int idIcon;
+    private final String label;
 
     public int getId() {
         return idIcon;

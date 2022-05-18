@@ -14,7 +14,7 @@ public class MealTest {
     private String name;
     private String shortDescription;
     private String longDescription;
-    private List<Allergen> allergens;
+    private List<String> allergens;
     private double price;
     private int imageId;
 
@@ -24,47 +24,51 @@ public class MealTest {
         shortDescription = "Yumi tofu";
         longDescription = "Plant based proteins";
         allergens = new ArrayList<>();
-        allergens.add(Allergen.EGGS);
-        allergens.add(Allergen.HONEY);
-        allergens.add(Allergen.SOY);
+        allergens.add(Allergen.EGGS.getLabel());
+        allergens.add(Allergen.HONEY.getLabel());
+        allergens.add(Allergen.SOY.getLabel());
         price = 2.23;
         imageId = 5;
+    }
+
+    private Meal getNewMeal() {
+        return new Meal(name, shortDescription, longDescription, imageId, allergens, price, null);
     }
 
 
     @Test
     public void bothConstructorWork() {
         new Meal(name, shortDescription, longDescription, imageId);
-        new Meal(name, shortDescription, longDescription, imageId, allergens, price);
+        getNewMeal();
     }
 
     @Test
     public void getName() {
-        Meal meal = new Meal(name, shortDescription, longDescription, imageId, allergens, price);
+        Meal meal = getNewMeal();
         assertEquals(name, meal.getName());
     }
 
     @Test
     public void getShortDescription() {
-        Meal meal = new Meal(name, shortDescription, longDescription, imageId, allergens, price);
+        Meal meal = getNewMeal();
         assertEquals(shortDescription, meal.getShortDescription());
     }
 
     @Test
     public void getLongDescription() {
-        Meal meal = new Meal(name, shortDescription, longDescription, imageId, allergens, price);
+        Meal meal = getNewMeal();
         assertEquals(longDescription, meal.getLongDescription());
     }
 
     @Test
     public void getAllergens() {
-        Meal meal = new Meal(name, shortDescription, longDescription, imageId, allergens, price);
+        Meal meal = getNewMeal();
         assertArrayEquals(allergens.toArray(), meal.getAllergens().toArray());
     }
 
     @Test
     public void getPrice() {
-        Meal meal = new Meal(name, shortDescription, longDescription, imageId, allergens, price);
+        Meal meal = getNewMeal();
         assertEquals(price, meal.getPrice(), 0.1);
     }
 
