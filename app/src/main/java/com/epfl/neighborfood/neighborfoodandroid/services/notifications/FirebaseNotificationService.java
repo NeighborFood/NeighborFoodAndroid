@@ -63,10 +63,7 @@ public class FirebaseNotificationService  extends FirebaseMessagingService imple
 
         //create intent when clicking on notification which redirects to the mealActivity
         Intent intent = new Intent(this, MealActivity.class);
-        intent.putExtra("name", meal.getName());
-        intent.putExtra("shortDes", meal.getShortDescription());
-        intent.putExtra("longDes", meal.getLongDescription());
-        intent.putExtra("imageid", meal.getImageId());
+        intent.putExtra("id", meal.getMealId());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         appContainer.getMealRepo().getMealById(mealId).continueWithTask(mealTask-> appContainer.getUserRepo().getUserById(vendorID).continueWith(fetchedVendor-> new Pair<>(mealTask.getResult(), fetchedVendor.getResult()))).addOnSuccessListener((result)->{

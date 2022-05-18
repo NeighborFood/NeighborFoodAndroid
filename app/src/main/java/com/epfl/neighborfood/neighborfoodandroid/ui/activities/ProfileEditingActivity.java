@@ -1,6 +1,8 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,9 +27,11 @@ import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityProfileEdit
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.EditProfileViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.EditProfileViewModelFactory;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -41,10 +45,13 @@ public class ProfileEditingActivity extends AppCompatActivity {
     public static final String KEY_IMAGE_DATA = "data";
     private ImageView ppView;
     private ActivityResultLauncher activityResultLauncher;
+    private boolean photoChanged;
+    String filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        photoChanged = false;
         binding = ActivityProfileEditingBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -81,7 +88,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.emailValue)).setText(user.getEmail());
         ((TextView) findViewById(R.id.bioValue)).setText(user.getBio());
         ((TextView) findViewById(R.id.usernameValue)).setText(user.getUsername());
-        Picasso.with(this).load(Uri.parse(user.getProfilePictureURI())).fit().into(ppView);
+        Picasso.get().load(Uri.parse(user.getProfilePictureURI())).fit().into(ppView);
         updateUserLinks(user);
 
     }
@@ -112,8 +119,9 @@ public class ProfileEditingActivity extends AppCompatActivity {
                 activityResultLauncher.launch(galleryIntent);
                 break;
             case R.id.saveButton:
-                vmodel.updateUser(getUserWithUpdatedData())
-                        .addOnSuccessListener((a)-> {
+                Task<Void> updateTask = photoChanged ? vmodel.updateUser(getUserWithUpdatedData(),filePath) : vmodel.updateUser(getUserWithUpdatedData()) ;
+
+                updateTask.addOnSuccessListener((a)-> {
                             Toast.makeText(this, R.string.save_success, Toast.LENGTH_SHORT).show();
                             finish();
                         }).addOnFailureListener((a)->Toast.makeText(this, R.string.save_failure, Toast.LENGTH_SHORT).show());
@@ -149,6 +157,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
                 links.add(text);
             }
         }
+
         newUser.setLinks(links);
         return newUser;
     }
@@ -156,14 +165,32 @@ public class ProfileEditingActivity extends AppCompatActivity {
     private void activityResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK && data != null) {
             Bundle extras = data.getExtras();
+            filePath = getRealPathFromUri(data.getData(), this);
+            try {
+                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                ppView.setImageBitmap(imageBitmap);
+                photoChanged = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (extras == null || !extras.containsKey(KEY_IMAGE_DATA)) {
                 return;
             }
-            Bitmap imageBitmap = (Bitmap) extras.get(KEY_IMAGE_DATA);
-            ppView.setImageBitmap(imageBitmap);
         }
 
     }
+    private String getRealPathFromUri(Uri imageUri, Activity activity){
+        Cursor cursor = activity.getContentResolver().query(imageUri, null, null, null, null);
+
+        if(cursor==null) {
+            return imageUri.getPath();
+        }else{
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
+    }
+
 
     /**
      * @return Adds a link input to the links list view

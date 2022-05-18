@@ -60,16 +60,21 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
 
         allergensInMeal = new ArrayList<String>();
         allergensIcons = new HashMap<ImageView, String>();
-        allergensIcons.put(findViewById(R.id.CeleryIcon), "celery");
-        allergensIcons.put(findViewById(R.id.MilkIcon), "milk");
-        allergensIcons.put(findViewById(R.id.FishIcon), "fish");
-        allergensIcons.put(findViewById(R.id.CheeseIcon), "cheese");
-        allergensIcons.put(findViewById(R.id.GlutenIcon), "gluten");
-        allergensIcons.put(findViewById(R.id.HoneyIcon), "honey");
-        allergensIcons.put(findViewById(R.id.LobsterIcon), "Lobster");
-        allergensIcons.put(findViewById(R.id.SoyIcon), "Soy");
-        allergensIcons.put(findViewById(R.id.EggsIcon), "Eggs");
-        allergensIcons.put(findViewById(R.id.ChocolateIcon), "Chocolate");
+        /* TODO it would be better to create the allergen list that way but currently each item of the list is hard coded in the xml.
+        for (Allergen allergen : Allergen.values()) {
+            allergensIcons.put(findViewById(allergen.getId()), allergen.getLabel());
+        }
+        */
+        allergensIcons.put(findViewById(R.id.CeleryIcon), "CELERY");
+        allergensIcons.put(findViewById(R.id.MilkIcon), "MILK");
+        allergensIcons.put(findViewById(R.id.FishIcon), "FISH");
+        allergensIcons.put(findViewById(R.id.CheeseIcon), "CHEESE");
+        allergensIcons.put(findViewById(R.id.GlutenIcon), "GLUTEN");
+        allergensIcons.put(findViewById(R.id.HoneyIcon), "HONEY");
+        allergensIcons.put(findViewById(R.id.LobsterIcon), "LOBSTER");
+        allergensIcons.put(findViewById(R.id.SoyIcon), "SOY");
+        allergensIcons.put(findViewById(R.id.EggsIcon), "EGGS");
+        allergensIcons.put(findViewById(R.id.ChocolateIcon), "CHOCOLATE");
 
         descriptionText = findViewById(R.id.textDesciption);
         priceText = findViewById(R.id.textPrice);
@@ -106,10 +111,30 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 break;
             case R.id.ConfirmationButton:
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                //TODO: replace with actual value of the place Meal
-                Task<Void> task = vmodel.placeMeal(new Meal(mealNameText.getText().toString(), descriptionText.getText().toString() , descriptionText.getText().toString() , 0, new ArrayList<>(), 0));
-                task.addOnCompleteListener((a)->{startActivity(i);});
+                boolean fieldsAreNotEmpty = true;
+                for (EditText field: cannotBeEmptyFields) {
+                    if (TextUtils.isEmpty(field.getText().toString())) {
+                        Toast.makeText(this,
+                                "No field can be empty!",
+                                Toast.LENGTH_SHORT).show();
+                        fieldsAreNotEmpty = false;
+                        break;
+                    }
+                }
+                if (fieldsAreNotEmpty) {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    Meal meal = new Meal(
+                            mealNameText.getText().toString(),
+                            descriptionText.getText().toString(),
+                            "Should add long description in the template", //TODO
+                            "",//TODO: Should get the image id but it is not gettable yet
+                            allergensInMeal,//TODO: Should build the list of allergens
+                            Double.parseDouble(priceText.getText().toString()),
+                            null);//TODO: build the retrieval date
+                    Task<Void> task = vmodel.placeMeal(meal);
+                    task.addOnCompleteListener((a)->{startActivity(i);});
+                }
+
                 break;
             case R.id.CalendarButton:
                 DatePickerDialog datePickerDialog = new DatePickerDialog(

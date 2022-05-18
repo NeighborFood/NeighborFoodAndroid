@@ -22,33 +22,37 @@ public class Meal extends Model implements Serializable {
     private String shortDescription;
     private String longDescription;
     private double price;
-    private int imageId;
-    private List<Allergen> allergens;
+    private Date retrievalDate;
+    private String imageUri;
+    private List<String> allergens;
 
-    /**
-     * @param id the id to set
-     * @return a new meal with all the attributes the same as this, but with a different id
-     */
-    public Meal copyWithId(String id){
-        return new Meal(id,vendorID,name,shortDescription,longDescription,imageId);
+    public Meal() {
+
     }
-    public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, int imageId){
-        this(name,shortDescription,longDescription,imageId);
+
+    public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, String imageUri, List<String> allergens, double price, Date retrievalDate){
+        this(name,shortDescription,longDescription,imageUri, allergens, price, retrievalDate);
         this.mealId = id;
         this.vendorID = vendorID;
     }
-    public Meal(String name, String shortDescription, String longDescription, int imageId) {
-        this.name = name;
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
-        this.imageId = imageId;
-    }
 
-    public Meal(String name, String shortDescription, String longDescription, int imageId, List<Allergen> allergens, double price) {
+
+
+    /**
+     * Complete constructor of a Meal
+     * @param name
+     * @param shortDescription
+     * @param longDescription
+     * @param imageUri
+     * @param allergens
+     * @param price
+     * @param retrievalDate
+     */
+    public Meal(String name, String shortDescription, String longDescription, String imageUri, List<String> allergens, double price, Date retrievalDate) {
         this.name = name;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
-        this.imageId = imageId;
+        this.imageUri = imageUri;
         this.allergens = allergens;
         this.price = price;
     }
@@ -76,8 +80,11 @@ public class Meal extends Model implements Serializable {
         return price;
     }
 
-    public int getImageId() {
-        return imageId;
+    public String getImageUri() {
+        return imageUri;
+    }
+    public void setImageUri(String imageUri){
+        this.imageUri = imageUri;
     }
 
     /** getter for the meal id
@@ -87,11 +94,11 @@ public class Meal extends Model implements Serializable {
         return mealId;
     }
 
-    /** getter for the meal id
-     * @return the meal id
+    /** setter for the meal id
+     * @param  mealId the meal id
      */
-    public void setMealId(String id){
-        mealId = id;
+    public void setMealId(String mealId){
+        this.mealId = mealId;
     }
     /** getter for the meal's vendor id
      * @return the owner vendorID
