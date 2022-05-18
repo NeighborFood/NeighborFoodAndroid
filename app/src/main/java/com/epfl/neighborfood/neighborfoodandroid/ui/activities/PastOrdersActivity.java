@@ -78,7 +78,7 @@ public class PastOrdersActivity extends AppCompatActivity {
         };
         for (int i = 0; i < imageId.length; i++) {
             Date date = new GregorianCalendar(2022, Calendar.FEBRUARY, 1 + i).getTime();
-            Meal meal = new Meal(mealsName[i], mealsShortDes[i], mealsLongDes[i], "",new ArrayList<>(),0,date);
+            Meal meal = new Meal(mealsName[i], mealsShortDes[i], mealsLongDes[i], "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon,new ArrayList<>(),0,date);
             //this will be changed later with actual meals.
             orderArrayList.add(new Order(meal, date, status[i], orderMealPrep[i]));
         }

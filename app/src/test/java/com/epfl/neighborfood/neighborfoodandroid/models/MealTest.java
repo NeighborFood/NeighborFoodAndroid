@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 
 import java.util.ArrayList;
@@ -32,13 +33,13 @@ public class MealTest {
     }
 
     private Meal getNewMeal() {
-        return new Meal(name, shortDescription, longDescription, imageId, allergens, price, null);
+        return new Meal(name, shortDescription, longDescription, "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon, allergens, price, null);
     }
 
 
     @Test
     public void bothConstructorWork() {
-        new Meal(name, shortDescription, longDescription, imageId);
+        //new Meal(name, shortDescription, longDescription, imageId);
         getNewMeal();
     }
 

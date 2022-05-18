@@ -91,6 +91,9 @@ public abstract class AppContainer {
         this.authRepo = new AuthRepository();
         this.userRepo = new UserRepository();
         this.mealRepo = new MealRepository();
+        if(context == null){
+            return;
+        }
         Map config = ObjectUtils.asMap(
                 "cloud_name", "dkg9lec21",
                 "api_key", "778522893956734",
