@@ -89,3 +89,5 @@ lint/tmp/
 # lint/reports/
 .idea/misc.xml
 .idea/misc.xml
+
+app/index.
