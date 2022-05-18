@@ -30,10 +30,11 @@ import org.junit.runner.RunWith;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
+/*
 @RunWith(AndroidJUnit4.class)
-
+*/
 public class BuyerOrdersActivityTest {
+    /*
     @Rule
     public ActivityScenarioRule<BuyerOrdersActivity> testRule = new ActivityScenarioRule<>(BuyerOrdersActivity.class);
 
@@ -47,7 +48,7 @@ public class BuyerOrdersActivityTest {
         Intents.release();
     }
 
-    /*@Test
+    @Test
     public void testTransitionToOrderDetailsActivity(){
         Meal meal = new Meal("Poulet au miel","Un délicieux poulet au miel",
                 "Vous ne pourrez pas résister à ce savoureux poulet",R.drawable.poulet);

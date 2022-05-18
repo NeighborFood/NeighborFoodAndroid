@@ -11,8 +11,7 @@ import com.google.android.gms.tasks.Task;
 import org.junit.Test;
 
 public class DatabaseFactoryTest {
-
-    /*@Test
+    @Test
     public void dependencyTest() {
 
         Database dep = new Database() {
@@ -42,6 +41,11 @@ public class DatabaseFactoryTest {
             }
 
             @Override
+            public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath, String attributeName, Object attributeValue) {
+                return null;
+            }
+
+            @Override
             public void addChangesListener(String collectionPath, String collectionId, ModelUpdateListener listener) {
 
             }
@@ -49,5 +53,5 @@ public class DatabaseFactoryTest {
 
         DatabaseFactory.setDependency(dep);
         assertEquals(dep,DatabaseFactory.getDependency());
-    }*/
+    }
 }
