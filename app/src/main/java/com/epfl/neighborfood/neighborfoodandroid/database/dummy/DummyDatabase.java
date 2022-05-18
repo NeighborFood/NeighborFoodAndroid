@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Tasks;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,7 +146,7 @@ public class DummyDatabase implements Database {
                 "blabla tarte"};
 
         for (int i = 0; i < imageId.length; i++) {
-            Meal meal = new Meal(mealsName[i], mealsShortDes[i], mealsLongDes[i], imageId[i]);
+            Meal meal = new Meal(mealsName[i], mealsShortDes[i], mealsLongDes[i], "",new ArrayList<>(),0,new Date());
             meals.put(Integer.toString(i),new MealDocumentSnapshot(meal));
         }
     }

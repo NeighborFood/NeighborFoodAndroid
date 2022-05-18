@@ -1,5 +1,18 @@
 package com.epfl.neighborfood.neighborfoodandroid.util;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
+
+import androidx.activity.ComponentActivity;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
@@ -13,6 +26,27 @@ import java.util.Map;
  */
 public class ImageUtil
 {
+    public static Intent getGalleryIntent(){
+        return new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    }
+    public static ActivityResultLauncher<Intent> getImagePickerActivityLauncher(ComponentActivity activity, ActivityResultCallback<ActivityResult> callback){
+        return activity.registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                callback
+                );
+
+    }
+    public  static String getRealPathFromUri(Uri imageUri, Activity activity){
+        Cursor cursor = activity.getContentResolver().query(imageUri, null, null, null, null);
+
+        if(cursor==null) {
+            return imageUri.getPath();
+        }else{
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
+    }
     public static Task<String> uploadImage(String imagePath){
         TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<>();
         uploadToCloudinary(imagePath,taskCompletionSource);

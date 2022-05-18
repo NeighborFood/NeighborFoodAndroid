@@ -27,6 +27,7 @@ import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityProfileEdit
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.EditProfileViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.EditProfileViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.util.ImageUtil;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
@@ -44,7 +45,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
     @VisibleForTesting
     public static final String KEY_IMAGE_DATA = "data";
     private ImageView ppView;
-    private ActivityResultLauncher activityResultLauncher;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
     private boolean photoChanged;
     String filePath;
 
@@ -67,11 +68,9 @@ public class ProfileEditingActivity extends AppCompatActivity {
         findViewById(R.id.profileEditAddLinkButton).setOnClickListener(this::onClick);
         linksLayout = findViewById(R.id.profileEditLinksLayout);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        activityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    activityResult(result.getResultCode(), result.getData());
-                });
+        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this,result -> {
+            activityResult(result.getResultCode(), result.getData());
+        });
     }
 
     /**
@@ -114,9 +113,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.profilePictureImageView:
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                activityResultLauncher.launch(galleryIntent);
+                activityResultLauncher.launch(ImageUtil.getGalleryIntent());
                 break;
             case R.id.saveButton:
                 Task<Void> updateTask = photoChanged ? vmodel.updateUser(getUserWithUpdatedData(),filePath) : vmodel.updateUser(getUserWithUpdatedData()) ;
@@ -164,32 +161,17 @@ public class ProfileEditingActivity extends AppCompatActivity {
 
     private void activityResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK && data != null) {
-            Bundle extras = data.getExtras();
-            filePath = getRealPathFromUri(data.getData(), this);
+            filePath = ImageUtil.getRealPathFromUri(data.getData(), this);
             try {
                 Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
                 ppView.setImageBitmap(imageBitmap);
                 photoChanged = true;
             } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (extras == null || !extras.containsKey(KEY_IMAGE_DATA)) {
-                return;
+                Toast.makeText(this, R.string.image_load_error, Toast.LENGTH_SHORT).show();
             }
         }
-
     }
-    private String getRealPathFromUri(Uri imageUri, Activity activity){
-        Cursor cursor = activity.getContentResolver().query(imageUri, null, null, null, null);
 
-        if(cursor==null) {
-            return imageUri.getPath();
-        }else{
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            return cursor.getString(idx);
-        }
-    }
 
 
     /**

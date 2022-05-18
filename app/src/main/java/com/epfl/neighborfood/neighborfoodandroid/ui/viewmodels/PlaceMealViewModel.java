@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
+import com.epfl.neighborfood.neighborfoodandroid.util.ImageUtil;
 import com.google.android.gms.tasks.Task;
 
 public class PlaceMealViewModel extends ViewModel {
@@ -20,8 +21,11 @@ public class PlaceMealViewModel extends ViewModel {
      * @param meal : the meal to post
      * @return the completable task
      */
-    public Task<Void> placeMeal(Meal meal){
+    public Task<Void> placeMeal(Meal meal,String imagePath){
         meal.setVendorID(authRepository.getAuthUser().getId());
-        return mealRepository.postMeal(meal).continueWith(task -> null);
+        return ImageUtil.uploadImage(imagePath).continueWithTask(imageUploadTask->{
+            meal.setImageUri(imageUploadTask.getResult());
+            return mealRepository.postMeal(meal);
+        }).continueWith(task -> null);
     }
 }

@@ -21,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class VendorDashboardFragment extends Fragment {
 
@@ -77,7 +78,7 @@ public class VendorDashboardFragment extends Fragment {
         ArrayList<Meal> mealArrayList = new ArrayList<>();
 
         for (int i = 0; i < mealsLongDes.length; i++) {
-            Meal meal = new Meal(nm.get(i), mealsShortDes[i], mealsLongDes[i], id.get(i));
+            Meal meal = new Meal(nm.get(i), mealsShortDes[i], mealsLongDes[i], "",new ArrayList<>(), 0, new Date());
             mealArrayList.add(meal);
         }
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
