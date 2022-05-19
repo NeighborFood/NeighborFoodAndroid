@@ -20,6 +20,7 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
 import com.google.android.gms.tasks.Continuation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class ConversationsFragment extends Fragment {
             }
             return aux;
         }).addOnSuccessListener(l-> {
-            l.sort(new Comparator<Conversation>() {
+            Collections.sort(l,new Comparator<Conversation>() {
                 @Override
                 public int compare(Conversation a, Conversation b) {
                     return b.lastMessage().getDate().compareTo(a.lastMessage().getDate());
