@@ -18,6 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
+import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
 
 import org.junit.After;
 import org.junit.Before;
@@ -33,7 +34,7 @@ public class BuyerOrderDetailsActivityTest {
     Meal meal = new Meal("Poulet au miel","Un délicieux poulet au miel",
             "Vous ne pourrez pas résister à ce savoureux poulet",R.drawable.poulet);
     Order order = new Order( "1", new GregorianCalendar(2022, Calendar.FEBRUARY, 1).getTime(),
-            false,"2","3");
+            OrderStatus.unassigned,"2","3");
     /*
     @Before
     public void setUp() throws Exception {

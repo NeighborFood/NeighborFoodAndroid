@@ -41,7 +41,7 @@ public class MealListFragment extends Fragment {
                 R.drawable.fondue, R.drawable.salade, R.drawable.soupe, R.drawable.tarte};
         viewModel = new ViewModelProvider(this, new MealListViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(MealListViewModel.class);
         MealListAdapter listAdapter = new MealListAdapter(getActivity(), new ArrayList<Meal>());
-        viewModel.getAllMeals().addOnSuccessListener(mealList->{
+        viewModel.getAllUnassignedMeals().addOnSuccessListener(mealList->{
             listAdapter.clear();
             listAdapter.addAll(mealList);
         }).addOnFailureListener(System.out::println);
@@ -49,10 +49,11 @@ public class MealListFragment extends Fragment {
         binding.mealListView.setClickable(true);
         binding.mealListView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent i = new Intent(getActivity(), MealActivity.class);
+            //to be removed
             i.putExtra("name",((Meal)(listAdapter.getItem(position))).getName());
-            i.putExtra("shortDes", ((Meal)(listAdapter.getItem(position))).getShortDescription());
             i.putExtra("longDes", ((Meal)(listAdapter.getItem(position))).getLongDescription());
-            i.putExtra("imageid", ((Meal)(listAdapter.getItem(position))).getImageId());
+            //to be kept
+            i.putExtra("imageid", ((Meal)(listAdapter.getItem(position))).getMealId());
             startActivity(i);
         });
     }

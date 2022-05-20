@@ -63,7 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/mealName" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/order_button"
                 android:layout_width="143dp"
                 android:layout_height="65dp"
                 android:text="@string/order_meal"

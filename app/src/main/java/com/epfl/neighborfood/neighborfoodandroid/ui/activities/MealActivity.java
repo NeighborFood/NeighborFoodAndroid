@@ -1,32 +1,47 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.AllergensAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityMealBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.BuyerOrderDetailsActivityViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.BuyerOrderDetailsViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.MealViewModelFactory;
 
 import java.util.ArrayList;
 
 public class MealActivity extends AppCompatActivity {
 
     ActivityMealBinding binding;
+    MealViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMealBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        viewModel = new ViewModelProvider(this, new MealViewModelFactory((NeighborFoodApplication) this.getApplication())).get(MealViewModel.class);
 
 
-        Button vendorButton = (Button)findViewById(R.id.go_vendor_profile_id);
+        Button vendorButton = (Button) findViewById(R.id.go_vendor_profile_id);
+        Button orderButton = (Button) findViewById(R.id.order_button);
 
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         // Listener to enable the click button to go to the vendor profile
         vendorButton.setOnClickListener(new View.OnClickListener() {

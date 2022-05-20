@@ -84,4 +84,7 @@
     <string name="channel_name">NeighborFood</string>
     <string name="channel_description">notifications for the app</string>
     <string name="channel_id">ch1</string>
+    <string name="assigned">assigned</string>
+    <string name="todo">TODO</string>
+
 </resources>

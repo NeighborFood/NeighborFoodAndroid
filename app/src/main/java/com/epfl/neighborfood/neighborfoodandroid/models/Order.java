@@ -9,19 +9,19 @@ public class Order extends Model {
     private static final String ORDER_NOT_YET_DELIVERED = "This order is being processed";
     private String orderId;
     private String mealId;
-    private String orderDate;
-    private boolean status;
+    private Date orderDate;
+    private OrderStatus orderStatus;
     private String vendorId;
     private String buyerId;
 
 
-    public Order(String s, Date time, boolean b, String s1, String s2){
+    public Order(String s, Date time, OrderStatus b, String s1, String s2){
     }
-    public Order(String orderId, String mealId, Date orderDate, boolean status, String VendorId, String buyerId) {
+    public Order(String orderId, String mealId, Date orderDate, OrderStatus orderStatus, String VendorId, String buyerId) {
         this.orderId = orderId;
         this.mealId = mealId;
-        this.orderDate = orderDate.toString();
-        this.status = status;
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
         this.vendorId = VendorId;
         this.buyerId = buyerId;
     }
@@ -36,16 +36,11 @@ public class Order extends Model {
     }
 
     public Date getOrderDate() {
-        try {
-            return new SimpleDateFormat("dd/MM/yyyy").parse(orderDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return orderDate;
     }
 
-    public boolean getStatus() {
-        return status;
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
     public String getVendorId() {
@@ -64,12 +59,12 @@ public class Order extends Model {
         this.mealId = mealId;
     }
 
-    public void setOrderDate(String orderDate) {
+    public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public void setVendorId(String vendorId) {
@@ -84,7 +79,7 @@ public class Order extends Model {
     returns description about the order status
      */
     public String orderStatusDes() {
-        if (status) {
+        if (orderStatus == OrderStatus.finished) {
             return ORDER_DELIVERED + orderDate.toString();
         }
         return ORDER_NOT_YET_DELIVERED;
