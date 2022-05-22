@@ -110,7 +110,7 @@ public class DummyDatabase implements Database {
         users = new HashMap<>();
         User userwithFakeLinks= new User("-1","zbiba@epfl.ch","Zbiba","Zabboub","");
         ArrayList<String> fakeLinks =new ArrayList();
-        fakeLinks.add("a");fakeLinks.add("b");fakeLinks.add("c");
+        fakeLinks.add("https://facebook.com/");fakeLinks.add("https://twitter.com/");fakeLinks.add("a");
         userwithFakeLinks.setLinks(fakeLinks);
         users.put("-1", new UserDocumentSnapshot(userwithFakeLinks));
 

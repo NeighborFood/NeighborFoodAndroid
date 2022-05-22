@@ -42,7 +42,7 @@
     <string name="log_out">Log Out</string>
     <string name="start">Start</string>
     <string name="textview">TextView</string>
-    <string name="likes">Likes</string>
+    <string name="subscribers">Subscribers</string>
     <string name="meals">meals</string>
     <string name="heart">heart</string>
     <string name="_50_reviews">50 reviews</string>
@@ -54,7 +54,7 @@
     <string name="facebookicon">facebookIcon</string>
     <string name="subscribe">subscribe</string>
     <string name="notify_me">notify me</string>
-    <string name="past_meals">Past_meals</string>
+    <string name="past_meals">Past meals</string>
     <string name="meal1">Meal1</string>
     <string name="sdp_fan">SDP fan</string>
     <string name="gordon_ramsey">Gordon Ramsey</string>
@@ -72,6 +72,8 @@
     <string name="links">Links</string>
     <string name="save_success">Successfully Saved!</string>
     <string name="save_failure"> Failed to saved :(</string>
+    <string name="subscribe_success">Successfully subscribed to %1$s</string>
+    <string name="unsubscribe_success">Successfully unsubscribed from %1$s</string>
     <string name="load_failure">Failed to load data :(</string>
     <string name="login_failure">Failed to login :(</string>
     <string name="welcome_message">Welcome, %1$s! We are glad that you joined us! \n Click on the button to setup your profile</string>

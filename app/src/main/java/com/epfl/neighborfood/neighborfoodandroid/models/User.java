@@ -4,6 +4,7 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 import android.net.Uri;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class User extends Model {
@@ -28,6 +29,8 @@ public class User extends Model {
     private String bio = "";
     private ArrayList<String> links = new ArrayList<>();
     private String ppUri;
+    private List<String> subscribedIDs;
+    private int numberSubscribers;
 
     /**
      * Create a new User object, holding database
@@ -46,6 +49,8 @@ public class User extends Model {
         setLastName(lastName);
         setUsername(firstName+lastName);
         setProfilePictureURI(uri);
+        subscribedIDs = new ArrayList<>();
+        numberSubscribers = 0;
     }
 
 
@@ -53,12 +58,24 @@ public class User extends Model {
     public User() {
     }
 
+    public List<String> getSubscribedIDs(){
+        return this.subscribedIDs;
+    }
+    public void setSubscribedIDs(List<String> subscribedIDs){
+        this.subscribedIDs = subscribedIDs;
+    }
+    public int getNumberSubscribers(){
+        return this.numberSubscribers;
+    }
+    public void setNumberSubscribers(int numberSubscribers){
+        this.numberSubscribers = numberSubscribers;
+    }
 
     /**
      * @return Full name of the user in the format "First name Last name"
      */
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     /**
@@ -89,7 +106,7 @@ public class User extends Model {
      * @return E-mail of the user
      */
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     /**
@@ -121,7 +138,7 @@ public class User extends Model {
      * @return Last name of the user
      */
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     /**
@@ -139,7 +156,7 @@ public class User extends Model {
      * @return URI
      */
     public String getProfilePictureURI() {
-        return ppUri;
+        return this.ppUri;
     }
 
     /**
@@ -148,7 +165,7 @@ public class User extends Model {
      * @param uri
      */
     public void setProfilePictureURI(String uri) {
-        ppUri = uri;
+        this.ppUri = uri;
     }
 
     /**
@@ -157,7 +174,7 @@ public class User extends Model {
      * @return the bio
      */
     public String getBio() {
-        return bio;
+        return this.bio;
     }
 
     /**

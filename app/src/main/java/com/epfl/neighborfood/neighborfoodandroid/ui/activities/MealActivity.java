@@ -32,7 +32,9 @@ public class MealActivity extends AppCompatActivity {
         vendorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MealActivity.this, VendorProfileActivity.class));
+                Intent vendorProfileIntent = new Intent(MealActivity.this, VendorProfileActivity.class);
+                vendorProfileIntent.putExtra("userID", "JDpBLvLCTefqXx03riPH9072KYu2");
+                startActivity(vendorProfileIntent);
             }
         });
 

@@ -41,10 +41,14 @@ import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.DummyAuthenticator;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.models.UserTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepositoryTestImplementation;
+import com.epfl.neighborfood.neighborfoodandroid.util.matchers.waitUntilTaskFinishedViewAction;
+import com.google.android.gms.tasks.Task;
 
 import org.junit.After;
 import org.junit.Before;
@@ -94,10 +98,10 @@ public class ProfileEditingActivityTest {
     }
     @Test
     public void linksFieldsContainUserLinksPlusEmpty(){
-        ArrayList<String> fakeLinks = new ArrayList<>();
-        fakeLinks.add("a");fakeLinks.add("b");fakeLinks.add("c");
-        dummyUser.setLinks(fakeLinks);
-        authRepo.setUser(dummyUser);
+        Task<DocumentSnapshot> t =DatabaseFactory.getDependency().fetch("Users",dummyUser.getId());
+        waitUntilTaskFinishedViewAction.waitUntilFinished(t,2000);
+        User user = t.getResult().toModel(User.class);
+        ArrayList<String> fakeLinks = user.getLinks();
         //verify number of children corresponds to what expected
         onView(withId(R.id.profileEditLinksLayout)).check(matches(hasChildCount(fakeLinks.size()+1)));
         //Verify text fiel contains actual links
@@ -112,6 +116,7 @@ public class ProfileEditingActivityTest {
         fakeLinks.add("a");fakeLinks.add("b");fakeLinks.add("c");
         dummyUser.setLinks(fakeLinks);
         authRepo.setUser(dummyUser);
+        DatabaseFactory.getDependency().set("Users",dummyUser.getId(),dummyUser);
         onView(withId(R.id.profileEditAddLinkButton)).perform(scrollTo(),click());
         onView(withId(R.id.profileEditAddLinkButton)).perform(scrollTo(),click());
         onView(withId(R.id.profileEditAddLinkButton)).perform(scrollTo(),click());
