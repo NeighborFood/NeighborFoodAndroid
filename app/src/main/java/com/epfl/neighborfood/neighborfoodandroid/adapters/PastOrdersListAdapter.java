@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,8 +42,7 @@ public class PastOrdersListAdapter extends ArrayAdapter {
         ImageView imageView = convertView.findViewById(R.id.order_image);
         TextView mealName = convertView.findViewById(R.id.order_title);
         TextView mealShortDes = convertView.findViewById(R.id.order_des);
-
-        imageView.setImageResource(order.getMeal().getImageId());
+        Picasso.get().load(order.getMeal().getImageUri()).into(imageView);
         mealName.setText(order.getMeal().getName() + " By " + order.getMealVendor());
         mealShortDes.setText(order.orderStatusDes());
 

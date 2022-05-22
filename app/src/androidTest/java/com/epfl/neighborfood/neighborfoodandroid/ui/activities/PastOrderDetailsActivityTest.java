@@ -28,6 +28,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -35,7 +36,7 @@ import java.util.GregorianCalendar;
 
 public class PastOrderDetailsActivityTest {
     Meal meal = new Meal("Poulet au miel","Un délicieux poulet au miel",
-            "Vous ne pourrez pas résister à ce savoureux poulet",R.drawable.poulet);
+            "Vous ne pourrez pas résister à ce savoureux poulet","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon,new ArrayList<>(),0,new GregorianCalendar(2022, Calendar.FEBRUARY, 1).getTime());
     Order order = new Order( meal, new GregorianCalendar(2022, Calendar.FEBRUARY, 1).getTime(),
             false,"Vendor A");
     @Before

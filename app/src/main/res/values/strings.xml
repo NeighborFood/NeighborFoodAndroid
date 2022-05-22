@@ -86,4 +86,5 @@
     <string name="channel_name">NeighborFood</string>
     <string name="channel_description">notifications for the app</string>
     <string name="channel_id">ch1</string>
+    <string name="image_load_error">Failed to load selected image :(</string>
 </resources>

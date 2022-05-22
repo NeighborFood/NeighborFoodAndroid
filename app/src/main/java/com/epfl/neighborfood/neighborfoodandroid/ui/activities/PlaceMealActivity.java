@@ -2,6 +2,7 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,8 +29,10 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.PlaceMealViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.PlaceMealViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.util.ImageUtil;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -48,7 +52,9 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     EditText descriptionText, priceText, mealNameText, dateText, timeText;
     Toolbar toolbar;
     Uri image;
+    private String imagePath;
     private PlaceMealViewModel vmodel;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
 
     private List<EditText> cannotBeEmptyFields;
 
@@ -70,16 +76,16 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
             allergensIcons.put(findViewById(allergen.getId()), allergen.getLabel());
         }
         */
-        allergensIcons.put(findViewById(R.id.CeleryIcon), "celery");
-        allergensIcons.put(findViewById(R.id.MilkIcon), "milk");
-        allergensIcons.put(findViewById(R.id.FishIcon), "fish");
-        allergensIcons.put(findViewById(R.id.CheeseIcon), "cheese");
-        allergensIcons.put(findViewById(R.id.GlutenIcon), "gluten");
-        allergensIcons.put(findViewById(R.id.HoneyIcon), "honey");
-        allergensIcons.put(findViewById(R.id.LobsterIcon), "Lobster");
-        allergensIcons.put(findViewById(R.id.SoyIcon), "Soy");
-        allergensIcons.put(findViewById(R.id.EggsIcon), "Eggs");
-        allergensIcons.put(findViewById(R.id.ChocolateIcon), "Chocolate");
+        allergensIcons.put(findViewById(R.id.CeleryIcon), "CELERY");
+        allergensIcons.put(findViewById(R.id.MilkIcon), "MILK");
+        allergensIcons.put(findViewById(R.id.FishIcon), "FISH");
+        allergensIcons.put(findViewById(R.id.CheeseIcon), "CHEESE");
+        allergensIcons.put(findViewById(R.id.GlutenIcon), "GLUTEN");
+        allergensIcons.put(findViewById(R.id.HoneyIcon), "HONEY");
+        allergensIcons.put(findViewById(R.id.LobsterIcon), "LOBSTER");
+        allergensIcons.put(findViewById(R.id.SoyIcon), "SOY");
+        allergensIcons.put(findViewById(R.id.EggsIcon), "EGGS");
+        allergensIcons.put(findViewById(R.id.ChocolateIcon), "CHOCOLATE");
 
         descriptionText = findViewById(R.id.textDescription);
         priceText = findViewById(R.id.textPrice);
@@ -102,6 +108,21 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         cannotBeEmptyFields.add(mealNameText);
         cannotBeEmptyFields.add(dateText);
         cannotBeEmptyFields.add(timeText);
+
+        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this, result -> {
+            activityResult(result.getResultCode(), result.getData());
+        });
+    }
+    private void activityResult(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && data != null) {
+            imagePath = ImageUtil.getRealPathFromUri(data.getData(), this);
+            try {
+                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                imageToUpload.setImageBitmap(imageBitmap);
+            } catch (IOException e) {
+                Toast.makeText(this, R.string.image_load_error, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -120,7 +141,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
             case R.id.addPictureButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 //@TODO for sprint 9 I (Raed) will change the upload picture to be abstract and not deprecated
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                activityResultLauncher.launch(ImageUtil.getGalleryIntent());
                 break;
             case R.id.ConfirmationButton:
                 boolean fieldsAreNotEmpty = true;
@@ -133,18 +154,20 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                         break;
                     }
                 }
+                if(imagePath == null){
+                    fieldsAreNotEmpty = false;
+                }
                 if (fieldsAreNotEmpty) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    MealRepository mealRepository = new MealRepository();
                     Meal meal = new Meal(
                             mealNameText.getText().toString(),
                             descriptionText.getText().toString(),
                             "Should add long description in the template", //TODO
-                            0,//TODO: Should get the image id but it is not gettable yet
+                            "",//TODO: Should get the image id but it is not gettable yet
                             allergensInMeal,//TODO: Should build the list of allergens
                             Double.parseDouble(priceText.getText().toString()),
                             null);//TODO: build the retrieval date
-                    Task<Void> task = vmodel.placeMeal(meal);
+                    Task<Void> task = vmodel.placeMeal(meal,imagePath);
                     task.addOnCompleteListener((a)->{startActivity(i);});
                 }
 

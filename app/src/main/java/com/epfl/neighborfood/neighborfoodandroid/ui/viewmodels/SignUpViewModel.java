@@ -2,7 +2,6 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels;
 
 import android.content.Intent;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
@@ -80,7 +79,9 @@ public class SignUpViewModel extends ViewModel {
      * @return the void that will complete after user registers
      */
     private Task<Boolean> registerUser(AuthenticatorUser authUser){
-        User newUser = new User(authUser.getId(), authUser.getEmail(),authUser.getFirstName(), authUser.getLastName(),authUser.getPpUri().toString());
+
+        //String encodedImage = ImageUtil.imageToString(ImageUtil.loadImageFromUri(authUser.getPpUri()));
+        User newUser = new User(authUser.getId(), authUser.getEmail(),authUser.getFirstName(), authUser.getLastName(),authUser.getPpUri());
         return userRepo.updateUser(newUser).continueWith(t->true);
     }
 }

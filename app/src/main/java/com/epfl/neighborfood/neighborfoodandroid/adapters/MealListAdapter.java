@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -34,8 +35,7 @@ public class MealListAdapter extends ArrayAdapter {
         ImageView imageView = convertView.findViewById(R.id.meal_pic);
         TextView mealName = convertView.findViewById(R.id.meal_name);
         TextView mealShortDes = convertView.findViewById(R.id.meal_short_des);
-
-        imageView.setImageResource(meal.getImageId());
+        Picasso.get().load(meal.getImageUri()).into(imageView);
         mealName.setText(meal.getName());
         mealShortDes.setText(meal.getShortDescription());
 

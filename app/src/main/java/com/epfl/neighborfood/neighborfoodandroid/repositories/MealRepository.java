@@ -46,12 +46,15 @@ public class MealRepository {
         }
         //We first post the meal to the database,
         return DatabaseFactory.getDependency().add(mealsDataCollectionPath,meal)
-                .continueWithTask(task ->
-                        // and once that is done (and we get the corresponding id of the meal),
-                        DatabaseFactory.getDependency().
+                .continueWithTask(task ->{
+                    meal.setMealId(task.getResult());
+                    // and once that is done (and we get the corresponding id of the meal),
+                    return DatabaseFactory.getDependency().
 
-                                // we need to update the mealId field stored in the database
-                                set(mealsDataCollectionPath,task.getResult(),meal.copyWithId(task.getResult())));
+                            // we need to update the mealId field stored in the database
+                                    set(mealsDataCollectionPath,task.getResult(),meal);
+                }
+);
     }
 
     /** Fetches all the meals stored in the database

@@ -49,10 +49,7 @@ public class MealListFragment extends Fragment {
         binding.mealListView.setClickable(true);
         binding.mealListView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent i = new Intent(getActivity(), MealActivity.class);
-            i.putExtra("name",((Meal)(listAdapter.getItem(position))).getName());
-            i.putExtra("shortDes", ((Meal)(listAdapter.getItem(position))).getShortDescription());
-            i.putExtra("longDes", ((Meal)(listAdapter.getItem(position))).getLongDescription());
-            i.putExtra("imageid", ((Meal)(listAdapter.getItem(position))).getImageId());
+            i.putExtra("id",((Meal)(listAdapter.getItem(position))).getMealId());
             startActivity(i);
         });
     }

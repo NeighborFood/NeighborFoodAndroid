@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Tasks;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,15 +109,15 @@ public class DummyDatabase implements Database {
     }
     private void initializeFields(){
         users = new HashMap<>();
-        User userwithFakeLinks= new User("-1","zbiba@epfl.ch","Zbiba","Zabboub","");
+        User userwithFakeLinks= new User("-1","zbiba@epfl.ch","Zbiba","Zabboub","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon);
         ArrayList<String> fakeLinks =new ArrayList();
         fakeLinks.add("https://facebook.com/");fakeLinks.add("https://twitter.com/");fakeLinks.add("a");
         userwithFakeLinks.setLinks(fakeLinks);
         users.put("-1", new UserDocumentSnapshot(userwithFakeLinks));
 
-        users.put("1", new UserDocumentSnapshot(new User("1","a","a","a","")));
-        users.put("2", new UserDocumentSnapshot(new User("2","b","b","b","")));
-        users.put("3", new UserDocumentSnapshot(new User("3","c","c","c","")));
+        users.put("1", new UserDocumentSnapshot(new User("1","a","a","a","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon)));
+        users.put("2", new UserDocumentSnapshot(new User("2","b","b","b","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon)));
+        users.put("3", new UserDocumentSnapshot(new User("3","c","c","c","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon)));
         meals = new HashMap<>();
         int[] imageId = {R.drawable.poulet, R.drawable.couscous, R.drawable.paella,
                 R.drawable.fondue, R.drawable.salade, R.drawable.soupe, R.drawable.tarte};
@@ -145,7 +146,7 @@ public class DummyDatabase implements Database {
                 "blabla tarte"};
 
         for (int i = 0; i < imageId.length; i++) {
-            Meal meal = new Meal(mealsName[i], mealsShortDes[i], mealsLongDes[i], imageId[i]);
+            Meal meal = new Meal(mealsName[i], mealsShortDes[i], mealsLongDes[i], "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon,new ArrayList<>(),0,new Date());
             meals.put(Integer.toString(i),new MealDocumentSnapshot(meal));
         }
     }

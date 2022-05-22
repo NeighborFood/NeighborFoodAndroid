@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -17,8 +18,8 @@ public class OrderTest {
 
     @Before
     public void initTestVariables() {
-        meal = new Meal("Tofu","Yumi tofu","Plant based proteins",5);
         orderDate = new GregorianCalendar(2022, Calendar.FEBRUARY, 1).getTime();
+        meal = new Meal("Tofu","Yumi tofu","Plant based proteins","",new ArrayList<>(),0,orderDate);
         status = true;
         mealVendor = "vendor";
     }

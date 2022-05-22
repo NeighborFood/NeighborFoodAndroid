@@ -1,14 +1,22 @@
 package com.epfl.neighborfood.neighborfoodandroid;
 
+import android.content.Context;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.utils.ObjectUtils;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.Authenticator;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
-import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
 import com.epfl.neighborfood.neighborfoodandroid.services.notifications.NotificationService;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The access point for all the dependencies of the app
@@ -74,14 +82,24 @@ public abstract class AppContainer {
      * @param dep the app's Database instance
      * @param authenticator the app's authenticator
      * @param notificationService the app's notification service
+     *
      */
-    protected AppContainer( Database dep, Authenticator authenticator, NotificationService notificationService) {
+    protected AppContainer(Context context, Database dep, Authenticator authenticator, NotificationService notificationService) {
         DatabaseFactory.setDependency(dep);
         AuthenticatorFactory.setDependency(authenticator);
         this.notificationService = notificationService;
         this.authRepo = new AuthRepository();
         this.userRepo = new UserRepository();
         this.mealRepo = new MealRepository();
+        if(context == null){
+            return;
+        }
+        Map config = ObjectUtils.asMap(
+                "cloud_name", "dkg9lec21",
+                "api_key", "778522893956734",
+                "api_secret", "XHWHbaQg49cZsbk9QPvAV5PaXF8");
+        Cloudinary cloudinary = new Cloudinary(config);
+        MediaManager.init(context,config);
 
     }
 
