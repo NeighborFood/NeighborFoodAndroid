@@ -126,6 +126,12 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
     private void updateNumberOfLikes(){
         ((TextView)findViewById(R.id.LikesId)).setText(String.valueOf(vendor.getNumberSubscribers()));
     }
+    private void subscriptionTaskComplete(boolean subscriptionState){
+        isCurrentUserSubscribed = subscriptionState;
+        Toast.makeText(this, getResources().getString(subscriptionState? R.string.subscribe_success :R.string.unsubscribe_success , vendor.getUsername()), Toast.LENGTH_SHORT).show();
+        updateNotificationIcon();
+        updateNumberOfLikes();
+    }
 
     @Override
     public void onClick(View v) {
@@ -137,35 +143,14 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
                 subscriptionTaskComplete =false;
                 if(isCurrentUserSubscribed){
                     vmodel.unsubscribeFromVendor(vendor).addOnCompleteListener(t->{subscriptionTaskComplete = true;}).addOnSuccessListener((a)->{
-                        isCurrentUserSubscribed = false;
-                        Toast.makeText(this, getResources().getString(R.string.unsubscribe_success, vendor.getUsername()), Toast.LENGTH_SHORT).show();
-                        updateNotificationIcon();
-                        updateNumberOfLikes();
+                        subscriptionTaskComplete(false);
                     }  );
                 }else{
                     vmodel.subscribeToVendor(vendor).addOnCompleteListener(t->{subscriptionTaskComplete = true;}).addOnSuccessListener((a)->{
-                        isCurrentUserSubscribed = true;
-                        Toast.makeText(this, getResources().getString(R.string.subscribe_success, vendor.getUsername()), Toast.LENGTH_SHORT).show();
-                        updateNotificationIcon();
-                        updateNumberOfLikes();
+                        subscriptionTaskComplete(false);
                     }  );
                 }
                 break;
-            case R.id.facebookId: {
-                String webLinkStr = getString(R.string.FacebookLink) + "gordonramsay";
-                openLink(webLinkStr);
-                break;
-            }
-            case R.id.instagramId: {
-                String webLinkStr = getString(R.string.InstagramLink) + "gordongram";
-                openLink(webLinkStr);
-                break;
-            }
-            case R.id.TwitterId: {
-                String webLinkStr = getString(R.string.twitterLink) + "GordonRamsay";
-                openLink(webLinkStr);
-                break;
-            }
 
         }
     }
