@@ -5,16 +5,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.gridlayout.widget.GridLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.PlaceMealViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorProfileViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.PlaceMealViewModelFactory;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.VendorProfileViewModelFactory;
+import com.squareup.picasso.Picasso;
 
 /**
  * Activity that displays for the user the profile of the vendor with all his details.
@@ -22,60 +25,132 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.VendorP
  *
  */
 public class VendorProfileActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageView subscribeButton;
-    private Boolean subscribed = false;
+    private enum SocialLinkType{
+        FACEBOOK("facebook",R.drawable.facebook),INSTAGRAM("instagram",R.drawable.instagram),TWITTER("twitter",R.drawable.twitter),DEFAULT("",R.drawable.link);
+        private String domainName;
+        private int resourceID;
+        SocialLinkType(String domainName, int resourceID){
+            this.domainName  =domainName;
+            this.resourceID = resourceID;
+        }
+
+        /** Function to see if the social link type matches the given url
+         * @param url the url to match
+         * @return true if the link matches the social link type
+         */
+        public boolean matches(String url){
+            return url.contains(domainName);
+        }
+        public static SocialLinkType getSocialLinkType(String url){
+            for (SocialLinkType s : SocialLinkType.values()) {
+                if(s.ordinal()!= SocialLinkType.DEFAULT.ordinal()&& s.matches(url)){
+                    return s;
+                }
+            }
+            return SocialLinkType.DEFAULT;
+        }
+    }
+    private final static int LINK_IMAGE_WIDTH = 50;
+    private final static int LINK_IMAGE_HEIGHT = 50;
     private ImageView notificationButton;
-    private Boolean notifyOn = false;
-    private int heart = R.drawable.empty_heart;
-    private int notif = R.drawable.empty_notif;
+    private User vendor;
     private VendorProfileViewModel vmodel;
+    private boolean subscriptionTaskComplete;
+    private boolean isCurrentUserSubscribed;
+    private GridLayout linksGridLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_profile);
         notificationButton = findViewById(R.id.notificationId);
-        subscribeButton = findViewById(R.id.SubscribeId);
-        subscribeButton.setOnClickListener(this);
         notificationButton.setOnClickListener(this);
         findViewById(R.id.facebookId).setOnClickListener(this);
         findViewById(R.id.instagramId).setOnClickListener(this);
         findViewById(R.id.TwitterId).setOnClickListener(this);
+        linksGridLayout = findViewById(R.id.SocialLinksGridLayout);
         vmodel = new ViewModelProvider(this, new VendorProfileViewModelFactory((NeighborFoodApplication) this.getApplication())).get(VendorProfileViewModel.class);
+        String vendorID = getUserIDFromIntent();
+        if(vendorID != null){
+            vmodel.getUserByID(vendorID).addOnSuccessListener(user->{
+                this.vendor = user;
+                updateUI();
+            });
+        }
+        subscriptionTaskComplete = true;
+    }
 
+    private void updateLinks(){
+        linksGridLayout.removeAllViews();
+        for (String s : vendor.getLinks()) {
+            addLinkButton(s);
+        }
+
+    }
+
+    private void addLinkButton(String url) {
+        ImageView image = new ImageView(this);
+        SocialLinkType linkType = SocialLinkType.getSocialLinkType(url);
+        image.setImageResource(linkType.resourceID);
+        linksGridLayout.addView(image);
+        image.setOnClickListener(v -> openLink(url));
+        image.getLayoutParams().width = LINK_IMAGE_WIDTH;
+        image.getLayoutParams().height = LINK_IMAGE_HEIGHT;
+    }
+
+    private void updateUI() {
+        if(vendor == null){
+            return;
+        }
+        ((TextView)findViewById(R.id.NameId)).setText(String.format("%s %s", vendor.getFirstName(), vendor.getLastName()));
+        isCurrentUserSubscribed = vmodel.getCurrentUser().getSubscribedIDs().contains(vendor.getId());
+        updateNotificationIcon();
+        updateNumberOfLikes();
+        ((TextView)findViewById(R.id.bioValue2)).setText(vendor.getBio());
+        Toast.makeText(this, vendor.getProfilePictureURI(), Toast.LENGTH_SHORT).show();
+        Picasso.get().load(vendor.getProfilePictureURI()).into((ImageView) findViewById(R.id.ProfilePictureId));
+        updateLinks();
+    }
+
+    private String getUserIDFromIntent(){
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            return extras.getString("userID");
+        }
+        return null;
+    }
+    private void updateNotificationIcon(){
+        int notif = isCurrentUserSubscribed ? R.drawable.full_notif : R.drawable.empty_notif;
+        notificationButton.setImageResource(notif);
+        notificationButton.setTag(notif);
+    }
+    private void updateNumberOfLikes(){
+        ((TextView)findViewById(R.id.LikesId)).setText(String.valueOf(vendor.getNumberSubscribers()));
+    }
+    private void subscriptionTaskComplete(boolean subscriptionState){
+        isCurrentUserSubscribed = subscriptionState;
+        Toast.makeText(this, getResources().getString(subscriptionState? R.string.subscribe_success :R.string.unsubscribe_success , vendor.getUsername()), Toast.LENGTH_SHORT).show();
+        updateNotificationIcon();
+        updateNumberOfLikes();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.SubscribeId:
-                subscribed = !subscribed;
-                vmodel.subscribeToVendor("Uuc7WoQvx5QRfAxNJY5QbMurnHy1").addOnCompleteListener((a)-> System.out.println("Subscribed"));
-                System.out.println("hello");
-                heart = (subscribed) ? R.drawable.full_heart : R.drawable.empty_heart;
-                subscribeButton.setImageResource(heart);
-                subscribeButton.setTag(heart);
-                break;
             case R.id.notificationId:
-                notifyOn = !notifyOn;
-                notif = (notifyOn) ? R.drawable.full_notif : R.drawable.empty_notif;
-                notificationButton.setImageResource(notif);
-                notificationButton.setTag(notif);
+                if(!subscriptionTaskComplete){
+                    break;
+                }
+                subscriptionTaskComplete =false;
+                if(isCurrentUserSubscribed){
+                    vmodel.unsubscribeFromVendor(vendor).addOnCompleteListener(t->{subscriptionTaskComplete = true;}).addOnSuccessListener((a)->{
+                        subscriptionTaskComplete(false);
+                    }  );
+                }else{
+                    vmodel.subscribeToVendor(vendor).addOnCompleteListener(t->{subscriptionTaskComplete = true;}).addOnSuccessListener((a)->{
+                        subscriptionTaskComplete(false);
+                    }  );
+                }
                 break;
-            case R.id.facebookId: {
-                String webLinkStr = getString(R.string.FacebookLink) + "gordonramsay";
-                openLink(webLinkStr);
-                break;
-            }
-            case R.id.instagramId: {
-                String webLinkStr = getString(R.string.InstagramLink) + "gordongram";
-                openLink(webLinkStr);
-                break;
-            }
-            case R.id.TwitterId: {
-                String webLinkStr = getString(R.string.twitterLink) + "GordonRamsay";
-                openLink(webLinkStr);
-                break;
-            }
 
         }
     }

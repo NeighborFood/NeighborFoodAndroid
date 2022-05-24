@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.ConversationListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
@@ -37,7 +38,6 @@ public class ConversationsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
-        //ConversationRepository rep = new ConversationRepositoryImplementation();
 
 
 

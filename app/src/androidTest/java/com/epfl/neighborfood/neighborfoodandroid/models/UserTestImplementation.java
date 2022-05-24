@@ -1,5 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
+import com.epfl.neighborfood.neighborfoodandroid.R;
+
 import java.util.ArrayList;
 
 public class UserTestImplementation extends User{
@@ -14,7 +16,7 @@ public class UserTestImplementation extends User{
      * @param lastName  Last name of user
      */
     public UserTestImplementation(String id, String email, String firstName, String lastName) {
-        super(id, email, firstName, lastName);
+        super(id, email, firstName, lastName,"android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon);
         setBio("");
         setLinks(new ArrayList<>());
     }

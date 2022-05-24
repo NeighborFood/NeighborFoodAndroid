@@ -126,7 +126,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             // Format the stored timestamp into a readable String
             SimpleDateFormat dateFormatter = new SimpleDateFormat("d MMM yyyy, HH:mm");
             timeText.setText(dateFormatter.format(message.getDate()));
-            nameText.setText(message.getSender().fullName());
+            nameText.setText(message.getSender().getUsername());
         }
     }
 

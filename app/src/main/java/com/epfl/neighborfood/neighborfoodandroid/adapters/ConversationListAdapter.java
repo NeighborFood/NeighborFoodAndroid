@@ -42,7 +42,7 @@ public class ConversationListAdapter extends ArrayAdapter {
         TextView userLastmsg = convertView.findViewById(R.id.user_last_message);
 
         imageView.setImageResource(DummyDatabase.PROFILE_IMG_ID);
-        userName.setText(conv.chatter().fullName());
+        userName.setText(conv.chatter().getUsername());
 
         String txt = "";
         Message last = conv.lastMessage();

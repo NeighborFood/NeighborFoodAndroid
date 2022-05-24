@@ -7,97 +7,92 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasData;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.hasPackage;
-import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
-
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.os.Bundle;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
+import com.epfl.neighborfood.neighborfoodandroid.AppContainerTestImplementation;
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.VendorProfileActivity;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
+import com.epfl.neighborfood.neighborfoodandroid.util.matchers.NthChildOfMatcher;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class VendorProfileAcitivtyTest {
+    private static String dummyVendorID = "-1";
+    static Intent intent;
+    static {
+        intent = new Intent(ApplicationProvider.getApplicationContext(), VendorProfileActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("userID", dummyVendorID);
+        intent.putExtras(bundle);
+    }
     @Rule
-    public ActivityScenarioRule<VendorProfileActivity> testRule = new ActivityScenarioRule<>(VendorProfileActivity.class);
+    public ActivityScenarioRule<VendorProfileActivity> testRule = new ActivityScenarioRule<>(intent);
+    @BeforeClass
+    public static void setUpApp(){
+        NeighborFoodApplication.appContainer = new AppContainerTestImplementation();
+        NeighborFoodApplication.appContainer.getAuthRepo().logInWithGoogleAccount(null);
+    }
     @Before
     public void setUp() throws Exception {
         Intents.init();
+        ((DummyDatabase)DatabaseFactory.getDependency()).reset();
     }
 
     @After
     public void cleanup() {
         Intents.release();
+        ((DummyDatabase)DatabaseFactory.getDependency()).reset();
     }
 
     @Test
-    public void subscribeTest(){
-        onView(withId(R.id.SubscribeId))
-                .perform(click());
-        onView(withId(R.id.SubscribeId)).check(matches(withTagValue(equalTo(R.drawable.full_heart))));
-    }
-    @Test
-    public void unsubscribeTest(){
-        onView(withId(R.id.SubscribeId))
-                .perform(click()).perform(click());
-        onView(withId(R.id.SubscribeId)).check(matches(withTagValue(equalTo(R.drawable.empty_heart))));
-    }
-    @Test
     public void notifyTest(){
+        NeighborFoodApplication.appContainer.getAuthRepo().getCurrentUser().setSubscribedIDs(new ArrayList<>());
         onView(withId(R.id.notificationId))
                 .perform(click());
         onView(withId(R.id.notificationId)).check(matches(withTagValue(equalTo(R.drawable.full_notif))));
     }
     @Test
-    public void notifyOffTest(){
+    public void notifyOffTest() {
+
+        ArrayList<String> subIDs = new ArrayList<>();
+        subIDs.add(dummyVendorID);
+        NeighborFoodApplication.appContainer.getAuthRepo().getCurrentUser().setSubscribedIDs(subIDs);
         onView(withId(R.id.notificationId))
-                .perform(click()).perform(click());
+                .perform(click());
         onView(withId(R.id.notificationId)).check(matches(withTagValue(equalTo(R.drawable.empty_notif))));
     }
+
     @Test
-    public void facebookLinkTest(){
+    public void clickLinkTest() {
+
         Matcher<Intent> expectedIntent= allOf(hasAction(Intent.ACTION_VIEW),
-                                hasData("https://www.facebook.com/gordonramsay"));
+                hasData("https://facebook.com/"));
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
 
-        onView(withId(R.id.facebookId))
-                .perform(click());
-
-        intended(expectedIntent);
-     }
-    @Test
-    public void twitterLinkTest(){
-        Matcher<Intent> expectedIntent= allOf(hasAction(Intent.ACTION_VIEW),
-                hasData("https://twitter.com/GordonRamsay"));
-        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
-
-        onView(withId(R.id.TwitterId))
+        onView(NthChildOfMatcher.nthChildOf(withId(R.id.SocialLinksGridLayout),0))
                 .perform(click());
 
         intended(expectedIntent);
     }
-    @Test
-    public void instagramLinkTest(){
-        Matcher<Intent> expectedIntent= allOf(hasAction(Intent.ACTION_VIEW),
-                hasData("https://www.instagram.com/gordongram"));
-        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
 
-        onView(withId(R.id.instagramId))
-                .perform(click());
-
-        intended(expectedIntent);
-    }
 }

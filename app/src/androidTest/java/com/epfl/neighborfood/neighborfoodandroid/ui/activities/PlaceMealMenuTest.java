@@ -50,10 +50,10 @@ public class PlaceMealMenuTest {
      */
     @Test
     public void changeMealDescriptionTest(){
-        onView(withId(R.id.textDesciption))
+        onView(withId(R.id.textDescription))
                 .perform(ViewActions.scrollTo())
                 .perform(typeText("vegan pizza"),closeSoftKeyboard());
-        onView((withId(R.id.textDesciption))).check(matches(withText("vegan pizza")));
+        onView((withId(R.id.textDescription))).check(matches(withText("vegan pizza")));
     }
 
     /*

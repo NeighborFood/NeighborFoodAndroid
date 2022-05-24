@@ -70,20 +70,20 @@ public class ConversationsActivityTest {
 
         DummyDatabase db = DummyDatabase.getInstance();
         User[] users = {
-                new User("1", "test1@machin.com", "Test", "One"),
-                new User("2", "test2@machin.com", "Test", "Two"),
-                new User("3", "test3@machin.com", "Test", "Three")
+                new User("1", "test1@machin.com", "Test", "One",""),
+                new User("2", "test2@machin.com", "Test", "Two",""),
+                new User("3", "test3@machin.com", "Test", "Three","")
         };
 
-        User currentUser = AuthenticatorFactory.getDependency().getCurrentUser();
+        User currentUser = ((DummyAuthenticator)(AuthenticatorFactory.getDependency())).getCurrentUser();
         Message[] messages = {
                 new Message("All good !", currentUser,
-                        new User("1", "test1@machin.com", "Test", "One")),
+                        new User("1", "test1@machin.com", "Test", "One","")),
 
-                new Message("Where are You ? ", new User("2", "test2@machin.com", "Test", "Two"),
+                new Message("Where are You ? ", new User("2", "test2@machin.com", "Test", "Two",""),
                         currentUser),
 
-                new Message("Thanks! very nice Meal", new User("3", "test3@machin.com", "Test", "Three"),
+                new Message("Thanks! very nice Meal", new User("3", "test3@machin.com", "Test", "Three",""),
                         currentUser)};
 
         Intent intent = new Intent(ApplicationProvider.getApplicationContext(), ConversationsActivity.class);
@@ -94,7 +94,7 @@ public class ConversationsActivityTest {
         for (int i = 0; i < users.length; i++) {
             List<User> aux = new ArrayList<>();
             aux.add(users[i]);
-            aux.add(AuthenticatorFactory.getDependency().getCurrentUser());
+            aux.add(((DummyAuthenticator)(AuthenticatorFactory.getDependency())).getCurrentUser());
             Conversation conv = new Conversation(aux, Arrays.asList(messages[i]));
             db.pushConversation(conv);
         }
@@ -112,7 +112,7 @@ public class ConversationsActivityTest {
             User usr = users[i];
             onData(anything()).inAdapterView(withId(R.id.conversationsListView)).atPosition(i).
                     onChildView(withId(R.id.user_name)).
-                    check(matches(withText(usr.fullName())));
+                    check(matches(withText(usr.getUsername())));
         }
 
 
@@ -136,19 +136,19 @@ public class ConversationsActivityTest {
 
         DummyDatabase db = DummyDatabase.getInstance();
         User[] users = {
-                new User("1", "test1@machin.com", "Test", "One"),
-                new User("2", "test2@machin.com", "Test", "Two"),
+                new User("1", "test1@machin.com", "Test", "One",""),
+                new User("2", "test2@machin.com", "Test", "Two",""),
         };
 
-        User currentUser = AuthenticatorFactory.getDependency().getCurrentUser();
+        User currentUser = ((DummyAuthenticator)(AuthenticatorFactory.getDependency())).getCurrentUser();
         Message[] messages = {
                 new Message("All good !", currentUser,
-                        new User("1", "test1@machin.com", "Test", "One")),
+                        new User("1", "test1@machin.com", "Test", "One","")),
 
-                new Message("Where are You ? ", new User("2", "test2@machin.com", "Test", "Two"),
+                new Message("Where are You ? ", new User("2", "test2@machin.com", "Test", "Two",""),
                         currentUser),
 
-                new Message("Thanks! very nice Meal", new User("3", "test3@machin.com", "Test", "Three"),
+                new Message("Thanks! very nice Meal", new User("3", "test3@machin.com", "Test", "Three",""),
                         currentUser)};
 
 
@@ -161,7 +161,7 @@ public class ConversationsActivityTest {
         for (int i = 0; i < users.length; i++) {
             List<User> aux = new ArrayList<>();
             aux.add(users[i]);
-            aux.add(AuthenticatorFactory.getDependency().getCurrentUser());
+            aux.add(((DummyAuthenticator)(AuthenticatorFactory.getDependency())).getCurrentUser());
             Conversation conv = new Conversation(aux, Arrays.asList(messages[i]));
             db.pushConversation(conv);
         }

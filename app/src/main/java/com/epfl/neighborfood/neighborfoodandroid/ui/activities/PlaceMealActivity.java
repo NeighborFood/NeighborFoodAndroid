@@ -2,9 +2,11 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,7 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,10 +26,13 @@ import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
+import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.PlaceMealViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.PlaceMealViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.util.ImageUtil;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -45,7 +52,11 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     EditText descriptionText, priceText, mealNameText, dateText, timeText;
     Toolbar toolbar;
     Uri image;
+    private String imagePath;
     private PlaceMealViewModel vmodel;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+
+    private List<EditText> cannotBeEmptyFields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,18 +71,23 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
 
         allergensInMeal = new ArrayList<String>();
         allergensIcons = new HashMap<ImageView, String>();
-        allergensIcons.put(findViewById(R.id.CeleryIcon), "celery");
-        allergensIcons.put(findViewById(R.id.MilkIcon), "milk");
-        allergensIcons.put(findViewById(R.id.FishIcon), "fish");
-        allergensIcons.put(findViewById(R.id.CheeseIcon), "cheese");
-        allergensIcons.put(findViewById(R.id.GlutenIcon), "gluten");
-        allergensIcons.put(findViewById(R.id.HoneyIcon), "honey");
-        allergensIcons.put(findViewById(R.id.LobsterIcon), "Lobster");
-        allergensIcons.put(findViewById(R.id.SoyIcon), "Soy");
-        allergensIcons.put(findViewById(R.id.EggsIcon), "Eggs");
-        allergensIcons.put(findViewById(R.id.ChocolateIcon), "Chocolate");
+        /* TODO it would be better to create the allergen list that way but currently each item of the list is hard coded in the xml.
+        for (Allergen allergen : Allergen.values()) {
+            allergensIcons.put(findViewById(allergen.getId()), allergen.getLabel());
+        }
+        */
+        allergensIcons.put(findViewById(R.id.CeleryIcon), "CELERY");
+        allergensIcons.put(findViewById(R.id.MilkIcon), "MILK");
+        allergensIcons.put(findViewById(R.id.FishIcon), "FISH");
+        allergensIcons.put(findViewById(R.id.CheeseIcon), "CHEESE");
+        allergensIcons.put(findViewById(R.id.GlutenIcon), "GLUTEN");
+        allergensIcons.put(findViewById(R.id.HoneyIcon), "HONEY");
+        allergensIcons.put(findViewById(R.id.LobsterIcon), "LOBSTER");
+        allergensIcons.put(findViewById(R.id.SoyIcon), "SOY");
+        allergensIcons.put(findViewById(R.id.EggsIcon), "EGGS");
+        allergensIcons.put(findViewById(R.id.ChocolateIcon), "CHOCOLATE");
 
-        descriptionText = findViewById(R.id.textDesciption);
+        descriptionText = findViewById(R.id.textDescription);
         priceText = findViewById(R.id.textPrice);
         mealNameText = findViewById(R.id.textMealName);
         calendarButton = findViewById(R.id.CalendarButton);
@@ -85,17 +101,39 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         addImageButton.setOnClickListener(this);
         confirmationButton.setOnClickListener(this);
 
+        // This is to create a list that need to not be empty and be checked for it
+        cannotBeEmptyFields = new ArrayList<>();
+        cannotBeEmptyFields.add(descriptionText);
+        cannotBeEmptyFields.add(priceText);
+        cannotBeEmptyFields.add(mealNameText);
+        cannotBeEmptyFields.add(dateText);
+        cannotBeEmptyFields.add(timeText);
+
+        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this, result -> {
+            activityResult(result.getResultCode(), result.getData());
+        });
+    }
+    private void activityResult(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && data != null) {
+            imagePath = ImageUtil.getRealPathFromUri(data.getData(), this);
+            try {
+                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                imageToUpload.setImageBitmap(imageBitmap);
+            } catch (IOException e) {
+                Toast.makeText(this, R.string.image_load_error, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
     public void onClick(View v) {
-        if (allergensIcons.keySet().contains(v)) {
-            String allergenName = allergensIcons.get(v);
-            if (allergensInMeal.contains(allergensIcons.get(v))) {
-                allergensInMeal.remove(allergenName);
+        if (allergensIcons.containsKey(v)) {
+            String allergenLabel = allergensIcons.get(v);
+            if (allergensInMeal.contains(allergenLabel)) {
+                allergensInMeal.remove(allergenLabel);
                 v.setBackgroundColor(0xFFFFFF);
             } else {
-                allergensInMeal.add(allergenName);
+                allergensInMeal.add(allergenLabel);
                 v.setBackgroundColor(0x666BEC70);
             }
         }
@@ -103,13 +141,36 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
             case R.id.addPictureButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 //@TODO for sprint 9 I (Raed) will change the upload picture to be abstract and not deprecated
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                activityResultLauncher.launch(ImageUtil.getGalleryIntent());
                 break;
             case R.id.ConfirmationButton:
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                //TODO: replace with actual value of the place Meal
-                Task<Void> task = vmodel.placeMeal(new Meal(mealNameText.getText().toString(), descriptionText.getText().toString() , descriptionText.getText().toString() , 0, new ArrayList<>(), 0));
-                task.addOnCompleteListener((a)->{startActivity(i);});
+                boolean fieldsAreNotEmpty = true;
+                for (EditText field: cannotBeEmptyFields) {
+                    if (TextUtils.isEmpty(field.getText().toString())) {
+                        Toast.makeText(this,
+                                "No field can be empty!",
+                                Toast.LENGTH_SHORT).show();
+                        fieldsAreNotEmpty = false;
+                        break;
+                    }
+                }
+                if(imagePath == null){
+                    fieldsAreNotEmpty = false;
+                }
+                if (fieldsAreNotEmpty) {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    Meal meal = new Meal(
+                            mealNameText.getText().toString(),
+                            descriptionText.getText().toString(),
+                            "Should add long description in the template", //TODO
+                            "",//TODO: Should get the image id but it is not gettable yet
+                            allergensInMeal,//TODO: Should build the list of allergens
+                            Double.parseDouble(priceText.getText().toString()),
+                            null);//TODO: build the retrieval date
+                    Task<Void> task = vmodel.placeMeal(meal,imagePath);
+                    task.addOnCompleteListener((a)->{startActivity(i);});
+                }
+
                 break;
             case R.id.CalendarButton:
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
