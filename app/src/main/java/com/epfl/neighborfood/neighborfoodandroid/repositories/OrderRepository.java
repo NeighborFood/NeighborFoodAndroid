@@ -50,6 +50,24 @@ public class OrderRepository {
         });
     }
     /*
+     * fetches all the orders that are still unassigned.
+     * @return task that fails if the database is unreachable
+     */
+    public Task<List<Order>> getAllOrdersByVendorId(String vendorId) {
+        if (vendorId == null) {
+            return Tasks.forException(new IllegalArgumentException("The vendor ID cannot be null"));
+        }
+        return DatabaseFactory.getDependency().fetchAllMatchingAttributeValue(ordersDataCollectionPath,buyerIdAttributeName,vendorId).continueWith(t -> {
+            ArrayList<Order> res = new ArrayList<>();
+            if (t.isSuccessful()) {
+                for (DocumentSnapshot m : t.getResult().getDocuments()) {
+                    res.add(m.toModel(Order.class));
+                }
+            }
+            return res;
+        });
+    }
+    /*
      * posts an order on the database
      * @param order Order to be posted
      * @return task containing orderId that fails if the database is unreachable
@@ -65,5 +83,16 @@ public class OrderRepository {
                                 set(ordersDataCollectionPath,task.getResult(),order);
                         return task.getResult();
                         });
+    }
+    /*
+     * Updates an existing order with new values
+     * @param order Order to be updated
+     * @return task containing orderId that fails if the database is unreachable
+     */
+    public Task<Void> updateOrder(Order order){
+        if (order == null) {
+            return Tasks.forException(new IllegalArgumentException("Cannot make a null order"));
+        }
+        return DatabaseFactory.getDependency().set(ordersDataCollectionPath,order.getOrderId(),order).continueWith(task->null);
     }
 }

@@ -145,8 +145,9 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                             Double.parseDouble(priceText.getText().toString()),
                             null);//TODO: build the retrieval date
                     Task<String> task = vmodel.placeMeal(meal);
+                    System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");System.out.println(meal.getVendorID());
                     task.addOnSuccessListener((mealId)->{
-                        vmodel.createOrder(mealId).addOnSuccessListener(orderId-> startActivity(i));
+                        vmodel.createOrder(mealId).addOnSuccessListener(orderId-> startActivity(i)).addOnFailureListener(System.out::println);
                     });
                 }
 

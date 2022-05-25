@@ -45,7 +45,7 @@ public class BuyerOrdersActivity extends AppCompatActivity {
                 System.out.println(order.getBuyerId());
                 viewModel.getMealById(order.getMealId()).addOnSuccessListener(meal ->
                         viewModel.getUserById(order.getVendorId()).addOnSuccessListener(vendor ->
-                                buyerOrderListAdapter.add(Triplet.of(order, meal, vendor))).addOnFailureListener(System.out::println)).addOnFailureListener(System.out::println);
+                                buyerOrderListAdapter.add(Triplet.of(order, meal, vendor))).addOnFailureListener(System.out::println));
             }
         }).addOnFailureListener(System.out::println);
 

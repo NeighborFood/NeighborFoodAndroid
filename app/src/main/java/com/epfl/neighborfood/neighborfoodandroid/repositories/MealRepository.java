@@ -12,6 +12,7 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
+import com.epfl.neighborfood.neighborfoodandroid.util.Pair;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -74,19 +75,21 @@ public class MealRepository {
         });
     }
     /** Fetches all the unassigned meals stored in the database
-     * @return the task that may complete and contains the meals
+     * @return the task that may complete and contains the unassigned orders and meals corresponding to it.
      */
-    public Task<List<Meal>> getAllUnassignedMeals(){
+    public Task<List<Pair<Order, Meal>>> getAllUnassignedMeals(){
         return DatabaseFactory.getDependency().fetchAllMatchingAttributeValue(ordersDataCollectionPath,"orderStatus", OrderStatus.unassigned).continueWith(to->{
-            ArrayList<Meal> res = new ArrayList<>();
+            ArrayList<Pair<Order,Meal>> res = new ArrayList<>();
             if(to.isSuccessful()){
                 for (DocumentSnapshot o: to.getResult().getDocuments()) {
                     getMealById(o.toModel(Order.class).getMealId()).addOnSuccessListener(meal->{
-                            res.add(meal);}
+                            res.add(Pair.of(o.toModel(Order.class),meal));}
                     );
                 }
             }
             return res;
         });
     }
+
+
 }
