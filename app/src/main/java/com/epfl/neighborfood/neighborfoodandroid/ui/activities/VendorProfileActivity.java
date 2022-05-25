@@ -64,6 +64,7 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_vendor_profile);
         notificationButton = findViewById(R.id.notificationId);
         notificationButton.setOnClickListener(this);
+        findViewById(R.id.messageVendor).setOnClickListener(this);
         findViewById(R.id.facebookId).setOnClickListener(this);
         findViewById(R.id.instagramId).setOnClickListener(this);
         findViewById(R.id.TwitterId).setOnClickListener(this);
@@ -152,6 +153,11 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
                 }
                 break;
 
+            case R.id.messageVendor:
+                Intent intent  = new Intent(this,ChatRoomActivity.class);
+                String conversationID = vmodel.getCurrentUser().getId().compareTo(vendor.getId()) > 0 ? vmodel.getCurrentUser().getId() +"-"+vendor.getId() : vendor.getId() +"-"+vmodel.getCurrentUser().getId();
+                intent.putExtra("ConversationID",conversationID);
+                startActivity(intent);
         }
     }
 

@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_chat_room.xml" value="0.19157608695652173" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_conversations.xml" value="0.19157608695652173" />
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_display_message.xml" value="0.176" />
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_meal.xml" value="0.16032608695652173" />
@@ -14,7 +16,9 @@
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/activity_vendor_profile.xml" value="0.264" />
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/content_personal_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/fragment_account.xml" value="0.18645833333333334" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/fragment_conversations.xml" value="0.2" />
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/fragment_meal_list.xml" value="0.221875" />
+        <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/list_item_conversation.xml" value="0.15416666666666667" />
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/list_item_meal.xml" value="0.16032608695652173" />
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/layout/me_message.xml" value="0.1125" />
         <entry key="..\:/Users/HP/Documents/Github/NeighborFoodAndroid/app/src/main/res/menu/bottom_nav_menu.xml" value="0.13854166666666667" />

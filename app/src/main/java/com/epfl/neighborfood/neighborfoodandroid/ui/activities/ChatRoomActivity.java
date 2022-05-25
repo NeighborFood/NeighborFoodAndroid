@@ -3,29 +3,23 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.MessageListAdapter;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.Database;
-import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
-import com.epfl.neighborfood.neighborfoodandroid.models.User;
-import com.google.android.gms.tasks.Continuation;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.ChatRoomViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.ChatRoomViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,85 +31,63 @@ public class ChatRoomActivity extends AppCompatActivity{
     private RecyclerView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
     private List<Message> messageList = new ArrayList<>();
-    private User chatter;
     private Conversation conv;
     private String id;
+    private ChatRoomViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         messageList = new ArrayList<>();
-
+        viewModel = new ViewModelProvider(this, new ChatRoomViewModelFactory((NeighborFoodApplication) (getApplication()))).get(ChatRoomViewModel.class);
 
         Intent i = getIntent();
-        chatter = (User)i.getSerializableExtra("Chatter");
         id = (String) i.getSerializableExtra("ConversationID");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
         //back arrow
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_gchannel);
+        Toolbar toolbar = findViewById(R.id.toolbar_gchannel);
         setSupportActionBar(toolbar);
 
         // add back arrow to toolbar and remove title
         if (getSupportActionBar() != null){
-            getSupportActionBar().setTitle(chatter.getUsername());
+            //getSupportActionBar().setTitle(chatter.getUsername());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-            mTitle.setText(toolbar.getTitle());
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
 
-        mMessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
+        mMessageRecycler = findViewById(R.id.recycler_gchat);
         mMessageAdapter = new MessageListAdapter(this, messageList);
 
-        DatabaseFactory.getDependency().fetch("Conversations",id).continueWith(
-                t -> {
-                    Conversation c = t.getResult().toModel(Conversation.class);
-                    return c;
-                }
-        ).addOnSuccessListener(
+        viewModel.getConversationLiveData(id).observe(this,
                 c -> {
+                    viewModel.getChatter(c).addOnSuccessListener(chatter->{
+                        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
+                        getSupportActionBar().setTitle(chatter.getUsername());
+                        mTitle.setText(chatter.getUsername());
+                    });
+                    conv = c;
+                    messageList.clear();
                     messageList.addAll(c.getMessages());
                     mMessageAdapter.notifyDataSetChanged();
+                    ((RecyclerView)findViewById(R.id.recycler_gchat)).smoothScrollToPosition(c.getMessages().size() - 1);
                 }
         );
 
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
         mMessageRecycler.setAdapter(mMessageAdapter);
-        Button send = (Button) findViewById(R.id.button_gchat_send);
+        Button send = findViewById(R.id.button_gchat_send);
 
 
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText message = (EditText) findViewById(R.id.edit_gchat_message);
-                String messageText = message.getText().toString();
-
-
-                User currentUser = ((NeighborFoodApplication)getApplication()).getAppContainer().getAuthRepo().getCurrentUser();
-                Message msg = new Message(messageText,currentUser,chatter);
-                mMessageAdapter.addMessage(msg);
-
-                DatabaseFactory.getDependency().fetch("Conversations",id).continueWith((Continuation<DocumentSnapshot,Conversation>) task ->{
-                    Conversation aux = null;
-                    if (task.isSuccessful()){
-                        aux = task.getResult().toModel(Conversation.class);
-                    }
-                    return aux;
-                }).continueWith(
-                        t ->{
-                            Conversation c = t.getResult();
-                            c.addMessage(msg);
-                            DatabaseFactory.getDependency().set("Conversations",id,c);
-                            return null;
-
-                        }
-                );
-            }
+        send.setOnClickListener(v -> {
+            EditText message = findViewById(R.id.edit_gchat_message);
+            String messageText = message.getText().toString();
+            message.setText("");
+            viewModel.sendMessage(conv,messageText);
         });
     }
 

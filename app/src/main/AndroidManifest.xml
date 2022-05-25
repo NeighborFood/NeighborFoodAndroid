@@ -34,9 +34,6 @@
             android:exported="true"
             android:label="Add a meal"/>
         <activity
-            android:name=".ui.activities.ConversationsActivity"
-            android:exported="true" />
-        <activity
             android:name=".ui.activities.MealActivity"
             android:exported="false" />
 

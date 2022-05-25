@@ -3,6 +3,8 @@ package com.epfl.neighborfood.neighborfoodandroid.database;
 import com.epfl.neighborfood.neighborfoodandroid.models.Model;
 import com.google.android.gms.tasks.Task;
 
+import java.util.List;
+
 /**
  * @author Mohamed Yassine Boukhari
  */
@@ -51,5 +53,7 @@ public interface Database {
     Task<CollectionSnapshot> fetchAll(String collectionPath);
 
     void addChangesListener(String collectionPath, String collectionId, ModelUpdateListener listener);
+
+    Task<List<DocumentSnapshot>> fetchAllArrayAttributeContains(String collectionPath, String attributeName, String attributeValue);
 
 }

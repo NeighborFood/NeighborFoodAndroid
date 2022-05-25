@@ -185,10 +185,11 @@
         android:id="@+id/notificationId"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="88dp"
         android:contentDescription="@string/facebookicon"
         app:layout_constraintBottom_toBottomOf="@+id/cardView"
         app:layout_constraintEnd_toStartOf="@+id/cardView"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/empty_notif"
         tools:ignore="ImageContrastCheck" />
@@ -311,5 +312,15 @@
                 android:src="@drawable/fondue" />
         </LinearLayout>
     </HorizontalScrollView>
+
+    <ImageView
+        android:id="@+id/messageVendor"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/NameId"
+        app:layout_constraintEnd_toStartOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notifymeTextId"
+        app:srcCompat="@drawable/ic_messages" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

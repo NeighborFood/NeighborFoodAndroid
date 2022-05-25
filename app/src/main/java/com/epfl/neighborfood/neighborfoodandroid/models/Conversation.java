@@ -9,7 +9,7 @@ import java.util.List;
  *
  */
 public class Conversation extends Model {
-    private List<User> users;
+    private List<String> users;
     private List<Message> messages;
     private String id;
 
@@ -22,9 +22,10 @@ public class Conversation extends Model {
      * @param messages the initial list of messages to start
      * the conversation with
      */
-    public Conversation(List<User> users, List<Message> messages) {
+    public Conversation(String id , List<String> users, List<Message> messages) {
         this.users = users;
         this.messages = messages;
+        this.id = id;
     }
 
     /**
@@ -32,23 +33,23 @@ public class Conversation extends Model {
      * user is chatting
      * @return a User
      */
-    public User chatter() {
+    public String chatter(String authenticatedID) {
         if (users != null) {
-            User chatter = null;
-            for (User usr: users){
-                if(!usr.getId().equals(AuthenticatorFactory.getDependency().getCurrentUser().getId())){
+            String chatter = null;
+            for (String usr: users){
+                if(!usr.equals(authenticatedID)){
                     chatter = usr;
                 }
             }
             return chatter;
         }
-        else return null;
+        return null;
     }
 
     /**
      * @return the set of users for this conversation
      */
-    public List<User> getUsers(){
+    public List<String> getUsers(){
         return users;
     }
 
@@ -71,13 +72,13 @@ public class Conversation extends Model {
      * @return
      */
     public Message lastMessage() {
-        if (messages != null) {
+        if (messages != null && messages.size() > 0) {
             return messages.get(messages.size() - 1);
         }
         return null;
     }
 
-    public String id() {
+    public String getId() {
         return id;
     }
 

@@ -90,6 +90,11 @@ public class DummyDatabase implements Database {
             }
             return (T)meal;
         }
+
+        @Override
+        public String getId() {
+            return meal.getMealId();
+        }
     }
     private class CollectionSnapshotImpl implements CollectionSnapshot{
         private List<DocumentSnapshot> documents;
@@ -176,7 +181,7 @@ public class DummyDatabase implements Database {
     public List<Message> fetchUserConversation(User chatter){
         if (chatter != null){
             for (Conversation conv: conversationsDB){
-                if (chatter.getId().equals(conv.getChatter().getId())){
+                if (chatter.getId().equals(conv.chatter(chatter.getId()))){
                     return conv.getMessages();
                 }
             }
@@ -261,5 +266,10 @@ public class DummyDatabase implements Database {
         if(collectionPath.equals("Users")){
             userUpdateListeners.add(listener);
         }
+    }
+
+    @Override
+    public Task<List<DocumentSnapshot>> fetchAllArrayAttributeContains(String collectionPath, String attributeName, String attributeValue) {
+        return null;
     }
 }

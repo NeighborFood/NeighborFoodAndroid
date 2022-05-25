@@ -37,10 +37,8 @@ public class MealListFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        int[] imageId = {R.drawable.poulet, R.drawable.couscous, R.drawable.paella,
-                R.drawable.fondue, R.drawable.salade, R.drawable.soupe, R.drawable.tarte};
         viewModel = new ViewModelProvider(this, new MealListViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(MealListViewModel.class);
-        MealListAdapter listAdapter = new MealListAdapter(getActivity(), new ArrayList<Meal>());
+        MealListAdapter listAdapter = new MealListAdapter(getActivity(), new ArrayList<>());
         viewModel.getAllMeals().addOnSuccessListener(mealList->{
             listAdapter.clear();
             listAdapter.addAll(mealList);

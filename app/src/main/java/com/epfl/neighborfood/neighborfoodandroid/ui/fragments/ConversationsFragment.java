@@ -3,26 +3,24 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.ConversationListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
-import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
-import com.google.android.gms.tasks.Continuation;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.ConversationsViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.ConversationsViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ConversationsFragment extends Fragment {
@@ -30,6 +28,7 @@ public class ConversationsFragment extends Fragment {
     private ListView listView;
     private ConversationListAdapter adapter;
     private List<Conversation> conversations = new ArrayList<>();
+    private ConversationsViewModel viewModel;
 
 
     public ConversationsFragment(){
@@ -41,46 +40,25 @@ public class ConversationsFragment extends Fragment {
 
 
 
-        listView = (ListView) view.findViewById(R.id.conversationsFragmentListView);
-        adapter = new ConversationListAdapter(view.getContext(), (ArrayList<Conversation>) conversations);
+        viewModel = new ViewModelProvider(this, new ConversationsViewModelFactory((NeighborFoodApplication) (getActivity().getApplication()))).get(ConversationsViewModel.class);
+        listView = view.findViewById(R.id.conversationsFragmentListView);
+        adapter = new ConversationListAdapter(view.getContext(), (ArrayList<Conversation>) conversations,viewModel);
         listView.setAdapter(adapter);
-
-        DatabaseFactory.getDependency().fetchAll("Conversations").continueWith((Continuation<CollectionSnapshot,List<Conversation>>) task ->{
-            List<Conversation> aux = new ArrayList<>();
-            if (task.isSuccessful()){
-                for (DocumentSnapshot d : task.getResult().getDocuments()){
-                    Conversation c = d.toModel(Conversation.class);
-                    c.setId(d.getId());
-                    for (User u : c.getUsers()){
-                        if (u.getId().equals(AuthenticatorFactory.getDependency().getCurrentUser().getId())){
-                            aux.add(c);
-                        }
-                    }
-                }
-            }
-            return aux;
-        }).addOnSuccessListener(l-> {
-            Collections.sort(l,new Comparator<Conversation>() {
-                @Override
-                public int compare(Conversation a, Conversation b) {
-                    return b.lastMessage().getDate().compareTo(a.lastMessage().getDate());
-                }
-            });
+        viewModel.fetchAllCurrentUserConversations().addOnSuccessListener(l-> {
+            Collections.sort(l, (a, b) -> b.lastMessage().getDate().compareTo(a.lastMessage().getDate()));
             adapter.clear();
             adapter.addAll(l);
+            conversations = l;
 
         });
 
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent i = new Intent(view.getContext(), ChatRoomActivity.class);
-                i.putExtra("Chatter",conversations.get(position).chatter());
-                i.putExtra("ConversationID",conversations.get(position).id());
-                startActivity(i);
-            }
+        listView.setOnItemClickListener((parent, v, position, id) -> {
+            Intent i = new Intent(view.getContext(), ChatRoomActivity.class);
+            System.out.println();
+            i.putExtra("ConversationID",conversations.get(position).getId());
+            startActivity(i);
         });
     }
 }

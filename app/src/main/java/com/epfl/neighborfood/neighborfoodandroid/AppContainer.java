@@ -10,6 +10,7 @@ import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFac
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
+import com.epfl.neighborfood.neighborfoodandroid.repositories.ConversationRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
 import com.epfl.neighborfood.neighborfoodandroid.services.notifications.NotificationService;
@@ -22,6 +23,7 @@ import java.util.Map;
  * The access point for all the dependencies of the app
  */
 public abstract class AppContainer {
+    private ConversationRepository conversationRepo;
     private AuthRepository authRepo;
     private MealRepository mealRepo;
     private UserRepository userRepo;
@@ -58,6 +60,13 @@ public abstract class AppContainer {
         return notificationService;
     }
 
+    /** getter for the conversation repository
+     * @return the conversation repository
+     */
+    public ConversationRepository getConversationRepo(){
+        return this.conversationRepo;
+    }
+
     /**Setter for the auth repository
      * @param authRepo the authrepo to set
      */
@@ -78,6 +87,13 @@ public abstract class AppContainer {
     protected void setUserRepo(UserRepository userRepo){
         this.userRepo = userRepo;
     }
+    /** Setter for the conversation repository
+     * @param conversationRepository the conversation repository to set
+     *
+     */
+    protected void setConversationRepo(ConversationRepository conversationRepository){
+        this.conversationRepo = conversationRepository;
+    }
     /**
      * @param dep the app's Database instance
      * @param authenticator the app's authenticator
@@ -91,6 +107,7 @@ public abstract class AppContainer {
         this.authRepo = new AuthRepository();
         this.userRepo = new UserRepository();
         this.mealRepo = new MealRepository();
+        this.conversationRepo = new ConversationRepository();
         if(context == null){
             return;
         }
@@ -102,5 +119,6 @@ public abstract class AppContainer {
         MediaManager.init(context,config);
 
     }
+
 
 }
