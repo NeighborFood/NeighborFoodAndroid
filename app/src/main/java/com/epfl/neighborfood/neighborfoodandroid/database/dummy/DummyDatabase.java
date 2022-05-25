@@ -17,13 +17,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
+
 
 
 public class DummyDatabase implements Database {
@@ -101,7 +103,7 @@ public class DummyDatabase implements Database {
             return documents;
         }
     }
-    private DummyDatabase(){
+    public DummyDatabase(){
         initializeFields();
         userUpdateListeners = new ArrayList<>();
 
@@ -260,5 +262,17 @@ public class DummyDatabase implements Database {
         if(collectionPath.equals("Users")){
             userUpdateListeners.add(listener);
         }
+    }
+
+    public void persist() throws Exception{
+        Map<String,User> u = new HashMap();
+        u.put("1", new User("1","a","a","a",""));
+        u.put("2", new User("2","b","b","b",""));
+        u.put("3", new User("3","c","c","c",""));
+
+        FileOutputStream fos = new FileOutputStream("map.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(u);
+        oos.close();
     }
 }
