@@ -31,7 +31,7 @@ public class MealListFragment extends Fragment {
     private FragmentMealListBinding binding;
     private MealListViewModel viewModel;
     private MealListAdapter listAdapter;
-    private ArrayList<Pair<Order, Meal>> orderMealList = new ArrayList<Pair<Order, Meal>>();
+    private ArrayList<Order> orderMealList = new ArrayList<Order>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,15 +44,19 @@ public class MealListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this, new MealListViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(MealListViewModel.class);
-        listAdapter = new MealListAdapter(getActivity(), orderMealList);
-        listAdapter.clear();
-        listAdapter.addAll(viewModel.getAllUnassignedOrders());
+        listAdapter = new MealListAdapter(getActivity(), orderMealList, viewModel);
+        viewModel.getAllUnassignedOrders().addOnSuccessListener(orders->{
+            listAdapter.clear();
+            listAdapter.addAll(orders);
+        });
         binding.mealListView.setAdapter(listAdapter);
         binding.mealListView.setClickable(true);
         binding.mealListView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent i = new Intent(getActivity(), MealActivity.class);
-            i.putExtra("orderId", orderMealList.get(position).getFirst().getOrderId());
-            i.putExtra("mealId", orderMealList.get(position).getSecond().getMealId());
+            System.out.println("order----"+orderMealList.get(position).getOrderId());
+            System.out.println("meal----" +orderMealList.get(position).getMealId());
+            i.putExtra("orderId", orderMealList.get(position).getOrderId());
+            i.putExtra("mealId", orderMealList.get(position).getMealId());
             startActivity(i);
         });
     }

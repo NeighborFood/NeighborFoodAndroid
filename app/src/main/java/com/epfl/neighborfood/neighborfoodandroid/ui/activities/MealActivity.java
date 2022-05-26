@@ -16,8 +16,10 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.BuyerOrderDetailsActivityViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealListViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.BuyerOrderDetailsViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.MealListViewModelFactory;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.MealViewModelFactory;
 
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ public class MealActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this, new MealViewModelFactory((NeighborFoodApplication) this.getApplication())).get(MealViewModel.class);
+
         binding = ActivityMealBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -41,13 +45,16 @@ public class MealActivity extends AppCompatActivity {
 
             String mealId = intent.getStringExtra("mealId");
             String orderId = intent.getStringExtra("orderId");
-
+            System.out.println(mealId+ "------"+ orderId);
             viewModel.getOrderById(orderId).addOnSuccessListener(orderFetched -> {
                 order = orderFetched;
             });
 
             viewModel.getMealById(mealId).addOnSuccessListener(mealFetched -> {
                 meal = mealFetched;
+                binding.mealImage.setImageResource(meal.getImageId());
+                binding.mealName.setText(meal.getName());
+                binding.mealDesc.setText(meal.getLongDescription());
             });
             // TODO adapt to get the correct allergens when the database will be setup
             ArrayList<Allergen> allergens = new ArrayList<>();
@@ -56,14 +63,7 @@ public class MealActivity extends AppCompatActivity {
             allergens.add(Allergen.GLUTEN);
             AllergensAdapter allergensAdapter = new AllergensAdapter(this, allergens);
             binding.allergensMeal.setAdapter(allergensAdapter);
-
-            binding.mealImage.setImageResource(meal.getImageId());
-            binding.mealName.setText(meal.getName());
-            binding.mealDesc.setText(meal.getLongDescription());
-
         }
-        viewModel = new ViewModelProvider(this, new MealViewModelFactory((NeighborFoodApplication) this.getApplication())).get(MealViewModel.class);
-
 
         Button vendorButton = (Button) findViewById(R.id.go_vendor_profile_id);
         Button orderButton = (Button) findViewById(R.id.order_button);

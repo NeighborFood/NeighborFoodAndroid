@@ -10,24 +10,29 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModel;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealListViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.util.Pair;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
 public class MealListAdapter extends ArrayAdapter {
+    private MealListViewModel viewModel;
 
-    public MealListAdapter(Context context, ArrayList<Pair<Order,Meal>> mealArrayList) {
+    public MealListAdapter(Context context, ArrayList<Order> mealArrayList, MealListViewModel viewModel) {
         super(context, R.layout.list_item_meal, mealArrayList);
+        this.viewModel = viewModel;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Pair<Order,Meal> pair = (Pair<Order,Meal>) getItem(position);
+        Order order = (Order) getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_meal, parent, false);
@@ -36,11 +41,15 @@ public class MealListAdapter extends ArrayAdapter {
         ImageView imageView = convertView.findViewById(R.id.meal_pic);
         TextView mealName = convertView.findViewById(R.id.meal_name);
         TextView mealShortDes = convertView.findViewById(R.id.meal_short_des);
-
-        imageView.setImageResource(pair.getSecond().getImageId());
-        mealName.setText(pair.getSecond().getName());
-        mealShortDes.setText(pair.getSecond().getShortDescription());
-
+        System.out.println("order------------"+ order.getOrderId()
+        );
+        viewModel.getMealById(order.getMealId()).addOnSuccessListener(meal -> {
+            mealName.setText(meal.getName());
+            System.out.println(meal.getMealId());
+            mealShortDes.setText(meal.getShortDescription());
+            imageView.setImageResource(meal.getImageId());
+        });
+        System.out.println("---------------------------------------");
         return convertView;
     }
 }

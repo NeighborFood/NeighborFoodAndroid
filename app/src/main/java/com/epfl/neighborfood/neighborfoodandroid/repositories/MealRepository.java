@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 
 public class MealRepository {
     private final static String mealsDataCollectionPath = "Meals";
-    private final static String ordersDataCollectionPath = "Orders";
 
     public MealRepository() {
     }
@@ -58,37 +57,6 @@ public class MealRepository {
                     return task.getResult();
                 });
 
-    }
-
-    /** Fetches all the meals stored in the database
-     * @return the task that may complete and contains the meals
-     */
-    public Task<List<Meal>> getAllMeals(){
-        return DatabaseFactory.getDependency().fetchAll(mealsDataCollectionPath).continueWith(t->{
-            ArrayList<Meal> res = new ArrayList<>();
-            if(t.isSuccessful()){
-                for (DocumentSnapshot m: t.getResult().getDocuments()) {
-                    res.add(m.toModel(Meal.class) );
-                }
-            }
-            return res;
-        });
-    }
-    /** Fetches all the unassigned meals stored in the database
-     * @return the task that may complete and contains the unassigned orders and meals corresponding to it.
-     */
-    public Task<List<Pair<Order, Meal>>> getAllUnassignedMeals(){
-        return DatabaseFactory.getDependency().fetchAllMatchingAttributeValue(ordersDataCollectionPath,"orderStatus", OrderStatus.unassigned).continueWith(to->{
-            ArrayList<Pair<Order,Meal>> res = new ArrayList<>();
-            if(to.isSuccessful()){
-                for (DocumentSnapshot o: to.getResult().getDocuments()) {
-                    getMealById(o.toModel(Order.class).getMealId()).addOnSuccessListener(meal->{
-                            res.add(Pair.of(o.toModel(Order.class),meal));}
-                    );
-                }
-            }
-            return res;
-        });
     }
 
 
