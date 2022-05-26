@@ -4,6 +4,7 @@ import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
+import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 
@@ -32,7 +33,7 @@ public class OrderRepository {
         });
     }
     /*
-     * fetches all the orders that are still unassigned.
+     * fetches all the orders made by a certain buyer.
      * @return task that fails if the database is unreachable
      */
     public Task<List<Order>> getAllOrdersByBuyerId(String buyerId) {
@@ -53,11 +54,44 @@ public class OrderRepository {
      * fetches all the orders that are still unassigned.
      * @return task that fails if the database is unreachable
      */
+    public Task<List<Order>> getAllOrdersMatchingStatus(OrderStatus status) {
+        if (status == null) {
+            return Tasks.forException(new IllegalArgumentException("The buyer ID cannot be null"));
+        }
+        return DatabaseFactory.getDependency().fetchAllMatchingAttributeValue(ordersDataCollectionPath,"orderStatus",status).continueWith(t -> {
+            ArrayList<Order> res = new ArrayList<>();
+            if (t.isSuccessful()) {
+                for (DocumentSnapshot m : t.getResult().getDocuments()) {
+                    res.add(m.toModel(Order.class));
+                }
+            }
+            return res;
+        });
+    }
+    /*
+     * fetches all the orders posted by a vendor.
+     * @return task that fails if the database is unreachable
+     */
     public Task<List<Order>> getAllOrdersByVendorId(String vendorId) {
         if (vendorId == null) {
             return Tasks.forException(new IllegalArgumentException("The vendor ID cannot be null"));
         }
         return DatabaseFactory.getDependency().fetchAllMatchingAttributeValue(ordersDataCollectionPath,buyerIdAttributeName,vendorId).continueWith(t -> {
+            ArrayList<Order> res = new ArrayList<>();
+            if (t.isSuccessful()) {
+                for (DocumentSnapshot m : t.getResult().getDocuments()) {
+                    res.add(m.toModel(Order.class));
+                }
+            }
+            return res;
+        });
+    }
+    /*
+     * fetches all the orders that are still unassigned.
+     * @return task that fails if the database is unreachable
+     */
+    public Task<List<Order>> getAllOrders() {
+        return DatabaseFactory.getDependency().fetchAll(ordersDataCollectionPath).continueWith(t -> {
             ArrayList<Order> res = new ArrayList<>();
             if (t.isSuccessful()) {
                 for (DocumentSnapshot m : t.getResult().getDocuments()) {

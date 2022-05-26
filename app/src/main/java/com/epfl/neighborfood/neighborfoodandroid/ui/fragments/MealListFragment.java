@@ -45,10 +45,8 @@ public class MealListFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this, new MealListViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(MealListViewModel.class);
         listAdapter = new MealListAdapter(getActivity(), orderMealList);
-        viewModel.getAllUnassignedMeals().addOnSuccessListener(mealList -> {
-            listAdapter.clear();
-            listAdapter.addAll(mealList);
-        }).addOnFailureListener(System.out::println);
+        listAdapter.clear();
+        listAdapter.addAll(viewModel.getAllUnassignedOrders());
         binding.mealListView.setAdapter(listAdapter);
         binding.mealListView.setClickable(true);
         binding.mealListView.setOnItemClickListener((parent, view1, position, id) -> {

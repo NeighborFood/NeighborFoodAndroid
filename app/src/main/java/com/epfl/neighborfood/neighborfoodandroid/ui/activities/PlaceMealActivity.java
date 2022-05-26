@@ -136,7 +136,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                 if (fieldsAreNotEmpty) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     MealRepository mealRepository = new MealRepository();
-                    Meal meal = new Meal(
+                    Meal meal = new Meal("",
                             mealNameText.getText().toString(),
                             descriptionText.getText().toString(),
                             "Should add long description in the template", //TODO

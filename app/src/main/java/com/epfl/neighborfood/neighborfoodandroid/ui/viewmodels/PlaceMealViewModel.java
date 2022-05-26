@@ -30,7 +30,7 @@ public class    PlaceMealViewModel extends ViewModel {
      */
     public Task<String> placeMeal(Meal meal){
         meal.setVendorID(authRepository.getAuthUser().getId());
-        System.out.println(meal.getVendorID());
+        System.out.println(meal.getVendorID()+"--------------------------");
         return mealRepository.postMeal(meal);
     }
     /** Requests to create an unassigned order on the database
