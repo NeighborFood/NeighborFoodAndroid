@@ -57,11 +57,6 @@ public class MainActivityTest {
 
     }
 
-    @Test
-    public void messagesButtonLoadsMessages(){
-        onView(withId((R.id.navBarMessages))).perform(click());
-        intending(toPackage(ConversationsActivity.class.getName()));
-    }
 
     @After
     public void tearDown() throws Exception {

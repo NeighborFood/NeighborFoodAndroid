@@ -65,6 +65,9 @@ public class ChatRoomActivity extends AppCompatActivity{
 
         viewModel.getConversationLiveData(id).observe(this,
                 c -> {
+                    if(c == null){
+                        return;
+                    }
                     viewModel.getChatter(c).addOnSuccessListener(chatter->{
                         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
                         getSupportActionBar().setTitle(chatter.getUsername());
@@ -74,7 +77,9 @@ public class ChatRoomActivity extends AppCompatActivity{
                     messageList.clear();
                     messageList.addAll(c.getMessages());
                     mMessageAdapter.notifyDataSetChanged();
-                    ((RecyclerView)findViewById(R.id.recycler_gchat)).smoothScrollToPosition(c.getMessages().size() - 1);
+                    if(c.getMessages().size()>0){
+                        ((RecyclerView)findViewById(R.id.recycler_gchat)).smoothScrollToPosition(c.getMessages().size() - 1);
+                    }
                 }
         );
 

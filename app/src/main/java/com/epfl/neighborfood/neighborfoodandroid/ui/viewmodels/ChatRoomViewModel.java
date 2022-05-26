@@ -30,6 +30,7 @@ public class ChatRoomViewModel extends ViewModel {
         conversationLiveData = new MutableLiveData<>();
     }
     public Task<User> getChatter(Conversation conversation){
+        System.out.println(conversation);
         return userRepository.getUserById(conversation.chatter(authRepository.getAuthUser().getId()));
     }
     public Task<Void> sendMessage(Conversation conversation, String message){
@@ -39,6 +40,7 @@ public class ChatRoomViewModel extends ViewModel {
     public LiveData<Conversation> getConversationLiveData(String convoID){
         conversationRepository.getConversation(convoID).continueWithTask(
                 t->{
+                    System.out.println(t.getResult());
                     if(t.getResult() == null){
                         List<String> usersList = new ArrayList<>(Arrays.asList(convoID.split("-")));
                         return conversationRepository.addConversation( convoID,new Conversation(convoID,usersList,new ArrayList<>()));
