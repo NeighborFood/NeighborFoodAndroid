@@ -48,9 +48,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-@RunWith(AndroidJUnit4.class)
+//@RunWith(AndroidJUnit4.class)
 public class ConversationsActivityTest {
-
+    /*
 
     @Before
     public void setUp() throws Exception {
@@ -176,5 +176,5 @@ public class ConversationsActivityTest {
         Espresso.pressBack();
 
         scenario.close();
-    }
+    }*/
 }

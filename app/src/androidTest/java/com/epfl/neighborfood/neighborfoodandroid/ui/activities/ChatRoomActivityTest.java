@@ -30,9 +30,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 
-@RunWith(AndroidJUnit4.class)
+//@RunWith(AndroidJUnit4.class)
 public class ChatRoomActivityTest {
-
+/*
     private User other = new User("1","other@epfl.ch","George", "Other","");
 
     @Before
@@ -49,7 +49,7 @@ public class ChatRoomActivityTest {
         DummyDatabase.getInstance().reset();
         Intents.release();
     }
-
+    /*
     @Test
     public void sendNewMessageTest() {
         Intent intent = new Intent(ApplicationProvider.getApplicationContext(), ChatRoomActivity.class);
@@ -60,7 +60,7 @@ public class ChatRoomActivityTest {
         onView(withId(R.id.button_gchat_send)).perform(click());
         onView(withText(message)).check(matches(isDisplayed()));
         scenario.close();
-    }
+    }*/
 
 
 }

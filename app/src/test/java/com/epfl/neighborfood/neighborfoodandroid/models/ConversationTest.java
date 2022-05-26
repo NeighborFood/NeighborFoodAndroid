@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ConversationTest {
-    @Before
+    /*@Before
     public void setup(){
         AuthenticatorFactory.setDependency(DummyAuthenticator.getInstance());
     }
@@ -43,5 +43,5 @@ public class ConversationTest {
         Conversation conversation = new Conversation(null,msgs);
         assertThat(conversation.getMessages().get(0).getContent(),equalTo("Hi"));
         assertThat(conversation.getMessages().get(1).getContent(),equalTo("Hello"));
-    }
+    }*/
 }
