@@ -63,10 +63,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/mealName" />
 
             <Button
-                android:id="@+id/order_button"
-                android:layout_width="143dp"
-                android:layout_height="65dp"
-                android:text="@string/order_meal"
+                android:id="@+id/ConfirmationButton"
+                android:layout_width="183dp"
+                android:layout_height="56dp"
+                android:text="@string/confirm_delivery"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

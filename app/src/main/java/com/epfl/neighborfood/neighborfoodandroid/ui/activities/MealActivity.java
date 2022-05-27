@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
@@ -67,7 +68,12 @@ public class MealActivity extends AppCompatActivity {
         Button vendorButton = findViewById(R.id.go_vendor_profile_id);
         Button orderButton = findViewById(R.id.order_button);
 
-        orderButton.setOnClickListener(v -> viewModel.assignOrder(order));
+        orderButton.setOnClickListener(v -> viewModel.assignOrder(order).addOnSuccessListener(t->{
+                    Toast.makeText(this, "a new order has been made", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(MealActivity.this, MainActivity.class);
+                    startActivity(i);
+                }
+                ));
 
         // Listener to enable the click button to go to the vendor profile
         vendorButton.setOnClickListener(v -> {

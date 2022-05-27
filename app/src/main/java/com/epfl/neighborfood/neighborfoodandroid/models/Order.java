@@ -5,8 +5,8 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 public class Order extends Model {
 
-    private static final String ORDER_DELIVERED = "This order was achieved the";
-    private static final String ORDER_NOT_YET_DELIVERED = "This order is being processed";
+    private static final String ORDER_DELIVERED = "This order was achieved the ";
+    private static final String ORDER_NOT_YET_DELIVERED = "This order is being processed ";
     private String orderId;
     private String mealId;
     private Date orderDate;

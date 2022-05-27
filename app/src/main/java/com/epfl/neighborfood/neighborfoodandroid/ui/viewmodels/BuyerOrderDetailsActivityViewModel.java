@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
+import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
@@ -42,6 +43,13 @@ public class BuyerOrderDetailsActivityViewModel extends ViewModel {
      */
     public Task<Meal> getMealById(String id){
         return mealRepository.getMealById(id);
+    }
+    /*
+        updates the order status to confirmed
+     */
+    public Task<Void> confirmOrder(Order order){
+        order.setOrderStatus(OrderStatus.finished);
+        return orderRepository.updateOrder(order);
     }
 
 }
