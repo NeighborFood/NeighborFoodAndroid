@@ -336,4 +336,9 @@ public class DummyDatabase implements Database {
         }
         return Tasks.forResult(res);
     }
+
+    @Override
+    public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath, String attributeName, Object attributeValue) {
+        return null;
+    }
 }

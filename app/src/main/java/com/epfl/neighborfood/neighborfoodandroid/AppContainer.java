@@ -12,6 +12,7 @@ import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.ConversationRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
+import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
 import com.epfl.neighborfood.neighborfoodandroid.services.notifications.NotificationService;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
@@ -27,6 +28,7 @@ public abstract class AppContainer {
     private AuthRepository authRepo;
     private MealRepository mealRepo;
     private UserRepository userRepo;
+    private OrderRepository orderRepo;
     private NotificationService notificationService;
     /**
      * getter for the Auth Repo of the app
@@ -35,6 +37,14 @@ public abstract class AppContainer {
      */
     public AuthRepository getAuthRepo() {
         return authRepo;
+    }
+    /**
+     * getter for the Order Repo of the app
+     *
+     * @return the authentication repository of the app
+     */
+    public OrderRepository getOrderRepo() {
+        return orderRepo;
     }
     /**
      * getter for the Meal Repo of the app
@@ -108,6 +118,7 @@ public abstract class AppContainer {
         this.userRepo = new UserRepository();
         this.mealRepo = new MealRepository();
         this.conversationRepo = new ConversationRepository();
+        this.orderRepo = new OrderRepository();
         if(context == null){
             return;
         }

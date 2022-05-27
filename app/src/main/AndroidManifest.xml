@@ -41,7 +41,7 @@
             android:name=".ui.activities.ChatRoomActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.PastOrdersActivity"
+            android:name=".ui.activities.BuyerOrdersActivity"
             android:exported="true" />
         <activity
             android:name=".ui.activities.VendorProfileActivity"
@@ -50,7 +50,7 @@
             android:name=".ui.activities.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activities.PastOrderDetailsActivity"
+            android:name=".ui.activities.BuyerOrderDetailsActivity"
             android:exported="true" />
         <activity
             android:name=".ui.activities.SignUpActivity"

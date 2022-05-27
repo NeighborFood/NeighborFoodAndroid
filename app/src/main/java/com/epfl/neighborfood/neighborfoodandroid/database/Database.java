@@ -51,6 +51,14 @@ public interface Database {
      * @return task that fails if the database is unreachable
      */
     Task<CollectionSnapshot> fetchAll(String collectionPath);
+    /**
+     * Fetches all the data in a collection that corresponds to an attribute value.
+     * @param collectionPath collection
+     * @param attributeName attribute type
+     * @param attributeValue value of the attribute
+     * @return task that fails if the database is unreachable
+     */
+    Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath,String attributeName, Object attributeValue);
 
     void addChangesListener(String collectionPath, String collectionId, ModelUpdateListener listener);
 

@@ -66,6 +66,14 @@ public class FirebaseDatabase implements Database {
     }
 
     @Override
+    public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath,String attributeName, Object attributeValue) {
+        return database.collection(collectionPath).whereEqualTo(attributeName,attributeValue).get().onSuccessTask(
+                (collectionSnapshot ->
+                        Tasks.forResult(new FirebaseCollectionSnapshot(collectionSnapshot))
+                ));
+    }
+
+
     public void addChangesListener(String collectionPath, String documentPath, ModelUpdateListener listener) {
         database.collection(collectionPath).document(documentPath).addSnapshotListener(
                 (value, error) -> listener.onModelUpdate(new FirebaseDocumentSnapshot(value))

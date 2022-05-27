@@ -5,21 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.adapters.MealListAdapter;
-import com.epfl.neighborfood.neighborfoodandroid.adapters.OrderListAdapter;
+import com.epfl.neighborfood.neighborfoodandroid.adapters.VendorOrderListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.FragmentVendorDashboardBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PlaceMealActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -83,7 +80,7 @@ public class VendorDashboardFragment extends Fragment {
         }
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        OrderListAdapter adapter = new OrderListAdapter(getContext(), nm, id);
+        VendorOrderListAdapter adapter = new VendorOrderListAdapter(getContext(), nm, id);
 
         RecyclerView recyclerView = binding.recyclerView;
         recyclerView.setLayoutManager(layoutManager);

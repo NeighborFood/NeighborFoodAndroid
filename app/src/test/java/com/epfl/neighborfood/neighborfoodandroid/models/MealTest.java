@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MealTest {
+    private String id;
     private String name;
     private String shortDescription;
     private String longDescription;
@@ -21,6 +22,7 @@ public class MealTest {
 
     @Before
     public void initTestVariables() {
+        id = "id1";
         name = "Tofu";
         shortDescription = "Yumi tofu";
         longDescription = "Plant based proteins";
@@ -33,7 +35,7 @@ public class MealTest {
     }
 
     private Meal getNewMeal() {
-        return new Meal(name, shortDescription, longDescription, "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon, allergens, price, null);
+        return new Meal(id,name, shortDescription, longDescription, "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon, allergens, price, null);
     }
 
 

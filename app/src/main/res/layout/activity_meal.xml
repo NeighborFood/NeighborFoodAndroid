@@ -24,21 +24,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
                 android:layout_marginBottom="12dp"
-                android:text="TextView" />
+                android:text="@string/textview" />
 
             <Button
                 android:id="@+id/go_vendor_profile_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="See Vendor Profile" />
+                android:text="@string/see_vendor_profile" />
 
             <ImageView
                 android:id="@+id/mealImage"
                 android:layout_width="229dp"
                 android:layout_height="147dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                android:contentDescription="@string/todo" />
 
             <TextView
                 android:id="@+id/mealDesc"
@@ -46,7 +47,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="30dp"
-                android:text="TextView" />
+                android:text="@string/textview" />
 
             <ListView
                 android:id="@+id/allergensMeal"
@@ -54,11 +55,11 @@
                 android:layout_height="wrap_content" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/order_button"
                 android:layout_width="143dp"
                 android:layout_height="65dp"
                 android:layout_marginBottom="16dp"
-                android:text="Order Meal" />
+                android:text="@string/order_meal" />
 
         </LinearLayout>
     </ScrollView>

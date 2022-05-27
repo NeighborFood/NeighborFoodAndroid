@@ -15,9 +15,13 @@ import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.MealListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.FragmentMealListBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
+import com.epfl.neighborfood.neighborfoodandroid.models.Order;
+import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MealActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealListViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.MealListViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.util.Pair;
+import com.epfl.neighborfood.neighborfoodandroid.util.Triplet;
 
 import java.util.ArrayList;
 
@@ -26,6 +30,8 @@ public class MealListFragment extends Fragment {
 
     private FragmentMealListBinding binding;
     private MealListViewModel viewModel;
+    private MealListAdapter listAdapter;
+    private ArrayList<Order> orderMealList = new ArrayList<Order>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -38,16 +44,18 @@ public class MealListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this, new MealListViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(MealListViewModel.class);
-        MealListAdapter listAdapter = new MealListAdapter(getActivity(), new ArrayList<>());
-        viewModel.getAllMeals().addOnSuccessListener(mealList->{
+        listAdapter = new MealListAdapter(getActivity(), orderMealList, viewModel);
+        viewModel.getAllUnassignedOrders().addOnSuccessListener(orders->{
             listAdapter.clear();
-            listAdapter.addAll(mealList);
-        }).addOnFailureListener(System.out::println);
+            listAdapter.addAll(orders);
+        });
         binding.mealListView.setAdapter(listAdapter);
         binding.mealListView.setClickable(true);
         binding.mealListView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent i = new Intent(getActivity(), MealActivity.class);
-            i.putExtra("id",((Meal)(listAdapter.getItem(position))).getMealId());
+
+            i.putExtra("orderId", orderMealList.get(position).getOrderId());
+            i.putExtra("mealId", orderMealList.get(position).getMealId());
             startActivity(i);
         });
     }

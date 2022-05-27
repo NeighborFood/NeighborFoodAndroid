@@ -18,6 +18,6 @@ public class MealListViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new MealListViewModel(app.getAppContainer().getMealRepo());
+        return (T) new MealListViewModel(app.getAppContainer().getMealRepo(), app.getAppContainer().getOrderRepo());
     }
 }

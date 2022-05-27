@@ -13,7 +13,6 @@ import org.junit.Test;
 import java.util.List;
 
 public class DatabaseFactoryTest {
-
     @Test
     public void dependencyTest() {
 
@@ -40,6 +39,11 @@ public class DatabaseFactoryTest {
 
             @Override
             public Task<CollectionSnapshot> fetchAll(String collectionPath) {
+                return null;
+            }
+
+            @Override
+            public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath, String attributeName, Object attributeValue) {
                 return null;
             }
 

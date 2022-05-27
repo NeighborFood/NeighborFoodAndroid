@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 public class ConversationTest {
-    @Before
+    /*@Before
     public void setup(){
     }
 
@@ -40,5 +40,5 @@ public class ConversationTest {
         Conversation conversation = new Conversation("",null,msgs);
         assertThat(conversation.getMessages().get(0).getContent(),equalTo("Hi"));
         assertThat(conversation.getMessages().get(1).getContent(),equalTo("Hello"));
-    }
+    }*/
 }

@@ -167,8 +167,10 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                             allergensInMeal,//TODO: Should build the list of allergens
                             Double.parseDouble(priceText.getText().toString()),
                             null);//TODO: build the retrieval date
-                    Task<Void> task = vmodel.placeMeal(meal,imagePath);
-                    task.addOnCompleteListener((a)->{startActivity(i);});
+                    Task<String> task = vmodel.placeMeal(meal,imagePath);
+                    task.addOnSuccessListener((mealId)->{
+                        vmodel.createOrder(mealId).addOnSuccessListener(orderId-> startActivity(i));
+                    });
                 }
 
                 break;
