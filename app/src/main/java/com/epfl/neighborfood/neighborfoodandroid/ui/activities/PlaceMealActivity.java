@@ -50,7 +50,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     @SuppressLint("SimpleDateFormat")
     private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     ImageView imageToUpload;
-    Map<ImageView, String> allergensIcons;
+    Map<ImageView, Allergen> allergensIcons;
     Button confirmationButton;
     ImageButton addImageButton, calendarButton;
     EditText descriptionText, priceText, mealNameText, dateText, timeText;
@@ -76,7 +76,16 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
 
         allergensInMeal = new ArrayList<>();
         allergensIcons = new HashMap<>();
-
+        allergensIcons.put(findViewById(R.id.CeleryIcon), Allergen.CELERY);
+        allergensIcons.put(findViewById(R.id.MilkIcon), Allergen.MILK);
+        allergensIcons.put(findViewById(R.id.FishIcon), Allergen.FISH);
+        allergensIcons.put(findViewById(R.id.CheeseIcon), Allergen.CHEESE);
+        allergensIcons.put(findViewById(R.id.GlutenIcon), Allergen.GLUTEN);
+        allergensIcons.put(findViewById(R.id.HoneyIcon), Allergen.HONEY);
+        allergensIcons.put(findViewById(R.id.LobsterIcon), Allergen.LOBSTER);
+        allergensIcons.put(findViewById(R.id.SoyIcon), Allergen.SOY);
+        allergensIcons.put(findViewById(R.id.EggsIcon), Allergen.EGGS);
+        allergensIcons.put(findViewById(R.id.ChocolateIcon), Allergen.CHOCOLATE);
         descriptionText = findViewById(R.id.textDescription);
         priceText = findViewById(R.id.textPrice);
         mealNameText = findViewById(R.id.textMealName);
@@ -118,12 +127,12 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         if (allergensIcons.containsKey(v)) {
-            String allergenLabel = allergensIcons.get(v);
-            if (allergensInMeal.contains(allergenLabel)) {
-                allergensInMeal.remove(allergenLabel);
+            Allergen allergen = allergensIcons.get(v);
+            if (allergensInMeal.contains(allergen)) {
+                allergensInMeal.remove(allergen);
                 v.setBackgroundColor(0xFFFFFF);
             } else {
-                allergensInMeal.add(Allergen.valueOf(allergenLabel));
+                allergensInMeal.add(allergen);
                 v.setBackgroundColor(0x666BEC70);
             }
         }

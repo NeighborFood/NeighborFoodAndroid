@@ -32,7 +32,6 @@ public class ConversationListAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
         Conversation conv = (Conversation) getItem(position);
 
         if (convertView == null) {
@@ -44,7 +43,6 @@ public class ConversationListAdapter extends ArrayAdapter {
         TextView userName = convertView.findViewById(R.id.user_name);
         TextView userLastmsg = convertView.findViewById(R.id.user_last_message);
         viewModel.getUser(conv.chatter(viewModel.getCurrentUser().getId())).addOnSuccessListener(chatter->{
-            //imageView.setImageResource(DummyDatabase.PROFILE_IMG_ID);
             Picasso.get().load(chatter.getProfilePictureURI()).into(imageView);
             userName.setText(chatter.getUsername());
 

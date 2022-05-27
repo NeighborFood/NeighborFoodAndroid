@@ -57,6 +57,7 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
     private VendorProfileViewModel vmodel;
     private boolean subscriptionTaskComplete;
     private boolean isCurrentUserSubscribed;
+    private boolean notificationButtonState;
     private GridLayout linksGridLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +66,6 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
         notificationButton = findViewById(R.id.notificationId);
         notificationButton.setOnClickListener(this);
         findViewById(R.id.messageVendor).setOnClickListener(this);
-        findViewById(R.id.facebookId).setOnClickListener(this);
-        findViewById(R.id.instagramId).setOnClickListener(this);
-        findViewById(R.id.TwitterId).setOnClickListener(this);
         linksGridLayout = findViewById(R.id.SocialLinksGridLayout);
         vmodel = new ViewModelProvider(this, new VendorProfileViewModelFactory((NeighborFoodApplication) this.getApplication())).get(VendorProfileViewModel.class);
         String vendorID = getUserIDFromIntent();
@@ -104,10 +102,9 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
         }
         ((TextView)findViewById(R.id.NameId)).setText(String.format("%s %s", vendor.getFirstName(), vendor.getLastName()));
         isCurrentUserSubscribed = vmodel.getCurrentUser().getSubscribedIDs().contains(vendor.getId());
-        updateNotificationIcon();
+        updateNotificationIcon(isCurrentUserSubscribed);
         updateNumberOfLikes();
         ((TextView)findViewById(R.id.bioValue2)).setText(vendor.getBio());
-        Toast.makeText(this, vendor.getProfilePictureURI(), Toast.LENGTH_SHORT).show();
         Picasso.get().load(vendor.getProfilePictureURI()).into((ImageView) findViewById(R.id.ProfilePictureId));
         updateLinks();
     }
@@ -119,10 +116,11 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
         }
         return null;
     }
-    private void updateNotificationIcon(){
-        int notif = isCurrentUserSubscribed ? R.drawable.full_notif : R.drawable.empty_notif;
+    private void updateNotificationIcon(boolean state){
+        int notif = state ? R.drawable.full_notif : R.drawable.empty_notif;
         notificationButton.setImageResource(notif);
         notificationButton.setTag(notif);
+        notificationButtonState = state;
     }
     private void updateNumberOfLikes(){
         ((TextView)findViewById(R.id.LikesId)).setText(String.valueOf(vendor.getNumberSubscribers()));
@@ -130,7 +128,7 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
     private void subscriptionTaskComplete(boolean subscriptionState){
         isCurrentUserSubscribed = subscriptionState;
         Toast.makeText(this, getResources().getString(subscriptionState? R.string.subscribe_success :R.string.unsubscribe_success , vendor.getUsername()), Toast.LENGTH_SHORT).show();
-        updateNotificationIcon();
+        updateNotificationIcon(subscriptionState);
         updateNumberOfLikes();
     }
 
@@ -138,6 +136,8 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.notificationId:
+                notificationButtonState = !notificationButtonState;
+                updateNotificationIcon(notificationButtonState);
                 if(!subscriptionTaskComplete){
                     break;
                 }
@@ -148,7 +148,7 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
                     }  );
                 }else{
                     vmodel.subscribeToVendor(vendor).addOnCompleteListener(t->{subscriptionTaskComplete = true;}).addOnSuccessListener((a)->{
-                        subscriptionTaskComplete(false);
+                        subscriptionTaskComplete(true);
                     }  );
                 }
                 break;

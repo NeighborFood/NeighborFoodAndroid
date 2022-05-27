@@ -53,7 +53,6 @@ public class ChatRoomActivity extends AppCompatActivity{
 
         // add back arrow to toolbar and remove title
         if (getSupportActionBar() != null){
-            //getSupportActionBar().setTitle(chatter.getUsername());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -61,7 +60,7 @@ public class ChatRoomActivity extends AppCompatActivity{
 
 
         mMessageRecycler = findViewById(R.id.recycler_gchat);
-        mMessageAdapter = new MessageListAdapter(this, messageList);
+        mMessageAdapter = new MessageListAdapter(this, messageList,viewModel);
 
         viewModel.getConversationLiveData(id).observe(this,
                 c -> {
