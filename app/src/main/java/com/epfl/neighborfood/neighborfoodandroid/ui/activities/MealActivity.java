@@ -48,7 +48,7 @@ public class MealActivity extends AppCompatActivity {
 
             String mealId = intent.getStringExtra("mealId");
             String orderId = intent.getStringExtra("orderId");
-            System.out.println(mealId+ "------"+ orderId);
+
             viewModel.getOrderById(orderId).addOnSuccessListener(orderFetched -> {
                 order = orderFetched;
             });
