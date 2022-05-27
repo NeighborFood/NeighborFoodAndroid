@@ -67,6 +67,4 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment, null).commit();
 
     }
-
-
 }

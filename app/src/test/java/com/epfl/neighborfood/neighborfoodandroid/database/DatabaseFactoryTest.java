@@ -2,9 +2,13 @@ package com.epfl.neighborfood.neighborfoodandroid.database;
 
 import static org.junit.Assert.assertEquals;
 
+import com.epfl.neighborfood.neighborfoodandroid.database.firebase.FirebaseCollectionSnapshot;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 
 import org.junit.Test;
+
+import java.util.List;
 
 public class DatabaseFactoryTest {
 
@@ -41,6 +45,15 @@ public class DatabaseFactoryTest {
             public void addChangesListener(String collectionPath, String collectionId, ModelUpdateListener listener) {
 
             }
+            @Override
+            public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath,String attributeName, Object attributeValue) {
+                return null;
+            }
+            @Override
+            public Task<List<DocumentSnapshot>> fetchAllArrayAttributeContains(String collectionPath, String attributeName, String attributeValue) {
+                return null;
+            }
+
         };
 
         DatabaseFactory.setDependency(dep);

@@ -1,7 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.fragments;
 
 import static org.hamcrest.core.AllOf.allOf;
-import static org.junit.Assert.*;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.espresso.intent.Intents;
@@ -17,7 +16,7 @@ import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PastOrdersActivity;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.BuyerOrdersActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ProfileEditingActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.SignUpActivity;
 
@@ -41,7 +40,7 @@ public class AccountFragmentTest {
     }
     @Test
     public void buttonPastOrdersTest() {
-        intending(toPackage(PastOrdersActivity.class.getName()));
+        intending(toPackage(BuyerOrdersActivity.class.getName()));
         controller.onFragment(fragment -> {
             fragment.getActivity().findViewById(R.id.PastOrdersButton).callOnClick();
         });

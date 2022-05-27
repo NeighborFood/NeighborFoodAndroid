@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.ChatRoomViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -19,20 +20,13 @@ import java.util.List;
 public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
+    private final ChatRoomViewModel viewModel;
 
-    private Context mContext;
     private List<Message> mMessageList;
 
-    public MessageListAdapter(Context context, List<Message> messageList) {
-        mContext = context;
+    public MessageListAdapter(Context context, List<Message> messageList, ChatRoomViewModel viewModel) {
         mMessageList = messageList;
-
-    }
-
-
-    public void addMessage(Message message){
-        mMessageList.add(message);
-        this.notifyDataSetChanged();
+        this.viewModel = viewModel;
     }
 
     @Override
@@ -44,10 +38,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     // Determines the appropriate ViewType according to the sender of the message.
     @Override
     public int getItemViewType(int position) {
-        Message message = (Message) mMessageList.get(position);
+        Message message = mMessageList.get(position);
 
-        if (message.getSender().getId() == AuthenticatorFactory.getDependency()
-                .getCurrentAuthUser().getId()) {
+        if (message.getSender().equals(AuthenticatorFactory.getDependency()
+                .getCurrentAuthUser().getId())) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
         } else {
@@ -96,8 +90,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         SentMessageHolder(View itemView) {
             super(itemView);
 
-            messageText = (TextView) itemView.findViewById(R.id.text_gchat_message_me);
-            timeText = (TextView) itemView.findViewById(R.id.text_gchat_timestamp_me);
+            messageText = itemView.findViewById(R.id.text_gchat_message_me);
+            timeText = itemView.findViewById(R.id.text_gchat_timestamp_me);
         }
 
         void bind(Message message) {
@@ -115,10 +109,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         ReceivedMessageHolder(View itemView) {
             super(itemView);
-            nameText  = (TextView) itemView.findViewById(R.id.text_gchat_user_other);
-            timeText = (TextView) itemView.findViewById(R.id.text_gchat_timestamp_other);
-            messageText = (TextView) itemView.findViewById(R.id.text_gchat_message_other);
-            profileImage = (ImageView) itemView.findViewById(R.id.image_gchat_profile_other);
+            nameText  = itemView.findViewById(R.id.text_gchat_user_other);
+            timeText = itemView.findViewById(R.id.text_gchat_timestamp_other);
+            messageText = itemView.findViewById(R.id.text_gchat_message_other);
+            profileImage = itemView.findViewById(R.id.image_gchat_profile_other);
         }
 
         void bind(Message message) {
@@ -126,7 +120,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             // Format the stored timestamp into a readable String
             SimpleDateFormat dateFormatter = new SimpleDateFormat("d MMM yyyy, HH:mm");
             timeText.setText(dateFormatter.format(message.getDate()));
-            nameText.setText(message.getSender().getUsername());
+            viewModel.getUserById(message.getSender()).addOnSuccessListener(user-> nameText.setText(user.getUsername()));
+            //nameText.setText(message.getSender().getUsername());
         }
     }
 

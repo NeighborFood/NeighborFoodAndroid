@@ -16,19 +16,22 @@ import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFac
 import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.ConversationsViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ConversationListAdapter extends ArrayAdapter {
-
-    public ConversationListAdapter(Context context, ArrayList<Conversation> conversationsArrayList) {
-        super(context, R.layout.activity_conversations, conversationsArrayList);
+    private final ConversationsViewModel viewModel;
+    public ConversationListAdapter(Context context, ArrayList<Conversation> conversationsArrayList, ConversationsViewModel viewModel) {
+        super(context, R.layout.fragment_conversations, conversationsArrayList);
+        this.viewModel = viewModel;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
         Conversation conv = (Conversation) getItem(position);
 
         if (convertView == null) {
@@ -39,21 +42,29 @@ public class ConversationListAdapter extends ArrayAdapter {
         ImageView imageView = convertView.findViewById(R.id.user_profile_picture);
         TextView userName = convertView.findViewById(R.id.user_name);
         TextView userLastmsg = convertView.findViewById(R.id.user_last_message);
+        viewModel.getUser(conv.chatter(viewModel.getCurrentUser().getId())).addOnSuccessListener(chatter->{
+            Picasso.get().load(chatter.getProfilePictureURI()).into(imageView);
+            userName.setText(chatter.getUsername());
 
-        imageView.setImageResource(DummyDatabase.PROFILE_IMG_ID);
-        userName.setText(conv.getChatter().getUsername());
+        });
 
         String txt = "";
-        Message last = conv.getLastMessage();
+        Message last = conv.lastMessage();
 
         if (last != null) {
             txt = last.getContent();
             String currUserID = AuthenticatorFactory.getDependency().getCurrentAuthUser().getId();
-            if (last.getSender().getId() == currUserID) {
+            if (last.getSender().equals(currUserID)) {
                 txt = "You : " + txt;
             }
         }
         userLastmsg.setText(txt);
         return convertView;
     }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
 }

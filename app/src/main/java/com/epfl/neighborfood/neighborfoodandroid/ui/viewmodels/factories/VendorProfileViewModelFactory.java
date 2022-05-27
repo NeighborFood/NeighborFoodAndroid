@@ -17,6 +17,6 @@ public class VendorProfileViewModelFactory implements ViewModelProvider.Factory 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new VendorProfileViewModel(app.getAppContainer().getUserRepo(),app.getAppContainer().getNotificationService());
+        return (T) new VendorProfileViewModel(app.getAppContainer().getUserRepo(),app.getAppContainer().getAuthRepo(),app.getAppContainer().getNotificationService());
     }
 }

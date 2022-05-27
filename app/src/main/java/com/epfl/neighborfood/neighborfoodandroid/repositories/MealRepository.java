@@ -9,7 +9,10 @@ import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
+import com.epfl.neighborfood.neighborfoodandroid.models.Order;
+import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
+import com.epfl.neighborfood.neighborfoodandroid.util.Pair;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -38,34 +41,24 @@ public class MealRepository {
 
     /** sends a request to post a meal
      * @param meal the meal to post
-     * @return the task that may complete, fails if the argument is null, or if the database is unreachable
+     * @return the task containing mealId that may complete, fails if the argument is null, or if the database is unreachable
      */
-    public Task<Void> postMeal(Meal meal){
+    public Task<String> postMeal(Meal meal){
         if (meal == null) {
             return Tasks.forException(new IllegalArgumentException("Cannot post a null meal"));
         }
         //We first post the meal to the database,
         return DatabaseFactory.getDependency().add(mealsDataCollectionPath,meal)
-                .continueWithTask(task ->
-                        // and once that is done (and we get the corresponding id of the meal),
-                        DatabaseFactory.getDependency().
+                .continueWithTask(task ->{
+                    meal.setMealId(task.getResult());
+                    // and once that is done (and we get the corresponding id of the meal),
+                    return DatabaseFactory.getDependency().
 
-                                // we need to update the mealId field stored in the database
-                                set(mealsDataCollectionPath,task.getResult(),meal.copyWithId(task.getResult())));
-    }
-
-    /** Fetches all the meals stored in the database
-     * @return the task that may complete and contains the meals
-     */
-    public Task<List<Meal>> getAllMeals(){
-        return DatabaseFactory.getDependency().fetchAll(mealsDataCollectionPath).continueWith(t->{
-            ArrayList<Meal> res = new ArrayList<>();
-            if(t.isSuccessful()){
-                for (DocumentSnapshot m: t.getResult().getDocuments()) {
-                    res.add(m.toModel(Meal.class) );
+                            // we need to update the mealId field stored in the database
+                                    set(mealsDataCollectionPath,task.getResult(),meal).continueWith(t-> task.getResult());
                 }
-            }
-            return res;
-        });
+        );
     }
+
+
 }

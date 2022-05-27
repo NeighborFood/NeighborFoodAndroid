@@ -94,7 +94,10 @@ public class SignUpActivity extends AppCompatActivity {
         viewModel.handleGoogleLoginResponse(resultCode, data).addOnSuccessListener(newUser->{
             this.newUser = newUser;
             updateUI(viewModel.getCurrentAuthUser());
-        }).addOnFailureListener(e-> Toast.makeText(this, R.string.login_failure, Toast.LENGTH_SHORT).show());
+        }).addOnFailureListener(e->{
+            Toast.makeText(this, R.string.login_failure, Toast.LENGTH_SHORT).show();
+            System.out.println(e.toString());
+        } );
     }
 
 

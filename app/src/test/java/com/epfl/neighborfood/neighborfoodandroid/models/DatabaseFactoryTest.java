@@ -10,8 +10,9 @@ import com.google.android.gms.tasks.Task;
 
 import org.junit.Test;
 
-public class DatabaseFactoryTest {
+import java.util.List;
 
+public class DatabaseFactoryTest {
     @Test
     public void dependencyTest() {
 
@@ -42,8 +43,18 @@ public class DatabaseFactoryTest {
             }
 
             @Override
+            public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath, String attributeName, Object attributeValue) {
+                return null;
+            }
+
+            @Override
             public void addChangesListener(String collectionPath, String collectionId, ModelUpdateListener listener) {
 
+            }
+
+            @Override
+            public Task<List<DocumentSnapshot>> fetchAllArrayAttributeContains(String collectionPath, String attributeName, String attributeValue) {
+                return null;
             }
         };
 

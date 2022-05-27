@@ -3,84 +3,62 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
+
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.ConversationListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
-import com.epfl.neighborfood.neighborfoodandroid.models.Message;
-import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ChatRoomActivity;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.ConversationsViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.ConversationsViewModelFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
+import java.util.List;
 
 public class ConversationsFragment extends Fragment {
     public static final int IMGID = R.drawable.profile_img_male;
     private ListView listView;
     private ConversationListAdapter adapter;
-    private ArrayList<Conversation> conversations = new ArrayList<>();
+    private List<Conversation> conversations = new ArrayList<>();
+    private ConversationsViewModel viewModel;
+
+
     public ConversationsFragment(){
         super(R.layout.fragment_conversations);
     }
-    /*
-    @Override
-    public View onCreateView (LayoutInflater inflater,
-                              ViewGroup container, Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        return null }*/
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
-        DummyDatabase dep = DummyDatabase.getInstance();
-        User[] users = {
-                new User("1", "test1@machin.com", "Test", "One",""),
-                new User("2", "test2@machin.com", "Test", "Two",""),
-                new User("3", "test3@machin.com", "Test", "Three","")
-        };
-
-        User currentUser = ((NeighborFoodApplication)getActivity().getApplication()).getAppContainer().getAuthRepo().getCurrentUser();
-        Message[] messages = {
-                new Message("All good !", currentUser,
-                        new User("1", "test1@machin.com", "Test", "One","")),
-
-                new Message("Where are You ? ", new User("2", "test2@machin.com", "Test", "Two",""),
-                        currentUser),
-
-                new Message("Thanks! very nice Meal", new User("3", "test3@machin.com", "Test", "Three",""),
-                        currentUser)};
-        DummyDatabase.getInstance().reset();
-
-        for (int i = 0; i < users.length; i++) {
-            Set<User> aux = new HashSet<>();
-            aux.add(users[i]);
-            aux.add(currentUser);
-            Conversation conv = new Conversation(aux, Arrays.asList(messages[i]));
-            dep.pushConversation(conv);
-        }
-        conversations = dep.fetchConversations();
 
 
 
-        listView = (ListView) view.findViewById(R.id.conversationsFragmentListView);
-        adapter = new ConversationListAdapter(view.getContext(), conversations);
+        viewModel = new ViewModelProvider(this, new ConversationsViewModelFactory((NeighborFoodApplication) (getActivity().getApplication()))).get(ConversationsViewModel.class);
+        listView = view.findViewById(R.id.conversationsFragmentListView);
+        adapter = new ConversationListAdapter(view.getContext(), (ArrayList<Conversation>) conversations,viewModel);
         listView.setAdapter(adapter);
+        viewModel.fetchAllCurrentUserConversations().addOnSuccessListener(l-> {
+            Collections.sort(l, (a, b) -> b.lastMessage().getDate().compareTo(a.lastMessage().getDate()));
+            adapter.clear();
+            adapter.addAll(l);
+            conversations = l;
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent i = new Intent(view.getContext(), ChatRoomActivity.class);
-                i.putExtra("Chatter",conversations.get(position).getChatter());
-                startActivity(i);
-            }
+        });
+
+
+
+        listView.setOnItemClickListener((parent, v, position, id) -> {
+            Intent i = new Intent(view.getContext(), ChatRoomActivity.class);
+            System.out.println();
+            i.putExtra("ConversationID",conversations.get(position).getId());
+            startActivity(i);
         });
     }
 }
