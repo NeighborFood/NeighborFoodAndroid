@@ -17,10 +17,11 @@ import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class AllergensAdapter extends ArrayAdapter {
-    public AllergensAdapter(Context context, ArrayList<Allergen> allergenArrayList) {
+    public AllergensAdapter(Context context, List<Allergen> allergenArrayList) {
         super(context, R.layout.list_item_allergen, allergenArrayList);
     }
 

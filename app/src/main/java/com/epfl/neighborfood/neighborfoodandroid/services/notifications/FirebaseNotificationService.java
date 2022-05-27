@@ -45,24 +45,14 @@ public class FirebaseNotificationService  extends FirebaseMessagingService imple
         createNotificationChannel();
 
         String mealId = remoteMessage.getData().get("mealId");
-        String vendorID = remoteMessage.getData().get("vendorID");
+        String vendorID = remoteMessage.getData().get("vendorId");
+        String orderId = remoteMessage.getData().get("orderId");
         AppContainer appContainer = ((NeighborFoodApplication) this.getApplication()).getAppContainer();
-        /*
-        I couldn't fetch the data from the database that's why I had to remove the following two lines
-
-        User vendor = appContainer.getUserRepo().getUserById(vendorID).getResult();
-
-        AtomicReference<Meal> meal = new AtomicReference<Meal>();
-        appContainer.getMealRepo().getMealById(mealId).addOnSuccessListener(result->{
-          meal.set(result);
-        });
-        */
-
-
         appContainer.getMealRepo().getMealById(mealId).continueWithTask(mealTask-> appContainer.getUserRepo().getUserById(vendorID).continueWith(fetchedVendor-> new Pair<>(mealTask.getResult(), fetchedVendor.getResult()))).addOnSuccessListener((result)->{
             //create intent when clicking on notification which redirects to the mealActivity
             Intent intent = new Intent(this, MealActivity.class);
-            intent.putExtra("id", result.first.getMealId());
+            intent.putExtra("mealId", mealId);
+            intent.putExtra("orderId", orderId);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 

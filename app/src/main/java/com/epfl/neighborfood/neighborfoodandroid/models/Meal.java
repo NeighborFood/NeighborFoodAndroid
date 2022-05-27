@@ -20,19 +20,18 @@ public class Meal extends Model implements Serializable {
     private String mealId;
     private String vendorID;
     private String name;
-    private String shortDescription;
-    private String longDescription;
+    private String description;
     private double price;
     private Date retrievalDate;
     private String imageUri;
-    private List<String> allergens;
+    private List<Allergen> allergens;
 
     public Meal() {
 
     }
 
-    public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, String imageUri, List<String> allergens, double price, Date retrievalDate){
-        this(name,shortDescription,longDescription,imageUri, allergens, price, retrievalDate);
+    public Meal(String id,String vendorID,String name, String description, String imageUri, List<Allergen> allergens, double price, Date retrievalDate){
+        this(name,description,imageUri, allergens, price, retrievalDate);
         this.mealId = id;
         this.vendorID = vendorID;
     }
@@ -42,17 +41,15 @@ public class Meal extends Model implements Serializable {
     /**
      * Complete constructor of a Meal
      * @param name
-     * @param shortDescription
-     * @param longDescription
+     * @param description
      * @param imageUri
      * @param allergens
      * @param price
      * @param retrievalDate
      */
-    public Meal(String name, String shortDescription, String longDescription, String imageUri, List<String> allergens, double price, Date retrievalDate) {
+    public Meal(String name,String description, String imageUri, List<Allergen> allergens, double price, Date retrievalDate) {
         this.name = name;
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
+        this.description = description;
         this.imageUri = imageUri;
         this.allergens = allergens;
         this.price = price;
@@ -63,15 +60,14 @@ public class Meal extends Model implements Serializable {
         return name;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description){
+        this.description = description;
     }
 
-    public String getLongDescription() {
-        return longDescription;
-    }
-
-    public List<String> getAllergens() {
+    public List<Allergen> getAllergens() {
         return allergens;
     }
 

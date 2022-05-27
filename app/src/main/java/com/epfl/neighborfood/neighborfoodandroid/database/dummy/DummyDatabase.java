@@ -168,16 +168,8 @@ public class DummyDatabase implements Database {
                 "De la soupe à l'oignon",
                 "Une bonne tarte aux pommes"};
 
-        String[] mealsLongDes = {"Vous ne pourrez pas résister à ce savoureux poulet",
-                "Ce couscous me fait penser à celui que me faisait mon grand-père",
-                "Recette de paella directement d'Italie !",
-                "blabla fondue",
-                "blabla salade",
-                "blabla soupe",
-                "blabla tarte"};
-
         for (int i = 0; i < mealsName.length; i++) {
-            Meal meal = new Meal(mealsName[i], mealsShortDes[i], mealsLongDes[i], "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon,new ArrayList<>(),0,new Date());
+            Meal meal = new Meal(mealsName[i], mealsShortDes[i], "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon,new ArrayList<>(),0,new Date());
             meals.put(Integer.toString(i),new MealDocumentSnapshot(meal));
         }
         conversations = new HashMap<>();

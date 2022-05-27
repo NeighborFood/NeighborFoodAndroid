@@ -65,7 +65,7 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
     private void updateMealDetails() {
         Picasso.get().load(meal.getImageUri()).into(binding.mealImage);
         binding.mealName.setText(meal.getName());
-        binding.mealDesc.setText(meal.getShortDescription());
+        binding.mealDesc.setText(meal.getDescription());
     }
 
 }

@@ -67,15 +67,10 @@ public class VendorDashboardFragment extends Fragment {
         String[] mealsShortDes = {"Un délicieux poulet au miel",
                 "Un couscous comme à la maison",
                 "Une paella traditionnelle"};
-
-        String[] mealsLongDes = {"Vous ne pourrez pas résister à ce savoureux poulet",
-                "Ce couscous me fait penser à celui que me faisait mon grand-père",
-                "Recette de paella directement d'Italie !"};
-
         ArrayList<Meal> mealArrayList = new ArrayList<>();
 
-        for (int i = 0; i < mealsLongDes.length; i++) {
-            Meal meal = new Meal(nm.get(i), mealsShortDes[i], mealsLongDes[i], "",new ArrayList<>(), 0, new Date());
+        for (int i = 0; i < mealsShortDes.length; i++) {
+            Meal meal = new Meal(nm.get(i), mealsShortDes[i], "",new ArrayList<>(), 0, new Date());
             mealArrayList.add(meal);
         }
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);

@@ -24,6 +24,7 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.MealVie
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MealActivity extends AppCompatActivity {
 
@@ -55,35 +56,27 @@ public class MealActivity extends AppCompatActivity {
                 meal = mealFetched;
                 Picasso.get().load(meal.getImageUri()).into(binding.mealImage);
                 binding.mealName.setText(meal.getName());
-                binding.mealDesc.setText(meal.getLongDescription());
+                binding.mealDesc.setText(meal.getDescription());
+                List<Allergen> allergens = meal.getAllergens();
+                AllergensAdapter allergensAdapter = new AllergensAdapter(this, allergens);
+                binding.allergensMeal.setAdapter(allergensAdapter);
             });
-            // TODO adapt to get the correct allergens when the database will be setup
-            ArrayList<Allergen> allergens = new ArrayList<>();
-            allergens.add(Allergen.CELERY);
-            allergens.add(Allergen.CHEESE);
-            allergens.add(Allergen.GLUTEN);
-            AllergensAdapter allergensAdapter = new AllergensAdapter(this, allergens);
-            binding.allergensMeal.setAdapter(allergensAdapter);
+
         }
 
-        Button vendorButton = (Button) findViewById(R.id.go_vendor_profile_id);
-        Button orderButton = (Button) findViewById(R.id.order_button);
+        Button vendorButton = findViewById(R.id.go_vendor_profile_id);
+        Button orderButton = findViewById(R.id.order_button);
 
-        orderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.assignOrder(order);
-            }
-        });
+        orderButton.setOnClickListener(v -> viewModel.assignOrder(order));
 
         // Listener to enable the click button to go to the vendor profile
-        vendorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent vendorProfileIntent = new Intent(MealActivity.this, VendorProfileActivity.class);
-                vendorProfileIntent.putExtra("userID", "JDpBLvLCTefqXx03riPH9072KYu2");
-                startActivity(vendorProfileIntent);
+        vendorButton.setOnClickListener(v -> {
+            Intent vendorProfileIntent = new Intent(MealActivity.this, VendorProfileActivity.class);
+            if(meal==null){
+                return;
             }
+            vendorProfileIntent.putExtra("userID", meal.getVendorID());
+            startActivity(vendorProfileIntent);
         });
 
     }

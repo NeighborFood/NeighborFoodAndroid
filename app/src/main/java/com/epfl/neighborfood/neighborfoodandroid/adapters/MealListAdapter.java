@@ -46,7 +46,7 @@ public class MealListAdapter extends ArrayAdapter {
         viewModel.getMealById(order.getMealId()).addOnSuccessListener(meal -> {
             mealName.setText(meal.getName());
             Picasso.get().load(meal.getImageUri()).into(imageView);
-            mealShortDes.setText(meal.getShortDescription());
+            mealShortDes.setText(meal.getDescription());
         });
         return convertView;
     }

@@ -1,5 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,8 +34,10 @@ import com.epfl.neighborfood.neighborfoodandroid.util.ImageUtil;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,12 +47,14 @@ import java.util.Map;
  */
 public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     private static final int RESULT_LOAD_IMAGE = 1;
+    @SuppressLint("SimpleDateFormat")
+    private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     ImageView imageToUpload;
     Map<ImageView, String> allergensIcons;
     Button confirmationButton;
     ImageButton addImageButton, calendarButton;
-    List<String> allergensInMeal, allergens;
     EditText descriptionText, priceText, mealNameText, dateText, timeText;
+    List<Allergen> allergensInMeal;
     Toolbar toolbar;
     Uri image;
     private String imagePath;
@@ -69,23 +74,8 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         addImageButton = findViewById(R.id.addPictureButton);
         vmodel = new ViewModelProvider(this, new PlaceMealViewModelFactory((NeighborFoodApplication) this.getApplication())).get(PlaceMealViewModel.class);
 
-        allergensInMeal = new ArrayList<String>();
-        allergensIcons = new HashMap<ImageView, String>();
-        /* TODO it would be better to create the allergen list that way but currently each item of the list is hard coded in the xml.
-        for (Allergen allergen : Allergen.values()) {
-            allergensIcons.put(findViewById(allergen.getId()), allergen.getLabel());
-        }
-        */
-        allergensIcons.put(findViewById(R.id.CeleryIcon), "CELERY");
-        allergensIcons.put(findViewById(R.id.MilkIcon), "MILK");
-        allergensIcons.put(findViewById(R.id.FishIcon), "FISH");
-        allergensIcons.put(findViewById(R.id.CheeseIcon), "CHEESE");
-        allergensIcons.put(findViewById(R.id.GlutenIcon), "GLUTEN");
-        allergensIcons.put(findViewById(R.id.HoneyIcon), "HONEY");
-        allergensIcons.put(findViewById(R.id.LobsterIcon), "LOBSTER");
-        allergensIcons.put(findViewById(R.id.SoyIcon), "SOY");
-        allergensIcons.put(findViewById(R.id.EggsIcon), "EGGS");
-        allergensIcons.put(findViewById(R.id.ChocolateIcon), "CHOCOLATE");
+        allergensInMeal = new ArrayList<>();
+        allergensIcons = new HashMap<>();
 
         descriptionText = findViewById(R.id.textDescription);
         priceText = findViewById(R.id.textPrice);
@@ -133,14 +123,12 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                 allergensInMeal.remove(allergenLabel);
                 v.setBackgroundColor(0xFFFFFF);
             } else {
-                allergensInMeal.add(allergenLabel);
+                allergensInMeal.add(Allergen.valueOf(allergenLabel));
                 v.setBackgroundColor(0x666BEC70);
             }
         }
         switch (v.getId()) {
             case R.id.addPictureButton:
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                //@TODO for sprint 9 I (Raed) will change the upload picture to be abstract and not deprecated
                 activityResultLauncher.launch(ImageUtil.getGalleryIntent());
                 break;
             case R.id.ConfirmationButton:
@@ -162,11 +150,10 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                     Meal meal = new Meal(
                             mealNameText.getText().toString(),
                             descriptionText.getText().toString(),
-                            "Should add long description in the template", //TODO
-                            "",//TODO: Should get the image id but it is not gettable yet
-                            allergensInMeal,//TODO: Should build the list of allergens
+                            "",
+                            allergensInMeal,
                             Double.parseDouble(priceText.getText().toString()),
-                            null);//TODO: build the retrieval date
+                            new Date());//TODO: build the retrieval date
                     Task<String> task = vmodel.placeMeal(meal,imagePath);
                     task.addOnSuccessListener((mealId)->{
                         vmodel.createOrder(mealId).addOnSuccessListener(orderId-> startActivity(i));
