@@ -1,5 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.database.firebase;
 
+import android.location.Location;
+
 import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
@@ -61,6 +63,15 @@ public class FirebaseDatabase implements Database {
                 Tasks.forResult(new FirebaseCollectionSnapshot(collectionSnapshot))
         ));
     }
+
+    @Override
+    public Task<CollectionSnapshot> fetchInRange(String collectionPath, Location minLocation, Location maxLocation) {
+        return database.collection(collectionPath).whereGreaterThanOrEqualTo("pickupLocation",minLocation).whereLessThan("price",maxLocation).get().onSuccessTask(
+                (collectionSnapshot ->
+                        Tasks.forResult(new FirebaseCollectionSnapshot(collectionSnapshot))
+                ));
+    }
+
 
     @Override
     public void addChangesListener(String collectionPath, String documentPath, ModelUpdateListener listener) {

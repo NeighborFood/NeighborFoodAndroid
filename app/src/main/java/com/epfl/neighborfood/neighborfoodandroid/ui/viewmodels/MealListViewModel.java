@@ -1,5 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels;
 
+import android.location.Location;
+
 import androidx.lifecycle.ViewModel;
 
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
@@ -15,5 +17,9 @@ public class MealListViewModel extends ViewModel {
     }
     public Task<List<Meal>> getAllMeals(){
         return mealRepository.getAllMeals();
+    }
+
+    public Task<List<Meal>> getMealsInRadius(Location loc, double radius){
+        return mealRepository.getMealsInRadius(loc, radius);
     }
 }

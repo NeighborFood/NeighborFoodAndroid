@@ -1,5 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.repositories;
 
+import android.location.Location;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -59,6 +60,25 @@ public class MealRepository {
      */
     public Task<List<Meal>> getAllMeals(){
         return DatabaseFactory.getDependency().fetchAll(mealsDataCollectionPath).continueWith(t->{
+            ArrayList<Meal> res = new ArrayList<>();
+            if(t.isSuccessful()){
+                for (DocumentSnapshot m: t.getResult().getDocuments()) {
+                    res.add(m.toModel(Meal.class) );
+                }
+            }
+            return res;
+        });
+    }
+
+    public Task<List<Meal>> getMealsInRadius(Location location, double radius){
+        Location min = new Location(location);
+        Location max = new Location(location);
+        min.setLatitude(min.getLatitude()-radius);
+        min.setLatitude(min.getLongitude()-radius);
+        max.setLatitude(max.getLatitude()+radius);
+        max.setLatitude(max.getLongitude()+radius);
+
+        return DatabaseFactory.getDependency().fetchInRange(mealsDataCollectionPath,min,max).continueWith(t->{
             ArrayList<Meal> res = new ArrayList<>();
             if(t.isSuccessful()){
                 for (DocumentSnapshot m: t.getResult().getDocuments()) {

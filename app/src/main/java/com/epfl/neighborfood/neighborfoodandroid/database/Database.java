@@ -1,5 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.database;
 
+import android.location.Location;
+
 import com.epfl.neighborfood.neighborfoodandroid.models.Model;
 import com.google.android.gms.tasks.Task;
 
@@ -49,6 +51,13 @@ public interface Database {
      * @return task that fails if the database is unreachable
      */
     Task<CollectionSnapshot> fetchAll(String collectionPath);
+
+    /**
+     * Fetches all the data in a collection
+     * @param collectionPath collection
+     * @return task that fails if the database is unreachable
+     */
+    Task<CollectionSnapshot> fetchInRange(String collectionPath, Location minLocation, Location maxLocation);
 
     void addChangesListener(String collectionPath, String collectionId, ModelUpdateListener listener);
 

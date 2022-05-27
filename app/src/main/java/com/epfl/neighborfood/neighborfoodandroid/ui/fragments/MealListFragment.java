@@ -85,15 +85,9 @@ public class MealListFragment extends Fragment {
 
     private void filterMeals(View view) {
         MealListAdapter listAdapter = new MealListAdapter(getActivity(), new ArrayList<Meal>());
-        viewModel.getAllMeals().addOnSuccessListener(mealList->{
+        viewModel.getMealsInRadius(currentLocation,0.02).addOnSuccessListener(mealList->{
             listAdapter.clear();
-            for (Meal meal : mealList) {
-                //we approximate 1 degree of latitude/longitude = 111km
-                if (Math.abs(meal.getPickupLocation().getLongitude()-currentLocation.getLongitude())< 1/30
-                    && Math.abs(meal.getPickupLocation().getLatitude()-currentLocation.getLatitude())< 1/30) {
-                    listAdapter.add(meal);
-                }
-            }
+            listAdapter.addAll(mealList);
         }).addOnFailureListener(System.out::println);
         binding.mealListView.setAdapter(listAdapter);
     }
