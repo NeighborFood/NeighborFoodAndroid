@@ -31,10 +31,10 @@ import java.util.GregorianCalendar;
 @RunWith(AndroidJUnit4.class)
 */
 public class BuyerOrderDetailsActivityTest {
-    Meal meal = new Meal("Poulet au miel","Un délicieux poulet au miel",
+    /*Meal meal = new Meal("Poulet au miel","Un délicieux poulet au miel",
             "Vous ne pourrez pas résister à ce savoureux poulet",R.drawable.poulet);
     Order order = new Order( "1", new GregorianCalendar(2022, Calendar.FEBRUARY, 1).getTime(),
-            OrderStatus.unassigned,"2","3");
+            OrderStatus.unassigned,"2","3");*/
     /*
     @Before
     public void setUp() throws Exception {

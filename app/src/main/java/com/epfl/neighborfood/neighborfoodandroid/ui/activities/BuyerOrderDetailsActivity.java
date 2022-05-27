@@ -70,7 +70,7 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
         binding.goVendorProfileId.setOnClickListener(e ->
         {
             Intent intentVendor = new Intent(BuyerOrderDetailsActivity.this, VendorProfileActivity.class);
-            intentVendor.putExtra("vendorId", vendor.getId());
+            intentVendor.putExtra("userID", vendor.getId());
             startActivity(intentVendor);
 
         });

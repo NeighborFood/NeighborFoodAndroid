@@ -15,7 +15,6 @@ public class MealTest {
     private String id;
     private String name;
     private String shortDescription;
-    private String longDescription;
     private List<Allergen> allergens;
     private double price;
     private int imageId;
@@ -25,7 +24,6 @@ public class MealTest {
         id = "id1";
         name = "Tofu";
         shortDescription = "Yumi tofu";
-        longDescription = "Plant based proteins";
         allergens = new ArrayList<>();
         allergens.add(Allergen.EGGS);
         allergens.add(Allergen.HONEY);
@@ -35,7 +33,7 @@ public class MealTest {
     }
 
     private Meal getNewMeal() {
-        return new Meal(id,name, shortDescription, longDescription, "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon, allergens, price, null);
+        return new Meal(name, shortDescription, "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon, allergens, price, null);
     }
 
 
@@ -57,11 +55,7 @@ public class MealTest {
         assertEquals(shortDescription, meal.getDescription());
     }
 
-    @Test
-    public void getLongDescription() {
-        Meal meal = getNewMeal();
-        assertEquals(longDescription, meal.getDescription());
-    }
+
 
     @Test
     public void getAllergens() {

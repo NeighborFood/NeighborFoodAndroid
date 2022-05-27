@@ -18,7 +18,7 @@ public class OrderTest {
     @Before
     public void initTestVariables() {
         orderDate = new GregorianCalendar(2022, Calendar.FEBRUARY, 1).getTime();
-        meal = new Meal("Tofu","Yumi tofu","Plant based proteins","",new ArrayList<>(),0,orderDate);
+        meal = new Meal("Tofu","Yumi tofu","",new ArrayList<>(),0,orderDate);
         status = true;
     }
     @Test
