@@ -24,6 +24,7 @@ import com.epfl.neighborfood.neighborfoodandroid.util.Pair;
 import com.epfl.neighborfood.neighborfoodandroid.util.Triplet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MealListFragment extends Fragment {
@@ -47,7 +48,10 @@ public class MealListFragment extends Fragment {
         listAdapter = new MealListAdapter(getActivity(), orderMealList, viewModel);
         viewModel.getAllUnassignedOrders().addOnSuccessListener(orders->{
             listAdapter.clear();
-            listAdapter.addAll(orders);
+            for (Order order: orders) {
+                if (!order.getVendorId().equals(viewModel.getCurrentUser().getId()))
+                    listAdapter.add(order);
+            }
         });
         binding.mealListView.setAdapter(listAdapter);
         binding.mealListView.setClickable(true);

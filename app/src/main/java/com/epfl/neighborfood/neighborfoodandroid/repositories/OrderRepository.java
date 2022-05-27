@@ -87,21 +87,6 @@ public class OrderRepository {
         });
     }
     /*
-     * fetches all the orders that are still unassigned.
-     * @return task that fails if the database is unreachable
-     */
-    public Task<List<Order>> getAllOrders() {
-        return DatabaseFactory.getDependency().fetchAll(ordersDataCollectionPath).continueWith(t -> {
-            ArrayList<Order> res = new ArrayList<>();
-            if (t.isSuccessful()) {
-                for (DocumentSnapshot m : t.getResult().getDocuments()) {
-                    res.add(m.toModel(Order.class));
-                }
-            }
-            return res;
-        });
-    }
-    /*
      * posts an order on the database
      * @param order Order to be posted
      * @return task containing orderId that fails if the database is unreachable
