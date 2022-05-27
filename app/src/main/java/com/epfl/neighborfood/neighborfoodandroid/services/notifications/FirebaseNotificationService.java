@@ -45,31 +45,17 @@ public class FirebaseNotificationService  extends FirebaseMessagingService imple
         createNotificationChannel();
 
         String mealId = remoteMessage.getData().get("mealId");
-        String vendorID = remoteMessage.getData().get("vendorID");
+        String vendorID = remoteMessage.getData().get("vendorId");
+        String orderId = remoteMessage.getData().get("orderId");
         AppContainer appContainer = ((NeighborFoodApplication) this.getApplication()).getAppContainer();
-        /*
-        I couldn't fetch the data from the database that's why I had to remove the following two lines
-
-        User vendor = appContainer.getUserRepo().getUserById(vendorID).getResult();
-
-        AtomicReference<Meal> meal = new AtomicReference<Meal>();
-        appContainer.getMealRepo().getMealById(mealId).addOnSuccessListener(result->{
-          meal.set(result);
-        });
-        */
-
-        User vendor = new User("id1", "email@epfl.ch", "gordon"," ramsey","");
-        Meal meal = new Meal("paella","delicious paella","delicious paella",R.drawable.fondue);
-
-        //create intent when clicking on notification which redirects to the mealActivity
-        Intent intent = new Intent(this, MealActivity.class);
-        intent.putExtra("name", meal.getName());
-        intent.putExtra("shortDes", meal.getShortDescription());
-        intent.putExtra("longDes", meal.getLongDescription());
-        intent.putExtra("imageid", meal.getImageId());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         appContainer.getMealRepo().getMealById(mealId).continueWithTask(mealTask-> appContainer.getUserRepo().getUserById(vendorID).continueWith(fetchedVendor-> new Pair<>(mealTask.getResult(), fetchedVendor.getResult()))).addOnSuccessListener((result)->{
+            //create intent when clicking on notification which redirects to the mealActivity
+            Intent intent = new Intent(this, MealActivity.class);
+            intent.putExtra("mealId", mealId);
+            intent.putExtra("orderId", orderId);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this,getString(R.string.channel_id))
                     .setSmallIcon(R.drawable.full_notif)
                     .setContentTitle("New meal available!")

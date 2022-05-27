@@ -30,8 +30,8 @@ public class MessageTest {
     public void getSenderTest(){
         String id = "1" ;
         User sender = new User(id,null,null,null,null);
-        Message msg = new Message(null,sender,null);
-        assertThat(msg.getSender().getId(),equalTo(id));
+        Message msg = new Message(null,sender.getId(),null);
+        assertThat(msg.getSender(),equalTo(id));
     }
 
 
@@ -40,31 +40,15 @@ public class MessageTest {
         String id = "1" ;
         User sender = new User(id,null,null,null,null);
         Message msg = new Message(null,null,null);
-        msg.setSender(sender);
-        assertThat(msg.getSender().getId(),equalTo(id));
-    }
-    @Test
-    public void getReceiverTest(){
-        String id = "1" ;
-        User rec= new User(id,null,null,null,null);
-        Message msg = new Message(null,null,rec);
-        assertThat(msg.getReceiver().getId(),equalTo(id));
+        msg.setSender(sender.getId());
+        assertThat(msg.getSender(),equalTo(id));
     }
 
-
-    @Test
-    public void setReceiverTest(){
-        String id = "1" ;
-        User rec = new User(id,null,null,null,null);
-        Message msg = new Message(null,null,null);
-        msg.setReceiver(rec);
-        assertThat(msg.getReceiver().getId(),equalTo(id));
-    }
 
     @Test
     public void getDateTest(){
         Date date = new Date();
-        Message msg = new Message(null,null,null,date);
+        Message msg = new Message(null,null,date);
         assertThat(msg.getDate(),equalTo(date));
     }
 

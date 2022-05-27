@@ -5,40 +5,41 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MealTest {
+    private String id;
     private String name;
     private String shortDescription;
-    private String longDescription;
-    private List<String> allergens;
+    private List<Allergen> allergens;
     private double price;
     private int imageId;
 
     @Before
     public void initTestVariables() {
+        id = "id1";
         name = "Tofu";
         shortDescription = "Yumi tofu";
-        longDescription = "Plant based proteins";
         allergens = new ArrayList<>();
-        allergens.add(Allergen.EGGS.getLabel());
-        allergens.add(Allergen.HONEY.getLabel());
-        allergens.add(Allergen.SOY.getLabel());
+        allergens.add(Allergen.EGGS);
+        allergens.add(Allergen.HONEY);
+        allergens.add(Allergen.SOY);
         price = 2.23;
         imageId = 5;
     }
 
     private Meal getNewMeal() {
-        return new Meal(name, shortDescription, longDescription, imageId, allergens, price, null);
+        return new Meal(name, shortDescription, "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon, allergens, price, null);
     }
 
 
     @Test
     public void bothConstructorWork() {
-        new Meal(name, shortDescription, longDescription, imageId);
+        //new Meal(name, shortDescription, longDescription, imageId);
         getNewMeal();
     }
 
@@ -49,16 +50,12 @@ public class MealTest {
     }
 
     @Test
-    public void getShortDescription() {
+    public void getDescription() {
         Meal meal = getNewMeal();
-        assertEquals(shortDescription, meal.getShortDescription());
+        assertEquals(shortDescription, meal.getDescription());
     }
 
-    @Test
-    public void getLongDescription() {
-        Meal meal = getNewMeal();
-        assertEquals(longDescription, meal.getLongDescription());
-    }
+
 
     @Test
     public void getAllergens() {
@@ -75,6 +72,6 @@ public class MealTest {
     @Test
     public void getImageId() {
         Meal meal = getNewMeal();
-        assertEquals(imageId, meal.getImageId());
+        //assertEquals(imageId, meal.getImageId());
     }
 }

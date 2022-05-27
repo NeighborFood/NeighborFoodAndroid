@@ -3,25 +3,29 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Mohamed Yassine Boukhari
  *
  */
 public class Conversation extends Model {
-    private Set<User> users;
+    private List<String> users;
     private List<Message> messages;
+    private String id;
 
+
+    public Conversation(){
+    }
     /**
      * constructor for the conversation class
      * @param users the set of users(2) in this conversation
      * @param messages the initial list of messages to start
      * the conversation with
      */
-    public Conversation(Set<User> users, List<Message> messages) {
+    public Conversation(String id , List<String> users, List<Message> messages) {
         this.users = users;
         this.messages = messages;
+        this.id = id;
     }
 
     /**
@@ -29,24 +33,32 @@ public class Conversation extends Model {
      * user is chatting
      * @return a User
      */
-    public User getChatter() {
-        User chatter = null;
-        for (User usr: users){
-            if(!usr.getId().equals(AuthenticatorFactory.getDependency().getCurrentAuthUser().getId())){
-                chatter = usr;
+    public String chatter(String authenticatedID) {
+        if (users != null) {
+            String chatter = null;
+            for (String usr: users){
+                if(!usr.equals(authenticatedID)){
+                    chatter = usr;
+                }
             }
+            return chatter;
         }
-        return chatter;
+        return null;
     }
 
     /**
      * @return the set of users for this conversation
      */
-    public Set<User> getUsers(){
+    public List<String> getUsers(){
         return users;
     }
 
     /**
+    }
+
+    public String id() {
+        return id;
+    }
      * the messages sent in this conversation
      * @return
      */
@@ -59,10 +71,23 @@ public class Conversation extends Model {
      * this conversation
      * @return
      */
-    public Message getLastMessage() {
-        if (messages != null) {
+    public Message lastMessage() {
+        if (messages != null && messages.size() > 0) {
             return messages.get(messages.size() - 1);
         }
         return null;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id){
+        this.id=id;
+    }
+
+    public List<Message> addMessage(Message msg){
+        messages.add(msg);
+        return  messages;
     }
 }

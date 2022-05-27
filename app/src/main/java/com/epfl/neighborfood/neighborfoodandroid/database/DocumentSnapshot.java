@@ -23,4 +23,7 @@ public interface DocumentSnapshot {
      * @return the model after conversion
      */
     <T extends Model> T toModel(Class<T> clazz);
+
+
+    String getId();
 }

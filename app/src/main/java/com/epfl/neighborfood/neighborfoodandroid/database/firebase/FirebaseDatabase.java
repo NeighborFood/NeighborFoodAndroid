@@ -7,6 +7,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FirebaseDatabase implements Database {
 
     private static final String TAG = "FirebaseDB";
@@ -63,9 +66,30 @@ public class FirebaseDatabase implements Database {
     }
 
     @Override
+    public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath,String attributeName, Object attributeValue) {
+        return database.collection(collectionPath).whereEqualTo(attributeName,attributeValue).get().onSuccessTask(
+                (collectionSnapshot ->
+                        Tasks.forResult(new FirebaseCollectionSnapshot(collectionSnapshot))
+                ));
+    }
+
+
     public void addChangesListener(String collectionPath, String documentPath, ModelUpdateListener listener) {
         database.collection(collectionPath).document(documentPath).addSnapshotListener(
                 (value, error) -> listener.onModelUpdate(new FirebaseDocumentSnapshot(value))
         );
+    }
+
+    @Override
+    public Task<List<DocumentSnapshot>> fetchAllArrayAttributeContains(String collectionPath, String attributeName, String attributeValue) {
+        return database.collection(collectionPath).whereArrayContains(attributeName,attributeValue).get().continueWith(t->{
+            List<com.google.firebase.firestore.DocumentSnapshot> ds = t.getResult().getDocuments();
+            List<DocumentSnapshot> res = new ArrayList<>();
+            for (com.google.firebase.firestore.DocumentSnapshot doc: ds) {
+                res.add(new FirebaseDocumentSnapshot(doc));
+            }
+
+            return res;
+        });
     }
 }

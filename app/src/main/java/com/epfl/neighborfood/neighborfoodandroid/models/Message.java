@@ -6,22 +6,17 @@ import java.util.Date;
 
 public class Message extends Model {
     private String content;
-    private User sender;
-    private User receiver;
+    private String sender;
     private Date date;
 
 
-    public Message(String messageText, User sender, User receiver) {
-        this.content = messageText;
-        this.sender = sender;
-        this.receiver = receiver;
-        date = new Date();
+    public Message(String messageText, String sender) {
+        this(messageText,sender,new Date());
     }
 
-    public Message(String messageText, User sender, User receiver, Date date) {
+    public Message(String messageText, String sender, Date date) {
         this.content = messageText;
         this.sender = sender;
-        this.receiver = receiver;
         this.date = date;
     }
 
@@ -36,21 +31,14 @@ public class Message extends Model {
         this.content = content;
     }
 
-    public User getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
-    public User getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
-    }
 
     public Date getDate() {
         return date;

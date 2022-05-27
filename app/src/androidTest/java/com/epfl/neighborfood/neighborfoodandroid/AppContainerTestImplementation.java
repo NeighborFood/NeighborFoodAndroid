@@ -14,7 +14,7 @@ import com.epfl.neighborfood.neighborfoodandroid.services.notifications.Notifica
 
 public class AppContainerTestImplementation extends AppContainer{
     public AppContainerTestImplementation() {
-        super(DummyDatabase.getInstance(), DummyAuthenticator.getInstance(), new NotificationServiceTestImplementation());
+        super(null,DummyDatabase.getInstance(), DummyAuthenticator.getInstance(), new NotificationServiceTestImplementation());
         setAuthRepo(new AuthRepositoryTestImplementation());
         setMealRepo(new MealRepositoryTestImplementation());
         setUserRepo(new UserRepositoryTestImplementation());

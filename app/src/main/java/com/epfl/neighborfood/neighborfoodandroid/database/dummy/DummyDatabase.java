@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Tasks;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +33,11 @@ public class DummyDatabase implements Database {
     private final ArrayList<Conversation> conversationsDB = new ArrayList<>();
     private static DummyDatabase instance;
     public static final int PROFILE_IMG_ID = R.drawable.profile_img_male;
-    private static Map<String, DocumentSnapshot> users;
-    private static Map<String, DocumentSnapshot> meals;
+    private static Map<String, UserDocumentSnapshot> users;
+    private static Map<String, MealDocumentSnapshot> meals;
+    private static Map<String, ConversationDocumentSnapshot> conversations;
     private final List<ModelUpdateListener> userUpdateListeners;
+    private final List<ModelUpdateListener> conversationsListeners;
 
     private class UserDocumentSnapshot extends User implements DocumentSnapshot{
         private User user;
@@ -89,6 +92,11 @@ public class DummyDatabase implements Database {
             }
             return (T)meal;
         }
+
+        @Override
+        public String getId() {
+            return meal.getMealId();
+        }
     }
     private class CollectionSnapshotImpl implements CollectionSnapshot{
         private List<DocumentSnapshot> documents;
@@ -101,26 +109,50 @@ public class DummyDatabase implements Database {
             return documents;
         }
     }
+
     private DummyDatabase(){
         initializeFields();
         userUpdateListeners = new ArrayList<>();
 
+        conversationsListeners = new ArrayList<>();
+    }
+    private class ConversationDocumentSnapshot extends Conversation implements DocumentSnapshot{
+        private Conversation convo;
+        public ConversationDocumentSnapshot(Conversation convo){
+            this.convo = convo;
+        }
+        @Override
+        public Object get(String field) {
+            return null;
+        }
+
+        @Override
+        public <T extends Model> T toModel(Class<T> clazz) {
+            if(clazz != Meal.class){
+                return null;
+            }
+            return (T)convo;
+        }
+
+        @Override
+        public String getId() {
+            return convo.getId();
+        }
     }
     private void initializeFields(){
         users = new HashMap<>();
-        User userwithFakeLinks= new User("-1","zbiba@epfl.ch","Zbiba","Zabboub","");
+        User userwithFakeLinks= new User("-1","zbiba@epfl.ch","Zbiba","Zabboub","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon);
         ArrayList<String> fakeLinks =new ArrayList();
-        fakeLinks.add("a");fakeLinks.add("b");fakeLinks.add("c");
+        fakeLinks.add("https://facebook.com/");fakeLinks.add("https://twitter.com/");fakeLinks.add("a");
         userwithFakeLinks.setLinks(fakeLinks);
         users.put("-1", new UserDocumentSnapshot(userwithFakeLinks));
+        users.put("0", new UserDocumentSnapshot(new User("0","z","z","z","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon)));
 
-        users.put("1", new UserDocumentSnapshot(new User("1","a","a","a","")));
-        users.put("2", new UserDocumentSnapshot(new User("2","b","b","b","")));
-        users.put("3", new UserDocumentSnapshot(new User("3","c","c","c","")));
+        users.put("1", new UserDocumentSnapshot(new User("1","a","a","a","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon)));
+        users.put("2", new UserDocumentSnapshot(new User("2","b","b","b","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon)));
+        users.put("3", new UserDocumentSnapshot(new User("3","c","c","c","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon)));
         meals = new HashMap<>();
-        int[] imageId = {R.drawable.poulet, R.drawable.couscous, R.drawable.paella,
-                R.drawable.fondue, R.drawable.salade, R.drawable.soupe, R.drawable.tarte};
-        String[] mealsName = {"Poulet au miel",
+       String[] mealsName = {"Poulet au miel",
                 "Couscous aux légumes",
                 "Paella aux crevettes",
                 "Fondue Moitié-Moitié",
@@ -136,18 +168,15 @@ public class DummyDatabase implements Database {
                 "De la soupe à l'oignon",
                 "Une bonne tarte aux pommes"};
 
-        String[] mealsLongDes = {"Vous ne pourrez pas résister à ce savoureux poulet",
-                "Ce couscous me fait penser à celui que me faisait mon grand-père",
-                "Recette de paella directement d'Italie !",
-                "blabla fondue",
-                "blabla salade",
-                "blabla soupe",
-                "blabla tarte"};
-
-        for (int i = 0; i < imageId.length; i++) {
-            Meal meal = new Meal(mealsName[i], mealsShortDes[i], mealsLongDes[i], imageId[i]);
+        for (int i = 0; i < mealsName.length; i++) {
+            Meal meal = new Meal(mealsName[i], mealsShortDes[i], "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon,new ArrayList<>(),0,new Date());
             meals.put(Integer.toString(i),new MealDocumentSnapshot(meal));
         }
+        conversations = new HashMap<>();
+        List<String> ids = new ArrayList<>();
+        ids.add("0");
+        ids.add("1");
+        conversations.put("0-1",new ConversationDocumentSnapshot(new Conversation("0-1",new ArrayList<>(ids),new ArrayList<>())));
     }
     public static DummyDatabase getInstance() {
         if (instance == null) {
@@ -175,7 +204,7 @@ public class DummyDatabase implements Database {
     public List<Message> fetchUserConversation(User chatter){
         if (chatter != null){
             for (Conversation conv: conversationsDB){
-                if (chatter.getId().equals(conv.getChatter().getId())){
+                if (chatter.getId().equals(conv.chatter(chatter.getId()))){
                     return conv.getMessages();
                 }
             }
@@ -200,6 +229,13 @@ public class DummyDatabase implements Database {
                 return Tasks.forException(new NoSuchElementException("User not found"));
             }
         }
+        if(collectionPath.equals("Conversations")){
+            if(conversations.containsKey(documentPath)){
+                return Tasks.forResult(conversations.get(documentPath));
+            }else{
+                return Tasks.forException(new NoSuchElementException("conversation not found"));
+            }
+        }
         return null;
     }
 
@@ -213,6 +249,18 @@ public class DummyDatabase implements Database {
             users.put(documentPath,newSnapshot);
             for (ModelUpdateListener l:
                  userUpdateListeners) {
+                l.onModelUpdate(newSnapshot);
+            }
+            return Tasks.forResult(null);
+        }
+        if(collectionPath.equals("Conversations") ){
+            if(! (data instanceof Conversation)){
+                return Tasks.forException(new IllegalArgumentException("Cannot save data to collection"));
+            }
+            ConversationDocumentSnapshot newSnapshot = new ConversationDocumentSnapshot((Conversation) data);
+            conversations.put(documentPath,newSnapshot);
+            for (ModelUpdateListener l:
+                    conversationsListeners) {
                 l.onModelUpdate(newSnapshot);
             }
             return Tasks.forResult(null);
@@ -234,23 +282,26 @@ public class DummyDatabase implements Database {
 
     @Override
     public Task<String> add(String collectionPath, Object data) {
-        int uid = -1;
+        String uid = "-1";
         if(collectionPath.equals("Users")) {
-            uid = users.size()+1;
+            uid = Integer.toString(users.size()+1);
         }
         if(collectionPath.equals("Meals")){
-            uid = meals.size()+1;
+            uid = Integer.toString(meals.size()+1);
         }
-        int finalUid = uid;
-        return set(collectionPath,Integer.toString(uid),data).continueWith(task -> Integer.toString(finalUid));
+        if(collectionPath.equals("Conversations")){
+            uid = ((Conversation)data).getId();
+        }
+        String finalUid = uid;
+        return set(collectionPath,uid,data).continueWith(task -> finalUid);
     }
 
     @Override
     public Task<CollectionSnapshot> fetchAll(String collectionPath) {
         switch (collectionPath){
             case "Meals":
-                System.out.println(meals.values().iterator().next().toModel(Meal.class).getMealId());
-                return Tasks.forResult(new CollectionSnapshotImpl(meals.values()));
+                Collection<? extends DocumentSnapshot> bases = meals.values();
+                return Tasks.forResult(new CollectionSnapshotImpl((Collection<DocumentSnapshot>) bases));
         }
         return null;
     }
@@ -260,5 +311,26 @@ public class DummyDatabase implements Database {
         if(collectionPath.equals("Users")){
             userUpdateListeners.add(listener);
         }
+        if(collectionPath.equals("Conversations")){
+            conversationsListeners.add(listener);
+        }
+    }
+
+    @Override
+    public Task<List<DocumentSnapshot>> fetchAllArrayAttributeContains(String collectionPath, String attributeName, String attributeValue) {
+        List<DocumentSnapshot> res = new ArrayList<>();
+        if(collectionPath.equals("Conversations") && attributeName.equals("users")){
+            for(ConversationDocumentSnapshot d : conversations.values()){
+                if(d.getUsers().contains(attributeValue)){
+                    res.add(d);
+                }
+            }
+        }
+        return Tasks.forResult(res);
+    }
+
+    @Override
+    public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath, String attributeName, Object attributeValue) {
+        return null;
     }
 }

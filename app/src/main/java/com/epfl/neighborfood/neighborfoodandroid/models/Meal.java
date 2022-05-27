@@ -20,58 +20,37 @@ public class Meal extends Model implements Serializable {
     private String mealId;
     private String vendorID;
     private String name;
-    private String shortDescription;
-    private String longDescription;
+    private String description;
     private double price;
     private Date retrievalDate;
-    private int imageId;
-    private List<String> allergens;
-
-    /**
-     * @param id the id to set
-     * @return a new meal with all the attributes the same as this, but with a different id
-     */
-    public Meal copyWithId(String id){
-        return new Meal(id,vendorID,name,shortDescription,longDescription,imageId, allergens, price, retrievalDate);
-    }
+    private String imageUri;
+    private List<Allergen> allergens;
 
     public Meal() {
 
     }
-  
-    public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, int imageId, List<String> allergens, double price, Date retrievalDate){
-        this(name,shortDescription,longDescription,imageId, allergens, price, retrievalDate);
-        this.mealId = id;
-    }
 
-    public Meal(String id,String vendorID,String name, String shortDescription, String longDescription, int imageId) {
-        this(name,shortDescription,longDescription,imageId);
+    public Meal(String id,String vendorID,String name, String description, String imageUri, List<Allergen> allergens, double price, Date retrievalDate){
+        this(name,description,imageUri, allergens, price, retrievalDate);
         this.mealId = id;
         this.vendorID = vendorID;
     }
-      
-    public Meal(String name, String shortDescription, String longDescription, int imageId) {
-        this.name = name;
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
-        this.imageId = imageId;
-    }
+
+
 
     /**
      * Complete constructor of a Meal
      * @param name
-     * @param shortDescription
-     * @param longDescription
-     * @param imageId
+     * @param description
+     * @param imageUri
      * @param allergens
      * @param price
      * @param retrievalDate
      */
-    public Meal(String name, String shortDescription, String longDescription, int imageId, List<String> allergens, double price, Date retrievalDate) {
+    public Meal(String name,String description, String imageUri, List<Allergen> allergens, double price, Date retrievalDate) {
         this.name = name;
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
-        this.imageId = imageId;
+        this.description = description;
+        this.imageUri = imageUri;
         this.allergens = allergens;
         this.price = price;
         this.retrievalDate = retrievalDate;
@@ -81,15 +60,14 @@ public class Meal extends Model implements Serializable {
         return name;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description){
+        this.description = description;
     }
 
-    public String getLongDescription() {
-        return longDescription;
-    }
-
-    public List<String> getAllergens() {
+    public List<Allergen> getAllergens() {
         return allergens;
     }
 
@@ -97,8 +75,11 @@ public class Meal extends Model implements Serializable {
         return price;
     }
 
-    public int getImageId() {
-        return imageId;
+    public String getImageUri() {
+        return imageUri;
+    }
+    public void setImageUri(String imageUri){
+        this.imageUri = imageUri;
     }
 
     /** getter for the meal id
@@ -108,11 +89,11 @@ public class Meal extends Model implements Serializable {
         return mealId;
     }
 
-    /** getter for the meal id
-     * @return the meal id
+    /** setter for the meal id
+     * @param  mealId the meal id
      */
-    public void setMealId(String id){
-        mealId = id;
+    public void setMealId(String mealId){
+        this.mealId = mealId;
     }
     /** getter for the meal's vendor id
      * @return the owner vendorID

@@ -148,6 +148,7 @@
                 android:hint="@string/bio"
                 android:minHeight="150dp"
                 tools:ignore="DuplicateSpeakableTextCheck" />
+
             <TextView
                 android:id="@+id/profileEditLinksLabel"
                 android:layout_width="match_parent"

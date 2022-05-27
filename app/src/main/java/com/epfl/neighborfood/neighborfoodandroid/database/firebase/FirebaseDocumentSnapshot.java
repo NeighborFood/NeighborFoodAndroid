@@ -23,5 +23,10 @@ public class FirebaseDocumentSnapshot implements DocumentSnapshot {
         return documentSnapshot.toObject(clazz);
     }
 
+    @Override
+    public String getId() {
+        return documentSnapshot.getId();
+    }
+
 
 }

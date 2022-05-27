@@ -17,6 +17,6 @@ public class PlaceMealViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new PlaceMealViewModel(app.getAppContainer().getMealRepo(),app.getAppContainer().getAuthRepo());
+        return (T) new PlaceMealViewModel(app.getAppContainer().getMealRepo(),app.getAppContainer().getAuthRepo(),app.getAppContainer().getOrderRepo());
     }
 }
