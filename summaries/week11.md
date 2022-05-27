@@ -1,22 +1,20 @@
-# Summary for sprint 10
+# Summary for sprint 10 2nd week
 
 ## Badis
-## Elior (scrum master)
-I implemented the upload of the meal to the database and cleaned the way the Allergen were handled. I had issues with image and vendorId management.
-Some interdependencies between our tasks prevented me to do some tasks (but I could have used fake data anyway!)
+## Elior
 ## Khalil
-I implemented fetching the meal list from the database. This task did not take me a lot of time, so I started working on some other aspects of the app that I felt were missing,
-so I implemented saving the changes that were done in the profile editing page on the database, as well as registering a user when he first loggs in to the app
-(while showing a different display message according to your registration status). After that, I had to adjust the tests so that the build works, but I had an issue with
-our lovely and capricious Jacoco that showed 0% coverage (even when running locally) even when the tests are running and passing. so I also worked on fixing that.
-## Raed
-I implemeted fetching only the orders that a buyer made from the order database to be displayed in the past orders activity and fetched meal details in the detailed order activity.
-This week's task was too long than usual as I had to change many things in the past code to make it coherent with the database implementation and I had a hard time with that(The content of the Order class, the activites, the adapter, tests...)
-and I had some difficulties with the implementation in itself as I wanted to make it as clean as possible to avoid recoding it later but I had some roadblocks that I had to find a way to fix them( orders adapter not compatible with multiple objects etc..)
-I didn't test the database implementation since khalil was working on that this week.
+
+For this sprint, I worked on uploading the photos for the user profile and the meals and also fetching them. I also worked on showing details of the user on their vendor profile (with photos, name, links and number of subscribers)
+This task also included making the subscription button functional (so that when you click on it you either get subscrirbed or unsubscribed)
+I also worked on merging the feature of the chat, refactoring it to fit well with the rest of the code base and adding the missing functionalitites it lacked (like starting a conversation with a vendor)
+Finally, I added the allergens upload on the database so that it reflects what the user chose when placing a meal.
+This was a pretty big sprint full of tasks on different aspects of the app and there still remains a lot to do for the app to be fully functionnal.
+
+## Raed(scrum master)
+This week I tried to do as many tasks as possible besides to the ones I got assigned to. I implemented pushing the meal with its corresponding order to the db when placed
+and I added more states to the orderStatus (order starts unassigned when posted then assigned when someone orders it then finshed when buyers confirms delivery). I reimplemented the
+fetching of the meal list so that it corresponds to the new architecture and added the queries where you only get unassigned meal that you didn't post. I fetched the meal details from the database too.
+I added some transitions between classes and many other small tasks. I worked on merging the two big branches together with khalil which took us a very long time.
+
 ## Yassine
-I finished implementing the chatting feature and its integration into the firestore. Now you can see the conversations that are fetched from the database and sending a message will add it to the db.
 ## Overall team
-We still get to work too late in the week, with late PR and not enough time for good code review.
-The database is being more and more used and the overall codebase starts to be more coherent!
-We have problems regarding the schedule of meetings, which leads to late meetings with few time to react afterwards.
