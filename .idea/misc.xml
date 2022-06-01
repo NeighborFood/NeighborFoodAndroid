@@ -58,6 +58,7 @@
         <entry key="..\:/Users/benmu/OneDrive/Documents/GitHub/NeighborFoodAndroid/app/src/main/res/layout/activity_sign_up.xml" value="0.3432971014492754" />
         <entry key="..\:/Users/benmu/OneDrive/Documents/GitHub/NeighborFoodAndroid/app/src/main/res/layout/activity_vendor_profile.xml" value="0.1" />
         <entry key="..\:/Users/benmu/OneDrive/Documents/GitHub/NeighborFoodAndroid/app/src/main/res/layout/fragment_account.xml" value="0.16145833333333334" />
+        <entry key="..\:/Users/benmu/OneDrive/Documents/GitHub/NeighborFoodAndroid/app/src/main/res/layout/fragment_vendor_dashboard.xml" value="0.21994884910485935" />
         <entry key="..\:/Users/benmu/OneDrive/Documents/GitHub/NeighborFoodAndroid/app/src/main/res/layout/layout_order_list.xml" value="0.35144927536231885" />
         <entry key="..\:/Users/benmu/OneDrive/Documents/GitHub/NeighborFoodAndroid/app/src/main/res/layout/list_item_conversation.xml" value="0.34375" />
         <entry key="..\:/Users/benmu/OneDrive/Documents/GitHub/NeighborFoodAndroid/app/src/main/res/layout/list_item_meal.xml" value="0.34375" />
@@ -86,7 +87,7 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

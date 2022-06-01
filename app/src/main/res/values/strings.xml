@@ -90,5 +90,6 @@
     <string name="todo">TODO</string>
     <string name="image_load_error">Failed to load selected image :(</string>
     <string name="confirm_delivery">confirm Delivery</string>
+    <string name="current_orders">Current Orders</string>
 
 </resources>

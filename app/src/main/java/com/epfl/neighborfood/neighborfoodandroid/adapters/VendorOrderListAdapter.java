@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.models.Order;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealListViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorOrdersViewModel;
 
 import java.util.ArrayList;
 
@@ -18,13 +21,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class VendorOrderListAdapter extends RecyclerView.Adapter<VendorOrderListAdapter.ViewHolder> {
     private static final String TAG = "OrderListAdapter";
 
-    private ArrayList<String> names = new ArrayList<>();
-    private ArrayList<Integer> imageIds = new ArrayList<>();
+    private ArrayList<Order> orderList = new ArrayList<>();
+    private VendorOrdersViewModel viewModel;
     private Context context;
 
-    public VendorOrderListAdapter(Context context, ArrayList<String> names, ArrayList<Integer> ids) {
-        this.names = names;
-        imageIds = ids;
+    public VendorOrderListAdapter(Context context, ArrayList<Order> orderList, VendorOrdersViewModel viewModel) {
+        this.orderList = orderList;
+        this viewModel = viewModel;
         this.context = context;
     }
 
@@ -47,7 +50,7 @@ public class VendorOrderListAdapter extends RecyclerView.Adapter<VendorOrderList
         return names.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView image;
         TextView name;
