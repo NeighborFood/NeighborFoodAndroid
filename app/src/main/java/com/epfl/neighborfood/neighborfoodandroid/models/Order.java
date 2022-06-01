@@ -5,8 +5,10 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 public class Order extends Model {
 
-    private static final String ORDER_DELIVERED = "This order was achieved the ";
-    private static final String ORDER_NOT_YET_DELIVERED = "This order is being processed ";
+    private static final String ORDER_ACHIEVED = "This order was achieved the ";
+    private static final String ORDER_DELIVERED = "This order was delivered";
+    private static final String ORDER_NOT_YET_DELIVERED = "This order is waiting for pickup ";
+    private static final String ORDER_NOT_YET_ASSIGNED = "This order is not assigned yet";
     private String orderId;
     private String mealId;
     private Date orderDate;
@@ -76,12 +78,29 @@ public class Order extends Model {
     }
 
     /*
+        returns short description about the order status
+         */
+    public String orderShortStatusDes() {
+        switch (orderStatus) {
+            case finished:
+                return ORDER_DELIVERED;
+            case assigned:
+                return ORDER_NOT_YET_DELIVERED;
+            default:
+                return ORDER_NOT_YET_ASSIGNED;
+        }
+    }
+        /*
     returns description about the order status
      */
     public String orderStatusDes() {
-        if (orderStatus == OrderStatus.finished) {
-            return ORDER_DELIVERED + orderDate.toString();
+        switch (orderStatus){
+            case finished:
+                return ORDER_ACHIEVED + orderDate.toString();
+            case assigned:
+                return ORDER_NOT_YET_DELIVERED;
+            default:
+                return ORDER_NOT_YET_ASSIGNED;
         }
-        return ORDER_NOT_YET_DELIVERED;
     }
 }
