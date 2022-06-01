@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.toList;
 
 import android.annotation.SuppressLint;
 
-
 import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
@@ -15,7 +14,6 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Model;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
-
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

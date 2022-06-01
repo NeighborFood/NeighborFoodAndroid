@@ -85,7 +85,10 @@ dependencies {
     //For Gradle, add to dependencies section of build.gradle
     implementation 'com.cloudinary:cloudinary-android:1.30.0'
 
-
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 }
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true

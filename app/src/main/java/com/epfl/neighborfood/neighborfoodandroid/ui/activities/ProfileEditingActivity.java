@@ -1,8 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -26,7 +23,7 @@ import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityProfileEditingBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.EditProfileViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.EditProfileViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.epfl.neighborfood.neighborfoodandroid.util.ImageUtil;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -56,7 +53,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
         binding = ActivityProfileEditingBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        vmodel = new ViewModelProvider(this, new EditProfileViewModelFactory((NeighborFoodApplication) this.getApplication())).get(EditProfileViewModel.class);
+        vmodel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getApplication())).get(EditProfileViewModel.class);
         vmodel.loadCurrentUser()
                 .addOnSuccessListener(this, this::updateUserFields)
                 .addOnFailureListener(this,e-> Toast.makeText(this, R.string.load_failure, Toast.LENGTH_SHORT).show());

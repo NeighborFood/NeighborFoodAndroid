@@ -232,6 +232,16 @@
             app:layout_constraintStart_toEndOf="@+id/CalendarButton"
             app:layout_constraintTop_toTopOf="@+id/DateTitle" />
 
+        <Button
+            android:id="@+id/locationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pickup Location"
+            app:layout_constraintBottom_toTopOf="@+id/TimeTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textPrice"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textDescription"
             android:layout_width="match_parent"

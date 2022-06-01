@@ -1,11 +1,8 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.Intents.intending;
@@ -48,7 +45,7 @@ import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.models.UserTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepositoryTestImplementation;
-import com.epfl.neighborfood.neighborfoodandroid.util.matchers.waitUntilTaskFinishedViewAction;
+import com.epfl.neighborfood.neighborfoodandroid.util.viewactions.waitUntilTaskFinishedViewAction;
 import com.google.android.gms.tasks.Task;
 
 import org.junit.After;
@@ -58,10 +55,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 
 @RunWith(AndroidJUnit4.class)

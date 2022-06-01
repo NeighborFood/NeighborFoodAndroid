@@ -19,7 +19,7 @@ import com.epfl.neighborfood.neighborfoodandroid.adapters.MessageListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.ChatRoomViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.ChatRoomViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class ChatRoomActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
 
         messageList = new ArrayList<>();
-        viewModel = new ViewModelProvider(this, new ChatRoomViewModelFactory((NeighborFoodApplication) (getApplication()))).get(ChatRoomViewModel.class);
+        viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) (getApplication()))).get(ChatRoomViewModel.class);
 
         Intent i = getIntent();
         id = (String) i.getSerializableExtra("ConversationID");

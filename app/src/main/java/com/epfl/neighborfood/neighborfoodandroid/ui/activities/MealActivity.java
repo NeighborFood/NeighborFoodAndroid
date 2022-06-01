@@ -1,13 +1,12 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
@@ -16,15 +15,10 @@ import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityMealBinding
 import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.BuyerOrderDetailsActivityViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealListViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.BuyerOrderDetailsViewModelFactory;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.MealListViewModelFactory;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.MealViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MealActivity extends AppCompatActivity {
@@ -37,7 +31,7 @@ public class MealActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this, new MealViewModelFactory((NeighborFoodApplication) this.getApplication())).get(MealViewModel.class);
+        viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getApplication())).get(MealViewModel.class);
 
         binding = ActivityMealBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -83,6 +77,18 @@ public class MealActivity extends AppCompatActivity {
             }
             vendorProfileIntent.putExtra("userID", meal.getVendorID());
             startActivity(vendorProfileIntent);
+        });
+
+        Button mapButton = findViewById(R.id.buttonLoc);
+
+        mapButton.setOnClickListener(v -> {
+            Intent mapIntent = new Intent(MealActivity.this, MapActivity.class);
+            if(meal==null){
+                return;
+            }
+            mapIntent.putExtra("latitude","46.5191");
+            mapIntent.putExtra("longitude", "6.5668");
+            startActivity(mapIntent);
         });
 
     }

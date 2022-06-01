@@ -9,7 +9,6 @@ import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.Task;
 
 import java.util.List;

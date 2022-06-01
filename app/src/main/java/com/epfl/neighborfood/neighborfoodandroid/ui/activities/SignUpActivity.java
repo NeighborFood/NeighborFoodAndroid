@@ -17,9 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
-import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.SignUpViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.SignupActivityViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -71,7 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void initAuthViewModel() {
 
-        viewModel = new ViewModelProvider(this, new SignupActivityViewModelFactory((NeighborFoodApplication) getApplication())).get(SignUpViewModel.class);
+        viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) getApplication())).get(SignUpViewModel.class);
     }
 
     private void initGoogleSignInClient() {
