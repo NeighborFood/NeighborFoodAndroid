@@ -1,15 +1,13 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationRequest;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,25 +15,29 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
+import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.PlaceMealViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.PlaceMealViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.util.ImageUtil;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,19 +45,23 @@ import java.util.Map;
 /**
  * Activity where vendors can place their meals, by uploading meal picture, selecting date, choosing allergens, and writing other details.
  */
-public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, LocationListener {
+public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     private static final int RESULT_LOAD_IMAGE = 1;
+    @SuppressLint("SimpleDateFormat")
+    private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     ImageView imageToUpload;
-    Map<ImageView, String> allergensIcons;
-    Button confirmationButton;
+    Map<ImageView, Allergen> allergensIcons;
+    Button confirmationButton, locationButton;
     ImageButton addImageButton, calendarButton;
-    List<String> allergensInMeal, allergens;
     EditText descriptionText, priceText, mealNameText, dateText, timeText;
+    List<Allergen> allergensInMeal;
     Toolbar toolbar;
     Uri image;
-    Location location;
-    LocationManager locationManager;
+    private String imagePath;
     private PlaceMealViewModel vmodel;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+
+    private List<EditText> cannotBeEmptyFields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,23 +74,23 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         addImageButton = findViewById(R.id.addPictureButton);
         vmodel = new ViewModelProvider(this, new PlaceMealViewModelFactory((NeighborFoodApplication) this.getApplication())).get(PlaceMealViewModel.class);
 
-        allergensInMeal = new ArrayList<String>();
-        allergensIcons = new HashMap<ImageView, String>();
-        allergensIcons.put(findViewById(R.id.CeleryIcon), "celery");
-        allergensIcons.put(findViewById(R.id.MilkIcon), "milk");
-        allergensIcons.put(findViewById(R.id.FishIcon), "fish");
-        allergensIcons.put(findViewById(R.id.CheeseIcon), "cheese");
-        allergensIcons.put(findViewById(R.id.GlutenIcon), "gluten");
-        allergensIcons.put(findViewById(R.id.HoneyIcon), "honey");
-        allergensIcons.put(findViewById(R.id.LobsterIcon), "Lobster");
-        allergensIcons.put(findViewById(R.id.SoyIcon), "Soy");
-        allergensIcons.put(findViewById(R.id.EggsIcon), "Eggs");
-        allergensIcons.put(findViewById(R.id.ChocolateIcon), "Chocolate");
-
-        descriptionText = findViewById(R.id.textDesciption);
+        allergensInMeal = new ArrayList<>();
+        allergensIcons = new HashMap<>();
+        allergensIcons.put(findViewById(R.id.CeleryIcon), Allergen.CELERY);
+        allergensIcons.put(findViewById(R.id.MilkIcon), Allergen.MILK);
+        allergensIcons.put(findViewById(R.id.FishIcon), Allergen.FISH);
+        allergensIcons.put(findViewById(R.id.CheeseIcon), Allergen.CHEESE);
+        allergensIcons.put(findViewById(R.id.GlutenIcon), Allergen.GLUTEN);
+        allergensIcons.put(findViewById(R.id.HoneyIcon), Allergen.HONEY);
+        allergensIcons.put(findViewById(R.id.LobsterIcon), Allergen.LOBSTER);
+        allergensIcons.put(findViewById(R.id.SoyIcon), Allergen.SOY);
+        allergensIcons.put(findViewById(R.id.EggsIcon), Allergen.EGGS);
+        allergensIcons.put(findViewById(R.id.ChocolateIcon), Allergen.CHOCOLATE);
+        descriptionText = findViewById(R.id.textDescription);
         priceText = findViewById(R.id.textPrice);
         mealNameText = findViewById(R.id.textMealName);
         calendarButton = findViewById(R.id.CalendarButton);
+        locationButton = findViewById(R.id.locationButton);
         dateText = findViewById(R.id.DateText);
         timeText = findViewById(R.id.TimeText);
         //listeners
@@ -94,38 +100,77 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         calendarButton.setOnClickListener(this);
         addImageButton.setOnClickListener(this);
         confirmationButton.setOnClickListener(this);
+        locationButton.setOnClickListener(this);
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        // This is to create a list that need to not be empty and be checked for it
+        cannotBeEmptyFields = new ArrayList<>();
+        cannotBeEmptyFields.add(descriptionText);
+        cannotBeEmptyFields.add(priceText);
+        cannotBeEmptyFields.add(mealNameText);
+        cannotBeEmptyFields.add(dateText);
+        cannotBeEmptyFields.add(timeText);
+
+        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this, result -> {
+            activityResult(result.getResultCode(), result.getData());
+        });
+    }
+    private void activityResult(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && data != null) {
+            imagePath = ImageUtil.getRealPathFromUri(data.getData(), this);
+            try {
+                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                imageToUpload.setImageBitmap(imageBitmap);
+            } catch (IOException e) {
+                Toast.makeText(this, R.string.image_load_error, Toast.LENGTH_SHORT).show();
+            }
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, this);
     }
 
     @Override
     public void onClick(View v) {
-        if (allergensIcons.keySet().contains(v)) {
-            String allergenName = allergensIcons.get(v);
-            if (allergensInMeal.contains(allergensIcons.get(v))) {
-                allergensInMeal.remove(allergenName);
+        if (allergensIcons.containsKey(v)) {
+            Allergen allergen = allergensIcons.get(v);
+            if (allergensInMeal.contains(allergen)) {
+                allergensInMeal.remove(allergen);
                 v.setBackgroundColor(0xFFFFFF);
             } else {
-                allergensInMeal.add(allergenName);
+                allergensInMeal.add(allergen);
                 v.setBackgroundColor(0x666BEC70);
             }
         }
         switch (v.getId()) {
             case R.id.addPictureButton:
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                //@TODO for sprint 9 I (Raed) will change the upload picture to be abstract and not deprecated
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                activityResultLauncher.launch(ImageUtil.getGalleryIntent());
                 break;
             case R.id.ConfirmationButton:
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                //TODO: replace with actual value of the place Meal
-                Task<Void> task = vmodel.placeMeal(new Meal(mealNameText.getText().toString(), descriptionText.getText().toString() , descriptionText.getText().toString() , 0, new ArrayList<>(), 0, location));
-                task.addOnCompleteListener((a)->{startActivity(i);});
+                boolean fieldsAreNotEmpty = true;
+                for (EditText field: cannotBeEmptyFields) {
+                    if (TextUtils.isEmpty(field.getText().toString())) {
+                        Toast.makeText(this,
+                                "No field can be empty!",
+                                Toast.LENGTH_SHORT).show();
+                        fieldsAreNotEmpty = false;
+                        break;
+                    }
+                }
+                if(imagePath == null){
+                    fieldsAreNotEmpty = false;
+                }
+                if (fieldsAreNotEmpty) {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    Meal meal = new Meal(
+                            mealNameText.getText().toString(),
+                            descriptionText.getText().toString(),
+                            "",
+                            allergensInMeal,
+                            Double.parseDouble(priceText.getText().toString()),
+                            new Date());//TODO: build the retrieval date
+                    Task<String> task = vmodel.placeMeal(meal,imagePath);
+                    task.addOnSuccessListener((mealId)->{
+                        vmodel.createOrder(mealId).addOnSuccessListener(orderId-> startActivity(i));
+                    });
+                }
+
                 break;
             case R.id.CalendarButton:
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -136,6 +181,10 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                         Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
                 );
                 datePickerDialog.show();
+                break;
+            case R.id.locationButton:
+                    Intent mapIntent = new Intent(PlaceMealActivity.this, PlacePinActivity.class);
+                    startActivity(mapIntent);
                 break;
         }
     }
@@ -153,10 +202,5 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         dateText.setText(dayOfMonth + "/" + (month + 1) + "/" + year, TextView.BufferType.EDITABLE);
-    }
-
-    @Override
-    public void onLocationChanged(@NonNull Location loc) {
-        location = loc;
     }
 }

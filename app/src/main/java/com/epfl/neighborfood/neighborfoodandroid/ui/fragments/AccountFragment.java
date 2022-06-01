@@ -2,7 +2,6 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
@@ -10,7 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PastOrdersActivity;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.BuyerOrdersActivity;
+import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PlacePinActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.ProfileEditingActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.SignUpActivity;
 
@@ -31,7 +31,7 @@ public class AccountFragment extends Fragment {
             startActivity(intent);
         });
         getView().findViewById(R.id.PastOrdersButton).setOnClickListener((View v) -> {
-            Intent intent = new Intent(getActivity(), PastOrdersActivity.class);
+            Intent intent = new Intent(getActivity(), BuyerOrdersActivity.class);
             startActivity(intent);
         });
 

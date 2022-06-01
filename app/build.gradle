@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'jacoco'
     id 'com.google.gms.google-services'  // Google Services plugin
+    //id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+
 }
 apply plugin: 'com.android.application'
 android {
@@ -43,6 +45,9 @@ dependencies {
         exclude module: "protobuf-lite"
     }
     implementation 'com.google.firebase:firebase-firestore:24.1.0'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.google.android.libraries.places:places:2.4.0'
     def fragment_version = "1.4.1"
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -71,6 +76,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore:24.1.0'
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
 
     implementation "com.google.android.material:material:1.2.0-alpha3"
 

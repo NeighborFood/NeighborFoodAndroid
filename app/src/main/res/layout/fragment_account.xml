@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/wallet_small"
                 android:drawableRight="@android:drawable/ic_media_play"
-                android:text="@string/payment_details" />
+                android:text="Payment Details" />
 
             <Button
                 android:id="@+id/preferencesButton"
