@@ -97,6 +97,11 @@ public class CacheDatabase implements Database{
             }
             return (T)meal;
         }
+
+        @Override
+        public String getId() {
+            return null;
+        }
     }
 
     private class CollectionSnapshotImpl implements CollectionSnapshot{
@@ -279,10 +284,20 @@ public class CacheDatabase implements Database{
     }
 
     @Override
+    public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath, String attributeName, Object attributeValue) {
+        return null;
+    }
+
+    @Override
     public void addChangesListener(String collectionPath, String collectionId, Database.ModelUpdateListener listener) {
         if(collectionPath.equals("Users")){
             userUpdateListeners.add(listener);
         }
+    }
+
+    @Override
+    public Task<List<DocumentSnapshot>> fetchAllArrayAttributeContains(String collectionPath, String attributeName, String attributeValue) {
+        return null;
     }
 
 
