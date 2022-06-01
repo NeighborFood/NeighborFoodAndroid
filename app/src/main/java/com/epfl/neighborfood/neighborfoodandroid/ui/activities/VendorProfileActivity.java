@@ -16,7 +16,7 @@ import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorProfileViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.VendorProfileViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -67,7 +67,7 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
         notificationButton.setOnClickListener(this);
         findViewById(R.id.messageVendor).setOnClickListener(this);
         linksGridLayout = findViewById(R.id.SocialLinksGridLayout);
-        vmodel = new ViewModelProvider(this, new VendorProfileViewModelFactory((NeighborFoodApplication) this.getApplication())).get(VendorProfileViewModel.class);
+        vmodel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getApplication())).get(VendorProfileViewModel.class);
         String vendorID = getUserIDFromIntent();
         if(vendorID != null){
             vmodel.getUserByID(vendorID).addOnSuccessListener(user->{

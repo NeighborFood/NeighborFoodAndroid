@@ -12,8 +12,6 @@ import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
 import com.google.android.gms.tasks.Task;
 
-import java.util.List;
-
 public class BuyerOrderDetailsActivityViewModel extends ViewModel {
     private AuthRepository authRepository;
     private OrderRepository orderRepository;

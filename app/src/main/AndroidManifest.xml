@@ -30,7 +30,6 @@
             android:name=".ui.activities.ProfileEditingActivity"
             android:label="Edit Profile"
             android:exported="false" />
-        <activity android:name=".ui.activities.DisplayMessageActivity" />
         <activity
             android:name=".ui.activities.PlaceMealActivity"
             android:exported="true"

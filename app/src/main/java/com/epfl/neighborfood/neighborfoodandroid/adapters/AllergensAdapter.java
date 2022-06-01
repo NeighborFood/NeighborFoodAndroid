@@ -1,22 +1,18 @@
 package com.epfl.neighborfood.neighborfoodandroid.adapters;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
-import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
-import java.util.ArrayList;
+
 import java.util.List;
 
 

@@ -11,20 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
-import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.MealListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.FragmentMealListBinding;
-import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
-import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MealActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealListViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.MealListViewModelFactory;
-import com.epfl.neighborfood.neighborfoodandroid.util.Pair;
-import com.epfl.neighborfood.neighborfoodandroid.util.Triplet;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MealListFragment extends Fragment {
@@ -44,7 +38,7 @@ public class MealListFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this, new MealListViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(MealListViewModel.class);
+        viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(MealListViewModel.class);
         listAdapter = new MealListAdapter(getActivity(), orderMealList, viewModel);
         viewModel.getAllUnassignedOrders().addOnSuccessListener(orders->{
             listAdapter.clear();

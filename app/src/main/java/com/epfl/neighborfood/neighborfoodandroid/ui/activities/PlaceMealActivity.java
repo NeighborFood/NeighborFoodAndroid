@@ -27,9 +27,8 @@ import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
-import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.PlaceMealViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.PlaceMealViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.epfl.neighborfood.neighborfoodandroid.util.ImageUtil;
 import com.google.android.gms.tasks.Task;
 
@@ -72,7 +71,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         imageToUpload = findViewById(R.id.imageToUpload);
         confirmationButton = findViewById(R.id.ConfirmationButton);
         addImageButton = findViewById(R.id.addPictureButton);
-        vmodel = new ViewModelProvider(this, new PlaceMealViewModelFactory((NeighborFoodApplication) this.getApplication())).get(PlaceMealViewModel.class);
+        vmodel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getApplication())).get(PlaceMealViewModel.class);
 
         allergensInMeal = new ArrayList<>();
         allergensIcons = new HashMap<>();

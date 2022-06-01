@@ -13,18 +13,18 @@ import androidx.annotation.Nullable;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
+import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.ConversationsViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.util.Pair;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class ConversationListAdapter extends ArrayAdapter {
     private final ConversationsViewModel viewModel;
-    public ConversationListAdapter(Context context, ArrayList<Conversation> conversationsArrayList, ConversationsViewModel viewModel) {
+    public ConversationListAdapter(Context context, ArrayList<Pair<Conversation, User>> conversationsArrayList, ConversationsViewModel viewModel) {
         super(context, R.layout.fragment_conversations, conversationsArrayList);
         this.viewModel = viewModel;
     }
@@ -32,7 +32,7 @@ public class ConversationListAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Conversation conv = (Conversation) getItem(position);
+        Pair<Conversation,User> conv = (Pair<Conversation,User>) getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_conversation
@@ -42,14 +42,11 @@ public class ConversationListAdapter extends ArrayAdapter {
         ImageView imageView = convertView.findViewById(R.id.user_profile_picture);
         TextView userName = convertView.findViewById(R.id.user_name);
         TextView userLastmsg = convertView.findViewById(R.id.user_last_message);
-        viewModel.getUser(conv.chatter(viewModel.getCurrentUser().getId())).addOnSuccessListener(chatter->{
-            Picasso.get().load(chatter.getProfilePictureURI()).into(imageView);
-            userName.setText(chatter.getUsername());
-
-        });
+        Picasso.get().load(conv.getSecond().getProfilePictureURI()).into(imageView);
+        userName.setText(conv.getSecond().getUsername());
 
         String txt = "";
-        Message last = conv.lastMessage();
+        Message last = conv.getFirst().lastMessage();
 
         if (last != null) {
             txt = last.getContent();

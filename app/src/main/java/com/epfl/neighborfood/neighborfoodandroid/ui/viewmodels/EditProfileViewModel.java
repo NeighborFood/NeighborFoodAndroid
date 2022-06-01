@@ -1,7 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
