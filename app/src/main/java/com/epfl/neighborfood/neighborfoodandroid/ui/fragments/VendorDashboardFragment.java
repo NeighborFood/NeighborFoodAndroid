@@ -13,20 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.adapters.MealListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.VendorOrderListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.FragmentVendorDashboardBinding;
-import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PlaceMealActivity;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealListViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorOrdersViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.MealListViewModelFactory;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.VendorOrdersViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class VendorDashboardFragment extends Fragment {
 
@@ -62,7 +57,7 @@ public class VendorDashboardFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        viewModel = new ViewModelProvider(this, new VendorOrdersViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(VendorOrdersViewModel.class);
+        viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(VendorOrdersViewModel.class);
         listAdapter = new VendorOrderListAdapter(getContext(), orderList, viewModel);
 
         viewModel.getVendorOrders().addOnSuccessListener(orders -> {

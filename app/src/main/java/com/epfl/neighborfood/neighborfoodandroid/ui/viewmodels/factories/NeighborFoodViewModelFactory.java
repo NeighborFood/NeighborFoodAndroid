@@ -14,6 +14,7 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealListViewModel
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.PlaceMealViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.SignUpViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorOrdersViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorProfileViewModel;
 
 public class NeighborFoodViewModelFactory implements ViewModelProvider.Factory{
@@ -55,6 +56,9 @@ public class NeighborFoodViewModelFactory implements ViewModelProvider.Factory{
         }
         if(modelClass == VendorProfileViewModel.class){
             return (T) new VendorProfileViewModel(app.getAppContainer().getUserRepo(),app.getAppContainer().getAuthRepo(),app.getAppContainer().getNotificationService());
+        }
+        if(modelClass == VendorOrdersViewModel.class){
+            return (T) new VendorOrdersViewModel(app.getAppContainer().getAuthRepo(), app.getAppContainer().getOrderRepo(), app.getAppContainer().getMealRepo());
         }
 
         throw new IllegalStateException("View model not yet implemented");
