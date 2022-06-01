@@ -66,21 +66,13 @@ public class VendorDashboardFragment extends Fragment {
         listAdapter = new VendorOrderListAdapter(getContext(), orderList, viewModel);
 
         viewModel.getVendorOrders().addOnSuccessListener(orders -> {
-            listAdapter.clear();
-
-        })
-        VendorOrderListAdapter adapter = new VendorOrderListAdapter(getContext(), orderArrayList);
-
-        RecyclerView recyclerView = binding.recyclerView;
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-
-
+            orderList.addAll(orders);
+            System.out.println(orders.size());
+            listAdapter.notifyDataSetChanged();
+            RecyclerView recyclerView = binding.recyclerView;
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(listAdapter);
+        });
     }
-
-    private void initRecyclerView() {
-
-    }
-
 
 }

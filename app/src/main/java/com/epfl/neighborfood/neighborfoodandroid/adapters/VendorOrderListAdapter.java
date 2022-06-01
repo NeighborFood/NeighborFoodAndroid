@@ -10,24 +10,29 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealListViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorOrdersViewModel;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class VendorOrderListAdapter extends RecyclerView.Adapter<VendorOrderListAdapter.ViewHolder> {
     private static final String TAG = "OrderListAdapter";
 
-    private ArrayList<Order> orderList = new ArrayList<>();
+    private List<Order> orderList;
     private VendorOrdersViewModel viewModel;
     private Context context;
 
-    public VendorOrderListAdapter(Context context, ArrayList<Order> orderList, VendorOrdersViewModel viewModel) {
+    public VendorOrderListAdapter(Context context, List<Order> orderList, VendorOrdersViewModel viewModel) {
         this.orderList = orderList;
-        this viewModel = viewModel;
+        this.viewModel = viewModel;
         this.context = context;
     }
 
@@ -40,25 +45,30 @@ public class VendorOrderListAdapter extends RecyclerView.Adapter<VendorOrderList
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.name.setText(names.get(position));
-        holder.image.setImageResource(imageIds.get(position));
+        viewModel.getMealById(orderList.get(position).getMealId()).addOnSuccessListener(meal ->{
+            holder.name.setText(meal.getName());
+            holder.status.setText(orderList.get(position).orderShortStatusDes());
+            Picasso.get().load(meal.getImageUri()).into(holder.image);
+        });
     }
 
 
     @Override
     public int getItemCount() {
-        return names.size();
+        return orderList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView image;
         TextView name;
+        TextView status;
 
         public ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image_view);
             name = itemView.findViewById(R.id.name);
+            status = itemView.findViewById(R.id.orderStatus);
         }
     }
 }
