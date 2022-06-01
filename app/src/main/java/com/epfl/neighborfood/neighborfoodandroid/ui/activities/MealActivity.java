@@ -79,6 +79,18 @@ public class MealActivity extends AppCompatActivity {
             startActivity(vendorProfileIntent);
         });
 
+        Button mapButton = findViewById(R.id.buttonLoc);
+
+        mapButton.setOnClickListener(v -> {
+            Intent mapIntent = new Intent(MealActivity.this, MapActivity.class);
+            if(meal==null){
+                return;
+            }
+            mapIntent.putExtra("latitude","46.5191");
+            mapIntent.putExtra("longitude", "6.5668");
+            startActivity(mapIntent);
+        });
+
     }
 
 }
