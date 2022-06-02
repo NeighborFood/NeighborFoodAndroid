@@ -84,7 +84,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/likesId"
+        android:id="@+id/nbMeals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/_3100"
@@ -131,8 +131,8 @@
         android:textColor="#535353"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView5"
-        app:layout_constraintStart_toStartOf="@+id/likesId"
-        app:layout_constraintTop_toBottomOf="@+id/likesId" />
+        app:layout_constraintStart_toStartOf="@+id/nbMeals"
+        app:layout_constraintTop_toBottomOf="@+id/nbMeals" />
 
     <ImageView
         android:id="@+id/StarId"
@@ -221,8 +221,8 @@
         android:layout_width="25dp"
         android:layout_height="27dp"
         android:contentDescription="@string/meals"
-        app:layout_constraintStart_toEndOf="@+id/likesId"
-        app:layout_constraintTop_toTopOf="@+id/likesId"
+        app:layout_constraintStart_toEndOf="@+id/nbMeals"
+        app:layout_constraintTop_toTopOf="@+id/nbMeals"
         app:srcCompat="@drawable/meal_icon"
         tools:ignore="ImageContrastCheck" />
 
@@ -295,9 +295,9 @@
                 android:id="@+id/mealPaellaId"
                 android:layout_width="160dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:layout_marginStart="20dp"
                 android:contentDescription="@string/meal1"
                 android:src="@drawable/paella" />
 

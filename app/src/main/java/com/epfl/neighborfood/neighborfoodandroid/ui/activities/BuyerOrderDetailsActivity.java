@@ -2,12 +2,15 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
+import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityPastOrderDetailsBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
@@ -63,8 +66,20 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
     }
 
     private void updateVendorDetails() {
+        ImageView vendorImage = findViewById(R.id.go_vendor_profile_id);
+        binding.vendorName.setText(vendor.getUsername());
+        Picasso.get().load(vendor.getProfilePictureURI()).into(vendorImage);
+        ImageView mapButton = findViewById(R.id.pickupLocation);
 
-        binding.goVendorProfileId.setText(vendor.getUsername());
+        mapButton.setOnClickListener(v -> {
+            Intent mapIntent = new Intent(BuyerOrderDetailsActivity.this, MapActivity.class);
+            if(meal==null){
+                return;
+            }
+            mapIntent.putExtra("latitude","46.5191");
+            mapIntent.putExtra("longitude", "6.5668");
+            startActivity(mapIntent);
+        });
         binding.goVendorProfileId.setOnClickListener(e ->
         {
             Intent intentVendor = new Intent(BuyerOrderDetailsActivity.this, VendorProfileActivity.class);
