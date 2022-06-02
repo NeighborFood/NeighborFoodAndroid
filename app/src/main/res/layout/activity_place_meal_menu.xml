@@ -215,10 +215,12 @@
             android:text="Date:"
             android:textColor="#9C27B0"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/DateText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.082"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/PriceTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/PriceTitle"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/TimeTitle"
@@ -237,10 +239,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pickup Location"
-            app:layout_constraintBottom_toTopOf="@+id/TimeTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/textPrice"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.405"
             app:layout_constraintStart_toEndOf="@+id/textPrice"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2"
+            app:layout_constraintVertical_bias="1.0" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textDescription"
@@ -275,13 +279,13 @@
             android:id="@+id/ConfirmationButton"
             android:layout_width="209dp"
             android:layout_height="49dp"
+            android:layout_marginBottom="16dp"
             android:text="Propose meal"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/DateText"
-            app:layout_constraintVertical_bias="0.327" />
+            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/DateText"
@@ -293,6 +297,7 @@
             android:hint="dd/mm/yyyy"
             android:inputType="date"
             android:minHeight="48dp"
+            app:layout_constraintBottom_toTopOf="@+id/ConfirmationButton"
             app:layout_constraintStart_toEndOf="@+id/DateTitle"
             app:layout_constraintTop_toBottomOf="@+id/textPrice" />
 
@@ -305,6 +310,7 @@
             android:hint="00:00"
             android:inputType="time"
             android:minHeight="48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/DateText"
             app:layout_constraintStart_toEndOf="@+id/TimeTitle"
             app:layout_constraintTop_toTopOf="@+id/DateText" />
 

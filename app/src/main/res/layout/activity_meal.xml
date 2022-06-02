@@ -12,62 +12,140 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="?attr/homeAsUpIndicator" />
 
             <TextView
                 android:id="@+id/mealName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:layout_marginBottom="12dp"
-                android:text="@string/textview" />
-
-            <Button
-                android:id="@+id/go_vendor_profile_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="@string/see_vendor_profile" />
-
-            <Button
-                android:id="@+id/buttonLoc"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:text="Pickup Location" />
+                android:layout_marginTop="20dp"
+                android:text="@string/textview"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar3" />
 
             <ImageView
                 android:id="@+id/mealImage"
-                android:layout_width="229dp"
-                android:layout_height="147dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:contentDescription="@string/todo" />
+                android:layout_width="166dp"
+                android:layout_height="152dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/todo"
+                app:layout_constraintEnd_toEndOf="@+id/mealName"
+                app:layout_constraintStart_toStartOf="@+id/mealName"
+                app:layout_constraintTop_toBottomOf="@+id/mealName" />
+
+            <TextView
+                android:id="@+id/priceMeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/mealImage"
+                app:layout_constraintHorizontal_bias="0.674"
+                app:layout_constraintStart_toStartOf="@+id/mealImage"
+                app:layout_constraintTop_toTopOf="@+id/priceTitle" />
+
+            <Button
+                android:id="@+id/go_vendor_profile_id"
+                android:layout_width="197dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="28dp"
+                android:text="@string/see_vendor_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/allergensMeal"
+                app:layout_constraintTop_toBottomOf="@+id/VendorProfileText" />
+
+            <Button
+                android:id="@+id/buttonLoc"
+                android:layout_width="197dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="28dp"
+                android:text="@string/pickup_location"
+                app:layout_constraintBottom_toBottomOf="@+id/allergensMeal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/allergensMeal"
+                app:layout_constraintTop_toBottomOf="@+id/go_vendor_profile_id"
+                app:layout_constraintVertical_bias="0.438" />
 
             <TextView
                 android:id="@+id/mealDesc"
-                android:layout_width="286dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="30dp"
-                android:text="@string/textview" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="@string/textview"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/mealImage"
+                app:layout_constraintHorizontal_bias="0.388"
+                app:layout_constraintStart_toStartOf="@+id/mealImage"
+                app:layout_constraintTop_toBottomOf="@+id/priceTitle" />
 
             <ListView
                 android:id="@+id/allergensMeal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="100dp"
+                android:layout_height="200dp"
+                app:layout_constraintBottom_toTopOf="@+id/order_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.051"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/VendorProfileText"
+                app:layout_constraintVertical_bias="0.184" />
 
             <Button
                 android:id="@+id/order_button"
                 android:layout_width="143dp"
                 android:layout_height="65dp"
-                android:layout_marginBottom="16dp"
-                android:text="@string/order_meal" />
+                android:layout_marginBottom="40dp"
+                android:text="@string/order_meal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/mealDesc"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="@+id/mealDesc" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/VendorProfileText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/allergens"
+                android:textColor="#9C27B0"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mealDesc" />
+
+            <TextView
+                android:id="@+id/priceTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="@string/priceText"
+                android:textColor="#9C27B0"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/priceMeal"
+                app:layout_constraintHorizontal_bias="0.409"
+                app:layout_constraintStart_toStartOf="@+id/mealImage"
+                app:layout_constraintTop_toBottomOf="@+id/mealImage" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
 </LinearLayout>
