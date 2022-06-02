@@ -2,12 +2,14 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
@@ -20,6 +22,8 @@ import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.BuyerOrderDetailsActivityViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 
 /**
@@ -38,6 +42,7 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getApplication())).get(BuyerOrderDetailsActivityViewModel.class);
+
 
         Intent intent = getIntent();
         String orderId = (String) intent.getSerializableExtra("orderId");
@@ -60,6 +65,10 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
 
         binding = ActivityPastOrderDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Toolbar toolbar = findViewById(R.id.buyerPastOrdersToolBar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
 
     }
 
@@ -102,6 +111,16 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
         Picasso.get().load(meal.getImageUri()).into(binding.mealImage);
         binding.mealName.setText(meal.getName());
         binding.mealDesc.setText(meal.getDescription());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) // tool bar Back Icon
+        {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
