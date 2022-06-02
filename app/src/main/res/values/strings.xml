@@ -100,5 +100,8 @@
     <string name="pickup_location">Pickup Location</string>
     <string name="allergens">allergens :</string>
     <string name="vendor_profile">vendor Profile</string>
+    <string name="unassigned_orders">Unassigned Orders</string>
+    <string name="waiting_for_pickup">Waiting for pickup</string>
+    <string name="delivered">Delivered</string>
 
 </resources>

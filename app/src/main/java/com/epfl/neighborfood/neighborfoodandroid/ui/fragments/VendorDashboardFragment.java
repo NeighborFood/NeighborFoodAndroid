@@ -1,11 +1,13 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.fragments;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,8 +30,13 @@ public class VendorDashboardFragment extends Fragment {
     private FragmentVendorDashboardBinding binding;
     private FloatingActionButton button;
     private VendorOrdersViewModel viewModel;
-    private VendorOrderListAdapter listAdapter;
-    private ArrayList<Order> orderList = new ArrayList<Order>();
+    private VendorOrderListAdapter unassignedListAdapter;
+    private VendorOrderListAdapter waitingListAdapter;
+    private VendorOrderListAdapter deliveredListAdapter;
+
+    private ArrayList<Order> unassignedOrderList = new ArrayList<>();
+    private ArrayList<Order> waitingOrderList = new ArrayList<>();
+    private ArrayList<Order> deliveredOrderList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -37,36 +44,49 @@ public class VendorDashboardFragment extends Fragment {
         super.onCreate(savedInstanceState);
         binding = FragmentVendorDashboardBinding.inflate(getLayoutInflater());
         button = binding.getRoot().findViewById(R.id.addMealButton);
-        button.setOnClickListener(new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View v) {
-                                          Intent intent = null;
-                                          switch (v.getId()) {
-                                              case R.id.addMealButton:
-                                                  intent = new Intent(getActivity(), PlaceMealActivity.class);
-                                          }
-                                          startActivity(intent);
-                                      }
-                                  }
-
-        );
+        button.setOnClickListener(v -> {
+            switch (v.getId()) {
+                case R.id.addMealButton:
+                    Intent intent = new Intent(getActivity(), PlaceMealActivity.class);
+                    startActivity(intent);
+            }
+        });
         return binding.getRoot();
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(VendorOrdersViewModel.class);
-        listAdapter = new VendorOrderListAdapter(getContext(), orderList, viewModel);
+        unassignedListAdapter = new VendorOrderListAdapter(getContext(), unassignedOrderList, viewModel);
+        RecyclerView unassignedRecyclerView = binding.unassignedRecyclerView;
+        unassignedRecyclerView.setAdapter(unassignedListAdapter);
+        unassignedRecyclerView.setLayoutManager(layoutManager);
+        viewModel.getUnassignedVendorOrders().addOnSuccessListener(orders -> {
+            unassignedOrderList.addAll(orders);
+            unassignedListAdapter.notifyDataSetChanged();
+        });
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        viewModel.getVendorOrders().addOnSuccessListener(orders -> {
-            orderList.addAll(orders);
-            System.out.println(orders.size());
-            listAdapter.notifyDataSetChanged();
-            RecyclerView recyclerView = binding.recyclerView;
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setAdapter(listAdapter);
+        waitingListAdapter = new VendorOrderListAdapter(getContext(), waitingOrderList, viewModel);
+        RecyclerView waitingRecyclerView = binding.waitingRecyclerView;
+        waitingRecyclerView.setAdapter(waitingListAdapter);
+        waitingRecyclerView.setLayoutManager(layoutManager1);
+        viewModel.getWaitingVendorOrders().addOnSuccessListener(orders -> {
+            waitingOrderList.addAll(orders);
+            waitingListAdapter.notifyDataSetChanged();
+        });
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+
+        deliveredListAdapter = new VendorOrderListAdapter(getContext(), deliveredOrderList, viewModel);
+        RecyclerView deliveredRecyclerView = binding.deliveredRecyclerView;
+        deliveredRecyclerView.setAdapter(deliveredListAdapter);
+        deliveredRecyclerView.setLayoutManager(layoutManager2);
+        viewModel.getFinishedVendorOrders().addOnSuccessListener(orders -> {
+            deliveredOrderList.addAll(orders);
+            deliveredListAdapter.notifyDataSetChanged();
         });
     }
 

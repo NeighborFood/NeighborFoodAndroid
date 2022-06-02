@@ -37,15 +37,13 @@
             android:layout_height="150dp"
             android:contentDescription="@string/profile_picture"
             android:nestedScrollingEnabled="false"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/gordon_ramsey_pic" />
+            android:scaleType="centerCrop" />
     </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/NameId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/gordon_ramsey"
         android:textColor="#000000"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -230,13 +228,12 @@
         android:id="@+id/bioLabel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="@string/bio"
-        android:textColor="#FF9C27B0"
+        android:textColor="@color/teal_700"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/bioLabel3"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reviewNbrId"
         app:layout_constraintVertical_bias="0.039" />
 
@@ -246,11 +243,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/past_meals"
-        android:textColor="#FF9C27B0"
+        android:textColor="@color/teal_700"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toStartOf="@+id/bioValue2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bioValue2" />
 
     <TextView
@@ -258,12 +255,11 @@
         android:layout_width="367dp"
         android:layout_height="81dp"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
         android:hint="@string/bio"
         android:minHeight="100dp"
         android:textColorHint="#757575"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bioLabel2"
         app:layout_constraintVertical_bias="0.0"
