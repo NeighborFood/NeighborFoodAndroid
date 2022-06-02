@@ -93,6 +93,9 @@
     <string name="current_orders">Current Orders</string>
     <string name="orderstatus">orderStatus</string>
     <string name="meal_name">Meal Name</string>
+
+    <string name="buyer_mode_title">Buyer</string>
+    <string name="vendor_mode_title">Vendor</string>
     <string name="priceText">Price:</string>
     <string name="pickup_location">Pickup Location</string>
     <string name="allergens">allergens :</string>
