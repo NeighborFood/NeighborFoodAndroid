@@ -2,6 +2,7 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityPastOrderDetailsBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
+import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.BuyerOrderDetailsActivityViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
@@ -27,6 +29,7 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
     private Order order;
     private Meal meal;
     private User vendor;
+    private OrderStatus status;
     private ActivityPastOrderDetailsBinding binding;
     private BuyerOrderDetailsActivityViewModel viewModel;
 
@@ -40,18 +43,24 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
         String orderId = (String) intent.getSerializableExtra("orderId");
         viewModel.getOrderById(orderId).addOnSuccessListener(orderFetched -> {
             order = orderFetched;
+            if(order.getOrderStatus() == OrderStatus.finished) {
+                System.out.println("helloo");
+                binding.ConfirmationButton.setVisibility(View.GONE);
+            }
+            else {
+                binding.ConfirmationButton.setOnClickListener(e -> viewModel.confirmOrder(order)
+                        .addOnSuccessListener(t -> {
+                            Toast.makeText(this, "the order has been delivered", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(BuyerOrderDetailsActivity.this, BuyerOrdersActivity.class);
+                            startActivity(i);
+                        }));
+            }
             fetchOrderDetails();
         });
 
         binding = ActivityPastOrderDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.ConfirmationButton.setOnClickListener(e -> viewModel.confirmOrder(order)
-                .addOnSuccessListener(t -> {
-                    Toast.makeText(this, "the order has been delivered", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(BuyerOrderDetailsActivity.this, BuyerOrdersActivity.class);
-                    startActivity(i);
-                }));
     }
 
     private void fetchOrderDetails() {
