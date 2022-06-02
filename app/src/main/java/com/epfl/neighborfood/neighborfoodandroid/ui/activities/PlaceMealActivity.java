@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -66,7 +67,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_meal_menu);
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.PlaceMealToolbar);
         setSupportActionBar(toolbar);
         imageToUpload = findViewById(R.id.imageToUpload);
         confirmationButton = findViewById(R.id.ConfirmationButton);
@@ -201,5 +202,15 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         dateText.setText(dayOfMonth + "/" + (month + 1) + "/" + year, TextView.BufferType.EDITABLE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) // tool bar Back Icon
+        {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

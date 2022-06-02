@@ -2,10 +2,12 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
@@ -20,6 +22,7 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.Neighbo
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MealActivity extends AppCompatActivity {
 
@@ -35,6 +38,10 @@ public class MealActivity extends AppCompatActivity {
 
         binding = ActivityMealBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Toolbar toolbar = findViewById(R.id.mealActivityToolBar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         Intent intent = this.getIntent();
 
@@ -92,6 +99,15 @@ public class MealActivity extends AppCompatActivity {
             startActivity(mapIntent);
         });
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) // tool bar Back Icon
+        {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
