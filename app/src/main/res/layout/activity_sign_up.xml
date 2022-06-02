@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background1"
+    android:background="@color/teal_700"
     tools:context=".ui.activities.SignUpActivity">
 
   <ImageView
@@ -15,7 +14,7 @@
       android:layout_marginStart="40dp"
       android:layout_marginTop="32dp"
       android:layout_marginEnd="40dp"
-      android:src="@drawable/icon"
+      android:src="@drawable/logo"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/welcome_text" />
@@ -30,7 +29,7 @@
       android:layout_marginEnd="50dp"
       android:gravity="center"
       android:text="@string/welcome_to_neighborfood"
-      android:textColor="@color/purple_200"
+      android:textColor="@color/white"
       android:textSize="35sp"
       android:textStyle="bold"
       app:layout_constraintEnd_toEndOf="parent"
@@ -70,8 +69,8 @@
       android:layout_marginTop="23dp"
       android:layout_marginEnd="162dp"
       android:layout_marginBottom="12dp"
-      android:text="@string/start"
       android:onClick="startScrolling"
+      android:text="@string/start"
       app:layout_constraintBottom_toTopOf="@+id/sign_out_button"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.0"
@@ -85,11 +84,9 @@
       android:layout_marginStart="50dp"
       android:layout_marginTop="37dp"
       android:layout_marginEnd="63dp"
-      android:fontFamily="casual"
       android:text="@string/textview"
-      android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-      android:textSize="16sp"
-      android:textStyle="bold|italic"
+      android:textColor="@color/white"
+      android:textSize="20sp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/imageView" />
