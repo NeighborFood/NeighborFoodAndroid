@@ -2,7 +2,6 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 
-import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;

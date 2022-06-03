@@ -1,92 +1,93 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.fragments;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.VendorOrderListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.FragmentVendorDashboardBinding;
-import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
+import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.PlaceMealActivity;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorOrdersViewModel;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class VendorDashboardFragment extends Fragment {
 
     private FragmentVendorDashboardBinding binding;
     private FloatingActionButton button;
-    private ArrayList<String> nm;
-    private ArrayList<Integer> id;
+    private VendorOrdersViewModel viewModel;
+    private VendorOrderListAdapter unassignedListAdapter;
+    private VendorOrderListAdapter waitingListAdapter;
+    private VendorOrderListAdapter deliveredListAdapter;
+
+    private ArrayList<Order> unassignedOrderList = new ArrayList<>();
+    private ArrayList<Order> waitingOrderList = new ArrayList<>();
+    private ArrayList<Order> deliveredOrderList = new ArrayList<>();
 
     @Override
-    public View onCreateView (LayoutInflater inflater,
-                              ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentVendorDashboardBinding.inflate(getLayoutInflater());
         button = binding.getRoot().findViewById(R.id.addMealButton);
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = null;
-                switch(v.getId()){
-                    case R.id.addMealButton:
-                        intent = new Intent(getActivity(), PlaceMealActivity.class);
-                }
-                startActivity(intent);
+        button.setOnClickListener(v -> {
+            switch (v.getId()) {
+                case R.id.addMealButton:
+                    Intent intent = new Intent(getActivity(), PlaceMealActivity.class);
+                    startActivity(intent);
             }
-                                  }
-
-        );
+        });
         return binding.getRoot();
 
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
-
-        id = new ArrayList<Integer>();
-        id.add(R.drawable.poulet);
-        id.add(R.drawable.couscous);
-        id.add(R.drawable.paella);
-
-        nm = new ArrayList<String>();
-        nm.add("Poulet au miel");
-        nm.add("Couscous aux légumes");
-        nm.add("Paella aux crevettes");
-
-
-
-        String[] mealsShortDes = {"Un délicieux poulet au miel",
-                "Un couscous comme à la maison",
-                "Une paella traditionnelle"};
-        ArrayList<Meal> mealArrayList = new ArrayList<>();
-
-        for (int i = 0; i < mealsShortDes.length; i++) {
-            Meal meal = new Meal(nm.get(i), mealsShortDes[i], "",new ArrayList<>(), 0, new Date());
-            mealArrayList.add(meal);
-        }
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(VendorOrdersViewModel.class);
+        unassignedListAdapter = new VendorOrderListAdapter(getContext(), unassignedOrderList, viewModel);
+        RecyclerView unassignedRecyclerView = binding.unassignedRecyclerView;
+        unassignedRecyclerView.setAdapter(unassignedListAdapter);
+        unassignedRecyclerView.setLayoutManager(layoutManager);
+        viewModel.getUnassignedVendorOrders().addOnSuccessListener(orders -> {
+            unassignedOrderList.addAll(orders);
+            unassignedListAdapter.notifyDataSetChanged();
+        });
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        VendorOrderListAdapter adapter = new VendorOrderListAdapter(getContext(), nm, id);
+        waitingListAdapter = new VendorOrderListAdapter(getContext(), waitingOrderList, viewModel);
+        RecyclerView waitingRecyclerView = binding.waitingRecyclerView;
+        waitingRecyclerView.setAdapter(waitingListAdapter);
+        waitingRecyclerView.setLayoutManager(layoutManager1);
+        viewModel.getWaitingVendorOrders().addOnSuccessListener(orders -> {
+            waitingOrderList.addAll(orders);
+            waitingListAdapter.notifyDataSetChanged();
+        });
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        RecyclerView recyclerView = binding.recyclerView;
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-
-
+        deliveredListAdapter = new VendorOrderListAdapter(getContext(), deliveredOrderList, viewModel);
+        RecyclerView deliveredRecyclerView = binding.deliveredRecyclerView;
+        deliveredRecyclerView.setAdapter(deliveredListAdapter);
+        deliveredRecyclerView.setLayoutManager(layoutManager2);
+        viewModel.getFinishedVendorOrders().addOnSuccessListener(orders -> {
+            deliveredOrderList.addAll(orders);
+            deliveredListAdapter.notifyDataSetChanged();
+        });
     }
-    private void initRecyclerView(){
-
-    }
-
-
 
 }

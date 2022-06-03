@@ -89,11 +89,6 @@
                 android:drawableRight="@android:drawable/ic_media_play"
                 android:text="@string/privacy" />
 
-            <Button
-                android:id="@+id/button7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
 
             <TextView
                 android:id="@+id/accountLabel"

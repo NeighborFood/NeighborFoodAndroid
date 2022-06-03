@@ -3,12 +3,14 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.gridlayout.widget.GridLayout;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,8 +18,10 @@ import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorProfileViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.VendorProfileViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 /**
  * Activity that displays for the user the profile of the vendor with all his details.
@@ -63,11 +67,14 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_profile);
+        Toolbar toolbar = findViewById(R.id.vendorProfileToolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         notificationButton = findViewById(R.id.notificationId);
         notificationButton.setOnClickListener(this);
         findViewById(R.id.messageVendor).setOnClickListener(this);
         linksGridLayout = findViewById(R.id.SocialLinksGridLayout);
-        vmodel = new ViewModelProvider(this, new VendorProfileViewModelFactory((NeighborFoodApplication) this.getApplication())).get(VendorProfileViewModel.class);
+        vmodel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getApplication())).get(VendorProfileViewModel.class);
         String vendorID = getUserIDFromIntent();
         if(vendorID != null){
             vmodel.getUserByID(vendorID).addOnSuccessListener(user->{
@@ -171,6 +178,16 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
         intent.setData(uri);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) // tool bar Back Icon
+        {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

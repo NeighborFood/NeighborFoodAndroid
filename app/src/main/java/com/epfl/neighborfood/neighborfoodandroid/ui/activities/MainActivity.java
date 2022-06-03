@@ -6,56 +6,50 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.AccountFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.ConversationsFragment;
+import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MainFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.MealListFragment;
 import com.epfl.neighborfood.neighborfoodandroid.ui.fragments.VendorDashboardFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "com.epfl.neighborfood.MESSAGE";
     private NavigationBarView navbar;
-    private Button toggleButton;
-    private boolean isVendor;
+    private Class<? extends Fragment> currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setCurrentFragment(MealListFragment.class);
+        currentFragment = MainFragment.class;
+        setCurrentFragment(currentFragment);
         navbar = findViewById(R.id.bottomNavigationView);
         navbar.setOnItemSelectedListener(this::switchFragment);
-        isVendor = false;
-        toggleButton = findViewById(R.id.button2);
-        toggleButton.setOnClickListener(this::toggleView);
-    }
-
-    private void toggleView(View view) {
-        isVendor = !isVendor;
-        switchFragment(navbar.getMenu().findItem(navbar.getSelectedItemId()));
     }
 
     private boolean switchFragment(MenuItem it) {
-
+        Class<? extends Fragment> selectedFragment ;
         switch (it.getItemId()) {
             case R.id.navBarHome:
-                if (isVendor) {
-                    setCurrentFragment(VendorDashboardFragment.class);
-                } else {
-                    setCurrentFragment(MealListFragment.class);
-                }
-                return true;
+                selectedFragment =  MainFragment.class;
+                break;
             case R.id.navBarMessages:
-                setCurrentFragment(ConversationsFragment.class);
-                return true;
+                selectedFragment =  ConversationsFragment.class;
+                break;
             case R.id.navBarAccount:
-                setCurrentFragment(AccountFragment.class);
-                return true;
+                selectedFragment =  AccountFragment.class;
+                break;
             default:
                 return false;
         }
+        if(currentFragment != selectedFragment){
+            setCurrentFragment(selectedFragment);
+            currentFragment = selectedFragment;
+        }
+        return true;
     }
 
     /**
@@ -63,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param fragment
      */
-    private void setCurrentFragment(Class fragment) {
+    private void setCurrentFragment(Class<? extends Fragment> fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment, null).commit();
 
     }

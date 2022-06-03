@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="286dp"
+        android:layout_height="99dp"
         android:layout_centerInParent="true"
         app:cardCornerRadius="4dp"
         app:cardElevation="1dp"
@@ -15,31 +16,51 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="108dp">
 
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image_view"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                android:layout_centerHorizontal="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/paella" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="183dp"
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/image_view"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_alignStart="@+id/image_view"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="128dp"
+                android:layout_marginTop="-97dp"
+                android:layout_marginEnd="30dp"
                 android:autoSizeMaxTextSize="15sp"
                 android:autoSizeMinTextSize="8sp"
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
-                android:text="Meal Name"
-                android:textColor="#000" />
+                android:text="@string/meal_name"
+                android:textColor="#000"
+                android:textSize="20sp"
+                tools:targetApi="o" />
+
+            <TextView
+                android:id="@+id/orderStatus"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/name"
+                android:layout_alignStart="@+id/name"
+                android:layout_alignEnd="@+id/name"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="-6dp"
+                android:text="@string/orderstatus" />
 
         </RelativeLayout>
 

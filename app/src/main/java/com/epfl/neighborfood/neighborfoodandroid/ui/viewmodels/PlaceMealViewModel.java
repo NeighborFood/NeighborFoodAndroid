@@ -2,7 +2,6 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 
-import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;

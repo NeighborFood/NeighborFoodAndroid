@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,9 +28,8 @@ import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
-import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.PlaceMealViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.PlaceMealViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.epfl.neighborfood.neighborfoodandroid.util.ImageUtil;
 import com.google.android.gms.tasks.Task;
 
@@ -51,7 +51,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     ImageView imageToUpload;
     Map<ImageView, Allergen> allergensIcons;
-    Button confirmationButton;
+    Button confirmationButton, mapButton;
     ImageButton addImageButton, calendarButton;
     EditText descriptionText, priceText, mealNameText, dateText, timeText;
     List<Allergen> allergensInMeal;
@@ -67,12 +67,13 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_meal_menu);
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.PlaceMealToolbar);
         setSupportActionBar(toolbar);
         imageToUpload = findViewById(R.id.imageToUpload);
         confirmationButton = findViewById(R.id.ConfirmationButton);
+        mapButton = findViewById(R.id.locationButton);
         addImageButton = findViewById(R.id.addPictureButton);
-        vmodel = new ViewModelProvider(this, new PlaceMealViewModelFactory((NeighborFoodApplication) this.getApplication())).get(PlaceMealViewModel.class);
+        vmodel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getApplication())).get(PlaceMealViewModel.class);
 
         allergensInMeal = new ArrayList<>();
         allergensIcons = new HashMap<>();
@@ -99,6 +100,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         calendarButton.setOnClickListener(this);
         addImageButton.setOnClickListener(this);
         confirmationButton.setOnClickListener(this);
+        mapButton.setOnClickListener(this);
 
         // This is to create a list that need to not be empty and be checked for it
         cannotBeEmptyFields = new ArrayList<>();
@@ -180,6 +182,10 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                 );
                 datePickerDialog.show();
                 break;
+            case R.id.locationButton:
+                Intent mapIntent = new Intent(PlaceMealActivity.this, PlacePinActivity.class);
+                startActivity(mapIntent);
+                break;
         }
     }
 
@@ -196,5 +202,15 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         dateText.setText(dayOfMonth + "/" + (month + 1) + "/" + year, TextView.BufferType.EDITABLE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) // tool bar Back Icon
+        {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

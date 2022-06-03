@@ -22,56 +22,127 @@
                 android:id="@+id/mealName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/couscous"
-                app:layout_constraintEnd_toEndOf="@+id/mealImage"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="@+id/mealImage"
-                app:layout_constraintTop_toBottomOf="@+id/mealImage" />
+                android:layout_marginTop="28dp"
+                android:text="@string/textview"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buyerPastOrdersToolBar" />
 
-            <Button
-                android:id="@+id/go_vendor_profile_id"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/buyerPastOrdersToolBar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/see_vendor_profile"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.023" />
+                app:navigationIcon="?attr/homeAsUpIndicator" />
+
+            <TextView
+                android:id="@+id/vendorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/ConfirmationButton"
+                app:layout_constraintEnd_toEndOf="@+id/go_vendor_profile_id"
+                app:layout_constraintHorizontal_bias="0.531"
+                app:layout_constraintStart_toStartOf="@+id/go_vendor_profile_id"
+                app:layout_constraintTop_toBottomOf="@+id/go_vendor_profile_id"
+                app:layout_constraintVertical_bias="0.134" />
+
+            <ImageView
+                android:id="@+id/go_vendor_profile_id"
+                android:layout_width="129dp"
+                android:layout_height="136dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/profile_picture"
+                android:nestedScrollingEnabled="false"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="@+id/VendorProfileText"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/VendorProfileText"
+                app:layout_constraintTop_toBottomOf="@+id/VendorProfileText"
+                app:srcCompat="@drawable/gordon_ramsey_pic" />
+
+            <ImageView
+                android:id="@+id/pickupLocation"
+                android:layout_width="77dp"
+                android:layout_height="81dp"
+                android:contentDescription="@string/pickup_location"
+                android:nestedScrollingEnabled="false"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@+id/go_vendor_profile_id"
+                app:layout_constraintEnd_toEndOf="@+id/pickupLocationText"
+                app:layout_constraintStart_toStartOf="@+id/pickupLocationText"
+                app:layout_constraintTop_toBottomOf="@+id/pickupLocationText"
+                app:srcCompat="@drawable/pickup_map" />
 
             <ImageView
                 android:id="@+id/mealImage"
                 android:layout_width="229dp"
                 android:layout_height="147dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:contentDescription="@string/meal1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/go_vendor_profile_id"
+                app:layout_constraintTop_toBottomOf="@+id/mealName"
                 app:srcCompat="@drawable/couscous" />
 
             <TextView
                 android:id="@+id/mealDesc"
                 android:layout_width="286dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/meal_description"
                 app:layout_constraintEnd_toEndOf="@+id/mealImage"
                 app:layout_constraintHorizontal_bias="0.508"
                 app:layout_constraintStart_toStartOf="@+id/mealImage"
-                app:layout_constraintTop_toBottomOf="@+id/mealName" />
+                app:layout_constraintTop_toBottomOf="@+id/mealImage" />
 
             <Button
                 android:id="@+id/ConfirmationButton"
                 android:layout_width="183dp"
                 android:layout_height="56dp"
+                android:layout_marginBottom="32dp"
                 android:text="@string/confirm_delivery"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/VendorProfileText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/vendor_profile"
+                android:textColor="#9C27B0"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.944" />
+                app:layout_constraintTop_toBottomOf="@+id/mealDesc" />
+
+            <TextView
+                android:id="@+id/pickupLocationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="44dp"
+                android:text="@string/pickup_location"
+                android:textColor="#9C27B0"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/VendorProfileText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+                app:layout_constraintStart_toEndOf="@+id/VendorProfileText"
+                app:layout_constraintTop_toTopOf="@+id/VendorProfileText"
+                app:layout_constraintVertical_bias="0.0" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

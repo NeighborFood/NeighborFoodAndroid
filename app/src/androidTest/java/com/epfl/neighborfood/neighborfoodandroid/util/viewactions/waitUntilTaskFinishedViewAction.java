@@ -1,4 +1,4 @@
-package com.epfl.neighborfood.neighborfoodandroid.util.matchers;
+package com.epfl.neighborfood.neighborfoodandroid.util.viewactions;
 
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 

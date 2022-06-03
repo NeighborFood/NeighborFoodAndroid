@@ -2,25 +2,25 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.BuyerOrderListAdapter;
-import com.epfl.neighborfood.neighborfoodandroid.adapters.VendorOrderListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.BuyerOrdersActivityViewModel;
-import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.BuyerOrdersViewModelFactory;
+import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.epfl.neighborfood.neighborfoodandroid.util.Triplet;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BuyerOrdersActivity extends AppCompatActivity {
     private ListView listView;
@@ -33,7 +33,11 @@ public class BuyerOrdersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_orders);
 
-        viewModel = new ViewModelProvider(this, new BuyerOrdersViewModelFactory((NeighborFoodApplication) this.getApplication())).get(BuyerOrdersActivityViewModel.class);
+        Toolbar toolbar = findViewById(R.id.buyerOrdersToolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getApplication())).get(BuyerOrdersActivityViewModel.class);
 
         buyerOrderListAdapter = new BuyerOrderListAdapter(this, buyerOrderList);
 
@@ -57,6 +61,15 @@ public class BuyerOrdersActivity extends AppCompatActivity {
             intent.putExtra("orderId", buyerOrderList.get(position).getFirst().getOrderId());
             startActivity(intent);
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) // tool bar Back Icon
+        {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
