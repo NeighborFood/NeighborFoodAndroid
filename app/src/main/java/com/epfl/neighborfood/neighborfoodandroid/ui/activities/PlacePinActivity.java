@@ -189,7 +189,8 @@ public class PlacePinActivity extends AppCompatActivity
             case R.id.button:
                 if (lastKnownLocation != null) {
                     final Intent data = new Intent();
-                    data.putExtra("Location",lastKnownLocation);
+                    data.putExtra("longitude",chosenLng);
+                    data.putExtra("latitude",chosenLat);
                     setResult(Activity.RESULT_OK, data);
                     finish();
                 }

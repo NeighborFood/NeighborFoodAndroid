@@ -127,7 +127,9 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == RESULT_OK) {
-                            location = new PickupLocation((Location) result.getData().getExtras().get("Location"));
+                            Double chosenLon = result.getData().getDoubleExtra("longitude",0);
+                            Double chosenLat = result.getData().getDoubleExtra("latitude",0);
+                            location = new PickupLocation(chosenLat,chosenLon);
                         }
                     }
                 }
