@@ -1,5 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
+import android.location.Location;
+
 import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -16,17 +18,17 @@ public class Order extends Model {
     private String vendorId;
     private String buyerId;
     private double price;
+    private PickupLocation location;
 
 
-    public Order(String s, Date time, OrderStatus b, String s1, String s2){
-    }
-    public Order(String orderId, String mealId, Date orderDate, OrderStatus orderStatus, String VendorId, String buyerId) {
+    public Order(String orderId, String mealId, Date orderDate, OrderStatus orderStatus, String VendorId, String buyerId,PickupLocation location) {
         this.orderId = orderId;
         this.mealId = mealId;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
         this.vendorId = VendorId;
         this.buyerId = buyerId;
+        this.location = location;
     }
     public Order(){}
 
@@ -53,6 +55,10 @@ public class Order extends Model {
     public String getBuyerId() {
         return buyerId;
     }
+
+    public PickupLocation getLocation(){return location; };
+
+    public void setLocation(PickupLocation location) { this.location = location; }
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;

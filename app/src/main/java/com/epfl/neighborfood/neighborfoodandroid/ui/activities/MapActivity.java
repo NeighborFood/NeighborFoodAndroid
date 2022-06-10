@@ -63,7 +63,7 @@ public class MapActivity extends AppCompatActivity
         this.map = googleMap;
         // Add meal marker
         // and move the map's camera to the same location.
-        LatLng pickupLocation = new LatLng(Double.parseDouble(getLatFromIntent()), Double.parseDouble(getLonFromIntent()));
+        LatLng pickupLocation = new LatLng(getLatFromIntent(), getLonFromIntent());
         googleMap.addMarker(new MarkerOptions()
                 .position(pickupLocation)
                 .title("Pickup Location"));
@@ -157,18 +157,18 @@ public class MapActivity extends AppCompatActivity
         lastKnownLocation=location;
     }
 
-    private String getLonFromIntent(){
+    private Double getLonFromIntent(){
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            return extras.getString("longitude");
+            return extras.getDouble("longitude");
         }
         return null;
     }
 
-    private String getLatFromIntent(){
+    private Double getLatFromIntent(){
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            return extras.getString("latitude");
+            return extras.getDouble("latitude");
         }
         return null;
     }

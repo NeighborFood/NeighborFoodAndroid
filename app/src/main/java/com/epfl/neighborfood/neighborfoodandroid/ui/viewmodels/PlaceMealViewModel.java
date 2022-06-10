@@ -1,10 +1,13 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels;
 
+import android.location.Location;
+
 import androidx.lifecycle.ViewModel;
 
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
+import com.epfl.neighborfood.neighborfoodandroid.models.PickupLocation;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
@@ -39,13 +42,14 @@ public class    PlaceMealViewModel extends ViewModel {
      * @param mealId : the mealId corresponding to the new order
      * @return the completable task containing orderId
      */
-    public Task<String> createOrder(String mealId,double price){
+    public Task<String> createOrder(String mealId, PickupLocation location,double price){
         Order order = new Order();
         order.setMealId(mealId);
         order.setPrice(price);
         order.setVendorId(authRepository.getAuthUser().getId());
         order.setBuyerId("");
         order.setOrderStatus(OrderStatus.unassigned);
+        order.setLocation(location);
         order.setOrderDate(Calendar.getInstance().getTime());
         return orderRepository.makeOrder(order);
     }

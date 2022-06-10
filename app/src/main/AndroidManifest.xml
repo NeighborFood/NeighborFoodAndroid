@@ -24,7 +24,7 @@
         android:requestLegacyExternalStorage="true">
         <service
             android:name="com.epfl.neighborfood.neighborfoodandroid.services.notifications.FirebaseNotificationService"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -37,7 +37,7 @@
         <activity
             android:name=".ui.activities.ProfileEditingActivity"
             android:label="Edit Profile"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.activities.PlaceMealActivity"
             android:exported="true"
@@ -45,12 +45,12 @@
         <activity
             android:name=".ui.activities.MealActivity"
             android:label="Meal Details"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".ui.activities.ChatRoomActivity"
             android:label="Chat Room"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.activities.BuyerOrdersActivity"
             android:label="Your Orders"
