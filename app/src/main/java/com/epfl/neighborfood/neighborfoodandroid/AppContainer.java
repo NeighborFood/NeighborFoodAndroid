@@ -6,18 +6,17 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.utils.ObjectUtils;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.Authenticator;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.ConversationRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
+import com.epfl.neighborfood.neighborfoodandroid.services.location.LocationService;
 import com.epfl.neighborfood.neighborfoodandroid.services.notifications.NotificationService;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,6 +29,7 @@ public abstract class AppContainer {
     private UserRepository userRepo;
     private OrderRepository orderRepo;
     private NotificationService notificationService;
+    private LocationService locationService;
     /**
      * getter for the Auth Repo of the app
      *
@@ -104,16 +104,23 @@ public abstract class AppContainer {
     protected void setConversationRepo(ConversationRepository conversationRepository){
         this.conversationRepo = conversationRepository;
     }
+    public LocationService getLocationService(){
+        return locationService;
+    }
+    protected void setLocationService(LocationService locationService){
+        this.locationService = locationService;
+    }
     /**
      * @param dep the app's Database instance
      * @param authenticator the app's authenticator
      * @param notificationService the app's notification service
      *
      */
-    protected AppContainer(Context context, Database dep, Authenticator authenticator, NotificationService notificationService) {
-        DatabaseFactory.setDependency(dep);
-        AuthenticatorFactory.setDependency(authenticator);
+    protected AppContainer(Context context, Database dep, Authenticator authenticator, NotificationService notificationService,LocationService locationService) {
+        DatabaseSingleton.setDependency(dep);
+        AuthenticatorSingleton.setDependency(authenticator);
         this.notificationService = notificationService;
+        this.locationService = locationService;
         this.authRepo = new AuthRepository();
         this.userRepo = new UserRepository();
         this.mealRepo = new MealRepository();

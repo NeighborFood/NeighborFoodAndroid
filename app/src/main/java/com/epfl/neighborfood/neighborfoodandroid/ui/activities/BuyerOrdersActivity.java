@@ -26,7 +26,7 @@ public class BuyerOrdersActivity extends AppCompatActivity {
     private ListView listView;
     private BuyerOrdersActivityViewModel viewModel;
     private BuyerOrderListAdapter buyerOrderListAdapter;
-    private ArrayList<Triplet<Order, Meal, User>> buyerOrderList = new ArrayList<Triplet<Order, Meal, User>>();
+    private final ArrayList<Triplet<Order, Meal, User>> buyerOrderList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,6 @@ public class BuyerOrdersActivity extends AppCompatActivity {
 
             for (Order order :
                     orderList) {
-                System.out.println(order.getBuyerId());
                 viewModel.getMealById(order.getMealId()).addOnSuccessListener(meal ->
                         viewModel.getUserById(order.getVendorId()).addOnSuccessListener(vendor ->
                                 buyerOrderListAdapter.add(Triplet.of(order, meal, vendor))));
@@ -54,7 +53,7 @@ public class BuyerOrdersActivity extends AppCompatActivity {
         });
 
 
-        listView = (ListView) findViewById(R.id.order_list_view);
+        listView = findViewById(R.id.order_list_view);
         listView.setAdapter(buyerOrderListAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(BuyerOrdersActivity.this, BuyerOrderDetailsActivity.class);
@@ -62,6 +61,7 @@ public class BuyerOrdersActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) // tool bar Back Icon

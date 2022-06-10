@@ -12,10 +12,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.epfl.neighborfood.neighborfoodandroid.AppContainerTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.DummyAuthenticator;
 import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
-import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 
 import org.junit.After;
@@ -24,22 +23,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 
 @RunWith(AndroidJUnit4.class)
 public class ChatRoomActivityTest {
-    private User authenticadted = new User("0","me@epfl.ch","me", "notyou","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon);
-    private User other = new User("1","other@epfl.ch","George", "Other","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon);
+    private final User authenticadted = new User("0","me@epfl.ch","me", "notyou","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon);
+    private final User other = new User("1","other@epfl.ch","George", "Other","android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon);
 
     @Before
     public void setUp() throws Exception {
         NeighborFoodApplication.appContainer = new AppContainerTestImplementation();
-        AuthenticatorFactory.setDependency(DummyAuthenticator.getInstance());
+        AuthenticatorSingleton.setDependency(DummyAuthenticator.getInstance());
         DummyAuthenticator.getInstance().logInWithGoogleAccount(null);
         //DummyAuthenticator.getInstance().setAuthUser(new AuthenticatorUser(authenticadted.getId(), authenticadted.getEmail(),authenticadted.getFirstName(),authenticadted.getLastName(),authenticadted.getProfilePictureURI()) {
        // });

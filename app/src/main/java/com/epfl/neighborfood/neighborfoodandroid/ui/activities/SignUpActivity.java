@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -38,11 +37,6 @@ public class SignUpActivity extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
     private boolean newUser;
 
-
-    // a request code for the sign in intent
-    @VisibleForTesting
-    public final static int RC_SIGN_IN = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +44,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         startButton = findViewById(R.id.start_button);
         guideTextView = findViewById(R.id.guide_textView);
-
-
         initSignInButton();
         initSignOutButton();
         initAuthViewModel();
@@ -81,9 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .build();
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    activityResult(result.getResultCode(), result.getData());
-                });
+                result -> activityResult(result.getResultCode(), result.getData()));
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
     }
 
@@ -93,10 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
         viewModel.handleGoogleLoginResponse(resultCode, data).addOnSuccessListener(newUser->{
             this.newUser = newUser;
             updateUI(viewModel.getCurrentAuthUser());
-        }).addOnFailureListener(e->{
-            Toast.makeText(this, R.string.login_failure, Toast.LENGTH_SHORT).show();
-            System.out.println(e.toString());
-        } );
+        }).addOnFailureListener(e-> Toast.makeText(this, R.string.login_failure, Toast.LENGTH_SHORT).show());
     }
 
 

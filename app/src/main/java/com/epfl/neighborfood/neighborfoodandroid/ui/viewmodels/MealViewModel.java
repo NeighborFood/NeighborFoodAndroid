@@ -13,10 +13,10 @@ import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
 import com.google.android.gms.tasks.Task;
 
 public class MealViewModel extends ViewModel {
-    private MealRepository mealRepository;
-    private OrderRepository orderRepository;
-    private UserRepository userRepository;
-    private AuthRepository authRepository;
+    private final MealRepository mealRepository;
+    private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
 
     public MealViewModel(OrderRepository orderRepo, MealRepository mealRepo, UserRepository userRepo, AuthRepository authRepo) {
         orderRepository = orderRepo;
@@ -25,29 +25,31 @@ public class MealViewModel extends ViewModel {
         authRepository = authRepo;
     }
 
-    /*
-       fetches order by id
-    */
+    /**
+     * fetches order by id
+     *
+     * @param id id of meal
+     * @return a task containing the order fetched
+     */
     public Task<Order> getOrderById(String id) {
         return orderRepository.getOrderById(id);
     }
 
-    /*
-       fetches meal by id
-    */
+    /**
+     * fetches meal by id
+     *
+     * @param id id of meal
+     * @return a task containing the meal fetched
+     */
     public Task<Meal> getMealById(String id) {
         return mealRepository.getMealById(id);
     }
 
-    /*
-       fetches user by id
-    */
-    public Task<User> getVendorById(String id) {
-        return userRepository.getUserById(id);
-    }
-
-    /*
-        updates the order with its new attributes when he gets assigned
+    /**
+     * updates the order with its new attributes when he gets assigned
+     *
+     * @param order order to be assigned
+     * @return task of the assigning of the order
      */
     public Task<Void> assignOrder(Order order) {
         order.setBuyerId(getCurrentUser().getId());
@@ -55,9 +57,11 @@ public class MealViewModel extends ViewModel {
         return orderRepository.updateOrder(order);
     }
 
-    /*
-       fetches current user.
-    */
+    /**
+     * fetches current authenticated user
+     *
+     * @return the current User fetched
+     */
     public User getCurrentUser() {
         return authRepository.getCurrentUser();
     }

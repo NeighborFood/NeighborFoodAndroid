@@ -4,12 +4,14 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Model;
 
 /**
  * A database query result
+ *
  * @author Mohamed Yassine Boukhari
  */
 public interface DocumentSnapshot {
 
     /**
      * fetches a specific field from the query result
+     *
      * @param field the name of the field to be fetched
      * @return
      */
@@ -18,6 +20,7 @@ public interface DocumentSnapshot {
 
     /**
      * converts a query result to a model
+     *
      * @param clazz the class to convert the query result to
      * @param <T>
      * @return the model after conversion

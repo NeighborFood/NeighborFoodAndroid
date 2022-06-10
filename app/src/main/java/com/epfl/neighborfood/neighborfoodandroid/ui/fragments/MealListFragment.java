@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.adapters.MealListAdapter;
 import com.epfl.neighborfood.neighborfoodandroid.databinding.FragmentMealListBinding;
+import com.epfl.neighborfood.neighborfoodandroid.databinding.PopupsortingdialogBinding;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MealActivity;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealListViewModel;
@@ -24,9 +26,11 @@ import java.util.ArrayList;
 public class MealListFragment extends Fragment {
 
     private FragmentMealListBinding binding;
+    private PopupsortingdialogBinding dialogBinding;
     private MealListViewModel viewModel;
     private MealListAdapter listAdapter;
-    private ArrayList<Order> orderMealList = new ArrayList<Order>();
+    private final ArrayList<Order> orderMealList = new ArrayList<>();
+    private AlertDialog sortingDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -37,12 +41,14 @@ public class MealListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        ((NeighborFoodApplication) requireActivity().getApplication()).getAppContainer().getLocationService().requestLocationPermission(getActivity());
         viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(MealListViewModel.class);
         listAdapter = new MealListAdapter(getActivity(), orderMealList, viewModel);
-        viewModel.getAllUnassignedOrders().addOnSuccessListener(orders->{
+        viewModel.getAllUnassignedOrders().observe(getViewLifecycleOwner(), orders -> {
+
             listAdapter.clear();
-            for (Order order: orders) {
+            for (Order order : orders) {
                 if (!order.getVendorId().equals(viewModel.getCurrentUser().getId()))
                     listAdapter.add(order);
             }
@@ -56,6 +62,28 @@ public class MealListFragment extends Fragment {
             i.putExtra("mealId", orderMealList.get(position).getMealId());
             startActivity(i);
         });
+        createNewSortingDialog();
+        binding.mealListSortingButton.setOnClickListener(v -> {
+            if (sortingDialog != null) {
+                dialogBinding.radioGroup.check((dialogBinding.radioGroup.getChildAt(viewModel.getOrderingIndex())).getId());
+                sortingDialog.show();
+            }
+        });
+    }
+
+    public void createNewSortingDialog() {
+        dialogBinding = PopupsortingdialogBinding.inflate(getLayoutInflater());
+        AlertDialog.Builder sortingDialogBuilder = new AlertDialog.Builder(requireContext());
+        sortingDialogBuilder.setView(dialogBinding.getRoot());
+        sortingDialog = sortingDialogBuilder.create();
+        dialogBinding.radioGroup.check((dialogBinding.radioGroup.getChildAt(viewModel.getOrderingIndex())).getId());
+        dialogBinding.saveButtonPopup.setOnClickListener(bv -> {
+            int index = dialogBinding.radioGroup.indexOfChild(sortingDialog.findViewById(dialogBinding.radioGroup.getCheckedRadioButtonId()));
+            viewModel.setOrdering(index);
+            sortingDialog.dismiss();
+        });
+        dialogBinding.cancelButtonPopup.setOnClickListener(bv -> sortingDialog.dismiss());
+
     }
 
 

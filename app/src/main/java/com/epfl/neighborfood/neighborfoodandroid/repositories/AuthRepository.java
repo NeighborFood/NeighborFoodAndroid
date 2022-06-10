@@ -1,14 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.repositories;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-
-import com.epfl.neighborfood.neighborfoodandroid.authentication.Authenticator;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.Database;
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorSingleton;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -26,32 +19,36 @@ public class AuthRepository {
      */
     public AuthRepository() {
         //When the authentication status of the user changes,
-        AuthenticatorFactory.getDependency().addAuthStateChangeListener(() -> {
-            if(AuthenticatorFactory.getDependency().getCurrentAuthUser() != null){
+        AuthenticatorSingleton.getDependency().addAuthStateChangeListener(() -> {
+            if (AuthenticatorSingleton.getDependency().getCurrentAuthUser() != null) {
                 // we add listeners to the database so that everytime the user is changed on the database,
                 // we have the most "fresh" version of the user
-                DatabaseFactory.getDependency()
-                        .addChangesListener(userCollection, AuthenticatorFactory.getDependency().getCurrentAuthUser().getId(),
+                DatabaseSingleton.getDependency()
+                        .addChangesListener(userCollection, AuthenticatorSingleton.getDependency().getCurrentAuthUser().getId(),
                                 newModel -> user = newModel.toModel(User.class));
                 // and we also fetch the currently authenticated user (if any) so that we have the user right away
-                DatabaseFactory.getDependency()
-                        .fetch(userCollection,AuthenticatorFactory.getDependency().getCurrentAuthUser().getId())
-                        .addOnSuccessListener(fetchedUser->user = fetchedUser.toModel(User.class));
+                DatabaseSingleton.getDependency()
+                        .fetch(userCollection, AuthenticatorSingleton.getDependency().getCurrentAuthUser().getId())
+                        .addOnSuccessListener(fetchedUser -> user = fetchedUser.toModel(User.class));
             }
         });
     }
 
-    /** gets the authenticated user from the authenticator system
+    /**
+     * gets the authenticated user from the authenticator system
+     *
      * @return the authenticator user, null if there's no authenticated user
      */
-    public AuthenticatorUser getAuthUser(){
-        return AuthenticatorFactory.getDependency().getCurrentAuthUser();
+    public AuthenticatorUser getAuthUser() {
+        return AuthenticatorSingleton.getDependency().getCurrentAuthUser();
     }
 
-    /** gets the currently authenticated user from the application
+    /**
+     * gets the currently authenticated user from the application
+     *
      * @return the user, null if no user is authenticated
      */
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         return user;
     }
 
@@ -59,7 +56,7 @@ public class AuthRepository {
      * requests the authenticator to log out the current usser
      */
     public void logOut() {
-        AuthenticatorFactory.getDependency().logOut();
+        AuthenticatorSingleton.getDependency().logOut();
     }
 
 
@@ -70,8 +67,8 @@ public class AuthRepository {
      * @return the task that may complete, with the authenticated user
      */
     public Task<AuthenticatorUser> logInWithGoogleAccount(GoogleSignInAccount googleSignInAccount) {
-        return AuthenticatorFactory.getDependency().logInWithGoogleAccount(googleSignInAccount)
-                .continueWith(task-> AuthenticatorFactory.getDependency().getCurrentAuthUser());
+        return AuthenticatorSingleton.getDependency().logInWithGoogleAccount(googleSignInAccount)
+                .continueWith(task -> AuthenticatorSingleton.getDependency().getCurrentAuthUser());
     }
 
 

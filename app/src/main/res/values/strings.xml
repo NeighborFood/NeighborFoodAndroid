@@ -76,9 +76,9 @@
     <string name="unsubscribe_success">Successfully unsubscribed from %1$s</string>
     <string name="load_failure">Failed to load data :(</string>
     <string name="login_failure">Failed to login :(</string>
-    <string name="welcome_message">Welcome, %1$s! We are glad that you joined us! \n Click on the button to setup your profile</string>
+    <string name="welcome_message">Welcome, %1$s! We are glad that you joined us! \n Click on the button to start navigating</string>
     <string name="welcome_back_message">Welcome back, %1$s! Fresh meals are right at the tip of your fingers, click start to see them!</string>
-    <string name="finish_profile">Set up profile</string>
+    <string name="finish_profile">Discover the app</string>
     <string name="connection_invitation">Please connect via your google account!</string>
     <string name="twitterLink">https://twitter.com/</string>
     <string name="InstagramLink">https://www.instagram.com/</string>
@@ -103,5 +103,11 @@
     <string name="unassigned_orders">Unassigned Orders</string>
     <string name="waiting_for_pickup">Waiting for pickup</string>
     <string name="delivered">Delivered</string>
+    <string name="distance">Distance</string>
+    <string name="price">Price</string>
+    <string name="sortby">Sort By:</string>
+    <string name="filter">filter</string>
+    <string name="price_tag">%1$.2f chf</string>
+    <string name="distance_tag">%1$s m</string>
 
 </resources>

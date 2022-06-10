@@ -33,7 +33,7 @@ public class MealTest {
     }
 
     private Meal getNewMeal() {
-        return new Meal(name, shortDescription, "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon, allergens, price, null);
+        return new Meal(name, shortDescription, "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon, allergens, null);
     }
 
 
@@ -63,11 +63,7 @@ public class MealTest {
         assertArrayEquals(allergens.toArray(), meal.getAllergens().toArray());
     }
 
-    @Test
-    public void getPrice() {
-        Meal meal = getNewMeal();
-        assertEquals(price, meal.getPrice(), 0.1);
-    }
+
 
     @Test
     public void getImageId() {

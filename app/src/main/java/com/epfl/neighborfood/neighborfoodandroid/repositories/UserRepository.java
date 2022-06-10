@@ -1,7 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.repositories;
 
-import com.epfl.neighborfood.neighborfoodandroid.database.Database;
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -15,10 +14,12 @@ public class UserRepository {
     /**
      * Creates an instance of the User Repository
      */
-    public UserRepository(){
+    public UserRepository() {
     }
 
-    /** Fetches a user from the database, by the user's id
+    /**
+     * Fetches a user from the database, by the user's id
+     *
      * @param id : the id of the user
      * @return the task that will contain the result of the query
      */
@@ -27,7 +28,7 @@ public class UserRepository {
         if (id == null) {
             return Tasks.forException(new IllegalArgumentException("The user ID cannot be null"));
         }
-        return  DatabaseFactory.getDependency().fetch(userDataCollectionPath, id).continueWith(task -> {
+        return DatabaseSingleton.getDependency().fetch(userDataCollectionPath, id).continueWith(task -> {
             if (task.isSuccessful()) {
                 return task.getResult().toModel(User.class);
             }
@@ -35,27 +36,31 @@ public class UserRepository {
         });
     }
 
-    /** Updates the user in the database, the user is created if it does not exist on the db
+    /**
+     * Updates the user in the database, the user is created if it does not exist on the db
+     *
      * @param user the user that will be added to the database
      * @return the task that succeeds or fails
      */
-    public Task<Void> updateUser(User user){
-        if(user == null){ // return a failed task if the given user is not valid
+    public Task<Void> updateUser(User user) {
+        if (user == null) { // return a failed task if the given user is not valid
             return Tasks.forException(new IllegalArgumentException("Provided user is null"));
         }
         //push the user to the database
-        return  DatabaseFactory.getDependency().set(userDataCollectionPath,user.getId(),user).continueWith(task->null);
+        return DatabaseSingleton.getDependency().set(userDataCollectionPath, user.getId(), user).continueWith(task -> null);
     }
 
-    /** Deletes a user from the database
+    /**
+     * Deletes a user from the database
+     *
      * @param id : the user to Delete
      * @return the task that may succeed or fail
      */
-    public Task<Void> deleteUser(String id){
+    public Task<Void> deleteUser(String id) {
         if (id == null) {
             return Tasks.forException(new IllegalArgumentException("The user ID cannot be null"));
         }
-        return DatabaseFactory.getDependency().delete(userDataCollectionPath, id);
+        return DatabaseSingleton.getDependency().delete(userDataCollectionPath, id);
     }
 
 }

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
@@ -22,8 +22,17 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ConversationListAdapter extends ArrayAdapter {
+/**
+ * Adapter class for conversations list
+ */
+public class ConversationListAdapter extends ArrayAdapter <Pair<Conversation, User>>{
     private final ConversationsViewModel viewModel;
+
+    /**
+     * @param context
+     * @param conversationsArrayList list of conversations
+     * @param viewModel              viewModel of conversations
+     */
     public ConversationListAdapter(Context context, ArrayList<Pair<Conversation, User>> conversationsArrayList, ConversationsViewModel viewModel) {
         super(context, R.layout.fragment_conversations, conversationsArrayList);
         this.viewModel = viewModel;
@@ -32,7 +41,7 @@ public class ConversationListAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Pair<Conversation,User> conv = (Pair<Conversation,User>) getItem(position);
+        Pair<Conversation, User> conv = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_conversation
@@ -50,7 +59,7 @@ public class ConversationListAdapter extends ArrayAdapter {
 
         if (last != null) {
             txt = last.getContent();
-            String currUserID = AuthenticatorFactory.getDependency().getCurrentAuthUser().getId();
+            String currUserID = AuthenticatorSingleton.getDependency().getCurrentAuthUser().getId();
             if (last.getSender().equals(currUserID)) {
                 txt = "You : " + txt;
             }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,27 +29,24 @@ import java.util.ArrayList;
 public class VendorDashboardFragment extends Fragment {
 
     private FragmentVendorDashboardBinding binding;
-    private FloatingActionButton button;
-    private VendorOrdersViewModel viewModel;
     private VendorOrderListAdapter unassignedListAdapter;
     private VendorOrderListAdapter waitingListAdapter;
     private VendorOrderListAdapter deliveredListAdapter;
 
-    private ArrayList<Order> unassignedOrderList = new ArrayList<>();
-    private ArrayList<Order> waitingOrderList = new ArrayList<>();
-    private ArrayList<Order> deliveredOrderList = new ArrayList<>();
+    private final ArrayList<Order> unassignedOrderList = new ArrayList<>();
+    private final ArrayList<Order> waitingOrderList = new ArrayList<>();
+    private final ArrayList<Order> deliveredOrderList = new ArrayList<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
+    public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentVendorDashboardBinding.inflate(getLayoutInflater());
-        button = binding.getRoot().findViewById(R.id.addMealButton);
+        FloatingActionButton button = binding.getRoot().findViewById(R.id.addMealButton);
         button.setOnClickListener(v -> {
-            switch (v.getId()) {
-                case R.id.addMealButton:
-                    Intent intent = new Intent(getActivity(), PlaceMealActivity.class);
-                    startActivity(intent);
+            if (v.getId() == R.id.addMealButton) {
+                Intent intent = new Intent(getActivity(), PlaceMealActivity.class);
+                startActivity(intent);
             }
         });
         return binding.getRoot();
@@ -57,9 +55,9 @@ public class VendorDashboardFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(VendorOrdersViewModel.class);
+        VendorOrdersViewModel viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(VendorOrdersViewModel.class);
         unassignedListAdapter = new VendorOrderListAdapter(getContext(), unassignedOrderList, viewModel);
         RecyclerView unassignedRecyclerView = binding.unassignedRecyclerView;
         unassignedRecyclerView.setAdapter(unassignedListAdapter);

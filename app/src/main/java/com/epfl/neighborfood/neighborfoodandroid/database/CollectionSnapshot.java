@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * A collection of query results
+ *
  * @author Mohamed Yassine Boukhari
  */
 

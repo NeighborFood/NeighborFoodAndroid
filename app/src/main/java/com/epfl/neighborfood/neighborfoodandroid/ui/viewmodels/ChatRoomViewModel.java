@@ -21,37 +21,66 @@ public class ChatRoomViewModel extends ViewModel {
     private final AuthRepository authRepository;
     private final ConversationRepository conversationRepository;
     private final UserRepository userRepository;
-    private MutableLiveData<Conversation> conversationLiveData;
+    private final MutableLiveData<Conversation> conversationLiveData;
 
-    public ChatRoomViewModel (AuthRepository authRepository, UserRepository userRepository, ConversationRepository conversationRepository){
+    public ChatRoomViewModel(AuthRepository authRepository, UserRepository userRepository, ConversationRepository conversationRepository) {
         this.authRepository = authRepository;
         this.userRepository = userRepository;
         this.conversationRepository = conversationRepository;
         conversationLiveData = new MutableLiveData<>();
     }
-    public Task<User> getChatter(Conversation conversation){
+
+    /**
+     * fetches the user that is chatting with the authenticated user in a certain conversation
+     *
+     * @param conversation conversation between the two users
+     * @return a task containing the User fetched
+     */
+    public Task<User> getChatter(Conversation conversation) {
         return userRepository.getUserById(conversation.chatter(authRepository.getAuthUser().getId()));
     }
-    public Task<Void> sendMessage(Conversation conversation, String message){
-        conversation.addMessage(new Message(message,authRepository.getAuthUser().getId()));
-        return conversationRepository.updateConversation(conversation,conversation.getId());
+
+    /**
+     * adds a new message to the conversation
+     *
+     * @param conversation conversation holding the new message
+     * @param message      the new message to be added to the conversation
+     * @return task of the message sending
+     */
+    public Task<Void> sendMessage(Conversation conversation, String message) {
+        conversation.addMessage(new Message(message, authRepository.getAuthUser().getId()));
+        return conversationRepository.updateConversation(conversation, conversation.getId());
     }
-    public LiveData<Conversation> getConversationLiveData(String convoID){
+
+    /**
+     * gets the live data of a conversation
+     *
+     * @param convoID conversation id
+     * @return live data of the conversation
+     */
+    public LiveData<Conversation> getConversationLiveData(String convoID) {
         conversationRepository.getConversation(convoID).continueWithTask(
-                t->{
-                    if(t.getResult() == null){
+                t -> {
+                    if (t.getResult() == null) {
                         List<String> usersList = new ArrayList<>(Arrays.asList(convoID.split("-")));
-                        return conversationRepository.addConversation( convoID,new Conversation(convoID,usersList,new ArrayList<>()));
+                        return conversationRepository.addConversation(convoID, new Conversation(convoID, usersList, new ArrayList<>()));
                     }
                     return Tasks.forResult(t.getResult());
                 }
-        ).addOnSuccessListener(c->conversationLiveData.postValue(c));
-        conversationRepository.addOnConversationChangeListener(convoID,newModel -> {
+        ).addOnSuccessListener(conversationLiveData::postValue);
+        conversationRepository.addOnConversationChangeListener(convoID, newModel -> {
             conversationLiveData.postValue(newModel.toModel(Conversation.class));
         });
         return conversationLiveData;
     }
-    public Task<User> getUserById(String id){
+
+    /**
+     * fetches user by id
+     *
+     * @param id id of user
+     * @return a task containing the User fetched
+     */
+    public Task<User> getUserById(String id) {
         return userRepository.getUserById(id);
     }
 }

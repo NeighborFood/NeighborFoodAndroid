@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -28,6 +29,7 @@ import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
+import com.epfl.neighborfood.neighborfoodandroid.models.PickupLocation;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.PlaceMealViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.factories.NeighborFoodViewModelFactory;
 import com.epfl.neighborfood.neighborfoodandroid.util.ImageUtil;
@@ -57,9 +59,12 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
     List<Allergen> allergensInMeal;
     Toolbar toolbar;
     Uri image;
+    PickupLocation location;
     private String imagePath;
     private PlaceMealViewModel vmodel;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    private ActivityResultLauncher<Intent> locationActivityResultLauncher;
+
 
     private List<EditText> cannotBeEmptyFields;
 
@@ -110,11 +115,20 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         cannotBeEmptyFields.add(dateText);
         cannotBeEmptyFields.add(timeText);
 
-        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this, result -> {
-            activityResult(result.getResultCode(), result.getData());
-        });
+        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this, result -> imageActivityResult(result.getResultCode(), result.getData()));
+
+        locationActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        double chosenLon = result.getData().getDoubleExtra("longitude",0);
+                        double chosenLat = result.getData().getDoubleExtra("latitude",0);
+                        location = new PickupLocation(chosenLat,chosenLon);
+                    }
+                }
+        );
     }
-    private void activityResult(int resultCode, Intent data) {
+
+    private void imageActivityResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK && data != null) {
             imagePath = ImageUtil.getRealPathFromUri(data.getData(), this);
             try {
@@ -144,7 +158,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.ConfirmationButton:
                 boolean fieldsAreNotEmpty = true;
-                for (EditText field: cannotBeEmptyFields) {
+                for (EditText field : cannotBeEmptyFields) {
                     if (TextUtils.isEmpty(field.getText().toString())) {
                         Toast.makeText(this,
                                 "No field can be empty!",
@@ -153,7 +167,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                         break;
                     }
                 }
-                if(imagePath == null){
+                if (imagePath == null) {
                     fieldsAreNotEmpty = false;
                 }
                 if (fieldsAreNotEmpty) {
@@ -163,11 +177,11 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                             descriptionText.getText().toString(),
                             "",
                             allergensInMeal,
-                            Double.parseDouble(priceText.getText().toString()),
                             new Date());//TODO: build the retrieval date
-                    Task<String> task = vmodel.placeMeal(meal,imagePath);
-                    task.addOnSuccessListener((mealId)->{
-                        vmodel.createOrder(mealId).addOnSuccessListener(orderId-> startActivity(i));
+                    Task<String> task = vmodel.placeMeal(meal, imagePath);
+                    task.addOnSuccessListener((mealId) -> {
+                        double price = Double.parseDouble(priceText.getText().toString());
+                        vmodel.createOrder(mealId,location,price).addOnSuccessListener(orderId -> startActivity(i));
                     });
                 }
 
@@ -184,7 +198,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.locationButton:
                 Intent mapIntent = new Intent(PlaceMealActivity.this, PlacePinActivity.class);
-                startActivity(mapIntent);
+                locationActivityResultLauncher.launch(mapIntent);
                 break;
         }
     }
@@ -196,7 +210,6 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
             image = data.getData();
             imageToUpload.setImageURI(image);
         }
-
     }
 
     @Override

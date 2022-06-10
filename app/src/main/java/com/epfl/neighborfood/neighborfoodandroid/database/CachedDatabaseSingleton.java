@@ -4,12 +4,13 @@ package com.epfl.neighborfood.neighborfoodandroid.database;
 /**
  * @author Mohamed Yassine Boukhari
  */
-public class CachedDatabaseFactory {
+public class CachedDatabaseSingleton {
 
     private static Database dependency;
 
     /**
      * Gets the authenticator instance currently used
+     *
      * @return authenticator
      */
     public static Database getDependency() {

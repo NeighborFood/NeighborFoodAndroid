@@ -6,7 +6,7 @@ import android.annotation.SuppressLint;
 
 import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
@@ -43,7 +43,7 @@ public class CacheDatabase implements Database{
 
 
     private class UserDocumentSnapshot extends User implements DocumentSnapshot{
-        private User user;
+        private final User user;
         public UserDocumentSnapshot(User user){
             this.user = user;
         }
@@ -79,7 +79,7 @@ public class CacheDatabase implements Database{
         }
     }
     private class MealDocumentSnapshot extends Meal implements DocumentSnapshot{
-        private Meal meal;
+        private final Meal meal;
         public MealDocumentSnapshot(Meal meal){
             this.meal = meal;
         }
@@ -103,7 +103,7 @@ public class CacheDatabase implements Database{
     }
 
     private class CollectionSnapshotImpl implements CollectionSnapshot{
-        private List<DocumentSnapshot> documents;
+        private final List<DocumentSnapshot> documents;
         @SuppressLint("NewApi")
         CollectionSnapshotImpl(Collection<DocumentSnapshot> documents){
             this.documents = documents.stream().collect(toList());
@@ -176,7 +176,7 @@ public class CacheDatabase implements Database{
                 return Tasks.forResult(ds);
             }
 
-            return DatabaseFactory.getDependency().fetch(collectionPath, documentPath).continueWith(
+            return DatabaseSingleton.getDependency().fetch(collectionPath, documentPath).continueWith(
                     task -> {
                         if (task.isSuccessful()){
                             DocumentSnapshot ds = task.getResult();
@@ -193,7 +193,7 @@ public class CacheDatabase implements Database{
                 DocumentSnapshot ds = new MealDocumentSnapshot(meals.get(documentPath));
                 return Tasks.forResult(ds);
             }
-            return DatabaseFactory.getDependency().fetch(collectionPath, documentPath).continueWith(
+            return DatabaseSingleton.getDependency().fetch(collectionPath, documentPath).continueWith(
                     task -> {
                         if (task.isSuccessful()){
                             DocumentSnapshot ds = task.getResult();
@@ -205,7 +205,7 @@ public class CacheDatabase implements Database{
                     }
             );
         }
-        return DatabaseFactory.getDependency().fetch(collectionPath, documentPath);
+        return DatabaseSingleton.getDependency().fetch(collectionPath, documentPath);
     }
 
     @Override
@@ -220,65 +220,61 @@ public class CacheDatabase implements Database{
                 meals.put(documentPath,(Meal)data);
             }
         }
-        return DatabaseFactory.getDependency().set(collectionPath,documentPath,data);
+        return DatabaseSingleton.getDependency().set(collectionPath,documentPath,data);
     }
 
     @Override
     public Task<Void> delete(String collectionPath, String documentPath) {
         if(collectionPath.equals(USERS_COLLECTION_PATH) ){
-            if(users.containsKey(documentPath)) {
-                users.remove(documentPath);
-            }
+            users.remove(documentPath);
         }
         else if (collectionPath.equals(MEALS_COLLECTION_PATH)){
-            if(meals.containsKey(documentPath)){
-                meals.remove(documentPath);
-            }
+            meals.remove(documentPath);
         }
-        return DatabaseFactory.getDependency().delete(collectionPath,documentPath);
+        return DatabaseSingleton.getDependency().delete(collectionPath,documentPath);
     }
 
     @Override
     public Task<String> add(String collectionPath, Object data) {
-        if (collectionPath.equals(USERS_COLLECTION_PATH)){
-            return DatabaseFactory.getDependency().add(collectionPath, data).continueWith(
-                    task -> {
-                        if (task.isSuccessful()){
-                        users.put(task.getResult(), (User)data);
-                        return task.getResult();
+        switch (collectionPath) {
+            case USERS_COLLECTION_PATH:
+                return DatabaseSingleton.getDependency().add(collectionPath, data).continueWith(
+                        task -> {
+                            if (task.isSuccessful()) {
+                                users.put(task.getResult(), (User) data);
+                                return task.getResult();
+                            }
+                            return null;
                         }
-                        return null;
-                    }
-            );
-        }
-        else if (collectionPath.equals(MEALS_COLLECTION_PATH)){
-            return DatabaseFactory.getDependency().add(collectionPath, data).continueWith(
-                    task -> {
-                        if (task.isSuccessful()) {
-                            meals.put(task.getResult(), (Meal) data);
-                            return task.getResult();
+                );
+            case MEALS_COLLECTION_PATH:
+                return DatabaseSingleton.getDependency().add(collectionPath, data).continueWith(
+                        task -> {
+                            if (task.isSuccessful()) {
+                                meals.put(task.getResult(), (Meal) data);
+                                return task.getResult();
+                            }
+                            return null;
                         }
-                        return null;
-                    }
-            );
-        }
-        else if (collectionPath.equals(CONV_COLLECTION_PATH)){
-            return DatabaseFactory.getDependency().add(collectionPath, data).continueWith(
-                    task -> {
-                        if (task.isSuccessful()) {
-                            conversations.put(task.getResult(), (Conversation) data);
-                            return task.getResult();
+                );
+            case CONV_COLLECTION_PATH:
+                return DatabaseSingleton.getDependency().add(collectionPath, data).continueWith(
+                        task -> {
+                            if (task.isSuccessful()) {
+                                conversations.put(task.getResult(), (Conversation) data);
+                                return task.getResult();
+                            }
+                            return null;
                         }
-                        return null;
-                    }
-            );
+                );
+            default:
+                return DatabaseSingleton.getDependency().add(collectionPath, data);
         }
-        else return DatabaseFactory.getDependency().add(collectionPath, data);
     }
 
     @Override
     public Task<CollectionSnapshot> fetchAll(String collectionPath) {
-            return DatabaseFactory.getDependency().fetchAll(collectionPath);
+            return DatabaseSingleton.getDependency().fetchAll(collectionPath);
     }
 
     @Override

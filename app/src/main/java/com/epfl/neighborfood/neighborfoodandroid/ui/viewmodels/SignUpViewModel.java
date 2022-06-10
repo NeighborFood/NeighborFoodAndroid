@@ -56,17 +56,17 @@ public class SignUpViewModel extends ViewModel {
      */
     public Task<Boolean> handleGoogleLoginResponse(int resultCode, Intent data) {
         Task<GoogleSignInAccount> getAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data);
-        return getAccountTask.continueWithTask(t->authRepo.logInWithGoogleAccount(t.getResult())).continueWithTask(
-                t->{
-                    if(t.isSuccessful()){ // if we could get the authenticated user, see if we can find him in the db
+        return getAccountTask.continueWithTask(t -> authRepo.logInWithGoogleAccount(t.getResult())).continueWithTask(
+                t -> {
+                    if (t.isSuccessful()) { // if we could get the authenticated user, see if we can find him in the db
                         return userRepo.getUserById(t.getResult().getId());
                     }
                     return Tasks.forException(new RuntimeException("Could not login with google account"));
                 }
-        ).continueWithTask(t->{
-            if(t.isSuccessful() && t.getResult() != null){ // if the user already exists, we finish the task
+        ).continueWithTask(t -> {
+            if (t.isSuccessful() && t.getResult() != null) { // if the user already exists, we finish the task
                 return Tasks.forResult(false);
-            }else{ // otherwise we register him to the database
+            } else { // otherwise we register him to the database
 
                 return registerUser(authRepo.getAuthUser());
             }
@@ -74,14 +74,16 @@ public class SignUpViewModel extends ViewModel {
     }
 
 
-    /** Registers a new user on the database, from an authenticated user
+    /**
+     * Registers a new user on the database, from an authenticated user
+     *
      * @param authUser : the auth user that we will base our app user from
      * @return the void that will complete after user registers
      */
-    private Task<Boolean> registerUser(AuthenticatorUser authUser){
+    private Task<Boolean> registerUser(AuthenticatorUser authUser) {
 
         //String encodedImage = ImageUtil.imageToString(ImageUtil.loadImageFromUri(authUser.getPpUri()));
-        User newUser = new User(authUser.getId(), authUser.getEmail(),authUser.getFirstName(), authUser.getLastName(),authUser.getPpUri());
-        return userRepo.updateUser(newUser).continueWith(t->true);
+        User newUser = new User(authUser.getId(), authUser.getEmail(), authUser.getFirstName(), authUser.getLastName(), authUser.getPpUri());
+        return userRepo.updateUser(newUser).continueWith(t -> true);
     }
 }

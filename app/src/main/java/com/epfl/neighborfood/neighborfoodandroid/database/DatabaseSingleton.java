@@ -4,13 +4,14 @@ package com.epfl.neighborfood.neighborfoodandroid.database;
 /**
  * @author Mohamed Yassine Boukhari
  */
-public class DatabaseFactory {
+public class DatabaseSingleton {
 
     private static Database dependency;
 
 
     /**
      * Gets the authenticator instance currently used
+     *
      * @return authenticator
      */
     public static Database getDependency() {

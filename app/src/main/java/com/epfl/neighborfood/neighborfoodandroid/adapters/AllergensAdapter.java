@@ -15,8 +15,15 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
 
 import java.util.List;
 
+/**
+ * Adapter class for allergens list
+ */
+public class AllergensAdapter extends ArrayAdapter<Allergen> {
 
-public class AllergensAdapter extends ArrayAdapter {
+    /**
+     * @param context           context for pastOrders
+     * @param allergenArrayList List of chosen allergens
+     */
     public AllergensAdapter(Context context, List<Allergen> allergenArrayList) {
         super(context, R.layout.list_item_allergen, allergenArrayList);
     }
@@ -24,7 +31,7 @@ public class AllergensAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Allergen allergen = (Allergen) getItem(position);
+        Allergen allergen = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_allergen, parent, false);

@@ -14,47 +14,64 @@ public class VendorProfileViewModel extends ViewModel {
     private final NotificationService notificationService;
     private final AuthRepository authRepository;
 
-    public VendorProfileViewModel(UserRepository userRepository,AuthRepository authRepository, NotificationService notificationService) {
+    public VendorProfileViewModel(UserRepository userRepository, AuthRepository authRepository, NotificationService notificationService) {
         this.userRepository = userRepository;
         this.notificationService = notificationService;
         this.authRepository = authRepository;
     }
 
-    /** Subscribes to vendor mealPosts
+    /**
+     * Subscribes to vendor mealPosts
+     *
      * @param vendor the id of the vendor
      * @return the completable task
      */
-    public Task<Void> subscribeToVendor(User vendor){
-        return notificationService.subscribeToUserMealPosts(vendor.getId()).continueWithTask(t->{
-            vendor.setNumberSubscribers(vendor.getNumberSubscribers()+1);
+    public Task<Void> subscribeToVendor(User vendor) {
+        return notificationService.subscribeToUserMealPosts(vendor.getId()).continueWithTask(t -> {
+            vendor.setNumberSubscribers(vendor.getNumberSubscribers() + 1);
             return userRepository.updateUser(vendor);
-        }).continueWithTask(t->{
+        }).continueWithTask(t -> {
             User current = getCurrentUser();
             current.getSubscribedIDs().add(vendor.getId());
             return userRepository.updateUser(current);
         });
     }
-    /** Unsubscribes from vendor mealPosts
+
+    /**
+     * Unsubscribes from vendor mealPosts
+     *
      * @param vendor the id of the vendor
      * @return the completable task
      */
-    public Task<Void> unsubscribeFromVendor(User vendor){
-        return notificationService.unsubscribeFromUserMealPosts(vendor.getId()).continueWithTask(t->{
-            vendor.setNumberSubscribers(vendor.getNumberSubscribers()-1);
+    public Task<Void> unsubscribeFromVendor(User vendor) {
+        return notificationService.unsubscribeFromUserMealPosts(vendor.getId()).continueWithTask(t -> {
+            vendor.setNumberSubscribers(vendor.getNumberSubscribers() - 1);
             return userRepository.updateUser(vendor);
-        }).continueWithTask(t->{
+        }).continueWithTask(t -> {
             User current = getCurrentUser();
-            if(current.getSubscribedIDs().remove(vendor.getId())){
+            if (current.getSubscribedIDs().remove(vendor.getId())) {
                 return userRepository.updateUser(current);
             }
             return t;
         });
     }
-    public Task<User> getUserByID(String userID){
+
+    /**
+     * fetches user by id
+     *
+     * @param userID id of user
+     * @return a task containing the user fetched
+     */
+    public Task<User> getUserByID(String userID) {
         return userRepository.getUserById(userID);
     }
 
-    public User getCurrentUser(){
+    /**
+     * fetches current authenticated user
+     *
+     * @return the current User fetched
+     */
+    public User getCurrentUser() {
         return authRepository.getCurrentUser();
     }
 }

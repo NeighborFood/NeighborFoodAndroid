@@ -6,24 +6,34 @@ import com.epfl.neighborfood.neighborfoodandroid.R;
  * An allergen is a pair of it's id in the fileSystem and its label
  */
 public enum Allergen {
-    CELERY (R.drawable.celery, "celery"),
-    MILK (R.drawable.milk, "milk"),
-    FISH (R.drawable.fish, "fish"),
-    CHEESE (R.drawable.cheese, "cheese"),
-    GLUTEN (R.drawable.gluten, "gluten"),
-    HONEY (R.drawable.honey, "honey"),
-    LOBSTER (R.drawable.lobster, "Lobster"),
-    SOY (R.drawable.soy, "Soy"),
-    EGGS (R.drawable.eggs, "Eggs"),
-    CHOCOLATE (R.drawable.chocolate, "Chocolate");
+    CELERY(R.drawable.celery, "celery"),
+    MILK(R.drawable.milk, "milk"),
+    FISH(R.drawable.fish, "fish"),
+    CHEESE(R.drawable.cheese, "cheese"),
+    GLUTEN(R.drawable.gluten, "gluten"),
+    HONEY(R.drawable.honey, "honey"),
+    LOBSTER(R.drawable.lobster, "Lobster"),
+    SOY(R.drawable.soy, "Soy"),
+    EGGS(R.drawable.eggs, "Eggs"),
+    CHOCOLATE(R.drawable.chocolate, "Chocolate");
 
     private final int idIcon;
     private final String label;
 
+    /**
+     * getter for the ID of the allergen
+     *
+     * @return allergen's id
+     */
     public int getId() {
         return idIcon;
     }
 
+    /**
+     * getter for allergen's label
+     *
+     * @return label of allergen
+     */
     public String getLabel() {
         return label;
     }

@@ -2,15 +2,12 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
 
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -23,7 +20,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import com.epfl.neighborfood.neighborfoodandroid.AppContainerTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.util.matchers.NthChildOfMatcher;
 
@@ -37,8 +34,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class VendorProfileAcitivtyTest {
-    private static String dummyVendorID = "-1";
-    static Intent intent;
+    private static final String dummyVendorID = "-1";
+    static final Intent intent;
     static {
         intent = new Intent(ApplicationProvider.getApplicationContext(), VendorProfileActivity.class);
         Bundle bundle = new Bundle();
@@ -55,13 +52,13 @@ public class VendorProfileAcitivtyTest {
     @Before
     public void setUp() throws Exception {
         Intents.init();
-        ((DummyDatabase)DatabaseFactory.getDependency()).reset();
+        ((DummyDatabase) DatabaseSingleton.getDependency()).reset();
     }
 
     @After
     public void cleanup() {
         Intents.release();
-        ((DummyDatabase)DatabaseFactory.getDependency()).reset();
+        ((DummyDatabase) DatabaseSingleton.getDependency()).reset();
     }
 
     @Test

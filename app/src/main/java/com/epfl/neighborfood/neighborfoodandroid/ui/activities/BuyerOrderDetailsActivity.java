@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -33,7 +32,6 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
     private Order order;
     private Meal meal;
     private User vendor;
-    private OrderStatus status;
     private ActivityPastOrderDetailsBinding binding;
     private BuyerOrderDetailsActivityViewModel viewModel;
 
@@ -48,11 +46,9 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
         String orderId = (String) intent.getSerializableExtra("orderId");
         viewModel.getOrderById(orderId).addOnSuccessListener(orderFetched -> {
             order = orderFetched;
-            if(order.getOrderStatus() == OrderStatus.finished) {
-                System.out.println("helloo");
+            if (order.getOrderStatus() == OrderStatus.finished) {
                 binding.ConfirmationButton.setVisibility(View.GONE);
-            }
-            else {
+            } else {
                 binding.ConfirmationButton.setOnClickListener(e -> viewModel.confirmOrder(order)
                         .addOnSuccessListener(t -> {
                             Toast.makeText(this, "the order has been delivered", Toast.LENGTH_SHORT).show();
@@ -72,6 +68,9 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * fetches the order details
+     */
     private void fetchOrderDetails() {
         viewModel.getMealById(order.getMealId()).addOnSuccessListener(meal -> {
             this.meal = meal;
@@ -81,23 +80,27 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
             this.vendor = user;
             updateVendorDetails();
         });
-    }
-
-    private void updateVendorDetails() {
-        ImageView vendorImage = findViewById(R.id.go_vendor_profile_id);
-        binding.vendorName.setText(vendor.getUsername());
-        Picasso.get().load(vendor.getProfilePictureURI()).into(vendorImage);
         ImageView mapButton = findViewById(R.id.pickupLocation);
 
         mapButton.setOnClickListener(v -> {
             Intent mapIntent = new Intent(BuyerOrderDetailsActivity.this, MapActivity.class);
-            if(meal==null){
+            if (meal == null) {
                 return;
             }
-            mapIntent.putExtra("latitude","46.5191");
-            mapIntent.putExtra("longitude", "6.5668");
+            mapIntent.putExtra("latitude", order.getLocation().getLatitude());
+            mapIntent.putExtra("longitude", order.getLocation());
             startActivity(mapIntent);
         });
+    }
+
+    /**
+     * updates the vendor details
+     */
+    private void updateVendorDetails() {
+        ImageView vendorImage = findViewById(R.id.go_vendor_profile_id);
+        binding.vendorName.setText(vendor.getUsername());
+        Picasso.get().load(vendor.getProfilePictureURI()).into(vendorImage);
+
         binding.goVendorProfileId.setOnClickListener(e ->
         {
             Intent intentVendor = new Intent(BuyerOrderDetailsActivity.this, VendorProfileActivity.class);
@@ -107,6 +110,9 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * update meal details
+     */
     private void updateMealDetails() {
         Picasso.get().load(meal.getImageUri()).into(binding.mealImage);
         binding.mealName.setText(meal.getName());

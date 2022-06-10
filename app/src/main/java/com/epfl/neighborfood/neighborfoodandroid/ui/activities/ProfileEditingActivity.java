@@ -1,5 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -35,7 +36,6 @@ import java.util.Objects;
 
 
 public class ProfileEditingActivity extends AppCompatActivity {
-    private ActivityProfileEditingBinding binding;
     private EditProfileViewModel vmodel;
     private LinearLayout linksLayout;
     private ArrayList<TextInputEditText> textEdits = new ArrayList<>();
@@ -50,13 +50,13 @@ public class ProfileEditingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         photoChanged = false;
-        binding = ActivityProfileEditingBinding.inflate(getLayoutInflater());
+        com.epfl.neighborfood.neighborfoodandroid.databinding.ActivityProfileEditingBinding binding = ActivityProfileEditingBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         vmodel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getApplication())).get(EditProfileViewModel.class);
         vmodel.loadCurrentUser()
                 .addOnSuccessListener(this, this::updateUserFields)
-                .addOnFailureListener(this,e-> Toast.makeText(this, R.string.load_failure, Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(this, e -> Toast.makeText(this, R.string.load_failure, Toast.LENGTH_SHORT).show());
         setContentView(R.layout.activity_profile_editing);
         Toolbar toolbar = findViewById(R.id.profileEditToolbar);
         setSupportActionBar(toolbar);
@@ -65,9 +65,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
         findViewById(R.id.profileEditAddLinkButton).setOnClickListener(this::onClick);
         linksLayout = findViewById(R.id.profileEditLinksLayout);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this,result -> {
-            activityResult(result.getResultCode(), result.getData());
-        });
+        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this, result -> activityResult(result.getResultCode(), result.getData()));
     }
 
     /**
@@ -107,18 +105,19 @@ public class ProfileEditingActivity extends AppCompatActivity {
         addLinkInput();
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.profilePictureImageView:
                 activityResultLauncher.launch(ImageUtil.getGalleryIntent());
                 break;
             case R.id.saveButton:
-                Task<Void> updateTask = photoChanged ? vmodel.updateUser(getUserWithUpdatedData(),filePath) : vmodel.updateUser(getUserWithUpdatedData()) ;
+                Task<Void> updateTask = photoChanged ? vmodel.updateUser(getUserWithUpdatedData(), filePath) : vmodel.updateUser(getUserWithUpdatedData());
 
-                updateTask.addOnSuccessListener((a)-> {
-                            Toast.makeText(this, R.string.save_success, Toast.LENGTH_SHORT).show();
-                            finish();
-                        }).addOnFailureListener((a)->Toast.makeText(this, R.string.save_failure, Toast.LENGTH_SHORT).show());
+                updateTask.addOnSuccessListener((a) -> {
+                    Toast.makeText(this, R.string.save_success, Toast.LENGTH_SHORT).show();
+                    finish();
+                }).addOnFailureListener((a) -> Toast.makeText(this, R.string.save_failure, Toast.LENGTH_SHORT).show());
 
             case R.id.profileEditAddLinkButton:
                 TextInputEditText empty = addLinkInput();
@@ -142,7 +141,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
             return null;
         }
         String bio = ((TextInputEditText) findViewById(R.id.bioValue)).getEditableText().toString();
-        User newUser = new User(currUser.getId(), currUser.getEmail(), currUser.getFirstName(), currUser.getLastName(),currUser.getProfilePictureURI().toString());
+        User newUser = new User(currUser.getId(), currUser.getEmail(), currUser.getFirstName(), currUser.getLastName(), currUser.getProfilePictureURI());
         newUser.setBio(bio);
         ArrayList<String> links = new ArrayList<>();
         for (TextInputEditText view : textEdits) {
@@ -168,7 +167,6 @@ public class ProfileEditingActivity extends AppCompatActivity {
             }
         }
     }
-
 
 
     /**
