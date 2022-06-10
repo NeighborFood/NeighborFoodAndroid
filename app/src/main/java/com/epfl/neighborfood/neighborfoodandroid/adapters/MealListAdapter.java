@@ -43,7 +43,7 @@ public class MealListAdapter extends ArrayAdapter {
             mealName.setText(meal.getName());
             Picasso.get().load(meal.getImageUri()).into(imageView);
             mealShortDes.setText(meal.getDescription());
-            price.setText(String.format("%.2f",meal.getPrice())+ " chf");
+            price.setText(String.format("%.2f",order.getPrice())+ " chf");
         });
         return convertView;
     }

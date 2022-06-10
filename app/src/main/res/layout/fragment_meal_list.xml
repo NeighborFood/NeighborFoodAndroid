@@ -6,13 +6,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/buttons"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#673AB7">
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="horizontal">
 
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/mealListSortingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="50dp"
+            android:minHeight="50dp"
+            android:src="@android:drawable/ic_menu_sort_by_size"
+            android:contentDescription="@string/filter" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/mealListView"

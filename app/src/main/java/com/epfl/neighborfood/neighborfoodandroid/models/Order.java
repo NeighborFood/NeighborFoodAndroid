@@ -15,6 +15,7 @@ public class Order extends Model {
     private OrderStatus orderStatus;
     private String vendorId;
     private String buyerId;
+    private double price;
 
 
     public Order(String s, Date time, OrderStatus b, String s1, String s2){
@@ -75,6 +76,12 @@ public class Order extends Model {
 
     public void setBuyerId(String buyerId) {
         this.buyerId = buyerId;
+    }
+    public void setPrice(double price){
+        this.price = price;
+    }
+    public double getPrice() {
+        return price;
     }
 
     /*

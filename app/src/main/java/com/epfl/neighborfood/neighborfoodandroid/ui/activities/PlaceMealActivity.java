@@ -163,11 +163,11 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                             descriptionText.getText().toString(),
                             "",
                             allergensInMeal,
-                            Double.parseDouble(priceText.getText().toString()),
                             new Date());//TODO: build the retrieval date
                     Task<String> task = vmodel.placeMeal(meal,imagePath);
                     task.addOnSuccessListener((mealId)->{
-                        vmodel.createOrder(mealId).addOnSuccessListener(orderId-> startActivity(i));
+                        double price = Double.parseDouble(priceText.getText().toString());
+                        vmodel.createOrder(mealId,price).addOnSuccessListener(orderId-> startActivity(i));
                     });
                 }
 

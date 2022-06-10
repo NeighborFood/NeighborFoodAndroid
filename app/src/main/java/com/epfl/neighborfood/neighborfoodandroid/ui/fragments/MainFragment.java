@@ -4,18 +4,24 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
 
+import java.util.Objects;
+
 public class MainFragment extends Fragment {
     private SwitchCompat userModeSwitch;
+
 
     public MainFragment() {
         super(R.layout.fragment_main);
@@ -25,7 +31,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userModeSwitch = getActivity().findViewById(R.id.modeSwitch);
+        userModeSwitch = requireActivity().findViewById(R.id.modeSwitch);
         userModeSwitch.setOnCheckedChangeListener(this::toggleView);
         updateSwitchButtonText(userModeSwitch.isChecked());
 
@@ -39,4 +45,5 @@ public class MainFragment extends Fragment {
         userModeSwitch.setText(state? getResources().getString(R.string.vendor_mode_title) : getResources().getString(R.string.buyer_mode_title));
 
     }
+
 }

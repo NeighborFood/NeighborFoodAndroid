@@ -39,9 +39,10 @@ public class    PlaceMealViewModel extends ViewModel {
      * @param mealId : the mealId corresponding to the new order
      * @return the completable task containing orderId
      */
-    public Task<String> createOrder(String mealId){
+    public Task<String> createOrder(String mealId,double price){
         Order order = new Order();
         order.setMealId(mealId);
+        order.setPrice(price);
         order.setVendorId(authRepository.getAuthUser().getId());
         order.setBuyerId("");
         order.setOrderStatus(OrderStatus.unassigned);

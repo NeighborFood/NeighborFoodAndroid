@@ -103,5 +103,9 @@
     <string name="unassigned_orders">Unassigned Orders</string>
     <string name="waiting_for_pickup">Waiting for pickup</string>
     <string name="delivered">Delivered</string>
+    <string name="distance">Distance</string>
+    <string name="price">Price</string>
+    <string name="sortby">Sort By:</string>
+    <string name="filter">filter</string>
 
 </resources>

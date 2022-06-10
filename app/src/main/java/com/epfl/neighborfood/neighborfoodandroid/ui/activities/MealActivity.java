@@ -52,6 +52,8 @@ public class MealActivity extends AppCompatActivity {
 
             viewModel.getOrderById(orderId).addOnSuccessListener(orderFetched -> {
                 order = orderFetched;
+
+                binding.priceMeal.setText(String.format("%.2f",order.getPrice())+ " chf");
             });
 
             viewModel.getMealById(mealId).addOnSuccessListener(mealFetched -> {
@@ -59,7 +61,6 @@ public class MealActivity extends AppCompatActivity {
                 Picasso.get().load(meal.getImageUri()).into(binding.mealImage);
                 binding.mealName.setText(meal.getName());
                 binding.mealDesc.setText(meal.getDescription());
-                binding.priceMeal.setText(String.format("%.2f",meal.getPrice())+ " chf");
                 List<Allergen> allergens = meal.getAllergens();
                 AllergensAdapter allergensAdapter = new AllergensAdapter(this, allergens);
                 binding.allergensMeal.setAdapter(allergensAdapter);

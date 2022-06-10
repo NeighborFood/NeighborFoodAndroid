@@ -63,11 +63,7 @@ public class MealTest {
         assertArrayEquals(allergens.toArray(), meal.getAllergens().toArray());
     }
 
-    @Test
-    public void getPrice() {
-        Meal meal = getNewMeal();
-        assertEquals(price, meal.getPrice(), 0.1);
-    }
+
 
     @Test
     public void getImageId() {

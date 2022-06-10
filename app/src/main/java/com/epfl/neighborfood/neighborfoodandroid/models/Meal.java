@@ -21,7 +21,6 @@ public class Meal extends Model implements Serializable {
     private String vendorID;
     private String name;
     private String description;
-    private double price;
     private Date retrievalDate;
     private String imageUri;
     private List<Allergen> allergens;
@@ -30,8 +29,8 @@ public class Meal extends Model implements Serializable {
 
     }
 
-    public Meal(String id,String vendorID,String name, String description, String imageUri, List<Allergen> allergens, double price, Date retrievalDate){
-        this(name,description,imageUri, allergens, price, retrievalDate);
+    public Meal(String id,String vendorID,String name, String description, String imageUri, List<Allergen> allergens,Date retrievalDate){
+        this(name,description,imageUri, allergens, retrievalDate);
         this.mealId = id;
         this.vendorID = vendorID;
     }
@@ -44,15 +43,13 @@ public class Meal extends Model implements Serializable {
      * @param description
      * @param imageUri
      * @param allergens
-     * @param price
      * @param retrievalDate
      */
-    public Meal(String name,String description, String imageUri, List<Allergen> allergens, double price, Date retrievalDate) {
+    public Meal(String name,String description, String imageUri, List<Allergen> allergens, Date retrievalDate) {
         this.name = name;
         this.description = description;
         this.imageUri = imageUri;
         this.allergens = allergens;
-        this.price = price;
         this.retrievalDate = retrievalDate;
     }
 
@@ -71,9 +68,6 @@ public class Meal extends Model implements Serializable {
         return allergens;
     }
 
-    public double getPrice() {
-        return price;
-    }
 
     public String getImageUri() {
         return imageUri;
