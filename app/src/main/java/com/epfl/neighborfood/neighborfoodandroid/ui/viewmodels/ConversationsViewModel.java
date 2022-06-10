@@ -25,10 +25,21 @@ public class ConversationsViewModel extends ViewModel {
         this.conversationRepository = conversationRepository;
     }
 
+    /**
+     * fetches user by id
+     *
+     * @param id id of user
+     * @return a task containing the User fetched
+     */
     public Task<User> getUser(String id) {
         return userRepository.getUserById(id);
     }
 
+    /**
+     * fetches the conversations and corresponding Users that the authenticated user participated in
+     *
+     * @return Task of the list of Pairs containing the conversations and corresponding Users
+     */
     public Task<List<Pair<Conversation, User>>> fetchAllCurrentUserConversations() {
         return conversationRepository.getAllConversations(authRepository.getAuthUser().getId()).continueWithTask(
                 tc -> {
@@ -43,6 +54,11 @@ public class ConversationsViewModel extends ViewModel {
         );
     }
 
+    /**
+     * fetches current authenticated user
+     *
+     * @return the current User fetched
+     */
     public User getCurrentUser() {
         return authRepository.getCurrentUser();
     }

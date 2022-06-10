@@ -37,7 +37,11 @@ public class EditProfileViewModel extends ViewModel {
         }
         return Tasks.forResult(currentUser);
     }
-
+    /**
+     * fetches current authenticated user
+     *
+     * @return the current User fetched
+     */
     public User getCurrentUser() {
         return currentUser;
     }
@@ -75,6 +79,12 @@ public class EditProfileViewModel extends ViewModel {
         return userRepo.updateUser(user);
     }
 
+    /**
+     * updates a user
+     *
+     * @param user user to be updated
+     * @return task of the user update
+     */
     public Task<Void> updateUser(User user) {
         return updateUser(user, null);
     }

@@ -56,10 +56,21 @@ public class VendorProfileViewModel extends ViewModel {
         });
     }
 
+    /**
+     * fetches user by id
+     *
+     * @param userID id of user
+     * @return a task containing the user fetched
+     */
     public Task<User> getUserByID(String userID) {
         return userRepository.getUserById(userID);
     }
 
+    /**
+     * fetches current authenticated user
+     *
+     * @return the current User fetched
+     */
     public User getCurrentUser() {
         return authRepository.getCurrentUser();
     }

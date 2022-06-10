@@ -68,11 +68,21 @@ public class MealListViewModel extends ViewModel {
         ordering = Ordering.PRICE;
     }
 
+    /**
+     * fetches User location's live data
+     *
+     * @return the live date of the user location
+     */
     public LiveData<PickupLocation> getUserLocation() {
         locationService.getDeviceLocation();
         return pickupLocationLiveData;
     }
 
+    /**
+     * fetches all the unassigned orders
+     *
+     * @return live data of the fetched orders
+     */
     public LiveData<List<Order>> getAllUnassignedOrders() {
         orderRepository.getAllOrdersMatchingStatus(OrderStatus.unassigned).addOnSuccessListener(l -> {
             if (l != null) {
@@ -83,14 +93,30 @@ public class MealListViewModel extends ViewModel {
         return ordersLiveData;
     }
 
+    /**
+     * fetches meal by id
+     *
+     * @param id id of meal
+     * @return a task containing the meal fetched
+     */
     public Task<Meal> getMealById(String id) {
         return mealRepository.getMealById(id);
     }
 
+    /**
+     * fetches current authenticated user
+     *
+     * @return the current User fetched
+     */
     public User getCurrentUser() {
         return authRepository.getCurrentUser();
     }
 
+    /**
+     * sets the ordering for the fetched orders
+     *
+     * @param ordering ordering to be set
+     */
     public void setOrdering(int ordering) {
         if (ordering < Ordering.values().length && ordering >= 0) {
             this.ordering = Ordering.values()[ordering];
@@ -98,10 +124,18 @@ public class MealListViewModel extends ViewModel {
         }
     }
 
+    /**
+     * fetches the ordering index
+     *
+     * @return ordering index
+     */
     public int getOrderingIndex() {
         return ordering.ordinal();
     }
 
+    /**
+     * reorders the orders list fetched
+     */
     private void reorderList() {
         List<Order> newList = ordersLiveData.getValue();
         if (newList == null) {

@@ -30,15 +30,34 @@ public class ChatRoomViewModel extends ViewModel {
         conversationLiveData = new MutableLiveData<>();
     }
 
+    /**
+     * fetches the user that is chatting with the authenticated user in a certain conversation
+     *
+     * @param conversation conversation between the two users
+     * @return a task containing the User fetched
+     */
     public Task<User> getChatter(Conversation conversation) {
         return userRepository.getUserById(conversation.chatter(authRepository.getAuthUser().getId()));
     }
 
+    /**
+     * adds a new message to the conversation
+     *
+     * @param conversation conversation holding the new message
+     * @param message      the new message to be added to the conversation
+     * @return task of the message sending
+     */
     public Task<Void> sendMessage(Conversation conversation, String message) {
         conversation.addMessage(new Message(message, authRepository.getAuthUser().getId()));
         return conversationRepository.updateConversation(conversation, conversation.getId());
     }
 
+    /**
+     * gets the live data of a conversation
+     *
+     * @param convoID conversation id
+     * @return live data of the conversation
+     */
     public LiveData<Conversation> getConversationLiveData(String convoID) {
         conversationRepository.getConversation(convoID).continueWithTask(
                 t -> {
@@ -55,6 +74,12 @@ public class ChatRoomViewModel extends ViewModel {
         return conversationLiveData;
     }
 
+    /**
+     * fetches user by id
+     *
+     * @param id id of user
+     * @return a task containing the User fetched
+     */
     public Task<User> getUserById(String id) {
         return userRepository.getUserById(id);
     }
