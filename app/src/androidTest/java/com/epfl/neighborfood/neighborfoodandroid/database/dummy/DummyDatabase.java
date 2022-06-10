@@ -12,7 +12,11 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.Model;
+import com.epfl.neighborfood.neighborfoodandroid.models.Order;
+import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
+import com.epfl.neighborfood.neighborfoodandroid.services.location.LocationService;
+import com.epfl.neighborfood.neighborfoodandroid.services.notification.LocationServiceTestImplementation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 
@@ -20,6 +24,7 @@ import com.google.android.gms.tasks.Tasks;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,6 +43,8 @@ public class DummyDatabase implements Database {
     private static Map<String, UserDocumentSnapshot> users;
     private static Map<String, MealDocumentSnapshot> meals;
     private static Map<String, ConversationDocumentSnapshot> conversations;
+    private static Map<String, OrderDocumentSnapshot> orders;
+
     private final List<ModelUpdateListener> userUpdateListeners;
     private final List<ModelUpdateListener> conversationsListeners;
 
@@ -100,6 +107,32 @@ public class DummyDatabase implements Database {
             return meal.getMealId();
         }
     }
+    private class OrderDocumentSnapshot extends Order implements DocumentSnapshot{
+        private final Order order;
+        public OrderDocumentSnapshot(Order meal){
+            this.order = meal;
+        }
+        @Override
+        public Object get(String field) {
+            return null;
+        }
+
+        @Override
+        public <T extends Model> T toModel(Class<T> clazz) {
+            if(clazz != Order.class){
+                return null;
+            }
+            return (T)order;
+        }
+
+        @Override
+        public String getId() {
+            return order.getOrderId();
+        }
+        private OrderStatus getStatus(){
+            return order.getOrderStatus();
+        }
+    }
     private class CollectionSnapshotImpl implements CollectionSnapshot{
         private final List<DocumentSnapshot> documents;
         @SuppressLint("NewApi")
@@ -120,7 +153,9 @@ public class DummyDatabase implements Database {
     private class ConversationDocumentSnapshot extends Conversation implements DocumentSnapshot{
         private final Conversation convo;
         public ConversationDocumentSnapshot(Conversation convo){
+            super(convo.getId(), convo.getUsers(), convo.getMessages());
             this.convo = convo;
+
         }
         @Override
         public Object get(String field) {
@@ -169,10 +204,14 @@ public class DummyDatabase implements Database {
                 "De la soupe à l'oignon",
                 "Une bonne tarte aux pommes"};
 
+        orders = new HashMap<>();
         for (int i = 0; i < mealsName.length; i++) {
             Meal meal = new Meal(mealsName[i], mealsShortDes[i], "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon,new ArrayList<>(),new Date());
+            Order order = new Order(Integer.toString(i),Integer.toString(i),new Date(), OrderStatus.unassigned,"0",null, LocationServiceTestImplementation.DEFAULT);
             meals.put(Integer.toString(i),new MealDocumentSnapshot(meal));
+            orders.put(Integer.toString(i),new OrderDocumentSnapshot(order));
         }
+
         conversations = new HashMap<>();
         List<String> ids = new ArrayList<>();
         ids.add("0");
@@ -230,6 +269,21 @@ public class DummyDatabase implements Database {
                 return Tasks.forException(new NoSuchElementException("User not found"));
             }
         }
+        if(collectionPath.equals("Meals")){
+            if(meals.containsKey(documentPath)){
+                return Tasks.forResult(meals.get(documentPath));
+            }else{
+                return Tasks.forException(new NoSuchElementException("User not found"));
+            }
+        }
+
+        if(collectionPath.equals("Orders")){
+            if(orders.containsKey(documentPath)){
+                return Tasks.forResult(orders.get(documentPath));
+            }else{
+                return Tasks.forException(new NoSuchElementException("User not found"));
+            }
+        }
         if(collectionPath.equals("Conversations")){
             if(conversations.containsKey(documentPath)){
                 return Tasks.forResult(conversations.get(documentPath));
@@ -252,6 +306,22 @@ public class DummyDatabase implements Database {
                  userUpdateListeners) {
                 l.onModelUpdate(newSnapshot);
             }
+            return Tasks.forResult(null);
+        }
+        if(collectionPath.equals("Meals") ){
+            if(! (data instanceof Meal)){
+                return Tasks.forException(new IllegalArgumentException("Cannot save data to collection"));
+            }
+            MealDocumentSnapshot newSnapshot = new MealDocumentSnapshot((Meal) data);
+            meals.put(documentPath,newSnapshot);
+            return Tasks.forResult(null);
+        }
+        if(collectionPath.equals("Orders") ){
+            if(! (data instanceof Order)){
+                return Tasks.forException(new IllegalArgumentException("Cannot save data to collection"));
+            }
+            OrderDocumentSnapshot newSnapshot = new OrderDocumentSnapshot((Order) data);
+            orders.put(documentPath,newSnapshot);
             return Tasks.forResult(null);
         }
         if(collectionPath.equals("Conversations") ){
@@ -331,6 +401,10 @@ public class DummyDatabase implements Database {
 
     @Override
     public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath, String attributeName, Object attributeValue) {
+        if(collectionPath.equals("Orders")){
+            List<DocumentSnapshot> f = new ArrayList<>(orders.values());
+            return Tasks.forResult(() -> f);
+        }
         return null;
     }
 

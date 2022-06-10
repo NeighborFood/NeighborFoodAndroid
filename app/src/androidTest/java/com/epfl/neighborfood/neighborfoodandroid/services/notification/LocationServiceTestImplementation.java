@@ -11,7 +11,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 
 public class LocationServiceTestImplementation extends LocationService {
-    private PickupLocation location = new PickupLocation(-33.8523341, 151.2106085);
+    public static PickupLocation DEFAULT = new PickupLocation(-33.8523341, 151.2106085);
+    private PickupLocation location = DEFAULT;
     @Override
     public Task<PickupLocation> getDeviceLocation() {
         pickupLocationMutableLiveData.postValue(location);

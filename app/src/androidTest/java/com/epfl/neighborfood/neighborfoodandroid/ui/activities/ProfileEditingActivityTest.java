@@ -56,6 +56,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -108,17 +109,13 @@ public class ProfileEditingActivityTest {
     }
     @Test
     public void multipleEmptyLinksDontGetSavedwithUser(){
-        ArrayList<String> fakeLinks = new ArrayList<>();
-        fakeLinks.add("a");fakeLinks.add("b");fakeLinks.add("c");
-        dummyUser.setLinks(fakeLinks);
-        authRepo.setUser(dummyUser);
-        DatabaseSingleton.getDependency().set("Users",dummyUser.getId(),dummyUser);
+        List<String > links = DatabaseSingleton.getDependency().fetch("Users",dummyUser.getId()).getResult().toModel(User.class).getLinks();
         onView(withId(R.id.profileEditAddLinkButton)).perform(scrollTo(),click());
         onView(withId(R.id.profileEditAddLinkButton)).perform(scrollTo(),click());
         onView(withId(R.id.profileEditAddLinkButton)).perform(scrollTo(),click());
         onView(withId(R.id.profileEditAddLinkButton)).perform(scrollTo(),click());
         onView(withId(R.id.saveButton)).perform(scrollTo(),click());
-        assertThat(authRepo.getCurrentUser().getLinks(),is(fakeLinks));
+        assertThat(DatabaseSingleton.getDependency().fetch("Users",dummyUser.getId()).getResult().toModel(User.class).getLinks(),is(links));
 
     }
 
@@ -163,8 +160,7 @@ public class ProfileEditingActivityTest {
     }
 
     @Test
-    public void uiReflectsUser() throws InterruptedException {
-        authRepo.setUser(dummyUser);
+    public void uiReflectsUser(){
         onView(withId(R.id.nameValue)).check(matches(withText(dummyUser.getFirstName())));
         onView(withId(R.id.surnameValue)).check(matches(withText(dummyUser.getLastName())));
         onView(withId(R.id.emailValue)).check(matches(withText(dummyUser.getEmail())));

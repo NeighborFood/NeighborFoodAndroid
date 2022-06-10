@@ -31,50 +31,7 @@ public class PlaceMealMenuTest {
     public GrantPermissionRule permissionRule = GrantPermissionRule.grant(Manifest.permission.READ_EXTERNAL_STORAGE);
 
 
-    /*
-     * Check meal Name changes correctly
-     */
-    @Test
-    public void changeMealNameTest(){
-        onView(withId(R.id.textMealName))
-                .perform(ViewActions.scrollTo())
-                .perform(typeText("pizza"),closeSoftKeyboard());
-        onView((withId(R.id.textMealName))).check(matches(withText("pizza")));
-    }
 
-    /*
-     * Check meal Name changes correctly
-     */
-    @Test
-    public void changeMealDescriptionTest(){
-        onView(withId(R.id.textDescription))
-                .perform(ViewActions.scrollTo())
-                .perform(typeText("vegan pizza"),closeSoftKeyboard());
-        onView((withId(R.id.textDescription))).check(matches(withText("vegan pizza")));
-    }
-
-    /*
-     * Check Price changes correctly
-     */
-    @Test
-    public void changePriceTest(){
-        onView(withId(R.id.textPrice))
-                .perform(ViewActions.scrollTo())
-                .perform(typeText("5"),closeSoftKeyboard());
-        onView((withId(R.id.textPrice))).check(matches(withText("5")));
-    }
-
-    /*
-     * Check Time changes correctly
-     */
-    /*
-    @Test
-    public void changeTimeTest(){
-        onView(withId(R.id.TimeText))
-                .perform(ViewActions.scrollTo())
-                .perform(typeText("15:00"),closeSoftKeyboard());
-        onView((withId(R.id.TimeText))).check(matches(withText("15:00")));
-    }*/
     /*
      * Check Date changes correctly when done manually.
      */
@@ -100,7 +57,7 @@ public class PlaceMealMenuTest {
         onView((withId(R.id.DateText))).check(matches(withText("11/11/2022")));
 
     }
-    /*@Test
+    @Test
     public void testAddAndDeleteAllergen() {
         //add
         onView(withId(R.id.FishIcon)).perform(click());
@@ -110,5 +67,5 @@ public class PlaceMealMenuTest {
         onView(withId(R.id.CheeseIcon)).perform(click());
         onView(withId(R.id.ConfirmationButton)).perform(click());
         //missing check if FishIcon is disabled and CheeseIcon is enabled
-    }*/
+    }
 }
