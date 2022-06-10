@@ -1,10 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
-import android.location.Location;
-
-import java.text.ParseException;
 import java.util.Date;
-import java.text.SimpleDateFormat;
+
 public class Order extends Model {
 
     private static final String ORDER_ACHIEVED = "This order was achieved the ";
@@ -56,7 +53,7 @@ public class Order extends Model {
         return buyerId;
     }
 
-    public PickupLocation getLocation(){return location; };
+    public PickupLocation getLocation(){return location; }
 
     public void setLocation(PickupLocation location) { this.location = location; }
 

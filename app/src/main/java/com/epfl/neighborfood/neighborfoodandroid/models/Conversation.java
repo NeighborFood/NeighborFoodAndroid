@@ -1,12 +1,10 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
 
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import java.util.List;
 
 /**
  * @author Mohamed Yassine Boukhari
- *
  */
 public class Conversation extends Model {
     private List<String> users;
@@ -14,15 +12,17 @@ public class Conversation extends Model {
     private String id;
 
 
-    public Conversation(){
+    public Conversation() {
     }
+
     /**
      * constructor for the conversation class
-     * @param users the set of users(2) in this conversation
+     *
+     * @param users    the set of users(2) in this conversation
      * @param messages the initial list of messages to start
-     * the conversation with
+     *                 the conversation with
      */
-    public Conversation(String id , List<String> users, List<Message> messages) {
+    public Conversation(String id, List<String> users, List<Message> messages) {
         this.users = users;
         this.messages = messages;
         this.id = id;
@@ -31,13 +31,14 @@ public class Conversation extends Model {
     /**
      * used to get the user with whom the current logged in
      * user is chatting
+     *
      * @return a User
      */
     public String chatter(String authenticatedID) {
         if (users != null) {
             String chatter = null;
-            for (String usr: users){
-                if(!usr.equals(authenticatedID)){
+            for (String usr : users) {
+                if (!usr.equals(authenticatedID)) {
                     chatter = usr;
                 }
             }
@@ -49,17 +50,18 @@ public class Conversation extends Model {
     /**
      * @return the set of users for this conversation
      */
-    public List<String> getUsers(){
+    public List<String> getUsers() {
         return users;
     }
 
     /**
-    }
-
-    public String id() {
-        return id;
-    }
+     * }
+     * <p>
+     * public String id() {
+     * return id;
+     * }
      * the messages sent in this conversation
+     *
      * @return
      */
     public List<Message> getMessages() {
@@ -69,6 +71,7 @@ public class Conversation extends Model {
     /**
      * get the last message sent by one of the users in
      * this conversation
+     *
      * @return
      */
     public Message lastMessage() {
@@ -82,12 +85,12 @@ public class Conversation extends Model {
         return id;
     }
 
-    public void setId(String id){
-        this.id=id;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public List<Message> addMessage(Message msg){
+    public List<Message> addMessage(Message msg) {
         messages.add(msg);
-        return  messages;
+        return messages;
     }
 }

@@ -20,9 +20,17 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Adapter class for meals list
+ */
 public class MealListAdapter extends ArrayAdapter {
-    private MealListViewModel viewModel;
+    private final MealListViewModel viewModel;
 
+    /**
+     * @param context
+     * @param mealArrayList list of orders that contain the meals
+     * @param viewModel     viewModel for meals list
+     */
     public MealListAdapter(Context context, ArrayList<Order> mealArrayList, MealListViewModel viewModel) {
         super(context, R.layout.list_item_meal, mealArrayList);
         this.viewModel = viewModel;

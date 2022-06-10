@@ -18,7 +18,7 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorOrdersViewM
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.VendorProfileViewModel;
 
 public class NeighborFoodViewModelFactory implements ViewModelProvider.Factory{
-    private NeighborFoodApplication app;
+    private final NeighborFoodApplication app;
 
     public NeighborFoodViewModelFactory(NeighborFoodApplication app) {
         this.app = app;

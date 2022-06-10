@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -118,9 +117,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         cannotBeEmptyFields.add(dateText);
         cannotBeEmptyFields.add(timeText);
 
-        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this, result -> {
-            imageActivityResult(result.getResultCode(), result.getData());
-        });
+        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this, result -> imageActivityResult(result.getResultCode(), result.getData()));
 
         locationActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {

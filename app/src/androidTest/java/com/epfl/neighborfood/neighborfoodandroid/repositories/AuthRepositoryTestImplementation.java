@@ -1,8 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.repositories;
 
-import android.os.Handler;
-
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.DummyAuthenticator;
 import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
@@ -11,7 +8,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 
 public class AuthRepositoryTestImplementation extends AuthRepository{
-    private AuthenticatorUser authUser = new AuthenticatorUser("-1","","","","") {
+    private final AuthenticatorUser authUser = new AuthenticatorUser("-1","","","","") {
     };
     private User user = new User("-1","","","","");
     @Override

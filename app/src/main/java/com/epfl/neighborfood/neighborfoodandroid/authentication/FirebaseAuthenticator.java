@@ -1,9 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.authentication;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
 import com.epfl.neighborfood.neighborfoodandroid.models.FirebaseAuthenticatorUser;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -17,23 +13,26 @@ import com.google.firebase.auth.GoogleAuthProvider;
  */
 public class FirebaseAuthenticator implements Authenticator {
     private static FirebaseAuthenticator instance;
-    private static FirebaseAuth mAuth ;
-    private FirebaseAuthenticator(){
+    private static FirebaseAuth mAuth;
+
+    private FirebaseAuthenticator() {
 
     }
-    public static FirebaseAuthenticator getInstance(){
-        if(instance == null){
-            mAuth= FirebaseAuth.getInstance();
+
+    public static FirebaseAuthenticator getInstance() {
+        if (instance == null) {
+            mAuth = FirebaseAuth.getInstance();
             instance = new FirebaseAuthenticator();
         }
         return instance;
     }
+
     @Override
     public AuthenticatorUser getCurrentAuthUser() {
-        if(mAuth.getCurrentUser() == null){
+        if (mAuth.getCurrentUser() == null) {
             return null;
         }
-        return new FirebaseAuthenticatorUser(mAuth.getCurrentUser()) ;
+        return new FirebaseAuthenticatorUser(mAuth.getCurrentUser());
     }
 
     @Override

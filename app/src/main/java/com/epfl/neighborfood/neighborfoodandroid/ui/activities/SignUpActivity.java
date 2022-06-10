@@ -79,14 +79,13 @@ public class SignUpActivity extends AppCompatActivity {
                 .build();
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    activityResult(result.getResultCode(), result.getData());
-                });
+                result -> activityResult(result.getResultCode(), result.getData()));
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
     }
 
 
 
+    @SuppressWarnings("ThrowablePrintedToSystemOut")
     public void activityResult(int resultCode, Intent data) {
         viewModel.handleGoogleLoginResponse(resultCode, data).addOnSuccessListener(newUser->{
             this.newUser = newUser;

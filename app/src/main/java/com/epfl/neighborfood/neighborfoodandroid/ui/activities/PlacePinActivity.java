@@ -65,7 +65,7 @@ public class PlacePinActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
 
         this.map = googleMap;
 
@@ -139,16 +139,14 @@ public class PlacePinActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button:
-                if (meetingPointSet) {
-                    final Intent data = new Intent();
-                    data.putExtra("longitude",chosenLng);
-                    data.putExtra("latitude",chosenLat);
-                    setResult(Activity.RESULT_OK, data);
-                    finish();
-                }
-                break;
+        if (v.getId() == R.id.button) {
+            if (lastKnownLocation != null) {
+                final Intent data = new Intent();
+                data.putExtra("longitude", chosenLng);
+                data.putExtra("latitude", chosenLat);
+                setResult(Activity.RESULT_OK, data);
+                finish();
+            }
         }
     }
 

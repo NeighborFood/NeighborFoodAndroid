@@ -16,14 +16,14 @@ public class FirebaseDatabase implements Database {
     private static FirebaseDatabase instance;
 
 
-    private static FirebaseFirestore database = FirebaseFirestore.getInstance();
+    private static final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
 
     private FirebaseDatabase() {
     }
 
     public static FirebaseDatabase getInstance() {
-        if (instance== null) {
+        if (instance == null) {
             instance = new FirebaseDatabase();
         }
         return instance;
@@ -61,13 +61,13 @@ public class FirebaseDatabase implements Database {
     public Task<CollectionSnapshot> fetchAll(String collectionPath) {
         return database.collection(collectionPath).get().onSuccessTask(
                 (collectionSnapshot ->
-                Tasks.forResult(new FirebaseCollectionSnapshot(collectionSnapshot))
-        ));
+                        Tasks.forResult(new FirebaseCollectionSnapshot(collectionSnapshot))
+                ));
     }
 
     @Override
-    public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath,String attributeName, Object attributeValue) {
-        return database.collection(collectionPath).whereEqualTo(attributeName,attributeValue).get().onSuccessTask(
+    public Task<CollectionSnapshot> fetchAllMatchingAttributeValue(String collectionPath, String attributeName, Object attributeValue) {
+        return database.collection(collectionPath).whereEqualTo(attributeName, attributeValue).get().onSuccessTask(
                 (collectionSnapshot ->
                         Tasks.forResult(new FirebaseCollectionSnapshot(collectionSnapshot))
                 ));
@@ -82,10 +82,10 @@ public class FirebaseDatabase implements Database {
 
     @Override
     public Task<List<DocumentSnapshot>> fetchAllArrayAttributeContains(String collectionPath, String attributeName, String attributeValue) {
-        return database.collection(collectionPath).whereArrayContains(attributeName,attributeValue).get().continueWith(t->{
+        return database.collection(collectionPath).whereArrayContains(attributeName, attributeValue).get().continueWith(t -> {
             List<com.google.firebase.firestore.DocumentSnapshot> ds = t.getResult().getDocuments();
             List<DocumentSnapshot> res = new ArrayList<>();
-            for (com.google.firebase.firestore.DocumentSnapshot doc: ds) {
+            for (com.google.firebase.firestore.DocumentSnapshot doc : ds) {
                 res.add(new FirebaseDocumentSnapshot(doc));
             }
 

@@ -21,7 +21,7 @@ public class ChatRoomViewModel extends ViewModel {
     private final AuthRepository authRepository;
     private final ConversationRepository conversationRepository;
     private final UserRepository userRepository;
-    private MutableLiveData<Conversation> conversationLiveData;
+    private final MutableLiveData<Conversation> conversationLiveData;
 
     public ChatRoomViewModel (AuthRepository authRepository, UserRepository userRepository, ConversationRepository conversationRepository){
         this.authRepository = authRepository;
@@ -45,7 +45,7 @@ public class ChatRoomViewModel extends ViewModel {
                     }
                     return Tasks.forResult(t.getResult());
                 }
-        ).addOnSuccessListener(c->conversationLiveData.postValue(c));
+        ).addOnSuccessListener(conversationLiveData::postValue);
         conversationRepository.addOnConversationChangeListener(convoID,newModel -> {
             conversationLiveData.postValue(newModel.toModel(Conversation.class));
         });

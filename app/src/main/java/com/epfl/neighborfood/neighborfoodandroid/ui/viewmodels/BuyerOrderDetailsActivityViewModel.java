@@ -13,10 +13,10 @@ import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
 import com.google.android.gms.tasks.Task;
 
 public class BuyerOrderDetailsActivityViewModel extends ViewModel {
-    private AuthRepository authRepository;
-    private OrderRepository orderRepository;
-    private MealRepository mealRepository;
-    private UserRepository userRepository;
+    private final AuthRepository authRepository;
+    private final OrderRepository orderRepository;
+    private final MealRepository mealRepository;
+    private final UserRepository userRepository;
 
     public BuyerOrderDetailsActivityViewModel(AuthRepository authRepository, OrderRepository orderRepository, MealRepository mealRepository, UserRepository userRepository) {
         this.authRepository = authRepository;

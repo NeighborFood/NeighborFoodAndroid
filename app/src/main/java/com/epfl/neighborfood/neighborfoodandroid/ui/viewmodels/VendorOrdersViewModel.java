@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
-import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
@@ -18,9 +17,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class VendorOrdersViewModel extends ViewModel {
-    private AuthRepository authRepository;
-    private OrderRepository orderRepository;
-    private MealRepository mealRepository;
+    private final AuthRepository authRepository;
+    private final OrderRepository orderRepository;
+    private final MealRepository mealRepository;
 
 
     public VendorOrdersViewModel(AuthRepository authRepository, OrderRepository orderRepository, MealRepository mealRepository) {

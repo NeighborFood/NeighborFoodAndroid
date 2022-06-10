@@ -15,8 +15,15 @@ import com.epfl.neighborfood.neighborfoodandroid.models.Allergen;
 
 import java.util.List;
 
-
+/**
+ * Adapter class for allergens list
+ */
 public class AllergensAdapter extends ArrayAdapter {
+
+    /**
+     * @param context           context for pastOrders
+     * @param allergenArrayList List of chosen allergens
+     */
     public AllergensAdapter(Context context, List<Allergen> allergenArrayList) {
         super(context, R.layout.list_item_allergen, allergenArrayList);
     }

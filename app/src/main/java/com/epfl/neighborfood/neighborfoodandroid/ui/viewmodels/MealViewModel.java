@@ -13,10 +13,10 @@ import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
 import com.google.android.gms.tasks.Task;
 
 public class MealViewModel extends ViewModel {
-    private MealRepository mealRepository;
-    private OrderRepository orderRepository;
-    private UserRepository userRepository;
-    private AuthRepository authRepository;
+    private final MealRepository mealRepository;
+    private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
 
     public MealViewModel(OrderRepository orderRepo, MealRepository mealRepo, UserRepository userRepo, AuthRepository authRepo) {
         orderRepository = orderRepo;

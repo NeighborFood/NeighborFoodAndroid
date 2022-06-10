@@ -7,6 +7,7 @@ public class AuthenticatorFactory {
 
     /**
      * Gets the authenticator instance currently used
+     *
      * @return authenticator
      */
     public static Authenticator getDependency() {
@@ -15,6 +16,7 @@ public class AuthenticatorFactory {
 
     /**
      * Sets the authenticator instance to be used
+     *
      * @param authenticator authenticator
      */
     public static void setDependency(Authenticator authenticator) {

@@ -30,9 +30,7 @@ public class VendorDashboardFragmentTest {
     @Test
     public void buttonAddMealTest(){
         intending(toPackage(PlaceMealActivity.class.getName()));
-        controller.onFragment(fragment -> {
-            fragment.getActivity().findViewById(R.id.addMealButton).callOnClick();
-        });
+        controller.onFragment(fragment -> fragment.getActivity().findViewById(R.id.addMealButton).callOnClick());
 
     }
 

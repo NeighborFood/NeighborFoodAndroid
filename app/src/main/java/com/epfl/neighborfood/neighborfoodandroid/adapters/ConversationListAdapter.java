@@ -22,8 +22,17 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter class for conversations list
+ */
 public class ConversationListAdapter extends ArrayAdapter {
     private final ConversationsViewModel viewModel;
+
+    /**
+     * @param context
+     * @param conversationsArrayList list of conversations
+     * @param viewModel              viewModel of conversations
+     */
     public ConversationListAdapter(Context context, ArrayList<Pair<Conversation, User>> conversationsArrayList, ConversationsViewModel viewModel) {
         super(context, R.layout.fragment_conversations, conversationsArrayList);
         this.viewModel = viewModel;
@@ -32,7 +41,7 @@ public class ConversationListAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Pair<Conversation,User> conv = (Pair<Conversation,User>) getItem(position);
+        Pair<Conversation, User> conv = (Pair<Conversation, User>) getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_conversation

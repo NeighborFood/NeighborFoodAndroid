@@ -1,7 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.authentication;
 
-import android.net.Uri;
-
 import com.epfl.neighborfood.neighborfoodandroid.models.AuthenticatorUser;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -10,20 +8,24 @@ import com.google.android.gms.tasks.Tasks;
 
 import java.util.ArrayList;
 
-
+/**
+ * Dummmy authenticator for tests
+ */
 public class DummyAuthenticator implements Authenticator {
     private static DummyAuthenticator instance;
     private AuthenticatorUser fakeAuthUser;
     private User user;
     private final ArrayList<AuthUserStateChangeListener> listeners;
-    private DummyAuthenticator(){
+
+    private DummyAuthenticator() {
         listeners = new ArrayList<>();
     }
-    public static DummyAuthenticator getInstance(){
-        if(instance==null){
+
+    public static DummyAuthenticator getInstance() {
+        if (instance == null) {
             instance = new DummyAuthenticator();
         }
-        return instance ;
+        return instance;
     }
 
     @Override
@@ -46,8 +48,9 @@ public class DummyAuthenticator implements Authenticator {
         user = null;
         notifyUpdate();
     }
-    private void notifyUpdate(){
-        for (AuthUserStateChangeListener l:
+
+    private void notifyUpdate() {
+        for (AuthUserStateChangeListener l :
                 listeners) {
             l.onAuthStateChanged();
         }
@@ -55,19 +58,18 @@ public class DummyAuthenticator implements Authenticator {
 
     @Override
     public Task<Void> logInWithGoogleAccount(GoogleSignInAccount googleAccount) {
-        this.fakeAuthUser = new AuthenticatorUser("-1","","","","") {
+        this.fakeAuthUser = new AuthenticatorUser("-1", "", "", "", "") {
         };
-        this.user =new User("-1", "me@epfl.ch", "Me", "Notyou", "");
+        this.user = new User("-1", "me@epfl.ch", "Me", "Notyou", "");
         notifyUpdate();
         return Tasks.forResult(null);
     }
 
-    public void setAuthUser(AuthenticatorUser user){
+    public void setAuthUser(AuthenticatorUser user) {
         this.fakeAuthUser = user;
-        this.user = new User(user.getId(),user.getEmail(),user.getFirstName(),user.getLastName(),user.getPpUri());
+        this.user = new User(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPpUri());
         notifyUpdate();
     }
-
 
 
 }

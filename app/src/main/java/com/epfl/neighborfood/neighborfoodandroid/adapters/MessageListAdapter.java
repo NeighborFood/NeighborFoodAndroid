@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
@@ -17,13 +18,22 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.ChatRoomViewModel
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * Adapter class for messages list in a conversation
+ */
 public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
+    private static final String DATE_FORMAT = "d MMM yyyy, HH:mm";
     private final ChatRoomViewModel viewModel;
 
-    private List<Message> mMessageList;
+    private final List<Message> mMessageList;
 
+    /**
+     * @param context
+     * @param messageList list of messages
+     * @param viewModel   viewModel for the chatroom
+     */
     public MessageListAdapter(Context context, List<Message> messageList, ChatRoomViewModel viewModel) {
         mMessageList = messageList;
         this.viewModel = viewModel;
@@ -51,8 +61,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
     // Inflates the appropriate layout according to the ViewType.
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
 
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
@@ -71,7 +82,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     // Passes the message object to a ViewHolder so that the contents can be bound to UI.
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Message message = (Message) mMessageList.get(position);
+        Message message = mMessageList.get(position);
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
@@ -83,9 +94,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
 
-
     private class SentMessageHolder extends RecyclerView.ViewHolder {
-        TextView messageText, timeText;
+        final TextView messageText;
+        final TextView timeText;
 
         SentMessageHolder(View itemView) {
             super(itemView);
@@ -98,18 +109,20 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             messageText.setText(message.getContent());
 
             // Format the stored timestamp into a readable String using method.
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("d MMM yyyy, HH:mm");
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
             timeText.setText(dateFormatter.format(message.getDate()));
         }
     }
 
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
-        TextView messageText, timeText, nameText;
-        ImageView profileImage;
+        final TextView messageText;
+        final TextView timeText;
+        final TextView nameText;
+        final ImageView profileImage;
 
         ReceivedMessageHolder(View itemView) {
             super(itemView);
-            nameText  = itemView.findViewById(R.id.text_gchat_user_other);
+            nameText = itemView.findViewById(R.id.text_gchat_user_other);
             timeText = itemView.findViewById(R.id.text_gchat_timestamp_other);
             messageText = itemView.findViewById(R.id.text_gchat_message_other);
             profileImage = itemView.findViewById(R.id.image_gchat_profile_other);
@@ -118,10 +131,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         void bind(Message message) {
             messageText.setText(message.getContent());
             // Format the stored timestamp into a readable String
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("d MMM yyyy, HH:mm");
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
             timeText.setText(dateFormatter.format(message.getDate()));
-            viewModel.getUserById(message.getSender()).addOnSuccessListener(user-> nameText.setText(user.getUsername()));
-            //nameText.setText(message.getSender().getUsername());
+            viewModel.getUserById(message.getSender()).addOnSuccessListener(user -> nameText.setText(user.getUsername()));
         }
     }
 

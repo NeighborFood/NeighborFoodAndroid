@@ -1,6 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.repositories;
 
-import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.google.android.gms.tasks.Task;
