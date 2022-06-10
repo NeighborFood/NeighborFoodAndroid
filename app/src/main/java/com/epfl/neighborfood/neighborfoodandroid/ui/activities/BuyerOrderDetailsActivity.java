@@ -68,6 +68,9 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * fetches the order details
+     */
     private void fetchOrderDetails() {
         viewModel.getMealById(order.getMealId()).addOnSuccessListener(meal -> {
             this.meal = meal;
@@ -77,12 +80,6 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
             this.vendor = user;
             updateVendorDetails();
         });
-    }
-
-    private void updateVendorDetails() {
-        ImageView vendorImage = findViewById(R.id.go_vendor_profile_id);
-        binding.vendorName.setText(vendor.getUsername());
-        Picasso.get().load(vendor.getProfilePictureURI()).into(vendorImage);
         ImageView mapButton = findViewById(R.id.pickupLocation);
 
         mapButton.setOnClickListener(v -> {
@@ -94,6 +91,16 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
             mapIntent.putExtra("longitude", order.getLocation());
             startActivity(mapIntent);
         });
+    }
+
+    /**
+     * updates the vendor details
+     */
+    private void updateVendorDetails() {
+        ImageView vendorImage = findViewById(R.id.go_vendor_profile_id);
+        binding.vendorName.setText(vendor.getUsername());
+        Picasso.get().load(vendor.getProfilePictureURI()).into(vendorImage);
+
         binding.goVendorProfileId.setOnClickListener(e ->
         {
             Intent intentVendor = new Intent(BuyerOrderDetailsActivity.this, VendorProfileActivity.class);
@@ -103,6 +110,9 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * update meal details
+     */
     private void updateMealDetails() {
         Picasso.get().load(meal.getImageUri()).into(binding.mealImage);
         binding.mealName.setText(meal.getName());

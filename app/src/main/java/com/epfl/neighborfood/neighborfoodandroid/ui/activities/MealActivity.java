@@ -95,9 +95,7 @@ public class MealActivity extends AppCompatActivity {
             if (meal == null) {
                 return;
             }
-            System.out.println("order Location lat" + order.getLocation().getLatitude());
-            System.out.println("order Location long" + order.getLocation().getLongitude());
-            System.out.println("-----------------------------------------------------");
+
             mapIntent.putExtra("latitude", order.getLocation().getLatitude());
             mapIntent.putExtra("longitude", order.getLocation().getLongitude());
             startActivity(mapIntent);
