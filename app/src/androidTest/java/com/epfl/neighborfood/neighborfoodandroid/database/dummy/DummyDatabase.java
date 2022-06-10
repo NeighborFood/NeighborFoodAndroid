@@ -207,7 +207,7 @@ public class DummyDatabase implements Database {
         orders = new HashMap<>();
         for (int i = 0; i < mealsName.length; i++) {
             Meal meal = new Meal(mealsName[i], mealsShortDes[i], "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon,new ArrayList<>(),new Date());
-            Order order = new Order(Integer.toString(i),Integer.toString(i),new Date(), OrderStatus.unassigned,"0",null, LocationServiceTestImplementation.DEFAULT);
+            Order order = new Order(Integer.toString(i),Integer.toString(i),new Date(), OrderStatus.unassigned,"0",null, LocationServiceTestImplementation.DEFAULT,0);
             meals.put(Integer.toString(i),new MealDocumentSnapshot(meal));
             orders.put(Integer.toString(i),new OrderDocumentSnapshot(order));
         }
