@@ -15,9 +15,7 @@ import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
 import com.epfl.neighborfood.neighborfoodandroid.services.notifications.NotificationService;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,8 +26,8 @@ public abstract class AppContainer {
     private AuthRepository authRepo;
     private MealRepository mealRepo;
     private UserRepository userRepo;
-    private OrderRepository orderRepo;
-    private NotificationService notificationService;
+    private final OrderRepository orderRepo;
+    private final NotificationService notificationService;
     /**
      * getter for the Auth Repo of the app
      *

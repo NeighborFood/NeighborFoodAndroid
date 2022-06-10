@@ -1,11 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.applications;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-
-import com.epfl.neighborfood.neighborfoodandroid.AppContainerImplementation;
-import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
-
 import org.junit.Test;
 
 public class NeighborFoodApplicationTest {

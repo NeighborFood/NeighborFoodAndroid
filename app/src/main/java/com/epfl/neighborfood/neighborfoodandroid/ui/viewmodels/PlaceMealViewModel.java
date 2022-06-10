@@ -1,7 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels;
 
-import android.location.Location;
-
 import androidx.lifecycle.ViewModel;
 
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;

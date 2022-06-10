@@ -24,9 +24,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class VendorOrderListAdapter extends RecyclerView.Adapter<VendorOrderListAdapter.ViewHolder> {
     private static final String TAG = "OrderListAdapter";
 
-    private List<Order> orderList;
-    private VendorOrdersViewModel viewModel;
-    private Context context;
+    private final List<Order> orderList;
+    private final VendorOrdersViewModel viewModel;
+    private final Context context;
 
     /**
      * @param context
@@ -63,9 +63,9 @@ public class VendorOrderListAdapter extends RecyclerView.Adapter<VendorOrderList
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        CircleImageView image;
-        TextView name;
-        TextView status;
+        final CircleImageView image;
+        final TextView name;
+        final TextView status;
 
         public ViewHolder(View itemView) {
             super(itemView);

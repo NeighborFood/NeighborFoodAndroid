@@ -31,8 +31,8 @@ import java.util.Objects;
 public class VendorProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private enum SocialLinkType{
         FACEBOOK("facebook",R.drawable.facebook),INSTAGRAM("instagram",R.drawable.instagram),TWITTER("twitter",R.drawable.twitter),DEFAULT("",R.drawable.link);
-        private String domainName;
-        private int resourceID;
+        private final String domainName;
+        private final int resourceID;
         SocialLinkType(String domainName, int resourceID){
             this.domainName  =domainName;
             this.resourceID = resourceID;
@@ -150,13 +150,9 @@ public class VendorProfileActivity extends AppCompatActivity implements View.OnC
                 }
                 subscriptionTaskComplete =false;
                 if(isCurrentUserSubscribed){
-                    vmodel.unsubscribeFromVendor(vendor).addOnCompleteListener(t->{subscriptionTaskComplete = true;}).addOnSuccessListener((a)->{
-                        subscriptionTaskComplete(false);
-                    }  );
+                    vmodel.unsubscribeFromVendor(vendor).addOnCompleteListener(t-> subscriptionTaskComplete = true).addOnSuccessListener((a)-> subscriptionTaskComplete(false));
                 }else{
-                    vmodel.subscribeToVendor(vendor).addOnCompleteListener(t->{subscriptionTaskComplete = true;}).addOnSuccessListener((a)->{
-                        subscriptionTaskComplete(true);
-                    }  );
+                    vmodel.subscribeToVendor(vendor).addOnCompleteListener(t-> subscriptionTaskComplete = true).addOnSuccessListener((a)-> subscriptionTaskComplete(true));
                 }
                 break;
 

@@ -1,7 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;

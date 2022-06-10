@@ -2,9 +2,7 @@ package com.epfl.neighborfood.neighborfoodandroid.database;
 
 import static org.junit.Assert.assertEquals;
 
-import com.epfl.neighborfood.neighborfoodandroid.database.firebase.FirebaseCollectionSnapshot;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 
 import org.junit.Test;
 

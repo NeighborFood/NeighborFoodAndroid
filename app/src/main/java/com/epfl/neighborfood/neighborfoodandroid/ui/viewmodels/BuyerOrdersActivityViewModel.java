@@ -14,10 +14,10 @@ import com.google.android.gms.tasks.Task;
 import java.util.List;
 
 public class BuyerOrdersActivityViewModel extends ViewModel {
-    private AuthRepository authRepository;
-    private OrderRepository orderRepository;
-    private MealRepository mealRepository;
-    private UserRepository userRepository;
+    private final AuthRepository authRepository;
+    private final OrderRepository orderRepository;
+    private final MealRepository mealRepository;
+    private final UserRepository userRepository;
 
     public BuyerOrdersActivityViewModel(AuthRepository authRepository, OrderRepository orderRepository, MealRepository mealRepository, UserRepository userRepository) {
         this.authRepository = authRepository;

@@ -63,9 +63,9 @@ import java.util.ArrayList;
 public class ProfileEditingActivityTest {
     public static final String KEY_IMAGE_DATA = "data";
     private AuthRepositoryTestImplementation authRepo;
-    private User dummyUser = new UserTestImplementation("-1","zbiba@epfl.ch","Zbiba","Zabboub");
+    private final User dummyUser = new UserTestImplementation("-1","zbiba@epfl.ch","Zbiba","Zabboub");
     @Rule
-    public ActivityScenarioRule<ProfileEditingActivity> testRule = new ActivityScenarioRule<>(ProfileEditingActivity.class);
+    public final ActivityScenarioRule<ProfileEditingActivity> testRule = new ActivityScenarioRule<>(ProfileEditingActivity.class);
 
     @BeforeClass
     public static void setupApp(){

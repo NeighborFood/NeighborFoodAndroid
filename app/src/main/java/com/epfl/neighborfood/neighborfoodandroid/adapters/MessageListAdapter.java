@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
@@ -26,7 +27,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private static final String DATE_FORMAT = "d MMM yyyy, HH:mm";
     private final ChatRoomViewModel viewModel;
 
-    private List<Message> mMessageList;
+    private final List<Message> mMessageList;
 
     /**
      * @param context
@@ -60,8 +61,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
     // Inflates the appropriate layout according to the ViewType.
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
 
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
@@ -80,7 +82,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     // Passes the message object to a ViewHolder so that the contents can be bound to UI.
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Message message = (Message) mMessageList.get(position);
+        Message message = mMessageList.get(position);
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
@@ -93,7 +95,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
 
     private class SentMessageHolder extends RecyclerView.ViewHolder {
-        TextView messageText, timeText;
+        final TextView messageText;
+        final TextView timeText;
 
         SentMessageHolder(View itemView) {
             super(itemView);
@@ -112,8 +115,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
-        TextView messageText, timeText, nameText;
-        ImageView profileImage;
+        final TextView messageText;
+        final TextView timeText;
+        final TextView nameText;
+        final ImageView profileImage;
 
         ReceivedMessageHolder(View itemView) {
             super(itemView);

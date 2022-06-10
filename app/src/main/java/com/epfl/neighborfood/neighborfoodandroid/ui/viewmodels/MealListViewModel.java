@@ -14,9 +14,9 @@ import com.google.android.gms.tasks.Task;
 import java.util.List;
 
 public class MealListViewModel extends ViewModel {
-    private MealRepository mealRepository;
-    private OrderRepository orderRepository;
-    private AuthRepository authRepository;
+    private final MealRepository mealRepository;
+    private final OrderRepository orderRepository;
+    private final AuthRepository authRepository;
 
     public MealListViewModel(MealRepository mealRepository, OrderRepository orderRepository, AuthRepository authRepository) {
         this.mealRepository = mealRepository;

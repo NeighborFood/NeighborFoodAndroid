@@ -1,26 +1,9 @@
 package com.epfl.neighborfood.neighborfoodandroid.repositories;
 
-import android.os.Build;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-
-import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
-import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
-import com.epfl.neighborfood.neighborfoodandroid.models.Order;
-import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
-import com.epfl.neighborfood.neighborfoodandroid.models.User;
-import com.epfl.neighborfood.neighborfoodandroid.util.Pair;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.auth.AuthResult;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class MealRepository {
     private final static String mealsDataCollectionPath = "Meals";

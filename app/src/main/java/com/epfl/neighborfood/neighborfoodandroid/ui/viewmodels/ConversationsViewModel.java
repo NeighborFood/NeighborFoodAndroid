@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConversationsViewModel extends ViewModel {
-    private AuthRepository authRepository;
-    private UserRepository userRepository;
-    private ConversationRepository conversationRepository;
+    private final AuthRepository authRepository;
+    private final UserRepository userRepository;
+    private final ConversationRepository conversationRepository;
     public ConversationsViewModel(AuthRepository authRepository, UserRepository userRepository, ConversationRepository conversationRepository){
         this.authRepository = authRepository;
         this.userRepository = userRepository;

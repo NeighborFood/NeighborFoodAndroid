@@ -15,15 +15,17 @@ public class FirebaseAuthenticatorUser extends AuthenticatorUser {
      * @param firebaseUser(FirebaseUser) : the user returned by firebase
      */
     public FirebaseAuthenticatorUser(com.google.firebase.auth.FirebaseUser firebaseUser) {
-        super(firebaseUser.getUid(), firebaseUser.getEmail(), firebaseUser.getDisplayName(), firebaseUser.getDisplayName(),firebaseUser.getPhotoUrl().toString());
+        super(firebaseUser.getUid(), firebaseUser.getEmail(), firebaseUser.getDisplayName(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl().toString());
         this.firebaseUser = firebaseUser;
-        String[] nameLastName = getNameLastNameFromDisplayName( firebaseUser.getDisplayName());
+        String[] nameLastName = getNameLastNameFromDisplayName(firebaseUser.getDisplayName());
         setFirstName(nameLastName[0]);
         setLastName(nameLastName[1]);
     }
 
 
-    /** Separates the first name from the lastname of the user
+    /**
+     * Separates the first name from the lastname of the user
+     *
      * @param str the string containing the full name
      * @return a list containing the first name and the lastname of the user, if not found, it will be an empty string
      */

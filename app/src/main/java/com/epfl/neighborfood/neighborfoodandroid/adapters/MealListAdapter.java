@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Adapter class for meals list
  */
 public class MealListAdapter extends ArrayAdapter {
-    private MealListViewModel viewModel;
+    private final MealListViewModel viewModel;
 
     /**
      * @param context

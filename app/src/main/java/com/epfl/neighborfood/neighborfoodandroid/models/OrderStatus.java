@@ -1,9 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
 
-
-import com.epfl.neighborfood.neighborfoodandroid.R;
-
 public enum OrderStatus {
     unassigned("meal unassigned"),
     assigned("assigned"),

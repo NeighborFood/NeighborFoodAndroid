@@ -16,7 +16,7 @@ public class FirebaseDatabase implements Database {
     private static FirebaseDatabase instance;
 
 
-    private static FirebaseFirestore database = FirebaseFirestore.getInstance();
+    private static final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
 
     private FirebaseDatabase() {

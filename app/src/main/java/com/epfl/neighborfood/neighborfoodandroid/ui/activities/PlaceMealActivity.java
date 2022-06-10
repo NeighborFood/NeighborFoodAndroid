@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -118,19 +117,14 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         cannotBeEmptyFields.add(dateText);
         cannotBeEmptyFields.add(timeText);
 
-        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this, result -> {
-            imageActivityResult(result.getResultCode(), result.getData());
-        });
+        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this, result -> imageActivityResult(result.getResultCode(), result.getData()));
 
         locationActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == RESULT_OK) {
-                            Double chosenLon = result.getData().getDoubleExtra("longitude",0);
-                            Double chosenLat = result.getData().getDoubleExtra("latitude",0);
-                            location = new PickupLocation(chosenLat,chosenLon);
-                        }
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Double chosenLon = result.getData().getDoubleExtra("longitude",0);
+                        Double chosenLat = result.getData().getDoubleExtra("latitude",0);
+                        location = new PickupLocation(chosenLat,chosenLon);
                     }
                 }
         );
@@ -188,9 +182,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                             Double.parseDouble(priceText.getText().toString()),
                             new Date());//TODO: build the retrieval date
                     Task<String> task = vmodel.placeMeal(meal, imagePath);
-                    task.addOnSuccessListener((mealId) -> {
-                        vmodel.createOrder(mealId,location).addOnSuccessListener(orderId -> startActivity(i));
-                    });
+                    task.addOnSuccessListener((mealId) -> vmodel.createOrder(mealId,location).addOnSuccessListener(orderId -> startActivity(i)));
                 }
 
                 break;

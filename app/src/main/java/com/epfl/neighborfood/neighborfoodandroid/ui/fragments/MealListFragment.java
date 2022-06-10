@@ -26,7 +26,7 @@ public class MealListFragment extends Fragment {
     private FragmentMealListBinding binding;
     private MealListViewModel viewModel;
     private MealListAdapter listAdapter;
-    private ArrayList<Order> orderMealList = new ArrayList<Order>();
+    private final ArrayList<Order> orderMealList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -37,7 +37,7 @@ public class MealListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(MealListViewModel.class);
         listAdapter = new MealListAdapter(getActivity(), orderMealList, viewModel);
         viewModel.getAllUnassignedOrders().addOnSuccessListener(orders->{

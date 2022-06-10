@@ -1,7 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.repositories;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;

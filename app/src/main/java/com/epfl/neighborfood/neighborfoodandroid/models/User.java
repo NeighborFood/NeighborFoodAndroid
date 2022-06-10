@@ -1,7 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.models;
 
 
-import android.net.Uri;
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -196,6 +196,7 @@ public class User extends Model {
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return "{\n" + KEY_ID + " : " + getId() + ", " +

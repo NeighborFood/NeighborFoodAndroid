@@ -30,16 +30,16 @@ public class Meal extends Model implements Serializable {
 
     }
 
-    public Meal(String id,String vendorID,String name, String description, String imageUri, List<Allergen> allergens, double price, Date retrievalDate){
-        this(name,description,imageUri, allergens, price, retrievalDate);
+    public Meal(String id, String vendorID, String name, String description, String imageUri, List<Allergen> allergens, double price, Date retrievalDate) {
+        this(name, description, imageUri, allergens, price, retrievalDate);
         this.mealId = id;
         this.vendorID = vendorID;
     }
 
 
-
     /**
      * Complete constructor of a Meal
+     *
      * @param name
      * @param description
      * @param imageUri
@@ -47,7 +47,7 @@ public class Meal extends Model implements Serializable {
      * @param price
      * @param retrievalDate
      */
-    public Meal(String name,String description, String imageUri, List<Allergen> allergens, double price, Date retrievalDate) {
+    public Meal(String name, String description, String imageUri, List<Allergen> allergens, double price, Date retrievalDate) {
         this.name = name;
         this.description = description;
         this.imageUri = imageUri;
@@ -63,7 +63,8 @@ public class Meal extends Model implements Serializable {
     public String getDescription() {
         return description;
     }
-    public void setDescription(String description){
+
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -78,34 +79,44 @@ public class Meal extends Model implements Serializable {
     public String getImageUri() {
         return imageUri;
     }
-    public void setImageUri(String imageUri){
+
+    public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
     }
 
-    /** getter for the meal id
+    /**
+     * getter for the meal id
+     *
      * @return the meal id
      */
-    public String getMealId(){
+    public String getMealId() {
         return mealId;
     }
 
-    /** setter for the meal id
-     * @param  mealId the meal id
+    /**
+     * setter for the meal id
+     *
+     * @param mealId the meal id
      */
-    public void setMealId(String mealId){
+    public void setMealId(String mealId) {
         this.mealId = mealId;
     }
-    /** getter for the meal's vendor id
+
+    /**
+     * getter for the meal's vendor id
+     *
      * @return the owner vendorID
      */
-    public String getVendorID(){
+    public String getVendorID() {
         return vendorID;
     }
 
-    /** Setter for the meal's vendor id
+    /**
+     * Setter for the meal's vendor id
+     *
      * @return the owner vendorID
      */
-    public void setVendorID(String vendorID){
+    public void setVendorID(String vendorID) {
         this.vendorID = vendorID;
     }
 

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 
 
 import com.epfl.neighborfood.neighborfoodandroid.R;

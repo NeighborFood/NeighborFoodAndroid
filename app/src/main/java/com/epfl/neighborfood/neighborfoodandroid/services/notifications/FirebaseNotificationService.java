@@ -66,9 +66,7 @@ public class FirebaseNotificationService extends FirebaseMessagingService implem
                     .setAutoCancel(true);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            new Handler(Looper.getMainLooper()).post(() -> {
-                notificationManager.notify(0, builder.build());
-            });
+            new Handler(Looper.getMainLooper()).post(() -> notificationManager.notify(0, builder.build()));
         });
 
     }

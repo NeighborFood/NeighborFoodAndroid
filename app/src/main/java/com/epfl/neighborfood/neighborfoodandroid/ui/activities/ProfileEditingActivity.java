@@ -65,9 +65,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
         findViewById(R.id.profileEditAddLinkButton).setOnClickListener(this::onClick);
         linksLayout = findViewById(R.id.profileEditLinksLayout);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this,result -> {
-            activityResult(result.getResultCode(), result.getData());
-        });
+        activityResultLauncher = ImageUtil.getImagePickerActivityLauncher(this,result -> activityResult(result.getResultCode(), result.getData()));
     }
 
     /**
@@ -142,7 +140,7 @@ public class ProfileEditingActivity extends AppCompatActivity {
             return null;
         }
         String bio = ((TextInputEditText) findViewById(R.id.bioValue)).getEditableText().toString();
-        User newUser = new User(currUser.getId(), currUser.getEmail(), currUser.getFirstName(), currUser.getLastName(),currUser.getProfilePictureURI().toString());
+        User newUser = new User(currUser.getId(), currUser.getEmail(), currUser.getFirstName(), currUser.getLastName(), currUser.getProfilePictureURI());
         newUser.setBio(bio);
         ArrayList<String> links = new ArrayList<>();
         for (TextInputEditText view : textEdits) {

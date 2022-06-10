@@ -42,7 +42,7 @@ public class DummyDatabase implements Database {
     private final List<ModelUpdateListener> conversationsListeners;
 
     private class UserDocumentSnapshot extends User implements DocumentSnapshot{
-        private User user;
+        private final User user;
         public UserDocumentSnapshot(User user){
             this.user = user;
         }
@@ -78,7 +78,7 @@ public class DummyDatabase implements Database {
         }
     }
     private class MealDocumentSnapshot extends Meal implements DocumentSnapshot{
-        private Meal meal;
+        private final Meal meal;
         public MealDocumentSnapshot(Meal meal){
             this.meal = meal;
         }
@@ -101,7 +101,7 @@ public class DummyDatabase implements Database {
         }
     }
     private class CollectionSnapshotImpl implements CollectionSnapshot{
-        private List<DocumentSnapshot> documents;
+        private final List<DocumentSnapshot> documents;
         @SuppressLint("NewApi")
         CollectionSnapshotImpl(Collection<DocumentSnapshot> documents){
             this.documents = documents.stream().collect(toList());
@@ -118,7 +118,7 @@ public class DummyDatabase implements Database {
         conversationsListeners = new ArrayList<>();
     }
     private class ConversationDocumentSnapshot extends Conversation implements DocumentSnapshot{
-        private Conversation convo;
+        private final Conversation convo;
         public ConversationDocumentSnapshot(Conversation convo){
             this.convo = convo;
         }
@@ -299,10 +299,9 @@ public class DummyDatabase implements Database {
 
     @Override
     public Task<CollectionSnapshot> fetchAll(String collectionPath) {
-        switch (collectionPath){
-            case "Meals":
-                Collection<? extends DocumentSnapshot> bases = meals.values();
-                return Tasks.forResult(new CollectionSnapshotImpl((Collection<DocumentSnapshot>) bases));
+        if ("Meals".equals(collectionPath)) {
+            Collection<? extends DocumentSnapshot> bases = meals.values();
+            return Tasks.forResult(new CollectionSnapshotImpl((Collection<DocumentSnapshot>) bases));
         }
         return null;
     }

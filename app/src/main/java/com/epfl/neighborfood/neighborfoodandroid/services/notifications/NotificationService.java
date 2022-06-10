@@ -4,11 +4,11 @@ import com.google.android.gms.tasks.Task;
 
 public interface NotificationService {
     enum NotificationTopic {
-        MEALPOSTS("mealposts-");
+        MEALPOSTS();
         private final String topicPrefix;
 
-        private NotificationTopic(String topicPrefix) {
-            this.topicPrefix = topicPrefix;
+        NotificationTopic() {
+            this.topicPrefix = "mealposts-";
         }
 
         public String getTopicPrefix() {

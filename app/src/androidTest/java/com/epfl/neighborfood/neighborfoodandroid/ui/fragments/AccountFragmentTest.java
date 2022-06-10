@@ -1,7 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.fragments;
 
-import static org.hamcrest.core.AllOf.allOf;
-
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -11,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 

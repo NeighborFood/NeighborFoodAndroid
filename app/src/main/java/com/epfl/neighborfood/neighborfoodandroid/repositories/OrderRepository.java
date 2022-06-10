@@ -2,7 +2,6 @@ package com.epfl.neighborfood.neighborfoodandroid.repositories;
 
 import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
 import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
-import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
 import com.google.android.gms.tasks.Task;

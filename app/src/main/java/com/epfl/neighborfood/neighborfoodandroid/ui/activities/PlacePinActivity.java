@@ -75,7 +75,7 @@ public class PlacePinActivity extends AppCompatActivity
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
 
         this.map = googleMap;
 
@@ -104,24 +104,21 @@ public class PlacePinActivity extends AppCompatActivity
         try {
             if (locationPermissionGranted) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
+                locationResult.addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
 
-                            lastKnownLocation = task.getResult();
-                            if (lastKnownLocation != null) {
-                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                        new LatLng(lastKnownLocation.getLatitude(),
-                                                lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                            }
-                        } else {
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-                            map.moveCamera(CameraUpdateFactory
-                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
-                            map.getUiSettings().setMyLocationButtonEnabled(false);
+                        lastKnownLocation = task.getResult();
+                        if (lastKnownLocation != null) {
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                    new LatLng(lastKnownLocation.getLatitude(),
+                                            lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                         }
+                    } else {
+                        Log.d(TAG, "Current location is null. Using defaults.");
+                        Log.e(TAG, "Exception: %s", task.getException());
+                        map.moveCamera(CameraUpdateFactory
+                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+                        map.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 });
             }
@@ -185,16 +182,14 @@ public class PlacePinActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button:
-                if (lastKnownLocation != null) {
-                    final Intent data = new Intent();
-                    data.putExtra("longitude",chosenLng);
-                    data.putExtra("latitude",chosenLat);
-                    setResult(Activity.RESULT_OK, data);
-                    finish();
-                }
-                break;
+        if (v.getId() == R.id.button) {
+            if (lastKnownLocation != null) {
+                final Intent data = new Intent();
+                data.putExtra("longitude", chosenLng);
+                data.putExtra("latitude", chosenLat);
+                setResult(Activity.RESULT_OK, data);
+                finish();
+            }
         }
     }
 
