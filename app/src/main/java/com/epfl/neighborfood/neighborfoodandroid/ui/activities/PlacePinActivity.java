@@ -1,6 +1,8 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -185,10 +187,16 @@ public class PlacePinActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button:
-                finish();
+                if (lastKnownLocation != null) {
+                    final Intent data = new Intent();
+                    data.putExtra("Location",lastKnownLocation);
+                    setResult(Activity.RESULT_OK, data);
+                    finish();
+                }
                 break;
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) // tool bar Back Icon

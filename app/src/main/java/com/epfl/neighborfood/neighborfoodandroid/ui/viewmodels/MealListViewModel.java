@@ -25,7 +25,7 @@ public class MealListViewModel extends ViewModel {
     }
 
     public Task<List<Order>> getAllUnassignedOrders() {
-        return orderRepository.getAllOrdersMatchingStatus(OrderStatus.unassigned);
+        return orderRepository.getAllOrdersMatchingStatus(OrderStatus.unassigned).addOnFailureListener(System.out::println);
     }
 
     public Task<Meal> getMealById(String id) {

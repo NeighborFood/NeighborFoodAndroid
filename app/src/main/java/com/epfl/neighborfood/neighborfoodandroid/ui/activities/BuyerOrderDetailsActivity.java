@@ -49,7 +49,6 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
         viewModel.getOrderById(orderId).addOnSuccessListener(orderFetched -> {
             order = orderFetched;
             if(order.getOrderStatus() == OrderStatus.finished) {
-                System.out.println("helloo");
                 binding.ConfirmationButton.setVisibility(View.GONE);
             }
             else {
@@ -94,8 +93,8 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
             if(meal==null){
                 return;
             }
-            mapIntent.putExtra("latitude","46.5191");
-            mapIntent.putExtra("longitude", "6.5668");
+            mapIntent.putExtra("latitude",order.getLocation().getLatitude());
+            mapIntent.putExtra("longitude", order.getLocation());
             startActivity(mapIntent);
         });
         binding.goVendorProfileId.setOnClickListener(e ->
