@@ -170,7 +170,7 @@ public class DummyDatabase implements Database {
                 "Une bonne tarte aux pommes"};
 
         for (int i = 0; i < mealsName.length; i++) {
-            Meal meal = new Meal(mealsName[i], mealsShortDes[i], "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon,new ArrayList<>(),0,new Date());
+            Meal meal = new Meal(mealsName[i], mealsShortDes[i], "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon,new ArrayList<>(),new Date());
             meals.put(Integer.toString(i),new MealDocumentSnapshot(meal));
         }
         conversations = new HashMap<>();

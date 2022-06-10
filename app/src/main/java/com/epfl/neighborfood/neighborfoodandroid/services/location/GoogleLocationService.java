@@ -1,4 +1,4 @@
-package com.epfl.neighborfood.neighborfoodandroid.services.notifications;
+package com.epfl.neighborfood.neighborfoodandroid.services.location;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

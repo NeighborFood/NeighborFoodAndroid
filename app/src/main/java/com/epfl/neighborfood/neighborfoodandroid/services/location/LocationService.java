@@ -1,4 +1,4 @@
-package com.epfl.neighborfood.neighborfoodandroid.services.notifications;
+package com.epfl.neighborfood.neighborfoodandroid.services.location;
 
 import android.app.Activity;
 import android.app.Service;

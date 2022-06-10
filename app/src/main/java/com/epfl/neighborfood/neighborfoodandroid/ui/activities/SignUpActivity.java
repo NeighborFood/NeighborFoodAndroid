@@ -93,7 +93,6 @@ public class SignUpActivity extends AppCompatActivity {
             updateUI(viewModel.getCurrentAuthUser());
         }).addOnFailureListener(e->{
             Toast.makeText(this, R.string.login_failure, Toast.LENGTH_SHORT).show();
-            System.out.println(e.toString());
         } );
     }
 

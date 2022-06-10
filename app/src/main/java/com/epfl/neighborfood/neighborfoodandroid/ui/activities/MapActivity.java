@@ -2,30 +2,21 @@ package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 
 import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.PickupLocation;
-import com.epfl.neighborfood.neighborfoodandroid.services.notifications.LocationService;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
+import com.epfl.neighborfood.neighborfoodandroid.services.location.LocationService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.Objects;

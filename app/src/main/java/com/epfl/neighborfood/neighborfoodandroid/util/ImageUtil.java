@@ -1,5 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.app.ActivityCompat;
 
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
@@ -30,6 +32,9 @@ public class ImageUtil
         return new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
     }
     public static ActivityResultLauncher<Intent> getImagePickerActivityLauncher(ComponentActivity activity, ActivityResultCallback<ActivityResult> callback){
+        ActivityCompat.requestPermissions(activity,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                2);
         return activity.registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 callback

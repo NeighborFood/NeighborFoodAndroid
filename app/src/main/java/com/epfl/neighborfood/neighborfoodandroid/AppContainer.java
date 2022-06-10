@@ -14,11 +14,9 @@ import com.epfl.neighborfood.neighborfoodandroid.repositories.ConversationReposi
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
-import com.epfl.neighborfood.neighborfoodandroid.services.notifications.LocationService;
+import com.epfl.neighborfood.neighborfoodandroid.services.location.LocationService;
 import com.epfl.neighborfood.neighborfoodandroid.services.notifications.NotificationService;
-import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

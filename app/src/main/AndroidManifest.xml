@@ -13,9 +13,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.NeighborFood.NoActionBar"
         android:name=".NeighborFoodApplication"
@@ -29,7 +29,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".services.notifications.LocationService" />
+        <service android:name=".services.location.LocationService" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

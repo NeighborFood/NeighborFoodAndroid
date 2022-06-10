@@ -17,7 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.PickupLocation;
-import com.epfl.neighborfood.neighborfoodandroid.services.notifications.LocationService;
+import com.epfl.neighborfood.neighborfoodandroid.services.location.LocationService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

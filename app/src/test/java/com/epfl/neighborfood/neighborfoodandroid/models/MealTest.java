@@ -33,7 +33,7 @@ public class MealTest {
     }
 
     private Meal getNewMeal() {
-        return new Meal(name, shortDescription, "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon, allergens, price, null);
+        return new Meal(name, shortDescription, "android.resource://com.neighborfood.neighborfoodandroid/" + R.drawable.icon, allergens, null);
     }
 
 

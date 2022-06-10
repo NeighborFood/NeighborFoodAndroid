@@ -1,9 +1,5 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels;
 
-import android.location.Location;
-import android.location.LocationListener;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,10 +12,9 @@ import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
-import com.epfl.neighborfood.neighborfoodandroid.services.notifications.LocationService;
+import com.epfl.neighborfood.neighborfoodandroid.services.location.LocationService;
 import com.google.android.gms.tasks.Task;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
