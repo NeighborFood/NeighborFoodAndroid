@@ -25,8 +25,7 @@ import java.util.ArrayList;
  */
 public class BuyerOrderListAdapter extends ArrayAdapter {
     /**
-     *
-     * @param context context for pastOrders
+     * @param context        context for pastOrders
      * @param orderArrayList List of past orders
      */
     public BuyerOrderListAdapter(Context context, ArrayList<Triplet<Order, Meal, User>> orderArrayList) {

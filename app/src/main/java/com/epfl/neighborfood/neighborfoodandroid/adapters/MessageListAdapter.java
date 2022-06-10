@@ -17,13 +17,22 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.ChatRoomViewModel
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * Adapter class for messages list in a conversation
+ */
 public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
+    private static final String DATE_FORMAT = "d MMM yyyy, HH:mm";
     private final ChatRoomViewModel viewModel;
 
     private List<Message> mMessageList;
 
+    /**
+     * @param context
+     * @param messageList list of messages
+     * @param viewModel   viewModel for the chatroom
+     */
     public MessageListAdapter(Context context, List<Message> messageList, ChatRoomViewModel viewModel) {
         mMessageList = messageList;
         this.viewModel = viewModel;
@@ -83,7 +92,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
 
-
     private class SentMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText;
 
@@ -98,7 +106,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             messageText.setText(message.getContent());
 
             // Format the stored timestamp into a readable String using method.
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("d MMM yyyy, HH:mm");
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
             timeText.setText(dateFormatter.format(message.getDate()));
         }
     }
@@ -109,7 +117,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         ReceivedMessageHolder(View itemView) {
             super(itemView);
-            nameText  = itemView.findViewById(R.id.text_gchat_user_other);
+            nameText = itemView.findViewById(R.id.text_gchat_user_other);
             timeText = itemView.findViewById(R.id.text_gchat_timestamp_other);
             messageText = itemView.findViewById(R.id.text_gchat_message_other);
             profileImage = itemView.findViewById(R.id.image_gchat_profile_other);
@@ -118,10 +126,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         void bind(Message message) {
             messageText.setText(message.getContent());
             // Format the stored timestamp into a readable String
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("d MMM yyyy, HH:mm");
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
             timeText.setText(dateFormatter.format(message.getDate()));
-            viewModel.getUserById(message.getSender()).addOnSuccessListener(user-> nameText.setText(user.getUsername()));
-            //nameText.setText(message.getSender().getUsername());
+            viewModel.getUserById(message.getSender()).addOnSuccessListener(user -> nameText.setText(user.getUsername()));
         }
     }
 

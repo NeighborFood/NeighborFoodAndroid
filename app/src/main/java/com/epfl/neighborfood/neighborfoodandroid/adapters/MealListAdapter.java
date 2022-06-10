@@ -18,9 +18,17 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter class for meals list
+ */
 public class MealListAdapter extends ArrayAdapter {
     private MealListViewModel viewModel;
 
+    /**
+     * @param context
+     * @param mealArrayList list of orders that contain the meals
+     * @param viewModel     viewModel for meals list
+     */
     public MealListAdapter(Context context, ArrayList<Order> mealArrayList, MealListViewModel viewModel) {
         super(context, R.layout.list_item_meal, mealArrayList);
         this.viewModel = viewModel;
@@ -43,7 +51,7 @@ public class MealListAdapter extends ArrayAdapter {
             mealName.setText(meal.getName());
             Picasso.get().load(meal.getImageUri()).into(imageView);
             mealShortDes.setText(meal.getDescription());
-            price.setText(String.format("%.2f",meal.getPrice())+ " chf");
+            price.setText(String.format("%.2f", meal.getPrice()) + " chf");
         });
         return convertView;
     }
