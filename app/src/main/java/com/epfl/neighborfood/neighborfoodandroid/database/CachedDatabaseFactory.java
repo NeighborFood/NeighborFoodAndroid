@@ -10,6 +10,7 @@ public class CachedDatabaseFactory {
 
     /**
      * Gets the authenticator instance currently used
+     *
      * @return authenticator
      */
     public static Database getDependency() {

@@ -1,7 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.database.firebase;
 
-import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
+import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;

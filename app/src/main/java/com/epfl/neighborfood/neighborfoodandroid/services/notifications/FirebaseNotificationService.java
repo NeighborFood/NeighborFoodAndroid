@@ -17,8 +17,6 @@ import androidx.core.app.NotificationManagerCompat;
 import com.epfl.neighborfood.neighborfoodandroid.AppContainer;
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.models.Meal;
-import com.epfl.neighborfood.neighborfoodandroid.models.User;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MealActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -29,17 +27,19 @@ import com.google.firebase.messaging.RemoteMessage;
 /**
  * Firebase implementation of the Notification Service
  */
-public class FirebaseNotificationService  extends FirebaseMessagingService implements com.epfl.neighborfood.neighborfoodandroid.services.notifications.NotificationService {
+public class FirebaseNotificationService extends FirebaseMessagingService implements com.epfl.neighborfood.neighborfoodandroid.services.notifications.NotificationService {
+    private static final String AVAILABLE_NOTIFICATION_TEXT = "New meal available!";
 
     @Override
     public Task<Void> subscribeToUserMealPosts(String uid) {
-        if(uid == null){
+        if (uid == null) {
             return Tasks.forException(new IllegalArgumentException("Invalid Uid"));
         }
         return FirebaseMessaging.getInstance()
-                .subscribeToTopic(NotificationTopic.MEALPOSTS.getTopicPrefix()+uid)
+                .subscribeToTopic(NotificationTopic.MEALPOSTS.getTopicPrefix() + uid)
                 .continueWith(task -> null);
     }
+
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         createNotificationChannel();
@@ -48,7 +48,7 @@ public class FirebaseNotificationService  extends FirebaseMessagingService imple
         String vendorID = remoteMessage.getData().get("vendorId");
         String orderId = remoteMessage.getData().get("orderId");
         AppContainer appContainer = ((NeighborFoodApplication) this.getApplication()).getAppContainer();
-        appContainer.getMealRepo().getMealById(mealId).continueWithTask(mealTask-> appContainer.getUserRepo().getUserById(vendorID).continueWith(fetchedVendor-> new Pair<>(mealTask.getResult(), fetchedVendor.getResult()))).addOnSuccessListener((result)->{
+        appContainer.getMealRepo().getMealById(mealId).continueWithTask(mealTask -> appContainer.getUserRepo().getUserById(vendorID).continueWith(fetchedVendor -> new Pair<>(mealTask.getResult(), fetchedVendor.getResult()))).addOnSuccessListener((result) -> {
             //create intent when clicking on notification which redirects to the mealActivity
             Intent intent = new Intent(this, MealActivity.class);
             intent.putExtra("mealId", mealId);
@@ -56,9 +56,9 @@ public class FirebaseNotificationService  extends FirebaseMessagingService imple
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this,getString(R.string.channel_id))
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.channel_id))
                     .setSmallIcon(R.drawable.full_notif)
-                    .setContentTitle("New meal available!")
+                    .setContentTitle(AVAILABLE_NOTIFICATION_TEXT)
                     .setContentText(result.first.getName() + " have been prepared by " + result.second.getUsername())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     // Set the intent that will fire when the user taps the notification
@@ -67,7 +67,7 @@ public class FirebaseNotificationService  extends FirebaseMessagingService imple
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             new Handler(Looper.getMainLooper()).post(() -> {
-                notificationManager.notify(0,builder.build());
+                notificationManager.notify(0, builder.build());
             });
         });
 
@@ -76,12 +76,12 @@ public class FirebaseNotificationService  extends FirebaseMessagingService imple
     @Override
     public Task<Void> unsubscribeFromUserMealPosts(String uid) {
         return FirebaseMessaging.getInstance()
-                .unsubscribeFromTopic(NotificationTopic.MEALPOSTS.getTopicPrefix()+uid)
+                .unsubscribeFromTopic(NotificationTopic.MEALPOSTS.getTopicPrefix() + uid)
                 .continueWith(task -> null);
     }
 
-    /*
-    Create the channel for the notifications
+    /**
+     * Create the channel for the notifications
      */
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
