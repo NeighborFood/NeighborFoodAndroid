@@ -37,47 +37,58 @@
         <activity
             android:name=".ui.activities.ProfileEditingActivity"
             android:label="Edit Profile"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".ui.activities.PlaceMealActivity"
             android:exported="true"
-            android:label="Add a meal"/>
+            android:label="Add a meal"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".ui.activities.MealActivity"
             android:label="Meal Details"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation = "portrait"/>
 
         <activity
             android:name=".ui.activities.ChatRoomActivity"
             android:label="Chat Room"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".ui.activities.BuyerOrdersActivity"
             android:label="Your Orders"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".ui.activities.VendorProfileActivity"
             android:label="Vendor Profile"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".ui.activities.MainActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".ui.activities.BuyerOrderDetailsActivity"
             android:label="Order Details"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".ui.activities.MapActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation = "portrait">
         </activity>
         <activity
             android:name=".ui.activities.PlacePinActivity"
             android:label="Select Pickup Location"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation = "portrait">
         </activity>
         <activity
             android:name=".ui.activities.SignUpActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation = "portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

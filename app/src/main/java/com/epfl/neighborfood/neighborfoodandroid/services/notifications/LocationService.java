@@ -16,11 +16,10 @@ import com.google.android.gms.tasks.Task;
 
 public abstract class LocationService extends Service {
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    public static final PickupLocation DEFAULT_LOCATION = new PickupLocation(-33.8523341, 151.2106085);
     protected final MutableLiveData<PickupLocation> pickupLocationMutableLiveData;
 
     protected LocationService() {
-        this.pickupLocationMutableLiveData = new MutableLiveData<>(DEFAULT_LOCATION);
+        this.pickupLocationMutableLiveData = new MutableLiveData<>();
     }
 
     public boolean getLocationPermissionGranted() {

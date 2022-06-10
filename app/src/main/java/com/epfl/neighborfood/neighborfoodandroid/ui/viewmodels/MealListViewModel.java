@@ -27,7 +27,7 @@ import java.util.List;
 public class MealListViewModel extends ViewModel{
 
     public enum Ordering{
-        DISTANCE(distanceComparator),PRICE(priceComparator);
+        PRICE(priceComparator),DISTANCE(distanceComparator);
         private final Comparator<Order> comparator;
         Ordering(Comparator<Order> comparator){
             this.comparator = comparator;
@@ -43,9 +43,15 @@ public class MealListViewModel extends ViewModel{
     private final LiveData<PickupLocation> pickupLocationLiveData;
     private Ordering ordering;
     private final MutableLiveData<List<Order>> ordersLiveData;
-    private static PickupLocation userLocation = LocationService.DEFAULT_LOCATION;
+    private static PickupLocation userLocation;
 
-    private final static Comparator<Order> distanceComparator= (o1, o2) -> (int) (PickupLocation.distanceBetweenLocations(userLocation, o1.getLocation())-PickupLocation.distanceBetweenLocations(userLocation, o2.getLocation()));
+    private final static Comparator<Order> distanceComparator= (o1, o2) -> {
+        if(userLocation != null){
+            double distance1 = PickupLocation.distanceBetweenLocations(userLocation, o1.getLocation());
+            double distance2 = PickupLocation.distanceBetweenLocations(userLocation, o2.getLocation());
+            return (int)(distance1-distance2);
+        }
+        return 0;};
     private final static Comparator<Order> priceComparator = (o1, o2) -> (int) (o1.getPrice() - o2.getPrice());
 
     public MealListViewModel(MealRepository mealRepository, OrderRepository orderRepository, AuthRepository authRepository,LocationService locationService) {
@@ -60,6 +66,7 @@ public class MealListViewModel extends ViewModel{
             getAllUnassignedOrders();
 
         });
+        ordering = Ordering.PRICE;
     }
     public LiveData<PickupLocation> getUserLocation(){
         locationService.getDeviceLocation();
@@ -88,6 +95,9 @@ public class MealListViewModel extends ViewModel{
             this.ordering = Ordering.values()[ordering];
             reorderList();
         }
+    }
+    public int getOrderingIndex(){
+        return ordering.ordinal();
     }
     private void reorderList(){
         List<Order> newList = ordersLiveData.getValue();

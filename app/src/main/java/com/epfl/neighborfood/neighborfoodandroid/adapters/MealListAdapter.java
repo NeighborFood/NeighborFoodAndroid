@@ -46,8 +46,11 @@ public class MealListAdapter extends ArrayAdapter {
             mealName.setText(meal.getName());
             Picasso.get().load(meal.getImageUri()).into(imageView);
             mealShortDes.setText(meal.getDescription());
-            int distance =(int) PickupLocation.distanceBetweenLocations(Objects.requireNonNull(viewModel.getUserLocation().getValue()),order.getLocation());
-            distanceText.setText(getContext().getResources().getString(R.string.distance_tag,String.valueOf(distance)));
+            PickupLocation pickupLocation = viewModel.getUserLocation().getValue();
+            if(pickupLocation != null){
+                int distance =(int) PickupLocation.distanceBetweenLocations(pickupLocation,order.getLocation());
+                distanceText.setText(getContext().getResources().getString(R.string.distance_tag,String.valueOf(distance)));
+            }
             price.setText(getContext().getResources().getString(R.string.price_tag,order.getPrice()));
         });
         return convertView;

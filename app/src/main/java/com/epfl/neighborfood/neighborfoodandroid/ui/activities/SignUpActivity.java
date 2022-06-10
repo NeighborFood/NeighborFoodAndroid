@@ -50,8 +50,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         startButton = findViewById(R.id.start_button);
         guideTextView = findViewById(R.id.guide_textView);
-
-
         initSignInButton();
         initSignOutButton();
         initAuthViewModel();

@@ -32,11 +32,11 @@ import java.util.Objects;
 public class MealListFragment extends Fragment {
 
     private FragmentMealListBinding binding;
+    private PopupsortingdialogBinding dialogBinding;
     private MealListViewModel viewModel;
     private MealListAdapter listAdapter;
     private final ArrayList<Order> orderMealList = new ArrayList<Order>();
     private AlertDialog sortingDialog;
-    private final static int DEFAULT_SORTING_INDEX = 0;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +47,7 @@ public class MealListFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        ((NeighborFoodApplication)getActivity().getApplication()).getAppContainer().getLocationService().requestLocationPermission(getActivity());
         viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(MealListViewModel.class);
         listAdapter = new MealListAdapter(getActivity(), orderMealList, viewModel);
         viewModel.getAllUnassignedOrders().observe(getViewLifecycleOwner(),orders->{
@@ -69,23 +70,23 @@ public class MealListFragment extends Fragment {
         createNewSortingDialog();
         binding.mealListSortingButton.setOnClickListener(v->{
             if(sortingDialog != null){
+                dialogBinding.radioGroup.check((dialogBinding.radioGroup.getChildAt(viewModel.getOrderingIndex())).getId());
                 sortingDialog.show();
             }
         });
     }
     public void createNewSortingDialog(){
-        PopupsortingdialogBinding binding = PopupsortingdialogBinding.inflate(getLayoutInflater());
+        dialogBinding = PopupsortingdialogBinding.inflate(getLayoutInflater());
         AlertDialog.Builder sortingDialogBuilder = new AlertDialog.Builder(requireContext());
-        sortingDialogBuilder.setView(binding.getRoot());
+        sortingDialogBuilder.setView(dialogBinding.getRoot());
         sortingDialog = sortingDialogBuilder.create();
-        binding.radioGroup.check(((RadioButton)binding.radioGroup.getChildAt(DEFAULT_SORTING_INDEX)).getId());
-        viewModel.setOrdering(DEFAULT_SORTING_INDEX);
-        binding.saveButtonPopup.setOnClickListener(bv->{
-            int index = binding.radioGroup.indexOfChild(sortingDialog.findViewById(binding.radioGroup.getCheckedRadioButtonId()));
+        dialogBinding.radioGroup.check((dialogBinding.radioGroup.getChildAt(viewModel.getOrderingIndex())).getId());
+        dialogBinding.saveButtonPopup.setOnClickListener(bv->{
+            int index = dialogBinding.radioGroup.indexOfChild(sortingDialog.findViewById(dialogBinding.radioGroup.getCheckedRadioButtonId()));
             viewModel.setOrdering(index);
             sortingDialog.dismiss();
         });
-        binding.cancelButtonPopup.setOnClickListener(bv->{
+        dialogBinding.cancelButtonPopup.setOnClickListener(bv->{
             sortingDialog.dismiss();
         });
 

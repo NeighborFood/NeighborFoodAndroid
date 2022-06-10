@@ -1,8 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 
-import static com.epfl.neighborfood.neighborfoodandroid.services.notifications.LocationService.DEFAULT_LOCATION;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,8 +18,6 @@ import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
 import com.epfl.neighborfood.neighborfoodandroid.models.PickupLocation;
 import com.epfl.neighborfood.neighborfoodandroid.services.notifications.LocationService;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,17 +28,11 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.Objects;
 
-public class PlacePinActivity extends AppCompatActivity
-        implements OnMapReadyCallback, View.OnClickListener {
-
-    private static final String TAG = PlacePinActivity.class.getSimpleName();
+public class PlacePinActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
     private GoogleMap map;
     private LocationService locationService;
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-
-    // The entry point to the Fused Location Provider.
-    private FusedLocationProviderClient fusedLocationProviderClient;
 
     private static final int DEFAULT_ZOOM = 15;
 
@@ -50,8 +41,6 @@ public class PlacePinActivity extends AppCompatActivity
 
     double chosenLat, chosenLng;
     boolean meetingPointSet;
-
-    Button confirmButton;
 
 
     @Override
@@ -80,8 +69,6 @@ public class PlacePinActivity extends AppCompatActivity
 
         this.map = googleMap;
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
         getLocationPermission();
         updateLocationUI();
         getDeviceLocation();
@@ -108,12 +95,7 @@ public class PlacePinActivity extends AppCompatActivity
                                     new LatLng(lastKnownLocation.getLatitude(),
                                             lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                         }
-                    } else {
-                        Log.d(TAG, "Current location is null. Using defaults.");
-                        Log.e(TAG, "Exception: %s", task.getException());
-                        map.moveCamera(CameraUpdateFactory
-                                .newLatLngZoom(new LatLng(DEFAULT_LOCATION.getLatitude(),DEFAULT_LOCATION.getLongitude()), DEFAULT_ZOOM));
-                        map.getUiSettings().setMyLocationButtonEnabled(false);
+                    } else {map.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 });
             }
@@ -125,7 +107,6 @@ public class PlacePinActivity extends AppCompatActivity
     private void getLocationPermission() {
         if(!locationService.getLocationPermissionGranted()){
             locationService.requestLocationPermission(this);
-
         }
     }
 
@@ -133,29 +114,25 @@ public class PlacePinActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode
-                == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
+        if (requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
             updateLocationUI();
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
+    @SuppressLint("MissingPermission")
     private void updateLocationUI() {
         if (map == null) {
             return;
         }
-        try {
-            if (locationService.getLocationPermissionGranted()) {
-                map.setMyLocationEnabled(true);
-                map.getUiSettings().setMyLocationButtonEnabled(true);
-                getDeviceLocation();
-            } else {
-                map.setMyLocationEnabled(false);
-                map.getUiSettings().setMyLocationButtonEnabled(false);
-            }
-        } catch (SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
+        if (locationService.getLocationPermissionGranted()) {
+            map.setMyLocationEnabled(true);
+            map.getUiSettings().setMyLocationButtonEnabled(true);
+            getDeviceLocation();
+        } else {
+            map.setMyLocationEnabled(false);
+            map.getUiSettings().setMyLocationButtonEnabled(false);
         }
     }
 
@@ -164,7 +141,7 @@ public class PlacePinActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button:
-                if ( meetingPointSet) {
+                if (meetingPointSet) {
                     final Intent data = new Intent();
                     data.putExtra("longitude",chosenLng);
                     data.putExtra("latitude",chosenLat);

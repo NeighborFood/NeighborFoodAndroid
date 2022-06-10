@@ -123,14 +123,11 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         });
 
         locationActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == RESULT_OK) {
-                            Double chosenLon = result.getData().getDoubleExtra("longitude",0);
-                            Double chosenLat = result.getData().getDoubleExtra("latitude",0);
-                            location = new PickupLocation(chosenLat,chosenLon);
-                        }
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        double chosenLon = result.getData().getDoubleExtra("longitude",0);
+                        double chosenLat = result.getData().getDoubleExtra("latitude",0);
+                        location = new PickupLocation(chosenLat,chosenLon);
                     }
                 }
         );
