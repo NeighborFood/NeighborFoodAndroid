@@ -4,7 +4,7 @@ package com.epfl.neighborfood.neighborfoodandroid.models;
 import java.util.List;
 
 /**
- * @author Mohamed Yassine Boukhari
+ * Conversation Class contains all the messages shared between two user
  */
 public class Conversation extends Model {
     private List<String> users;
@@ -48,6 +48,8 @@ public class Conversation extends Model {
     }
 
     /**
+     * Getter for the conversation's users
+     *
      * @return the set of users for this conversation
      */
     public List<String> getUsers() {
@@ -55,11 +57,6 @@ public class Conversation extends Model {
     }
 
     /**
-     * }
-     * <p>
-     * public String id() {
-     * return id;
-     * }
      * the messages sent in this conversation
      *
      * @return the list of messages
@@ -81,14 +78,29 @@ public class Conversation extends Model {
         return null;
     }
 
+    /**
+     * getter for the conversation's ID
+     *
+     * @return ID of the conversation
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Setter for the conversation's ID
+     *
+     * @param id ID of the conversation
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Adds a message to the messages list
+     *
+     * @param msg message to be added
+     */
     public void addMessage(Message msg) {
         messages.add(msg);
     }

@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * A NeighborFood user, storedin our database
+ * A NeighborFood user, stored in our database
  */
 public class User extends Model {
 

@@ -20,10 +20,20 @@ public enum Allergen {
     private final int idIcon;
     private final String label;
 
+    /**
+     * getter for the ID of the allergen
+     *
+     * @return allergen's id
+     */
     public int getId() {
         return idIcon;
     }
 
+    /**
+     * getter for allergen's label
+     *
+     * @return label of allergen
+     */
     public String getLabel() {
         return label;
     }

@@ -13,6 +13,8 @@ public abstract class AuthenticatorUser {
     private final String ppUri;
 
     /**
+     * Constructor of the authenticated User
+     *
      * @param id        the id of the user in the authenticator system
      * @param email     the email of the user registered in the authenticator system
      * @param firstName the firstname
