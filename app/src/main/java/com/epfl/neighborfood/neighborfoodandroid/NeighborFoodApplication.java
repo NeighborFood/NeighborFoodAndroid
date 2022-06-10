@@ -14,7 +14,15 @@ import java.util.Map;
  */
 public class NeighborFoodApplication extends Application {
     public static AppContainer appContainer;
+    private static Context context;
 
+    public void onCreate(){
+        super.onCreate();
+        NeighborFoodApplication.context = getApplicationContext();
+    }
+    public static Context getAppContext() {
+        return NeighborFoodApplication.context;
+    }
 
     public AppContainer getAppContainer(){
         if(appContainer == null){

@@ -9,12 +9,13 @@ import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
 import com.epfl.neighborfood.neighborfoodandroid.services.notifications.FirebaseNotificationService;
+import com.epfl.neighborfood.neighborfoodandroid.services.notifications.GoogleLocationService;
 
 /**
  * The production container of the application
  */
 public class AppContainerImplementation extends AppContainer{
     protected AppContainerImplementation(Context context) {
-        super(context,FirebaseDatabase.getInstance(), FirebaseAuthenticator.getInstance(),new FirebaseNotificationService());
+        super(context,FirebaseDatabase.getInstance(), FirebaseAuthenticator.getInstance(),new FirebaseNotificationService(), new GoogleLocationService());
     }
 }

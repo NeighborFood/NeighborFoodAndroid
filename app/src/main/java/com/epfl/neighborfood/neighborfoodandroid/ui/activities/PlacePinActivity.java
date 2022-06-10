@@ -1,11 +1,10 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.activities;
 
 
+import static com.epfl.neighborfood.neighborfoodandroid.services.notifications.LocationService.DEFAULT_LOCATION;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,10 +14,11 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
+import com.epfl.neighborfood.neighborfoodandroid.models.PickupLocation;
+import com.epfl.neighborfood.neighborfoodandroid.services.notifications.LocationService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,28 +27,26 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.Objects;
 
 public class PlacePinActivity extends AppCompatActivity
-        implements OnMapReadyCallback, LocationListener, View.OnClickListener {
+        implements OnMapReadyCallback, View.OnClickListener {
 
     private static final String TAG = PlacePinActivity.class.getSimpleName();
     private GoogleMap map;
+    private LocationService locationService;
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
 
-    private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
     private static final int DEFAULT_ZOOM = 15;
-    private boolean locationPermissionGranted;
 
 
-    private Location lastKnownLocation;
+    private PickupLocation lastKnownLocation;
 
     double chosenLat, chosenLng;
     boolean meetingPointSet;
@@ -59,7 +57,7 @@ public class PlacePinActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        locationService = ((NeighborFoodApplication)getApplication()).getAppContainer().getLocationService();
         setContentView(R.layout.activity_place_pin);
 
         Button confirmButton = findViewById(R.id.button);
@@ -72,6 +70,9 @@ public class PlacePinActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.PickupLocationToolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        locationService.getPickupLocationLiveData().observe(this,newLocation->{
+            lastKnownLocation = newLocation;
+        });
     }
 
     @Override
@@ -84,11 +85,6 @@ public class PlacePinActivity extends AppCompatActivity
         getLocationPermission();
         updateLocationUI();
         getDeviceLocation();
-        if (lastKnownLocation != null) {
-            googleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()))
-                    .title("Pickup Location"));
-        }
 
         map.setOnMapClickListener(latLng -> {
             map.clear();
@@ -102,26 +98,22 @@ public class PlacePinActivity extends AppCompatActivity
     private void getDeviceLocation() {
 
         try {
-            if (locationPermissionGranted) {
-                Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-
-                            lastKnownLocation = task.getResult();
-                            if (lastKnownLocation != null) {
-                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                        new LatLng(lastKnownLocation.getLatitude(),
-                                                lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                            }
-                        } else {
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-                            map.moveCamera(CameraUpdateFactory
-                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
-                            map.getUiSettings().setMyLocationButtonEnabled(false);
+            if (locationService.getLocationPermissionGranted()) {
+                Task<PickupLocation> locationResult = locationService.getDeviceLocation();
+                locationResult.addOnCompleteListener( task -> {
+                    if (task.isSuccessful()) {
+                        lastKnownLocation = task.getResult();
+                        if (lastKnownLocation != null) {
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                    new LatLng(lastKnownLocation.getLatitude(),
+                                            lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                         }
+                    } else {
+                        Log.d(TAG, "Current location is null. Using defaults.");
+                        Log.e(TAG, "Exception: %s", task.getException());
+                        map.moveCamera(CameraUpdateFactory
+                                .newLatLngZoom(new LatLng(DEFAULT_LOCATION.getLatitude(),DEFAULT_LOCATION.getLongitude()), DEFAULT_ZOOM));
+                        map.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 });
             }
@@ -131,14 +123,9 @@ public class PlacePinActivity extends AppCompatActivity
     }
 
     private void getLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            locationPermissionGranted = true;
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        if(!locationService.getLocationPermissionGranted()){
+            locationService.requestLocationPermission(this);
+
         }
     }
 
@@ -146,17 +133,12 @@ public class PlacePinActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        locationPermissionGranted = false;
         if (requestCode
                 == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                locationPermissionGranted = true;
-            }
+            updateLocationUI();
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-        updateLocationUI();
     }
 
     private void updateLocationUI() {
@@ -164,30 +146,25 @@ public class PlacePinActivity extends AppCompatActivity
             return;
         }
         try {
-            if (locationPermissionGranted) {
+            if (locationService.getLocationPermissionGranted()) {
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
+                getDeviceLocation();
             } else {
                 map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
-                lastKnownLocation = null;
-                getLocationPermission();
             }
         } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
 
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-        lastKnownLocation = location;
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button:
-                if (lastKnownLocation != null) {
+                if ( meetingPointSet) {
                     final Intent data = new Intent();
                     data.putExtra("longitude",chosenLng);
                     data.putExtra("latitude",chosenLat);

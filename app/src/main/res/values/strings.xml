@@ -107,5 +107,7 @@
     <string name="price">Price</string>
     <string name="sortby">Sort By:</string>
     <string name="filter">filter</string>
+    <string name="price_tag">%1$.2f chf</string>
+    <string name="distance_tag">%1$s m</string>
 
 </resources>

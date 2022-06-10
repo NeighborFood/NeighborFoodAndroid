@@ -14,6 +14,7 @@ import com.epfl.neighborfood.neighborfoodandroid.repositories.ConversationReposi
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.OrderRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.UserRepository;
+import com.epfl.neighborfood.neighborfoodandroid.services.notifications.LocationService;
 import com.epfl.neighborfood.neighborfoodandroid.services.notifications.NotificationService;
 import com.epfl.neighborfood.neighborfoodandroid.ui.activities.MainActivity;
 
@@ -30,6 +31,7 @@ public abstract class AppContainer {
     private UserRepository userRepo;
     private OrderRepository orderRepo;
     private NotificationService notificationService;
+    private LocationService locationService;
     /**
      * getter for the Auth Repo of the app
      *
@@ -104,16 +106,23 @@ public abstract class AppContainer {
     protected void setConversationRepo(ConversationRepository conversationRepository){
         this.conversationRepo = conversationRepository;
     }
+    public LocationService getLocationService(){
+        return locationService;
+    }
+    protected void setLocationService(LocationService locationService){
+        this.locationService = locationService;
+    }
     /**
      * @param dep the app's Database instance
      * @param authenticator the app's authenticator
      * @param notificationService the app's notification service
      *
      */
-    protected AppContainer(Context context, Database dep, Authenticator authenticator, NotificationService notificationService) {
+    protected AppContainer(Context context, Database dep, Authenticator authenticator, NotificationService notificationService,LocationService locationService) {
         DatabaseFactory.setDependency(dep);
         AuthenticatorFactory.setDependency(authenticator);
         this.notificationService = notificationService;
+        this.locationService = locationService;
         this.authRepo = new AuthRepository();
         this.userRepo = new UserRepository();
         this.mealRepo = new MealRepository();

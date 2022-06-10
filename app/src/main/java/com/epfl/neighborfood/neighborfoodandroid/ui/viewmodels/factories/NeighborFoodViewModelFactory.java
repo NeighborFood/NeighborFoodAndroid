@@ -42,7 +42,7 @@ public class NeighborFoodViewModelFactory implements ViewModelProvider.Factory{
             return(T) new EditProfileViewModel(app.getAppContainer().getAuthRepo(),app.getAppContainer().getUserRepo());
         }
         if(modelClass == MealListViewModel.class){
-            return (T) new MealListViewModel(app.getAppContainer().getMealRepo(), app.getAppContainer().getOrderRepo(),app.getAppContainer().getAuthRepo());
+            return (T) new MealListViewModel(app.getAppContainer().getMealRepo(), app.getAppContainer().getOrderRepo(),app.getAppContainer().getAuthRepo(),app.getAppContainer().getLocationService());
         }
         if(modelClass == MealViewModel.class){
             return (T) new MealViewModel(app.getAppContainer().getOrderRepo(), app.getAppContainer().getMealRepo(),

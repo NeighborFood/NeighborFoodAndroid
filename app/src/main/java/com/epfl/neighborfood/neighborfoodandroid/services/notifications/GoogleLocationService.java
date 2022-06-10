@@ -1,40 +1,54 @@
 package com.epfl.neighborfood.neighborfoodandroid.services.notifications;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.IBinder;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
+import com.epfl.neighborfood.neighborfoodandroid.models.PickupLocation;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 
 public class GoogleLocationService extends LocationService implements LocationListener {
-    private boolean locationPermissionGranted;
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private Location lastKnownLocation;
-    private static final LatLng DEFAULT_LOCATION = new LatLng(-33.8523341, 151.2106085);
+    private FusedLocationProviderClient locationProvider;
 
+    public GoogleLocationService(){
+       super();
+    }
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        lastKnownLocation = location;
+        pickupLocationMutableLiveData.postValue(new PickupLocation(location.getLatitude(),location.getLongitude()));
     }
-
-    public Location getLastKnownLocation(){
-        if(lastKnownLocation == null){
-            return new Location(DEFAULT_LOCATION.latitude,DEFAULT_LOCATION.longitude);
-        }
-        return lastKnownLocation;
-    }
-
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+    //already performing the check in the getLocationPermissionGranted call
+    @SuppressLint("MissingPermission")
+    @Override
+    public Task<PickupLocation> getDeviceLocation() {
+        if(locationProvider == null){
+            locationProvider = LocationServices.getFusedLocationProviderClient(NeighborFoodApplication.getAppContext());
+        }
+        if(!getLocationPermissionGranted()){
+            return Tasks.forException(new IllegalStateException("Permission not granted yet!"));
+        }
+        Task<PickupLocation> res = locationProvider.getLastLocation().continueWith(t->{
+            if(t.isSuccessful()&& t.getResult() != null){
+                return new PickupLocation(t.getResult().getLatitude(),t.getResult().getLongitude());
+            }
+        return null;
+        });
+        res.addOnSuccessListener(pickupLocationMutableLiveData::postValue);
+        return res;
     }
 }
