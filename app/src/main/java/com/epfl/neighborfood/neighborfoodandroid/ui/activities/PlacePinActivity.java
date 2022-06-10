@@ -46,7 +46,7 @@ public class PlacePinActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        locationService = ((NeighborFoodApplication)getApplication()).getAppContainer().getLocationService();
+        locationService = ((NeighborFoodApplication) getApplication()).getAppContainer().getLocationService();
         setContentView(R.layout.activity_place_pin);
 
         Button confirmButton = findViewById(R.id.button);
@@ -54,14 +54,13 @@ public class PlacePinActivity extends AppCompatActivity implements OnMapReadyCal
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if (mapFragment != null)
+            mapFragment.getMapAsync(this);
 
         Toolbar toolbar = findViewById(R.id.PickupLocationToolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        locationService.getPickupLocationLiveData().observe(this,newLocation->{
-            lastKnownLocation = newLocation;
-        });
+        locationService.getPickupLocationLiveData().observe(this, newLocation -> lastKnownLocation = newLocation);
     }
 
     @Override
@@ -87,7 +86,7 @@ public class PlacePinActivity extends AppCompatActivity implements OnMapReadyCal
         try {
             if (locationService.getLocationPermissionGranted()) {
                 Task<PickupLocation> locationResult = locationService.getDeviceLocation();
-                locationResult.addOnCompleteListener( task -> {
+                locationResult.addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         lastKnownLocation = task.getResult();
                         if (lastKnownLocation != null) {
@@ -95,7 +94,8 @@ public class PlacePinActivity extends AppCompatActivity implements OnMapReadyCal
                                     new LatLng(lastKnownLocation.getLatitude(),
                                             lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                         }
-                    } else {map.getUiSettings().setMyLocationButtonEnabled(false);
+                    } else {
+                        map.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 });
             }
@@ -105,7 +105,7 @@ public class PlacePinActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void getLocationPermission() {
-        if(!locationService.getLocationPermissionGranted()){
+        if (!locationService.getLocationPermissionGranted()) {
             locationService.requestLocationPermission(this);
         }
     }

@@ -36,16 +36,18 @@ public class VendorOrdersViewModel extends ViewModel {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public Task<List<Order>> getUnassignedVendorOrders(){
-        return orderRepository.getAllOrdersByVendorId(authRepository.getCurrentUser().getId()).continueWith(t-> t.getResult().stream().filter(o->o.getOrderStatus().equals(OrderStatus.unassigned)).collect(Collectors.toList()));
+    public Task<List<Order>> getUnassignedVendorOrders() {
+        return orderRepository.getAllOrdersByVendorId(authRepository.getCurrentUser().getId()).continueWith(t -> t.getResult().stream().filter(o -> o.getOrderStatus().equals(OrderStatus.unassigned)).collect(Collectors.toList()));
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public Task<List<Order>> getWaitingVendorOrders(){
-        return orderRepository.getAllOrdersByVendorId(authRepository.getCurrentUser().getId()).continueWith(t-> t.getResult().stream().filter(o->o.getOrderStatus().equals(OrderStatus.assigned)).collect(Collectors.toList()));
+    public Task<List<Order>> getWaitingVendorOrders() {
+        return orderRepository.getAllOrdersByVendorId(authRepository.getCurrentUser().getId()).continueWith(t -> t.getResult().stream().filter(o -> o.getOrderStatus().equals(OrderStatus.assigned)).collect(Collectors.toList()));
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public Task<List<Order>> getFinishedVendorOrders(){
-        return orderRepository.getAllOrdersByVendorId(authRepository.getCurrentUser().getId()).continueWith(t-> t.getResult().stream().filter(o->o.getOrderStatus().equals(OrderStatus.finished)).collect(Collectors.toList()));
+    public Task<List<Order>> getFinishedVendorOrders() {
+        return orderRepository.getAllOrdersByVendorId(authRepository.getCurrentUser().getId()).continueWith(t -> t.getResult().stream().filter(o -> o.getOrderStatus().equals(OrderStatus.finished)).collect(Collectors.toList()));
     }
 
     /*

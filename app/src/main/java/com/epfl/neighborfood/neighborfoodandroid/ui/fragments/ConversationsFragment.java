@@ -23,27 +23,23 @@ import java.util.Collections;
 import java.util.List;
 
 public class ConversationsFragment extends Fragment {
-    public static final int IMGID = R.drawable.profile_img_male;
-    private ListView listView;
     private ConversationListAdapter adapter;
-    private List<Pair<Conversation,User>> conversations = new ArrayList<>();
-    private ConversationsViewModel viewModel;
+    private List<Pair<Conversation, User>> conversations = new ArrayList<>();
 
 
-    public ConversationsFragment(){
+    public ConversationsFragment() {
         super(R.layout.fragment_conversations);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
 
-
-        viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) (getActivity().getApplication()))).get(ConversationsViewModel.class);
-        listView = view.findViewById(R.id.conversationsFragmentListView);
-        adapter = new ConversationListAdapter(view.getContext(), (ArrayList<Pair<Conversation, User>>) conversations,viewModel);
+        ConversationsViewModel viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) (requireActivity().getApplication()))).get(ConversationsViewModel.class);
+        ListView listView = view.findViewById(R.id.conversationsFragmentListView);
+        adapter = new ConversationListAdapter(view.getContext(), (ArrayList<Pair<Conversation, User>>) conversations, viewModel);
         listView.setAdapter(adapter);
-        viewModel.fetchAllCurrentUserConversations().addOnSuccessListener(l-> {
+        viewModel.fetchAllCurrentUserConversations().addOnSuccessListener(l -> {
             Collections.sort(l, (a, b) -> b.getFirst().lastMessage().getDate().compareTo(a.getFirst().lastMessage().getDate()));
             adapter.clear();
             adapter.addAll(l);
@@ -52,10 +48,9 @@ public class ConversationsFragment extends Fragment {
         });
 
 
-
         listView.setOnItemClickListener((parent, v, position, id) -> {
             Intent i = new Intent(view.getContext(), ChatRoomActivity.class);
-            i.putExtra("ConversationID",conversations.get(position).getFirst().getId());
+            i.putExtra("ConversationID", conversations.get(position).getFirst().getId());
             startActivity(i);
         });
     }

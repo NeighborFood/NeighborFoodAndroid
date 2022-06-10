@@ -1,23 +1,15 @@
 package com.epfl.neighborfood.neighborfoodandroid.ui.fragments;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
-import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.RadioGroup;
-import android.widget.Switch;
-
-
 import com.epfl.neighborfood.neighborfoodandroid.R;
-
-import java.util.Objects;
 
 public class MainFragment extends Fragment {
     private SwitchCompat userModeSwitch;
@@ -38,11 +30,12 @@ public class MainFragment extends Fragment {
     }
 
     private void toggleView(CompoundButton compoundButton, boolean b) {
-        getChildFragmentManager().beginTransaction().replace(R.id.MainFragmentContainerFragment, b ? VendorDashboardFragment.class: MealListFragment.class, null).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.MainFragmentContainerFragment, b ? VendorDashboardFragment.class : MealListFragment.class, null).commit();
         updateSwitchButtonText(b);
     }
-    private void updateSwitchButtonText(boolean state){
-        userModeSwitch.setText(state? getResources().getString(R.string.vendor_mode_title) : getResources().getString(R.string.buyer_mode_title));
+
+    private void updateSwitchButtonText(boolean state) {
+        userModeSwitch.setText(state ? getResources().getString(R.string.vendor_mode_title) : getResources().getString(R.string.buyer_mode_title));
 
     }
 

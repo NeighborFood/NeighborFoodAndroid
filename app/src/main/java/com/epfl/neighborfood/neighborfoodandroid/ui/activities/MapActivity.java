@@ -25,7 +25,7 @@ import java.util.Objects;
  * An activity that displays a Google map with a marker (pin) to indicate a particular location.
  */
 public class MapActivity extends AppCompatActivity
-        implements OnMapReadyCallback{
+        implements OnMapReadyCallback {
 
     private GoogleMap map;
 
@@ -39,7 +39,7 @@ public class MapActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        locationService = ((NeighborFoodApplication)getApplication()).getAppContainer().getLocationService();
+        locationService = ((NeighborFoodApplication) getApplication()).getAppContainer().getLocationService();
 
         setContentView(R.layout.activity_maps);
 
@@ -67,14 +67,14 @@ public class MapActivity extends AppCompatActivity
 
 
     private void getDeviceLocation() {
-            if (locationService.getLocationPermissionGranted()) {
-                Task<PickupLocation> locationResult = locationService.getDeviceLocation();
-                locationResult.addOnCompleteListener(this, task -> {
-                    if (!task.isSuccessful()) {
-                        map.getUiSettings().setMyLocationButtonEnabled(false);
-                    }
-                });
-            }
+        if (locationService.getLocationPermissionGranted()) {
+            Task<PickupLocation> locationResult = locationService.getDeviceLocation();
+            locationResult.addOnCompleteListener(this, task -> {
+                if (!task.isSuccessful()) {
+                    map.getUiSettings().setMyLocationButtonEnabled(false);
+                }
+            });
+        }
 
     }
 
@@ -101,27 +101,27 @@ public class MapActivity extends AppCompatActivity
         if (map == null) {
             return;
         }
-            if (locationService.getLocationPermissionGranted()) {
-                map.setMyLocationEnabled(true);
-                map.getUiSettings().setMyLocationButtonEnabled(true);
-            } else {
-                map.setMyLocationEnabled(false);
-                map.getUiSettings().setMyLocationButtonEnabled(false);
-            }
+        if (locationService.getLocationPermissionGranted()) {
+            map.setMyLocationEnabled(true);
+            map.getUiSettings().setMyLocationButtonEnabled(true);
+        } else {
+            map.setMyLocationEnabled(false);
+            map.getUiSettings().setMyLocationButtonEnabled(false);
+        }
     }
 
 
-    private Double getLonFromIntent(){
+    private Double getLonFromIntent() {
         Bundle extras = getIntent().getExtras();
-        if(extras != null){
+        if (extras != null) {
             return extras.getDouble("longitude");
         }
         return null;
     }
 
-    private Double getLatFromIntent(){
+    private Double getLatFromIntent() {
         Bundle extras = getIntent().getExtras();
-        if(extras != null){
+        if (extras != null) {
             return extras.getDouble("latitude");
         }
         return null;

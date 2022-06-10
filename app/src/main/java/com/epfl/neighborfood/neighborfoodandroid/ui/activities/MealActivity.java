@@ -53,7 +53,7 @@ public class MealActivity extends AppCompatActivity {
             viewModel.getOrderById(orderId).addOnSuccessListener(orderFetched -> {
                 order = orderFetched;
 
-                binding.priceMeal.setText(String.format("%.2f",order.getPrice())+ " chf");
+                binding.priceMeal.setText(getResources().getString(R.string.price_tag, order.getPrice()));
             });
 
             viewModel.getMealById(mealId).addOnSuccessListener(mealFetched -> {
@@ -71,17 +71,17 @@ public class MealActivity extends AppCompatActivity {
         Button vendorButton = findViewById(R.id.go_vendor_profile_id);
         Button orderButton = findViewById(R.id.order_button);
 
-        orderButton.setOnClickListener(v -> viewModel.assignOrder(order).addOnSuccessListener(t->{
+        orderButton.setOnClickListener(v -> viewModel.assignOrder(order).addOnSuccessListener(t -> {
                     Toast.makeText(this, "a new order has been made", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(MealActivity.this, MainActivity.class);
                     startActivity(i);
                 }
-                ));
+        ));
 
         // Listener to enable the click button to go to the vendor profile
         vendorButton.setOnClickListener(v -> {
             Intent vendorProfileIntent = new Intent(MealActivity.this, VendorProfileActivity.class);
-            if(meal==null){
+            if (meal == null) {
                 return;
             }
             vendorProfileIntent.putExtra("userID", meal.getVendorID());
@@ -92,18 +92,19 @@ public class MealActivity extends AppCompatActivity {
 
         mapButton.setOnClickListener(v -> {
             Intent mapIntent = new Intent(MealActivity.this, MapActivity.class);
-            if(meal==null){
+            if (meal == null) {
                 return;
             }
-            System.out.println("order Location lat"+ order.getLocation().getLatitude());
-            System.out.println("order Location long"+ order.getLocation().getLongitude());
+            System.out.println("order Location lat" + order.getLocation().getLatitude());
+            System.out.println("order Location long" + order.getLocation().getLongitude());
             System.out.println("-----------------------------------------------------");
-            mapIntent.putExtra("latitude",order.getLocation().getLatitude());
+            mapIntent.putExtra("latitude", order.getLocation().getLatitude());
             mapIntent.putExtra("longitude", order.getLocation().getLongitude());
             startActivity(mapIntent);
         });
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) // tool bar Back Icon

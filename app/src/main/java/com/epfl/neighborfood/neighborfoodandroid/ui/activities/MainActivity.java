@@ -27,21 +27,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean switchFragment(MenuItem it) {
-        Class<? extends Fragment> selectedFragment ;
+        Class<? extends Fragment> selectedFragment;
         switch (it.getItemId()) {
             case R.id.navBarHome:
-                selectedFragment =  MainFragment.class;
+                selectedFragment = MainFragment.class;
                 break;
             case R.id.navBarMessages:
-                selectedFragment =  ConversationsFragment.class;
+                selectedFragment = ConversationsFragment.class;
                 break;
             case R.id.navBarAccount:
-                selectedFragment =  AccountFragment.class;
+                selectedFragment = AccountFragment.class;
                 break;
             default:
                 return false;
         }
-        if(currentFragment != selectedFragment){
+        if (currentFragment != selectedFragment) {
             setCurrentFragment(selectedFragment);
             currentFragment = selectedFragment;
         }

@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.ChatRoomViewModel;
 
@@ -50,7 +50,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         Message message = mMessageList.get(position);
 
-        if (message.getSender().equals(AuthenticatorFactory.getDependency()
+        if (message.getSender().equals(AuthenticatorSingleton.getDependency()
                 .getCurrentAuthUser().getId())) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
@@ -70,13 +70,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.me_message, parent, false);
             return new SentMessageHolder(view);
-        } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
+        } else  {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.other_message, parent, false);
             return new ReceivedMessageHolder(view);
         }
-
-        return null;
     }
 
     // Passes the message object to a ViewHolder so that the contents can be bound to UI.
@@ -94,7 +92,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
 
-    private class SentMessageHolder extends RecyclerView.ViewHolder {
+    private static class SentMessageHolder extends RecyclerView.ViewHolder {
         final TextView messageText;
         final TextView timeText;
 

@@ -1,6 +1,7 @@
 package com.epfl.neighborfood.neighborfoodandroid;
 
 import android.app.Application;
+import android.content.Context;
 
 /**
  * NeighborFood Application class: attributes

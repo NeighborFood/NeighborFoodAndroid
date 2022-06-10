@@ -23,35 +23,39 @@ public class ChatRoomViewModel extends ViewModel {
     private final UserRepository userRepository;
     private final MutableLiveData<Conversation> conversationLiveData;
 
-    public ChatRoomViewModel (AuthRepository authRepository, UserRepository userRepository, ConversationRepository conversationRepository){
+    public ChatRoomViewModel(AuthRepository authRepository, UserRepository userRepository, ConversationRepository conversationRepository) {
         this.authRepository = authRepository;
         this.userRepository = userRepository;
         this.conversationRepository = conversationRepository;
         conversationLiveData = new MutableLiveData<>();
     }
-    public Task<User> getChatter(Conversation conversation){
+
+    public Task<User> getChatter(Conversation conversation) {
         return userRepository.getUserById(conversation.chatter(authRepository.getAuthUser().getId()));
     }
-    public Task<Void> sendMessage(Conversation conversation, String message){
-        conversation.addMessage(new Message(message,authRepository.getAuthUser().getId()));
-        return conversationRepository.updateConversation(conversation,conversation.getId());
+
+    public Task<Void> sendMessage(Conversation conversation, String message) {
+        conversation.addMessage(new Message(message, authRepository.getAuthUser().getId()));
+        return conversationRepository.updateConversation(conversation, conversation.getId());
     }
-    public LiveData<Conversation> getConversationLiveData(String convoID){
+
+    public LiveData<Conversation> getConversationLiveData(String convoID) {
         conversationRepository.getConversation(convoID).continueWithTask(
-                t->{
-                    if(t.getResult() == null){
+                t -> {
+                    if (t.getResult() == null) {
                         List<String> usersList = new ArrayList<>(Arrays.asList(convoID.split("-")));
-                        return conversationRepository.addConversation( convoID,new Conversation(convoID,usersList,new ArrayList<>()));
+                        return conversationRepository.addConversation(convoID, new Conversation(convoID, usersList, new ArrayList<>()));
                     }
                     return Tasks.forResult(t.getResult());
                 }
         ).addOnSuccessListener(conversationLiveData::postValue);
-        conversationRepository.addOnConversationChangeListener(convoID,newModel -> {
+        conversationRepository.addOnConversationChangeListener(convoID, newModel -> {
             conversationLiveData.postValue(newModel.toModel(Conversation.class));
         });
         return conversationLiveData;
     }
-    public Task<User> getUserById(String id){
+
+    public Task<User> getUserById(String id) {
         return userRepository.getUserById(id);
     }
 }

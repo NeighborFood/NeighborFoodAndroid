@@ -32,7 +32,6 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
     private Order order;
     private Meal meal;
     private User vendor;
-    private OrderStatus status;
     private ActivityPastOrderDetailsBinding binding;
     private BuyerOrderDetailsActivityViewModel viewModel;
 
@@ -47,10 +46,9 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
         String orderId = (String) intent.getSerializableExtra("orderId");
         viewModel.getOrderById(orderId).addOnSuccessListener(orderFetched -> {
             order = orderFetched;
-            if(order.getOrderStatus() == OrderStatus.finished) {
+            if (order.getOrderStatus() == OrderStatus.finished) {
                 binding.ConfirmationButton.setVisibility(View.GONE);
-            }
-            else {
+            } else {
                 binding.ConfirmationButton.setOnClickListener(e -> viewModel.confirmOrder(order)
                         .addOnSuccessListener(t -> {
                             Toast.makeText(this, "the order has been delivered", Toast.LENGTH_SHORT).show();
@@ -89,10 +87,10 @@ public class BuyerOrderDetailsActivity extends AppCompatActivity {
 
         mapButton.setOnClickListener(v -> {
             Intent mapIntent = new Intent(BuyerOrderDetailsActivity.this, MapActivity.class);
-            if(meal==null){
+            if (meal == null) {
                 return;
             }
-            mapIntent.putExtra("latitude",order.getLocation().getLatitude());
+            mapIntent.putExtra("latitude", order.getLocation().getLatitude());
             mapIntent.putExtra("longitude", order.getLocation());
             startActivity(mapIntent);
         });

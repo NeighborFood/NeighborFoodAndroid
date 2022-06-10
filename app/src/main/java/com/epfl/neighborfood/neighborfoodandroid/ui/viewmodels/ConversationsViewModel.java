@@ -18,29 +18,32 @@ public class ConversationsViewModel extends ViewModel {
     private final AuthRepository authRepository;
     private final UserRepository userRepository;
     private final ConversationRepository conversationRepository;
-    public ConversationsViewModel(AuthRepository authRepository, UserRepository userRepository, ConversationRepository conversationRepository){
+
+    public ConversationsViewModel(AuthRepository authRepository, UserRepository userRepository, ConversationRepository conversationRepository) {
         this.authRepository = authRepository;
         this.userRepository = userRepository;
         this.conversationRepository = conversationRepository;
     }
-    public Task<User> getUser(String id){
+
+    public Task<User> getUser(String id) {
         return userRepository.getUserById(id);
     }
 
-    public Task<List<Pair<Conversation,User>>> fetchAllCurrentUserConversations(){
+    public Task<List<Pair<Conversation, User>>> fetchAllCurrentUserConversations() {
         return conversationRepository.getAllConversations(authRepository.getAuthUser().getId()).continueWithTask(
-                tc->{
+                tc -> {
                     List<Conversation> conversations = tc.getResult();
-                    List<Task<Pair<Conversation,User>>> res = new ArrayList<>();
-                    for (Conversation c : conversations){
+                    List<Task<Pair<Conversation, User>>> res = new ArrayList<>();
+                    for (Conversation c : conversations) {
                         Task<User> fetchUser = userRepository.getUserById(c.chatter(authRepository.getAuthUser().getId()));
-                        res.add(fetchUser.continueWith(tu-> Pair.of(c,tu.getResult())));
+                        res.add(fetchUser.continueWith(tu -> Pair.of(c, tu.getResult())));
                     }
                     return Tasks.whenAllSuccess(res);
                 }
         );
     }
-    public User getCurrentUser(){
+
+    public User getCurrentUser() {
         return authRepository.getCurrentUser();
     }
 }

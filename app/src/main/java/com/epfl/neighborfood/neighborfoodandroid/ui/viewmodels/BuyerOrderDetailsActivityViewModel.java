@@ -24,28 +24,32 @@ public class BuyerOrderDetailsActivityViewModel extends ViewModel {
         this.mealRepository = mealRepository;
         this.userRepository = userRepository;
     }
+
     /*
         fetches user by id
      */
-    public Task<User> getUserById(String id){
+    public Task<User> getUserById(String id) {
         return userRepository.getUserById(id);
     }
+
     /*
         fetches order by id
      */
-    public Task<Order> getOrderById(String id){
+    public Task<Order> getOrderById(String id) {
         return orderRepository.getOrderById(id);
     }
+
     /*
         fetches meal by id
      */
-    public Task<Meal> getMealById(String id){
+    public Task<Meal> getMealById(String id) {
         return mealRepository.getMealById(id);
     }
+
     /*
         updates the order status to confirmed
      */
-    public Task<Void> confirmOrder(Order order){
+    public Task<Void> confirmOrder(Order order) {
         order.setOrderStatus(OrderStatus.finished);
         return orderRepository.updateOrder(order);
     }

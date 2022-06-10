@@ -4,9 +4,10 @@ package com.epfl.neighborfood.neighborfoodandroid.database;
 /**
  * @author Mohamed Yassine Boukhari
  */
-public class CachedDatabaseFactory {
+public class DatabaseSingleton {
 
     private static Database dependency;
+
 
     /**
      * Gets the authenticator instance currently used
@@ -18,11 +19,9 @@ public class CachedDatabaseFactory {
     }
 
     /**
-     * Sets the database instance to be used
+     * Sets the authenticator instance to be used
      */
     public static void setDependency(Database dep) {
         dependency = dep;
     }
-
-
 }

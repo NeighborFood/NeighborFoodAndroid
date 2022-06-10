@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.CollectionSnapshot;
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
 import com.google.android.gms.tasks.Task;
 
@@ -58,7 +58,7 @@ public class DatabaseFactoryTest {
             }
         };
 
-        DatabaseFactory.setDependency(dep);
-        assertEquals(dep,DatabaseFactory.getDependency());
+        DatabaseSingleton.setDependency(dep);
+        assertEquals(dep, DatabaseSingleton.getDependency());
     }
 }

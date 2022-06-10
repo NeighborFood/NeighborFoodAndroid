@@ -54,7 +54,7 @@ public class DatabaseFactoryTest {
 
         };
 
-        DatabaseFactory.setDependency(dep);
-        assertEquals(dep,DatabaseFactory.getDependency());
+        DatabaseSingleton.setDependency(dep);
+        assertEquals(dep, DatabaseSingleton.getDependency());
     }
 }

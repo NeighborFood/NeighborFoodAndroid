@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ChatRoomActivity extends AppCompatActivity{
+public class ChatRoomActivity extends AppCompatActivity {
 
 
     private RecyclerView mMessageRecycler;
@@ -52,7 +52,7 @@ public class ChatRoomActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         // add back arrow to toolbar and remove title
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -60,14 +60,14 @@ public class ChatRoomActivity extends AppCompatActivity{
 
 
         mMessageRecycler = findViewById(R.id.recycler_gchat);
-        mMessageAdapter = new MessageListAdapter(this, messageList,viewModel);
+        mMessageAdapter = new MessageListAdapter(this, messageList, viewModel);
 
         viewModel.getConversationLiveData(id).observe(this,
                 c -> {
-                    if(c == null){
+                    if (c == null) {
                         return;
                     }
-                    viewModel.getChatter(c).addOnSuccessListener(chatter->{
+                    viewModel.getChatter(c).addOnSuccessListener(chatter -> {
                         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
                         getSupportActionBar().setTitle(chatter.getUsername());
                         mTitle.setText(chatter.getUsername());
@@ -76,8 +76,8 @@ public class ChatRoomActivity extends AppCompatActivity{
                     messageList.clear();
                     messageList.addAll(c.getMessages());
                     mMessageAdapter.notifyDataSetChanged();
-                    if(c.getMessages().size()>0){
-                        ((RecyclerView)findViewById(R.id.recycler_gchat)).smoothScrollToPosition(c.getMessages().size() - 1);
+                    if (c.getMessages().size() > 0) {
+                        ((RecyclerView) findViewById(R.id.recycler_gchat)).smoothScrollToPosition(c.getMessages().size() - 1);
                     }
                 }
         );
@@ -91,7 +91,7 @@ public class ChatRoomActivity extends AppCompatActivity{
             EditText message = findViewById(R.id.edit_gchat_message);
             String messageText = message.getText().toString();
             message.setText("");
-            viewModel.sendMessage(conv,messageText);
+            viewModel.sendMessage(conv, messageText);
         });
     }
 

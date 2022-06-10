@@ -6,11 +6,14 @@ public class PickupLocation extends Model {
     private double latitude;
     private double longitude;
 
-    public PickupLocation(){}
-    public PickupLocation(Location location){
+    public PickupLocation() {
+    }
+
+    public PickupLocation(Location location) {
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
     }
+
     public PickupLocation(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
@@ -32,9 +35,9 @@ public class PickupLocation extends Model {
         this.longitude = longitude;
     }
 
-    public static float distanceBetweenLocations(PickupLocation l1, PickupLocation l2){
+    public static float distanceBetweenLocations(PickupLocation l1, PickupLocation l2) {
         float[] result = new float[1];
-        Location.distanceBetween(l1.latitude,l1.longitude,l2.latitude,l2.longitude, result);
+        Location.distanceBetween(l1.latitude, l1.longitude, l2.latitude, l2.longitude, result);
         return result[0];
     }
 }

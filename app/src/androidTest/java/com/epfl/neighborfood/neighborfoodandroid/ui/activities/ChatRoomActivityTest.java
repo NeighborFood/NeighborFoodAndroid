@@ -12,7 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.epfl.neighborfood.neighborfoodandroid.AppContainerTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.DummyAuthenticator;
 import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
@@ -33,7 +33,7 @@ public class ChatRoomActivityTest {
     @Before
     public void setUp() throws Exception {
         NeighborFoodApplication.appContainer = new AppContainerTestImplementation();
-        AuthenticatorFactory.setDependency(DummyAuthenticator.getInstance());
+        AuthenticatorSingleton.setDependency(DummyAuthenticator.getInstance());
         DummyAuthenticator.getInstance().logInWithGoogleAccount(null);
         //DummyAuthenticator.getInstance().setAuthUser(new AuthenticatorUser(authenticadted.getId(), authenticadted.getEmail(),authenticadted.getFirstName(),authenticadted.getLastName(),authenticadted.getProfilePictureURI()) {
        // });

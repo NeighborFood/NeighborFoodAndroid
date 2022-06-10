@@ -29,8 +29,6 @@ import java.util.ArrayList;
 public class VendorDashboardFragment extends Fragment {
 
     private FragmentVendorDashboardBinding binding;
-    private FloatingActionButton button;
-    private VendorOrdersViewModel viewModel;
     private VendorOrderListAdapter unassignedListAdapter;
     private VendorOrderListAdapter waitingListAdapter;
     private VendorOrderListAdapter deliveredListAdapter;
@@ -44,7 +42,7 @@ public class VendorDashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentVendorDashboardBinding.inflate(getLayoutInflater());
-        button = binding.getRoot().findViewById(R.id.addMealButton);
+        FloatingActionButton button = binding.getRoot().findViewById(R.id.addMealButton);
         button.setOnClickListener(v -> {
             if (v.getId() == R.id.addMealButton) {
                 Intent intent = new Intent(getActivity(), PlaceMealActivity.class);
@@ -59,7 +57,7 @@ public class VendorDashboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(VendorOrdersViewModel.class);
+        VendorOrdersViewModel viewModel = new ViewModelProvider(this, new NeighborFoodViewModelFactory((NeighborFoodApplication) this.getActivity().getApplication())).get(VendorOrdersViewModel.class);
         unassignedListAdapter = new VendorOrderListAdapter(getContext(), unassignedOrderList, viewModel);
         RecyclerView unassignedRecyclerView = binding.unassignedRecyclerView;
         unassignedRecyclerView.setAdapter(unassignedListAdapter);

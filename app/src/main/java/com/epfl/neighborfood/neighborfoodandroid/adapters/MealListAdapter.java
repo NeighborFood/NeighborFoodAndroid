@@ -18,12 +18,11 @@ import com.epfl.neighborfood.neighborfoodandroid.ui.viewmodels.MealListViewModel
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Adapter class for meals list
  */
-public class MealListAdapter extends ArrayAdapter {
+public class MealListAdapter extends ArrayAdapter<Order> {
     private final MealListViewModel viewModel;
 
     /**
@@ -39,7 +38,7 @@ public class MealListAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Order order = (Order) getItem(position);
+        Order order = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_meal, parent, false);
@@ -55,11 +54,11 @@ public class MealListAdapter extends ArrayAdapter {
             Picasso.get().load(meal.getImageUri()).into(imageView);
             mealShortDes.setText(meal.getDescription());
             PickupLocation pickupLocation = viewModel.getUserLocation().getValue();
-            if(pickupLocation != null){
-                int distance =(int) PickupLocation.distanceBetweenLocations(pickupLocation,order.getLocation());
-                distanceText.setText(getContext().getResources().getString(R.string.distance_tag,String.valueOf(distance)));
+            if (pickupLocation != null) {
+                int distance = (int) PickupLocation.distanceBetweenLocations(pickupLocation, order.getLocation());
+                distanceText.setText(getContext().getResources().getString(R.string.distance_tag, String.valueOf(distance)));
             }
-            price.setText(getContext().getResources().getString(R.string.price_tag,order.getPrice()));
+            price.setText(getContext().getResources().getString(R.string.price_tag, order.getPrice()));
         });
         return convertView;
     }

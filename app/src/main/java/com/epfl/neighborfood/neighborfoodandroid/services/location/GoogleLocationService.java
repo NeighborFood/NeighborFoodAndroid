@@ -19,12 +19,13 @@ import com.google.android.gms.tasks.Tasks;
 public class GoogleLocationService extends LocationService implements LocationListener {
     private FusedLocationProviderClient locationProvider;
 
-    public GoogleLocationService(){
-       super();
+    public GoogleLocationService() {
+        super();
     }
+
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        pickupLocationMutableLiveData.postValue(new PickupLocation(location.getLatitude(),location.getLongitude()));
+        pickupLocationMutableLiveData.postValue(new PickupLocation(location.getLatitude(), location.getLongitude()));
     }
 
     @Nullable
@@ -32,21 +33,22 @@ public class GoogleLocationService extends LocationService implements LocationLi
     public IBinder onBind(Intent intent) {
         return null;
     }
+
     //already performing the check in the getLocationPermissionGranted call
     @SuppressLint("MissingPermission")
     @Override
     public Task<PickupLocation> getDeviceLocation() {
-        if(locationProvider == null){
+        if (locationProvider == null) {
             locationProvider = LocationServices.getFusedLocationProviderClient(NeighborFoodApplication.getAppContext());
         }
-        if(!getLocationPermissionGranted()){
+        if (!getLocationPermissionGranted()) {
             return Tasks.forException(new IllegalStateException("Permission not granted yet!"));
         }
-        Task<PickupLocation> res = locationProvider.getLastLocation().continueWith(t->{
-            if(t.isSuccessful()&& t.getResult() != null){
-                return new PickupLocation(t.getResult().getLatitude(),t.getResult().getLongitude());
+        Task<PickupLocation> res = locationProvider.getLastLocation().continueWith(t -> {
+            if (t.isSuccessful() && t.getResult() != null) {
+                return new PickupLocation(t.getResult().getLatitude(), t.getResult().getLongitude());
             }
-        return null;
+            return null;
         });
         res.addOnSuccessListener(pickupLocationMutableLiveData::postValue);
         return res;

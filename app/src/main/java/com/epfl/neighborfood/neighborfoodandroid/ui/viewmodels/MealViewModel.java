@@ -39,12 +39,6 @@ public class MealViewModel extends ViewModel {
         return mealRepository.getMealById(id);
     }
 
-    /*
-       fetches user by id
-    */
-    public Task<User> getVendorById(String id) {
-        return userRepository.getUserById(id);
-    }
 
     /*
         updates the order with its new attributes when he gets assigned

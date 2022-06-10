@@ -25,23 +25,25 @@ public class BuyerOrdersActivityViewModel extends ViewModel {
         this.mealRepository = mealRepository;
         this.userRepository = userRepository;
     }
+
     /*
      *  fetches user by id
      */
-    public Task<User> getUserById(String id){
+    public Task<User> getUserById(String id) {
         return userRepository.getUserById(id);
     }
 
     /*
      *  fetches all orders made by a user (as a Buyer).
      */
-    public Task<List<Order>> getUserOrders(){
+    public Task<List<Order>> getUserOrders() {
         return orderRepository.getAllOrdersByBuyerId(authRepository.getCurrentUser().getId());
     }
+
     /*
         fetches meal by id
      */
-    public Task<Meal> getMealById(String id){
+    public Task<Meal> getMealById(String id) {
         return mealRepository.getMealById(id);
     }
 

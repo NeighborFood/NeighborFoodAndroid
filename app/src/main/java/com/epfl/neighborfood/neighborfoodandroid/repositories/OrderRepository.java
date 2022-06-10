@@ -1,6 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.repositories;
 
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.models.Order;
 import com.epfl.neighborfood.neighborfoodandroid.models.OrderStatus;
@@ -27,7 +27,7 @@ public class OrderRepository {
         if (id == null) {
             return Tasks.forException(new IllegalArgumentException("The order ID cannot be null"));
         }
-        return DatabaseFactory.getDependency().fetch(ordersDataCollectionPath, id).continueWith(task -> {
+        return DatabaseSingleton.getDependency().fetch(ordersDataCollectionPath, id).continueWith(task -> {
             if (task.isSuccessful()) {
                 return task.getResult().toModel(Order.class);
             }
@@ -43,7 +43,7 @@ public class OrderRepository {
         if (buyerId == null) {
             return Tasks.forException(new IllegalArgumentException("The buyer ID cannot be null"));
         }
-        return DatabaseFactory.getDependency().fetchAllMatchingAttributeValue(ordersDataCollectionPath, buyerIdAttributeName, buyerId).continueWith(t -> {
+        return DatabaseSingleton.getDependency().fetchAllMatchingAttributeValue(ordersDataCollectionPath, buyerIdAttributeName, buyerId).continueWith(t -> {
             ArrayList<Order> res = new ArrayList<>();
             if (t.isSuccessful()) {
                 for (DocumentSnapshot m : t.getResult().getDocuments()) {
@@ -62,7 +62,7 @@ public class OrderRepository {
         if (status == null) {
             return Tasks.forException(new IllegalArgumentException("The buyer ID cannot be null"));
         }
-        return DatabaseFactory.getDependency().fetchAllMatchingAttributeValue(ordersDataCollectionPath, "orderStatus", status).continueWith(t -> {
+        return DatabaseSingleton.getDependency().fetchAllMatchingAttributeValue(ordersDataCollectionPath, "orderStatus", status).continueWith(t -> {
             ArrayList<Order> res = new ArrayList<>();
             if (t.isSuccessful()) {
                 for (DocumentSnapshot m : t.getResult().getDocuments()) {
@@ -81,7 +81,7 @@ public class OrderRepository {
         if (vendorId == null) {
             return Tasks.forException(new IllegalArgumentException("The vendor ID cannot be null"));
         }
-        return DatabaseFactory.getDependency().fetchAllMatchingAttributeValue(ordersDataCollectionPath, vendorIdAttributeName, vendorId).continueWith(t -> {
+        return DatabaseSingleton.getDependency().fetchAllMatchingAttributeValue(ordersDataCollectionPath, vendorIdAttributeName, vendorId).continueWith(t -> {
             ArrayList<Order> res = new ArrayList<>();
             if (t.isSuccessful()) {
                 for (DocumentSnapshot m : t.getResult().getDocuments()) {
@@ -101,10 +101,10 @@ public class OrderRepository {
         if (order == null) {
             return Tasks.forException(new IllegalArgumentException("Cannot make a null order"));
         }
-        return DatabaseFactory.getDependency().add(ordersDataCollectionPath, order)
+        return DatabaseSingleton.getDependency().add(ordersDataCollectionPath, order)
                 .continueWith(task -> {
                     order.setOrderId(task.getResult());
-                    DatabaseFactory.getDependency().
+                    DatabaseSingleton.getDependency().
                             set(ordersDataCollectionPath, task.getResult(), order);
                     return task.getResult();
                 });
@@ -119,6 +119,6 @@ public class OrderRepository {
         if (order == null) {
             return Tasks.forException(new IllegalArgumentException("Cannot make a null order"));
         }
-        return DatabaseFactory.getDependency().set(ordersDataCollectionPath, order.getOrderId(), order).continueWith(task -> null);
+        return DatabaseSingleton.getDependency().set(ordersDataCollectionPath, order.getOrderId(), order).continueWith(task -> null);
     }
 }

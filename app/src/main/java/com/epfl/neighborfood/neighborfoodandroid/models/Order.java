@@ -18,7 +18,7 @@ public class Order extends Model {
     private PickupLocation location;
 
 
-    public Order(String orderId, String mealId, Date orderDate, OrderStatus orderStatus, String VendorId, String buyerId,PickupLocation location) {
+    public Order(String orderId, String mealId, Date orderDate, OrderStatus orderStatus, String VendorId, String buyerId, PickupLocation location) {
         this.orderId = orderId;
         this.mealId = mealId;
         this.orderDate = orderDate;
@@ -27,7 +27,9 @@ public class Order extends Model {
         this.buyerId = buyerId;
         this.location = location;
     }
-    public Order(){}
+
+    public Order() {
+    }
 
     public String getOrderId() {
         return orderId;
@@ -53,9 +55,13 @@ public class Order extends Model {
         return buyerId;
     }
 
-    public PickupLocation getLocation(){return location; }
+    public PickupLocation getLocation() {
+        return location;
+    }
 
-    public void setLocation(PickupLocation location) { this.location = location; }
+    public void setLocation(PickupLocation location) {
+        this.location = location;
+    }
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
@@ -80,9 +86,11 @@ public class Order extends Model {
     public void setBuyerId(String buyerId) {
         this.buyerId = buyerId;
     }
-    public void setPrice(double price){
+
+    public void setPrice(double price) {
         this.price = price;
     }
+
     public double getPrice() {
         return price;
     }
@@ -100,11 +108,12 @@ public class Order extends Model {
                 return ORDER_NOT_YET_ASSIGNED;
         }
     }
-        /*
-    returns description about the order status
-     */
+
+    /*
+returns description about the order status
+ */
     public String orderStatusDes() {
-        switch (orderStatus){
+        switch (orderStatus) {
             case finished:
                 return ORDER_ACHIEVED + orderDate.toString();
             case assigned:

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.models.Conversation;
 import com.epfl.neighborfood.neighborfoodandroid.models.Message;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Adapter class for conversations list
  */
-public class ConversationListAdapter extends ArrayAdapter {
+public class ConversationListAdapter extends ArrayAdapter <Pair<Conversation, User>>{
     private final ConversationsViewModel viewModel;
 
     /**
@@ -41,7 +41,7 @@ public class ConversationListAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Pair<Conversation, User> conv = (Pair<Conversation, User>) getItem(position);
+        Pair<Conversation, User> conv = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_conversation
@@ -59,7 +59,7 @@ public class ConversationListAdapter extends ArrayAdapter {
 
         if (last != null) {
             txt = last.getContent();
-            String currUserID = AuthenticatorFactory.getDependency().getCurrentAuthUser().getId();
+            String currUserID = AuthenticatorSingleton.getDependency().getCurrentAuthUser().getId();
             if (last.getSender().equals(currUserID)) {
                 txt = "You : " + txt;
             }

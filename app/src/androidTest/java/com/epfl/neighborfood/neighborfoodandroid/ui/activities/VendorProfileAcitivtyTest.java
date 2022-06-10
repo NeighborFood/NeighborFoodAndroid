@@ -20,7 +20,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import com.epfl.neighborfood.neighborfoodandroid.AppContainerTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.util.matchers.NthChildOfMatcher;
 
@@ -52,13 +52,13 @@ public class VendorProfileAcitivtyTest {
     @Before
     public void setUp() throws Exception {
         Intents.init();
-        ((DummyDatabase)DatabaseFactory.getDependency()).reset();
+        ((DummyDatabase) DatabaseSingleton.getDependency()).reset();
     }
 
     @After
     public void cleanup() {
         Intents.release();
-        ((DummyDatabase)DatabaseFactory.getDependency()).reset();
+        ((DummyDatabase) DatabaseSingleton.getDependency()).reset();
     }
 
     @Test

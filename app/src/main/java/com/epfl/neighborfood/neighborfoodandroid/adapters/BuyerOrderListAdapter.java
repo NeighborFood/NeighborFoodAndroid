@@ -23,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Adapter class for past orders list
  */
-public class BuyerOrderListAdapter extends ArrayAdapter {
+public class BuyerOrderListAdapter extends ArrayAdapter<Triplet<Order, Meal, User>> {
     /**
      * @param context        context for pastOrders
      * @param orderArrayList List of past orders
@@ -35,7 +35,7 @@ public class BuyerOrderListAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Triplet<Order, Meal, User> detailedOrder = (Triplet<Order, Meal, User>) getItem(position);
+        Triplet<Order, Meal, User> detailedOrder = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_order, parent, false);
@@ -45,9 +45,7 @@ public class BuyerOrderListAdapter extends ArrayAdapter {
         TextView mealName = convertView.findViewById(R.id.order_title);
         TextView mealShortDes = convertView.findViewById(R.id.order_des);
         Picasso.get().load(detailedOrder.getSecond().getImageUri()).into(imageView);
-
-        //imageView.setImageResource(detailedOrder .getSecond().getImageId());
-        mealName.setText(detailedOrder.getSecond().getName() + " By " + detailedOrder.getThird().getFirstName());
+        mealName.setText(new StringBuilder().append(detailedOrder.getSecond().getName()).append(" By ").append(detailedOrder.getThird().getFirstName()).toString());
         mealShortDes.setText(detailedOrder.getFirst().orderStatusDes());
 
         return convertView;

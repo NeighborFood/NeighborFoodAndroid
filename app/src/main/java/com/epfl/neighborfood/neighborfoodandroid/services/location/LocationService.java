@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Service;
 import android.content.pm.PackageManager;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;

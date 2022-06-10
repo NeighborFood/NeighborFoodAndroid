@@ -11,7 +11,7 @@ public class Message extends Model {
 
 
     public Message(String messageText, String sender) {
-        this(messageText,sender,new Date());
+        this(messageText, sender, new Date());
     }
 
     public Message(String messageText, String sender, Date date) {

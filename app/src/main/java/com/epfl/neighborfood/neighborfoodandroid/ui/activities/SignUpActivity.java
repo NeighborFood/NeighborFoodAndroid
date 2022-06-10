@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -37,11 +36,6 @@ public class SignUpActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private GoogleSignInClient googleSignInClient;
     private boolean newUser;
-
-
-    // a request code for the sign in intent
-    @VisibleForTesting
-    public final static int RC_SIGN_IN = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,14 +79,11 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
-    @SuppressWarnings("ThrowablePrintedToSystemOut")
     public void activityResult(int resultCode, Intent data) {
         viewModel.handleGoogleLoginResponse(resultCode, data).addOnSuccessListener(newUser->{
             this.newUser = newUser;
             updateUI(viewModel.getCurrentAuthUser());
-        }).addOnFailureListener(e->{
-            Toast.makeText(this, R.string.login_failure, Toast.LENGTH_SHORT).show();
-        } );
+        }).addOnFailureListener(e-> Toast.makeText(this, R.string.login_failure, Toast.LENGTH_SHORT).show());
     }
 
 

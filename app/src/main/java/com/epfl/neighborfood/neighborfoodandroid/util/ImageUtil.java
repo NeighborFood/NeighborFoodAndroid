@@ -25,38 +25,41 @@ import java.util.Map;
 /**
  * A utility class that allows image manipulation
  */
-public class ImageUtil
-{
-    public static Intent getGalleryIntent(){
+public class ImageUtil {
+    public static Intent getGalleryIntent() {
         return new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
     }
-    public static ActivityResultLauncher<Intent> getImagePickerActivityLauncher(ComponentActivity activity, ActivityResultCallback<ActivityResult> callback){
+
+    public static ActivityResultLauncher<Intent> getImagePickerActivityLauncher(ComponentActivity activity, ActivityResultCallback<ActivityResult> callback) {
         ActivityCompat.requestPermissions(activity,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                 2);
         return activity.registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 callback
-                );
+        );
 
     }
-    public  static String getRealPathFromUri(Uri imageUri, Activity activity){
+
+    public static String getRealPathFromUri(Uri imageUri, Activity activity) {
         Cursor cursor = activity.getContentResolver().query(imageUri, null, null, null, null);
 
-        if(cursor==null) {
+        if (cursor == null) {
             return imageUri.getPath();
-        }else{
+        } else {
             cursor.moveToFirst();
             int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
             return cursor.getString(idx);
         }
     }
-    public static Task<String> uploadImage(String imagePath){
+
+    public static Task<String> uploadImage(String imagePath) {
         TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<>();
-        uploadToCloudinary(imagePath,taskCompletionSource);
+        uploadToCloudinary(imagePath, taskCompletionSource);
 
         return taskCompletionSource.getTask();
     }
+
     private static void uploadToCloudinary(String filePath, TaskCompletionSource<String> taskCompletionSource) {
         MediaManager.get().upload(filePath).callback(new UploadCallback() {
             @Override
@@ -70,18 +73,18 @@ public class ImageUtil
             @Override
             public void onSuccess(String requestId, Map resultData) {
                 taskCompletionSource.setResult(resultData.get("url").toString());
-        }
+            }
 
-        @Override
-        public void onError(String requestId, ErrorInfo error) {
-            taskCompletionSource.setException(new RuntimeException(error.toString()));
-        }
+            @Override
+            public void onError(String requestId, ErrorInfo error) {
+                taskCompletionSource.setException(new RuntimeException(error.toString()));
+            }
 
-        @Override
-        public void onReschedule(String requestId, ErrorInfo error) {
-        }
-    }).dispatch();
-}
+            @Override
+            public void onReschedule(String requestId, ErrorInfo error) {
+            }
+        }).dispatch();
+    }
 
 
 }

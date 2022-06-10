@@ -37,9 +37,9 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.epfl.neighborfood.neighborfoodandroid.AppContainerTestImplementation;
 import com.epfl.neighborfood.neighborfoodandroid.NeighborFoodApplication;
 import com.epfl.neighborfood.neighborfoodandroid.R;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.DummyAuthenticator;
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.database.DocumentSnapshot;
 import com.epfl.neighborfood.neighborfoodandroid.database.dummy.DummyDatabase;
 import com.epfl.neighborfood.neighborfoodandroid.models.User;
@@ -70,7 +70,7 @@ public class ProfileEditingActivityTest {
     @BeforeClass
     public static void setupApp(){
         NeighborFoodApplication.appContainer = new AppContainerTestImplementation();
-        AuthenticatorFactory.setDependency(DummyAuthenticator.getInstance());
+        AuthenticatorSingleton.setDependency(DummyAuthenticator.getInstance());
         NeighborFoodApplication.appContainer.getAuthRepo().logInWithGoogleAccount(null);
     }
 
@@ -94,7 +94,7 @@ public class ProfileEditingActivityTest {
     }
     @Test
     public void linksFieldsContainUserLinksPlusEmpty(){
-        Task<DocumentSnapshot> t =DatabaseFactory.getDependency().fetch("Users",dummyUser.getId());
+        Task<DocumentSnapshot> t = DatabaseSingleton.getDependency().fetch("Users",dummyUser.getId());
         waitUntilTaskFinishedViewAction.waitUntilFinished(t,2000);
         User user = t.getResult().toModel(User.class);
         ArrayList<String> fakeLinks = user.getLinks();
@@ -112,7 +112,7 @@ public class ProfileEditingActivityTest {
         fakeLinks.add("a");fakeLinks.add("b");fakeLinks.add("c");
         dummyUser.setLinks(fakeLinks);
         authRepo.setUser(dummyUser);
-        DatabaseFactory.getDependency().set("Users",dummyUser.getId(),dummyUser);
+        DatabaseSingleton.getDependency().set("Users",dummyUser.getId(),dummyUser);
         onView(withId(R.id.profileEditAddLinkButton)).perform(scrollTo(),click());
         onView(withId(R.id.profileEditAddLinkButton)).perform(scrollTo(),click());
         onView(withId(R.id.profileEditAddLinkButton)).perform(scrollTo(),click());

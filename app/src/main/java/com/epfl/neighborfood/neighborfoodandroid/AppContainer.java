@@ -6,9 +6,9 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.utils.ObjectUtils;
 import com.epfl.neighborfood.neighborfoodandroid.authentication.Authenticator;
-import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorFactory;
+import com.epfl.neighborfood.neighborfoodandroid.authentication.AuthenticatorSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.database.Database;
-import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseFactory;
+import com.epfl.neighborfood.neighborfoodandroid.database.DatabaseSingleton;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.AuthRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.ConversationRepository;
 import com.epfl.neighborfood.neighborfoodandroid.repositories.MealRepository;
@@ -117,8 +117,8 @@ public abstract class AppContainer {
      *
      */
     protected AppContainer(Context context, Database dep, Authenticator authenticator, NotificationService notificationService,LocationService locationService) {
-        DatabaseFactory.setDependency(dep);
-        AuthenticatorFactory.setDependency(authenticator);
+        DatabaseSingleton.setDependency(dep);
+        AuthenticatorSingleton.setDependency(authenticator);
         this.notificationService = notificationService;
         this.locationService = locationService;
         this.authRepo = new AuthRepository();

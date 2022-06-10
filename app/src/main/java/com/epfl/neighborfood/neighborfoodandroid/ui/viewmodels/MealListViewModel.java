@@ -19,18 +19,21 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MealListViewModel extends ViewModel{
+public class MealListViewModel extends ViewModel {
 
-    public enum Ordering{
-        PRICE(priceComparator),DISTANCE(distanceComparator);
+    public enum Ordering {
+        PRICE(priceComparator), DISTANCE(distanceComparator);
         private final Comparator<Order> comparator;
-        Ordering(Comparator<Order> comparator){
+
+        Ordering(Comparator<Order> comparator) {
             this.comparator = comparator;
         }
-        public Comparator<Order> getComparator(){
+
+        public Comparator<Order> getComparator() {
             return comparator;
         }
     }
+
     private final MealRepository mealRepository;
     private final OrderRepository orderRepository;
     private final AuthRepository authRepository;
@@ -40,37 +43,39 @@ public class MealListViewModel extends ViewModel{
     private final MutableLiveData<List<Order>> ordersLiveData;
     private static PickupLocation userLocation;
 
-    private final static Comparator<Order> distanceComparator= (o1, o2) -> {
-        if(userLocation != null){
+    private final static Comparator<Order> distanceComparator = (o1, o2) -> {
+        if (userLocation != null) {
             double distance1 = PickupLocation.distanceBetweenLocations(userLocation, o1.getLocation());
             double distance2 = PickupLocation.distanceBetweenLocations(userLocation, o2.getLocation());
-            return (int)(distance1-distance2);
+            return (int) (distance1 - distance2);
         }
-        return 0;};
+        return 0;
+    };
     private final static Comparator<Order> priceComparator = (o1, o2) -> (int) (o1.getPrice() - o2.getPrice());
 
-    public MealListViewModel(MealRepository mealRepository, OrderRepository orderRepository, AuthRepository authRepository,LocationService locationService) {
+    public MealListViewModel(MealRepository mealRepository, OrderRepository orderRepository, AuthRepository authRepository, LocationService locationService) {
         this.mealRepository = mealRepository;
         this.orderRepository = orderRepository;
         this.authRepository = authRepository;
         this.locationService = locationService;
         ordersLiveData = new MutableLiveData<>();
         pickupLocationLiveData = locationService.getPickupLocationLiveData();
-        pickupLocationLiveData.observeForever(location->{
-            userLocation=location;
+        pickupLocationLiveData.observeForever(location -> {
+            userLocation = location;
             getAllUnassignedOrders();
 
         });
         ordering = Ordering.PRICE;
     }
-    public LiveData<PickupLocation> getUserLocation(){
+
+    public LiveData<PickupLocation> getUserLocation() {
         locationService.getDeviceLocation();
         return pickupLocationLiveData;
     }
 
     public LiveData<List<Order>> getAllUnassignedOrders() {
-        orderRepository.getAllOrdersMatchingStatus(OrderStatus.unassigned).addOnSuccessListener(l->{
-            if(l != null){
+        orderRepository.getAllOrdersMatchingStatus(OrderStatus.unassigned).addOnSuccessListener(l -> {
+            if (l != null) {
                 ordersLiveData.postValue(l);
                 reorderList();
             }
@@ -85,21 +90,24 @@ public class MealListViewModel extends ViewModel{
     public User getCurrentUser() {
         return authRepository.getCurrentUser();
     }
-    public void setOrdering(int ordering){
-        if(ordering<Ordering.values().length && ordering>=0 ){
+
+    public void setOrdering(int ordering) {
+        if (ordering < Ordering.values().length && ordering >= 0) {
             this.ordering = Ordering.values()[ordering];
             reorderList();
         }
     }
-    public int getOrderingIndex(){
+
+    public int getOrderingIndex() {
         return ordering.ordinal();
     }
-    private void reorderList(){
+
+    private void reorderList() {
         List<Order> newList = ordersLiveData.getValue();
-        if(newList == null){
+        if (newList == null) {
             return;
         }
-        Collections.sort(newList,ordering.getComparator());
+        Collections.sort(newList, ordering.getComparator());
 
         ordersLiveData.postValue(newList);
     }

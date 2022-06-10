@@ -62,7 +62,7 @@ public class Conversation extends Model {
      * }
      * the messages sent in this conversation
      *
-     * @return
+     * @return the list of messages
      */
     public List<Message> getMessages() {
         return messages;
@@ -72,7 +72,7 @@ public class Conversation extends Model {
      * get the last message sent by one of the users in
      * this conversation
      *
-     * @return
+     * @return the last message
      */
     public Message lastMessage() {
         if (messages != null && messages.size() > 0) {
@@ -89,8 +89,7 @@ public class Conversation extends Model {
         this.id = id;
     }
 
-    public List<Message> addMessage(Message msg) {
+    public void addMessage(Message msg) {
         messages.add(msg);
-        return messages;
     }
 }

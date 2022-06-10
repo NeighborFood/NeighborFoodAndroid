@@ -1,6 +1,6 @@
 package com.epfl.neighborfood.neighborfoodandroid.authentication;
 
-public class AuthenticatorFactory {
+public class AuthenticatorSingleton {
 
 
     private static Authenticator dependency = FirebaseAuthenticator.getInstance();

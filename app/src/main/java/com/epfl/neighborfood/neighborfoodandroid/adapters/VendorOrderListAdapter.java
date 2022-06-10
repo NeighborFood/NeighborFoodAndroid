@@ -48,6 +48,8 @@ public class VendorOrderListAdapter extends RecyclerView.Adapter<VendorOrderList
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if (orderList.get(position) == null)
+            return;
         viewModel.getMealById(orderList.get(position).getMealId()).addOnSuccessListener(meal -> {
             holder.name.setText(meal.getName());
             holder.status.setText(orderList.get(position).orderShortStatusDes());
@@ -61,7 +63,7 @@ public class VendorOrderListAdapter extends RecyclerView.Adapter<VendorOrderList
         return orderList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         final CircleImageView image;
         final TextView name;

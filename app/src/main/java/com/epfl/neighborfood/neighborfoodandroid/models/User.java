@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * A NeighborFood user, storedin our database
+ */
 public class User extends Model {
 
     /* Keys of the data received from the server */
@@ -47,27 +50,29 @@ public class User extends Model {
         setEmail(email);
         setFirstName(firstName);
         setLastName(lastName);
-        setUsername(firstName+lastName);
+        setUsername(firstName + lastName);
         setProfilePictureURI(uri);
         subscribedIDs = new ArrayList<>();
         numberSubscribers = 0;
     }
 
 
-
     public User() {
     }
 
-    public List<String> getSubscribedIDs(){
+    public List<String> getSubscribedIDs() {
         return this.subscribedIDs;
     }
-    public void setSubscribedIDs(List<String> subscribedIDs){
+
+    public void setSubscribedIDs(List<String> subscribedIDs) {
         this.subscribedIDs = subscribedIDs;
     }
-    public int getNumberSubscribers(){
+
+    public int getNumberSubscribers() {
         return this.numberSubscribers;
     }
-    public void setNumberSubscribers(int numberSubscribers){
+
+    public void setNumberSubscribers(int numberSubscribers) {
         this.numberSubscribers = numberSubscribers;
     }
 
