@@ -36,6 +36,7 @@ import com.epfl.neighborfood.neighborfoodandroid.util.ImageUtil;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,7 +49,8 @@ import java.util.Map;
  */
 public class PlaceMealActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     private static final int RESULT_LOAD_IMAGE = 1;
-
+    @SuppressLint("SimpleDateFormat")
+    private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     ImageView imageToUpload;
     Map<ImageView, Allergen> allergensIcons;
     Button confirmationButton, mapButton;
@@ -80,9 +82,16 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
 
         allergensInMeal = new ArrayList<>();
         allergensIcons = new HashMap<>();
-        for (Allergen a : Allergen.values()) {
-            allergensIcons.put((ImageView) findViewById(a.getId()), a);
-        }
+        allergensIcons.put(findViewById(R.id.CeleryIcon), Allergen.CELERY);
+        allergensIcons.put(findViewById(R.id.MilkIcon), Allergen.MILK);
+        allergensIcons.put(findViewById(R.id.FishIcon), Allergen.FISH);
+        allergensIcons.put(findViewById(R.id.CheeseIcon), Allergen.CHEESE);
+        allergensIcons.put(findViewById(R.id.GlutenIcon), Allergen.GLUTEN);
+        allergensIcons.put(findViewById(R.id.HoneyIcon), Allergen.HONEY);
+        allergensIcons.put(findViewById(R.id.LobsterIcon), Allergen.LOBSTER);
+        allergensIcons.put(findViewById(R.id.SoyIcon), Allergen.SOY);
+        allergensIcons.put(findViewById(R.id.EggsIcon), Allergen.EGGS);
+        allergensIcons.put(findViewById(R.id.ChocolateIcon), Allergen.CHOCOLATE);
         descriptionText = findViewById(R.id.textDescription);
         priceText = findViewById(R.id.textPrice);
         mealNameText = findViewById(R.id.textMealName);
@@ -111,9 +120,9 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         locationActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
-                        double chosenLon = result.getData().getDoubleExtra("longitude", 0);
-                        double chosenLat = result.getData().getDoubleExtra("latitude", 0);
-                        location = new PickupLocation(chosenLat, chosenLon);
+                        double chosenLon = result.getData().getDoubleExtra("longitude",0);
+                        double chosenLat = result.getData().getDoubleExtra("latitude",0);
+                        location = new PickupLocation(chosenLat,chosenLon);
                     }
                 }
         );
@@ -131,7 +140,6 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         if (allergensIcons.containsKey(v)) {
@@ -173,7 +181,7 @@ public class PlaceMealActivity extends AppCompatActivity implements View.OnClick
                     Task<String> task = vmodel.placeMeal(meal, imagePath);
                     task.addOnSuccessListener((mealId) -> {
                         double price = Double.parseDouble(priceText.getText().toString());
-                        vmodel.createOrder(mealId, location, price).addOnSuccessListener(orderId -> startActivity(i));
+                        vmodel.createOrder(mealId,location,price).addOnSuccessListener(orderId -> startActivity(i));
                     });
                 }
 
