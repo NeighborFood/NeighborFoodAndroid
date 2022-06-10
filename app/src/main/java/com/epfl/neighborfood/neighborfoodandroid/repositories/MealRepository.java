@@ -11,6 +11,12 @@ public class MealRepository {
     public MealRepository() {
     }
 
+    /**
+     * fetches the meal corresponding to an ID
+     *
+     * @param id meal id
+     * @return Task containg the fetched meal
+     */
     public Task<Meal> getMealById(String id) {
         if (id == null) {
             return Tasks.forException(new IllegalArgumentException("The meal ID cannot be null"));

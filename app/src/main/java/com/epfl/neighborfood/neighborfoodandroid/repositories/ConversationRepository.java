@@ -9,7 +9,9 @@ import com.google.android.gms.tasks.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Contains
+ */
 public class ConversationRepository {
     private final static String CONVERSATIONS_COLLECTION_PATH = "Conversations";
 
@@ -21,8 +23,8 @@ public class ConversationRepository {
     /**
      * fetches a particular conversation from the database
      *
-     * @param conversationID
-     * @return
+     * @param conversationID Id of a conversation
+     * @return Task containing the conversation fetched
      */
     public Task<Conversation> getConversation(String conversationID) {
         return DatabaseSingleton.getDependency().fetch(CONVERSATIONS_COLLECTION_PATH, conversationID).continueWith(t -> t.getResult().toModel(Conversation.class));
@@ -48,18 +50,34 @@ public class ConversationRepository {
         );
     }
 
+    /**
+     * Adds a conversation with an Id to the database
+     *
+     * @param id   id of conversation to be set
+     * @param conv the conversation to be added
+     * @return a task containing the conversation added
+     */
     public Task<Conversation> addConversation(String id, Conversation conv) {
         return DatabaseSingleton.getDependency().set(CONVERSATIONS_COLLECTION_PATH, id, conv).continueWith(t -> conv);
     }
 
+    /**
+     * Updates an existing conversation in the database
+     *
+     * @param conv           conversation to be updated
+     * @param conversationID Id of the conversation to be updated
+     * @return a task containing the updated conversation
+     */
     public Task<Void> updateConversation(Conversation conv, String conversationID) {
         return DatabaseSingleton.getDependency().set(CONVERSATIONS_COLLECTION_PATH, conversationID, conv);
     }
 
-    public void removeConversation(String conversationID) {
-
-    }
-
+    /**
+     * notifies listener when updates happen in a conversation
+     *
+     * @param conversationID ID of conversation
+     * @param listener       listener to the conversation updates
+     */
     public void addOnConversationChangeListener(String conversationID, Database.ModelUpdateListener listener) {
         DatabaseSingleton.getDependency().addChangesListener(CONVERSATIONS_COLLECTION_PATH, conversationID, listener);
     }

@@ -18,9 +18,10 @@ public class OrderRepository {
     public OrderRepository() {
     }
 
-    /*
+    /**
      * fetches an order using its id.
-     * @param orderId
+     *
+     * @param id Order id
      * @return task that fails if the database is unreachable
      */
     public Task<Order> getOrderById(String id) {
@@ -35,8 +36,9 @@ public class OrderRepository {
         });
     }
 
-    /*
+    /**
      * fetches all the orders made by a certain buyer.
+     *
      * @return task that fails if the database is unreachable
      */
     public Task<List<Order>> getAllOrdersByBuyerId(String buyerId) {
@@ -54,8 +56,9 @@ public class OrderRepository {
         });
     }
 
-    /*
+    /**
      * fetches all the orders that are still unassigned.
+     *
      * @return task that fails if the database is unreachable
      */
     public Task<List<Order>> getAllOrdersMatchingStatus(OrderStatus status) {
@@ -73,8 +76,9 @@ public class OrderRepository {
         });
     }
 
-    /*
+    /**
      * fetches all the orders posted by a vendor.
+     *
      * @return task that fails if the database is unreachable
      */
     public Task<List<Order>> getAllOrdersByVendorId(String vendorId) {
@@ -92,8 +96,9 @@ public class OrderRepository {
         });
     }
 
-    /*
+    /**
      * posts an order on the database
+     *
      * @param order Order to be posted
      * @return task containing orderId that fails if the database is unreachable
      */
@@ -110,8 +115,9 @@ public class OrderRepository {
                 });
     }
 
-    /*
+    /**
      * Updates an existing order with new values
+     *
      * @param order Order to be updated
      * @return task containing orderId that fails if the database is unreachable
      */
